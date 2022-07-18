@@ -10,11 +10,11 @@ interface ButtonProps {
 
 const Button = ({ text, style, as, onClick }: ButtonProps) => {
   return (
-    <div>
+    <>
       <ButtonElem onClick={() => onClick()} as={as} style={style}>
         { text }
       </ButtonElem>
-    </div>
+    </>
   );
 };
 

@@ -18,7 +18,7 @@ export default function Connector(props: ConnectorProps) {
   return (
     <>
       <LogoContainer hoverLogo={hoverLogo} />
-      <div>{name}</div>
+      <>{name}</>
       <ConnectStatus>
         {props.connectState === 'connecting' && <LoadingText />}
       </ConnectStatus>
