@@ -1,7 +1,9 @@
 {
-  "name": "receiver",
+  "name": "@daopanel/receiver",
   "version": "0.1.0",
-  "private": true,
+  "publishConfig": {
+    "@daopanel:registry": "https://npm.pkg.github.com/daopanel"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
