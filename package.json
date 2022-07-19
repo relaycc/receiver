@@ -2,7 +2,7 @@
   "name": "@daopanel/receiver",
   "version": "0.1.0",
   "publishConfig": {
-    "@daopanel:registry": "https://npm.pkg.github.com/daopanel"
+    "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
     "dev": "next dev",
@@ -41,5 +41,14 @@
   },
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
-  "types": "lib/index.d.ts"
+  "types": "lib/index.d.ts",
+  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "bugs": {
+    "url": "https://github.com/daopanel/receiver/issues"
+  },
+  "homepage": "https://github.com/daopanel/receiver#readme",
+  "directories": {
+    "lib": "lib"
+  },
+  "author": ""
 }
