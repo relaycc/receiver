@@ -1,1 +1,1 @@
-export { default as Receiver } from "./Button";
+export { default as Receiver } from "./Receiver";
