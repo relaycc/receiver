@@ -4,7 +4,8 @@ import typescript from "@rollup/plugin-typescript";
 import postcss from "rollup-plugin-postcss";
 import dts from "rollup-plugin-dts";
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
-import nodePolyfills from 'rollup-plugin-polyfill-node';
+import image from '@rollup/plugin-image';
+import json from '@rollup/plugin-json';
 
 const packageJson = require("./package.json");
 
@@ -24,8 +25,10 @@ export default [
       },
     ],
     plugins: [
-      peerDepsExternal(),
+      image(),
       resolve(),
+      json(),
+      peerDepsExternal(),
       commonjs(),
       typescript({ tsconfig: "./tsconfig.json" }),
       postcss(),
