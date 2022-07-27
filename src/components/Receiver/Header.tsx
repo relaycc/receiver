@@ -40,7 +40,7 @@ const Header = styled.div`
   font-size: 12px;
   font-weight: 500;
   padding: 10px 24px;
-  font-family: Inter;
+  font-family: sans-serif;
   height: 62px;
   position: absolute;
   top: 0;

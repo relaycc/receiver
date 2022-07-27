@@ -12,7 +12,7 @@ export default function LoadingSpinner(props: LoaderProps) {
   return (
     <Container width={width} height={height}>
       <img
-        src={MobileLoadingSpinner.src}
+        src={MobileLoadingSpinner}
         alt="loading"
         width={width}
         height={height}

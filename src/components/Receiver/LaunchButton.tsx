@@ -27,7 +27,7 @@ const ButtonElem = styled.button<ButtonProps>`
   position: fixed;
   bottom: 80px;
   right: 20px;
-  font-family: 'sans-serif';
+  font-family: sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;

@@ -28,7 +28,7 @@ const TextWrapper = styled.div<{ sentByMe: boolean }>`
 
 const MessageText = styled.p<{ sentByMe: boolean }>`
   color: ${(props) => (props.sentByMe ? 'white' : '#333333')};
-  font-family: 'Inter';
+  font-family: sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;

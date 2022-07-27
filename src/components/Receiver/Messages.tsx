@@ -194,7 +194,7 @@ const RelayInputFooter = styled.div`
   bottom: 0;
   color: #333333;
   text-align: center;
-  font-family: 'Roboto';
+  font-family: sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 13px;

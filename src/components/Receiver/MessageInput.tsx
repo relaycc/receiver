@@ -43,7 +43,7 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
         onKeyDown={handleKeyDown}
       />
       <SvgContainer inputTextCount={inputTextCount} onClick={handleSend}>
-        <img src={MessageSend.src} width={20} height={20} />
+        <img src={MessageSend} width={20} height={20} />
       </SvgContainer>
     </Container>
   );
@@ -78,10 +78,10 @@ const StyledInput = styled.input`
   &::placeholder {
     color: #4F5E7B;
     font-weight: 400;
-    font-family: 'Roboto';
+    font-family: sans-serif;
   }
   color: #333333;
-  font-family: 'Roboto';
+  font-family: sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;

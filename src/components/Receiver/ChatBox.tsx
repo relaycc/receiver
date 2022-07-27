@@ -118,7 +118,12 @@ const ChatBox = ({ style, visible, as, peerAddress, headerText, closeReceiver}: 
           </>
         )}
         { !xmtpReady && ( 
-          <RelayFooter>Powered by Relay</RelayFooter>
+          <RelayFooter>
+            Powered by Relay
+            <img src={Logo}
+              height={30}
+              width={30} />
+          </RelayFooter>
         )}
       </RelayRelativeContainer>
     </ChatContainer>
@@ -150,7 +155,7 @@ const RelayFooter = styled.div`
   bottom: 0;
   color: #333333;
   text-align: center;
-  font-family: 'Roboto';
+  font-family: sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
@@ -159,12 +164,10 @@ const RelayFooter = styled.div`
   background: #F7F7F7;
   line-height: 35px;
 
-  &:after {
-    background-image: url(${Logo.src});
+  img {
+    display:inline-block;
     height: 15px;
     width: 15px;
-    content: '';
-    display: inline-block;
     vertical-align: sub;
     margin-left: 5px;
   }
@@ -172,7 +175,7 @@ const RelayFooter = styled.div`
 
 const ConnectorPrompt = styled.div`
   color: #686868;
-  font-family: 'Inter';
+  font-family: sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 12px;
@@ -210,7 +213,7 @@ const Connector = styled.li`
   display: flex;
   align-items: center;
   padding: 0 10px;
-  font-family: 'Inter';
+  font-family: sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;

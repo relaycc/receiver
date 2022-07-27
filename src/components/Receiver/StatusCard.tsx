@@ -34,7 +34,7 @@ export default function StatusCard({
       {isError && (
         <Right>
           <img
-            src={MobileErrorIndicator.src}
+            src={MobileErrorIndicator}
             height={20}
             width={20}
             alt="error"
@@ -83,7 +83,7 @@ const Card = styled.div`
 
 const SubtitleHeader = styled.div`
   font-weight: 800;
-  font-family: 'Inter';
+  font-family: sans-serif;
   font-style: normal;
   font-size: 12px;
   color: #333333;
@@ -93,7 +93,7 @@ const SubtitleHeader = styled.div`
 
 const Title = styled.h1`
   /* Headline/Headline 3 */
-  font-family: 'Inter';
+  font-family: sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 12px;
@@ -107,7 +107,7 @@ const Title = styled.h1`
 
 const Subtitle = styled.h6`
   margin-top: 8px;
-  font-family: 'Inter';
+  font-family: sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -151,7 +151,7 @@ const Button = styled.button`
   border-radius: 4px;
   color: white;
 
-  font-family: 'Inter';
+  font-family: sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
