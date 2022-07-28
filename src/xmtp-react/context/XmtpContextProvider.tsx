@@ -16,12 +16,18 @@ import { useImmer } from 'use-immer';
 
 export const XmtpContextProvider: FunctionComponent<{
   children: React.ReactNode;
-}> = ({ children }) => {
+  connectedWallet?: Signer;
+}> = ({ children, connectedWallet }) => {
   /*
    * Hooks
    */
 
-  const { data: wallet } = useSigner();
+  let { data: wallet } = useSigner();
+
+  if (connectedWallet) {
+    wallet = connectedWallet;
+  } 
+
   const [status, setStatus] = useState<Status>(Status.disconnected);
   const [client, setClient] = useState<Client | null>(null);
   const prevClientAddress = usePreviousString(client?.address);

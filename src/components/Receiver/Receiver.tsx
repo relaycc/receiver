@@ -16,6 +16,7 @@ import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { XmtpContextProvider } from '../../xmtp-react/context';
 import CSS from 'csstype';
+import { Signer } from 'ethers';
 
 const alchemyKey = 'kmMb00nhQ0SWModX6lJLjXy_pVtiQnjx';
 
@@ -54,9 +55,10 @@ interface ContainerProps {
   launchButtonStyle?: Interpolation<React.CSSProperties>;
   receiverContainerStyle?: Interpolation<React.CSSProperties>;
   peerAddress?: string;
+  signer?: Signer;
 }
 
-const Receiver = ({ buttonText = '', inlineLaunchLogo = false, launchButtonStyle, receiverContainerStyle, peerAddress }: ContainerProps) => {
+const Receiver = ({ buttonText = '', inlineLaunchLogo = false, launchButtonStyle, receiverContainerStyle, peerAddress, signer }: ContainerProps) => {
   const [showBox, setShowBox] = useState<boolean>(false);
   const [hasLaunched, setHasLaunched] = useState<boolean>(false);
 
@@ -64,6 +66,10 @@ const Receiver = ({ buttonText = '', inlineLaunchLogo = false, launchButtonStyle
     setShowBox(!showBox);
     if (!hasLaunched) setHasLaunched(true);
   };
+
+  if (signer) {
+
+  }
 
   const chatBoxContainerStyle:CSS.Properties = {
     maxHeight: showBox ? '480px' : (hasLaunched ? '62px' : '0px'),
@@ -78,7 +84,7 @@ const Receiver = ({ buttonText = '', inlineLaunchLogo = false, launchButtonStyle
 
   return (
     <WagmiConfig client={wagmi}>
-      <XmtpContextProvider>
+      <XmtpContextProvider connectedWallet={signer}>
         <Container>
           <LaunchButton inlineLogo={inlineLaunchLogo} onClick={toggle} text={buttonText} style={launchButtonStyle}></LaunchButton>
           <div style={chatBoxContainerStyle}>
