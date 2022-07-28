@@ -6,6 +6,14 @@ This project is part of a [blog & video tutorial](https://dev.to/alexeagleson/ho
 
 You can use this repo to fork as a template for your own React library projects.  
 
+### Install
+
+npm i --save-dev @daopanel/receiver @xmtp/xmtp-js use-immer wagmi styled-components
+
+OR
+
+yarn add --dev @daopanel/receiver @xmtp/xmtp-js use-immer wagmi styled-components
+
 ## Available Scripts
 
 ### Build the library
