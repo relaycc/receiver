@@ -58,14 +58,14 @@ export default function LoadingMessages() {
 }
 
 const MainContainer = styled.div`
-  color: white;
-  width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 0px;
-  padding: 20px;
-  overflow: scroll;
-  z-index: 1000;
+  flex-direction: column-reverse;
+  overflow: hidden;
+  gap: 0.75rem;
+  width: 100%;
+  z-index: 10;
+  max-height: 345px;
+  padding: 12px;
 
   @keyframes slide {
     0% {

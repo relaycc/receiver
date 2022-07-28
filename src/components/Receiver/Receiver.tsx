@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { Interpolation } from 'styled-components';
 import ChatBox from './ChatBox';
 import LaunchButton from './LaunchButton';
@@ -48,13 +49,14 @@ const wagmi = createClient({
 });
 
 interface ContainerProps {
-  buttonText: string;
+  buttonText?: string;
+  inlineLaunchLogo?: boolean;
   launchButtonStyle?: Interpolation<React.CSSProperties>;
   receiverContainerStyle?: Interpolation<React.CSSProperties>;
   peerAddress?: string;
 }
 
-const Receiver = ({ buttonText, launchButtonStyle, receiverContainerStyle, peerAddress }: ContainerProps) => {
+const Receiver = ({ buttonText = '', inlineLaunchLogo = false, launchButtonStyle, receiverContainerStyle, peerAddress }: ContainerProps) => {
   const [showBox, setShowBox] = useState<boolean>(false);
   const [hasLaunched, setHasLaunched] = useState<boolean>(false);
 
@@ -71,19 +73,25 @@ const Receiver = ({ buttonText, launchButtonStyle, receiverContainerStyle, peerA
     right: '150px',
     transition: 'max-height 0.25s ease-in',
     overflow: 'hidden',
-    borderRadius: showBox ? '7px' : '7px 7px 0 0'
+    borderRadius: '8px 8px 0 0'
   }
 
   return (
     <WagmiConfig client={wagmi}>
       <XmtpContextProvider>
-        <LaunchButton onClick={toggle} text={buttonText} style={launchButtonStyle}></LaunchButton>
-        <div style={chatBoxContainerStyle}>
-          <ChatBox style={receiverContainerStyle} closeReceiver={toggle} peerAddress={peerAddress} visible={showBox}></ChatBox>
-        </div>
+        <Container>
+          <LaunchButton inlineLogo={inlineLaunchLogo} onClick={toggle} text={buttonText} style={launchButtonStyle}></LaunchButton>
+          <div style={chatBoxContainerStyle}>
+            <ChatBox style={receiverContainerStyle} closeReceiver={toggle} peerAddress={peerAddress} visible={showBox}></ChatBox>
+          </div>
+        </Container>
       </XmtpContextProvider>
     </WagmiConfig>
   );
 };
+
+const Container = styled.div`
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600&family=Montserrat:ital,wght@0,100;0,300;0,400;0,500;1,400&family=Roboto:wght@100;300;500;700&display=swap');
+`;
 
 export default Receiver;

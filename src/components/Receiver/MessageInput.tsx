@@ -58,7 +58,6 @@ const Container = styled.div`
   height: 45px;
   background: #F7F7F7;
   backdrop-filter: blur(100px);
-  width: 100%;
   padding-left: 20px;
   padding-right: 20px;
   gap: 20px;
@@ -86,6 +85,7 @@ const StyledInput = styled.input`
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;
+  letter-spacing: 1px;
 `;
 
 const SvgContainer = styled.div<StyleProps>`
@@ -94,6 +94,10 @@ const SvgContainer = styled.div<StyleProps>`
   &:nth-of-type(2) > :first-child > :first-child {
     stroke: ${({ inputTextCount }) =>
       inputTextCount > 0 ? '#333333' : '#4F5E7B'};
+  }
+
+  img {
+    vertical-align: middle;
   }
 
   @media (hover: none), (pointer: coarse) {

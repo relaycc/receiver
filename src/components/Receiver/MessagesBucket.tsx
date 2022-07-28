@@ -6,34 +6,44 @@ import React from 'react'
 
 interface MessagesBucketProps {
   peerAddress: string;
-  sentByAddress: string | undefined;
-  startDate: Date | undefined;
+  startDate: string;
   messages: Message[];
 }
 
 export default function MessagesBucket(props: MessagesBucketProps) {
-  const sentByMe = props.sentByAddress !== props.peerAddress;
   if (props.messages.length === 0) return null;
 
   return (
     <>
       {props.messages.map((message: Message) => {
+        let sentByMe = message.senderAddress !== props.peerAddress;
         return (
           <MessagePosition key={message.id} left={sentByMe}>
-            { sentByMe || (<AvatarContainer><Avatar address={props.sentByAddress} /></AvatarContainer>)}
+            { sentByMe || (<AvatarContainer><Avatar address={message.senderAddress} /></AvatarContainer>)}
             <MessageBubble
               message={
                 message.content
               }
+              messageTime={message.sent}
               sentByMe={sentByMe}
             />
-            { sentByMe && (<AvatarContainer><Avatar address={props.sentByAddress} /></AvatarContainer>)}
           </MessagePosition>
         );
       })}
+      <BucketTimestamp>{props.startDate}</BucketTimestamp>
     </>
   );
 }
+
+const BucketTimestamp = styled.div`
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: center;
+  color: #333333;
+`;
 
 const MessagePosition = styled.div`
   max-width: 80%;

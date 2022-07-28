@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "version": "0.1.1",
+  "version": "0.1.5",
   "description": "A simple template for a custom React component library",
   "scripts": {
     "rollup": "rollup -c"
@@ -61,8 +61,5 @@
   "files": [
     "dist"
   ],
-  "types": "dist/index.d.ts",
-  "dependencies": {
-    "@babel/runtime": "^7.18.9"
-  }
+  "types": "dist/index.d.ts"
 }

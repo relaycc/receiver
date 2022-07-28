@@ -1,20 +1,38 @@
 import React from 'react';
 import styled, { Interpolation } from 'styled-components';
+import Logo from '../../assets/images/logo.svg';
 
 interface ButtonProps {
   text: string;
+  inlineLogo: boolean;
   onClick: () => unknown;
   as?: string | React.ComponentType<any>;
   style?: Interpolation<React.CSSProperties>;
 }
 
-const LaunchButton = ({ text, style, as, onClick }: ButtonProps) => {
+const LaunchButton = ({ inlineLogo, text, style, as, onClick }: ButtonProps) => {
   return (
-    <ButtonElem onClick={() => onClick()} as={as} style={style}>
-      { text }
-    </ButtonElem>
+    inlineLogo ? (
+      <InlineLogo onClick={() => onClick()}>
+        <img src={Logo} height={30} width={30} />
+      </InlineLogo>
+    ) : (
+      <ButtonElem onClick={() => onClick()} as={as} style={style}>
+        { text }
+      </ButtonElem>
+    )
   );
 };
+
+const InlineLogo = styled.div`
+  height: 30px;
+  width: 30px;
+  display: inline;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 const ButtonElem = styled.button<ButtonProps>`
   ${({ style }) => style };

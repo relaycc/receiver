@@ -7,6 +7,9 @@ import Metamask from '../../assets/images/Metamask.svg';
 import SignInLink from './Connector';
 import { useCallback, useState } from 'react';
 import Messages from './Messages';
+import Card from './Card';
+import MessageInput from './MessageInput';
+
 import Header from './Header';
 import Logo from '../../assets/images/logo.svg';
 import {
@@ -14,6 +17,7 @@ import {
   Status as SendMessageStatus,
 } from '../../xmtp-react/conversations';
 import React from 'react';
+import { useEnsAddress } from 'wagmi';
 
 interface ChatButtonProps {
   visible: boolean;
@@ -30,6 +34,10 @@ const ChatBox = ({ style, visible, as, peerAddress, headerText, closeReceiver}: 
   const [userDidConnect, setUserDidConnect] = useState<boolean>(false);
   const { connect, connectors, status } = useConnect();
   const { isConnected } = useAccount();
+
+  const { data: peerEnsAddress, isError, isLoading } = useEnsAddress({
+    name: peerAddress
+  })
 
   const sendMessage = useSendMessage();
 
@@ -71,26 +79,25 @@ const ChatBox = ({ style, visible, as, peerAddress, headerText, closeReceiver}: 
 
   const doSendMessage = useCallback(
     async (message: string) => {
-      if (peerAddress && sendMessage.status === SendMessageStatus.ready) {
-        sendMessage.send(peerAddress, message);
+      if (peerEnsAddress && sendMessage.status === SendMessageStatus.ready) {
+        sendMessage.send(peerEnsAddress, message);
       }
     },
-    [sendMessage, peerAddress]
+    [sendMessage, peerEnsAddress]
   );
+
+  const textForHeader = (isConnected && userDidConnect) ? peerAddress : headerText;
 
   return (
     <ChatContainer visible={visible} as={as} style={style} closeReceiver={closeReceiver}>
+      <Header visible={visible} text={textForHeader} closeReceiver={closeReceiver} />
+
       <RelayRelativeContainer>
         {(isConnected && userDidConnect) ? (
-          <>
-            <Header visible={visible} text={peerAddress} closeReceiver={closeReceiver} />
-            <Messages onXmptReady={handleOnXmtpReady} providedPeerAddress={peerAddress} />
-          </>
+          <Messages onXmptReady={handleOnXmtpReady} providedPeerAddress={peerAddress} />
         ) : (
-          <>
-            <Header visible={visible} closeReceiver={closeReceiver} text={headerText} />
+          <Card title='Connect your wallet to start a converation!'>
             <ConnectorList>
-              <ConnectorPrompt>Connect your wallet to start a converation!</ConnectorPrompt>
               {isMetaMask && (
                 <Connector onClick={handleClickMetamask}>
                   <SignInLink
@@ -115,23 +122,40 @@ const ChatBox = ({ style, visible, as, peerAddress, headerText, closeReceiver}: 
                 />
               </MaybeHideOnConnector>
             </ConnectorList>
-          </>
-        )}
-        { !xmtpReady && ( 
-          <RelayFooter>
-            Powered by Relay
-            <img src={Logo}
-              height={30}
-              width={30} />
-          </RelayFooter>
+          </Card>
         )}
       </RelayRelativeContainer>
+      { !xmtpReady ? (
+        <RelayFooter>
+          Powered by Relay
+          <img src={Logo}
+            height={30}
+            width={30} />
+        </RelayFooter>
+      ) : (
+        <RelayInputFooter>
+          <MessageInput
+            onSendMessage={doSendMessage}
+          />
+        </RelayInputFooter>
+      )}
     </ChatContainer>
   );
 };
 
+const RelayInputFooter = styled.div`
+  color: #333333;
+  text-align: center;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  height: 45px;
+  width: 100%;
+  background-color: white;
+`;
+
 const ChatContainer = styled.div<ChatButtonProps>`
-  overflow: scroll;
   background-color: white;
   color: white;
   border: none;
@@ -141,18 +165,20 @@ const ChatContainer = styled.div<ChatButtonProps>`
   height: 100%;
   z-index: 1000;
   width: 375px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   ${({ style }) => style };
 `;
 
 const RelayRelativeContainer = styled.div`
-  height: 100%;
+  height: 375px;
   width: 100%;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const RelayFooter = styled.div`
-  position: absolute;
-  bottom: 0;
   color: #333333;
   text-align: center;
   font-family: sans-serif;
@@ -173,35 +199,14 @@ const RelayFooter = styled.div`
   }
 `;
 
-const ConnectorPrompt = styled.div`
-  color: #686868;
-  font-family: sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 18px;
-  text-align: center;
-  padding: 0 8px 8px 8px;
-  border-bottom: 1px solid #E4E4E4;
-`;
-
-const ConnectorList = styled.ul`
+const ConnectorList = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 8px 10px;
+  align-items: center;
   gap: 10px;
-  position: absolute;
-  width: 227px;
-  height: 263px;
-  left: 80px;
-  bottom: 92px;
-  background: #F7F7F7;
-  border: 1px dashed #A6A6A6;
-  border-radius: 8px;
 `;
 
-const Connector = styled.li`
+const Connector = styled.div`
   color: #333333;
   list-style-type: none;
   cursor: pointer;
@@ -221,14 +226,6 @@ const Connector = styled.li`
     cursor: pointer;
   }
 `;
-
-const AvatarContainer = styled.div`
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  left: 25px;
-  bottom: 73px;
-`
 
 const MaybeHideOnConnector = styled(Connector)<{ shouldHide: boolean }>`
   @media (pointer: coarse) {

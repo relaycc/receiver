@@ -15,9 +15,9 @@ export default function RelayHeader({
 }: HeaderProps) {
   return (
     <Header>
-       <TextContainer>
-          {text}
-       </TextContainer>
+      <TextContainer>
+        {text}
+      </TextContainer>
       
       { visible && 
         <CloseContainer onClick={closeReceiver}>
@@ -37,19 +37,21 @@ export default function RelayHeader({
 const Header = styled.div`
   background-color: #5A46C6;
   color: white;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   padding: 10px 24px;
-  font-family: sans-serif;
-  height: 62px;
-  position: absolute;
-  top: 0;
+  font-family: 'Inter', sans-serif;;
+  padding: 24px;
+  font-family: 'Inter',sans-serif;
   z-index: 1000;
-  width: 100%;
+  text-align: left;
 `;
 
 const TextContainer = styled.div`
-  padding-top: 15px;
+  margin-right: 35px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const CloseContainer = styled.div`

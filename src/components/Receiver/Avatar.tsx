@@ -41,6 +41,6 @@ export default function Avatar(props: AvatarProps) {
 
 const AvatarImage = styled.img<{ size?: 'large' | 'small' | 'medium' }>`
   border-radius: 50%;
-  width: ${(p) => (p.size === 'large' ? '30px' : '30px')};
-  height: ${(p) => (p.size === 'large' ? '30px' : '30px')};
+  width: ${(p) => (p.size === 'large' ? '40px' : '40px')};
+  height: ${(p) => (p.size === 'large' ? '40px' : '40px')};
 `;
