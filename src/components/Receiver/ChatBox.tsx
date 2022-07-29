@@ -157,7 +157,7 @@ const RelayInputFooter = styled.div`
 `;
 
 const ChatContainer = styled.div<ChatButtonProps>`
-  background-color: white;
+  background-color: transparent;
   color: white;
   border: none;
   padding: 0px;
@@ -177,6 +177,7 @@ const RelayRelativeContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: white;
 `;
 
 const RelayFooter = styled.div`

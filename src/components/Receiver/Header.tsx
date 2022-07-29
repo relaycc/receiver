@@ -45,7 +45,7 @@ const Header = styled.div`
   font-family: 'Inter',sans-serif;
   z-index: 1000;
   text-align: left;
-  borderRadius: '8px 8px 0 0',
+  border-radius: 8px 8px 0 0;
 `;
 
 const TextContainer = styled.div`
