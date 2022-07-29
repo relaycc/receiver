@@ -14,6 +14,14 @@ OR
 
 yarn add --dev @daopanel/receiver @xmtp/xmtp-js use-immer wagmi styled-components
 
+### Configure
+
+import { ReceiverConfig } from '@daopanel/receiver';
+
+Wrap your app in ReceiverConfig component.
+If your site connects to a wallet, and the user has connected, you can pass the wallet in using the signer prop.
+Ex. <ReceiverConfig signer={signer} />
+
 ## Available Scripts
 
 ### Build the library

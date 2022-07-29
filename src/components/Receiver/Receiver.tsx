@@ -3,51 +3,8 @@ import styled from 'styled-components';
 import { Interpolation } from 'styled-components';
 import ChatBox from './ChatBox';
 import LaunchButton from './LaunchButton';
-import {
-  WagmiConfig,
-  configureChains,
-  createClient,
-  defaultChains,
-} from 'wagmi';
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { publicProvider } from 'wagmi/providers/public'
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
-import { InjectedConnector } from 'wagmi/connectors/injected';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-import { XmtpContextProvider } from '../../xmtp-react/context';
 import CSS from 'csstype';
 import { Signer } from 'ethers';
-
-const alchemyKey = 'kmMb00nhQ0SWModX6lJLjXy_pVtiQnjx';
-
-const { chains, provider } = configureChains(defaultChains, [
-  alchemyProvider({ apiKey: alchemyKey }),
-  publicProvider(),
-])
-
-// Set up connectors
-const wagmi = createClient({
-  autoConnect: false,
-  connectors: [
-    new CoinbaseWalletConnector({
-      chains,
-      options: {
-        appName: 'wagmi'
-      },
-    }),
-    new WalletConnectConnector({
-      chains,
-      options: {
-        qrcode: true,
-      },
-    }),
-    new InjectedConnector({
-      chains,
-      options: { shimDisconnect: true },
-    }),
-  ],
-  provider
-});
 
 interface ContainerProps {
   buttonText?: string;
@@ -78,16 +35,12 @@ const Receiver = ({ buttonText = '', inlineLaunchLogo = false, launchButtonStyle
   }
 
   return (
-    <WagmiConfig client={wagmi}>
-      <XmtpContextProvider connectedWallet={signer}>
-        <Container>
-          <LaunchButton inlineLogo={inlineLaunchLogo} onClick={toggle} text={buttonText} style={launchButtonStyle}></LaunchButton>
-          <div style={chatBoxContainerStyle}>
-            <ChatBox isUserConnected={signer != undefined} style={receiverContainerStyle} toggleReceiver={toggle} peerAddress={peerAddress} visible={showBox}></ChatBox>
-          </div>
-        </Container>
-      </XmtpContextProvider>
-    </WagmiConfig>
+    <Container>
+      <LaunchButton inlineLogo={inlineLaunchLogo} onClick={toggle} text={buttonText} style={launchButtonStyle}></LaunchButton>
+      <div style={chatBoxContainerStyle}>
+        <ChatBox isUserConnected={signer != undefined} style={receiverContainerStyle} toggleReceiver={toggle} peerAddress={peerAddress} visible={showBox}></ChatBox>
+      </div>
+    </Container>
   );
 };
 
