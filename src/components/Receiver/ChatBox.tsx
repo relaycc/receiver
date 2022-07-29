@@ -87,7 +87,7 @@ const ChatBox = ({ style, isUserConnected, visible, as, peerAddress, headerText,
     [sendMessage, peerAddress]
   );
 
-  const textForHeader = (isConnected && userDidConnect) ? (peerName ? peerName : peerAddress) : headerText;
+  const textForHeader = (isUserConnected || (isConnected && userDidConnect)) ? (peerName ? peerName : peerAddress) : headerText;
 
   return (
     <ChatContainer visible={visible} as={as} style={style}>
