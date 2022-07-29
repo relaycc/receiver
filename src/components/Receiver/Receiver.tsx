@@ -74,8 +74,6 @@ const Receiver = ({ buttonText = '', inlineLaunchLogo = false, launchButtonStyle
     bottom: '0px', 
     right: '150px',
     transition: 'max-height 0.25s ease-in',
-    overflow: 'hidden',
-    borderRadius: '8px 8px 0 0',
     zIndex: 1000
   }
 

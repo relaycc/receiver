@@ -13,7 +13,7 @@ interface ButtonProps {
 const LaunchButton = ({ inlineLogo, text, style, as, onClick }: ButtonProps) => {
   return (
     inlineLogo ? (
-      <InlineLogo onClick={() => onClick()}>
+      <InlineLogo as={as} style={style} onClick={() => onClick()}>
         <img src={Logo} height={30} width={30} />
       </InlineLogo>
     ) : (
@@ -24,10 +24,11 @@ const LaunchButton = ({ inlineLogo, text, style, as, onClick }: ButtonProps) => 
   );
 };
 
-const InlineLogo = styled.div`
+const InlineLogo = styled.div<ButtonProps>`
   height: 30px;
   width: 30px;
   display: inline;
+  ${({ style }) => style };
 
   &:hover {
     cursor: pointer;
@@ -35,7 +36,6 @@ const InlineLogo = styled.div`
 `;
 
 const ButtonElem = styled.button<ButtonProps>`
-  ${({ style }) => style };
   background-color: #5A46C6;
   color: white;
   border: none;
@@ -54,6 +54,7 @@ const ButtonElem = styled.button<ButtonProps>`
   border: 1px solid rgba(55, 41, 125, 0.5);
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
+  ${({ style }) => style };
 
   &:hover {
     cursor: pointer;
