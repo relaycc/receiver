@@ -11,7 +11,7 @@ import Card from './Card';
 import MessageInput from './MessageInput';
 
 import Header from './Header';
-import Logo from '../../assets/images/logo.svg';
+import Logo from '../../assets/images/logo2.svg';
 import {
   useSendMessage,
   Status as SendMessageStatus,

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { Interpolation } from 'styled-components';
-import Logo from '../../assets/images/logo.svg';
+import Logo from '../../assets/images/logo2.svg';
 
 interface ButtonProps {
   text: string;

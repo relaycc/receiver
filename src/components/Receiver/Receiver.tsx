@@ -67,10 +67,6 @@ const Receiver = ({ buttonText = '', inlineLaunchLogo = false, launchButtonStyle
     if (!hasLaunched) setHasLaunched(true);
   };
 
-  if (signer) {
-
-  }
-
   const chatBoxContainerStyle:CSS.Properties = {
     maxHeight: showBox ? '480px' : (hasLaunched ? '62px' : '0px'),
     height: '480px', 
@@ -79,7 +75,8 @@ const Receiver = ({ buttonText = '', inlineLaunchLogo = false, launchButtonStyle
     right: '150px',
     transition: 'max-height 0.25s ease-in',
     overflow: 'hidden',
-    borderRadius: '8px 8px 0 0'
+    borderRadius: '8px 8px 0 0',
+    zIndex: 1000
   }
 
   return (
