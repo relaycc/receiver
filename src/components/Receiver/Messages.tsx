@@ -14,15 +14,12 @@ import { shortDate } from '../../utls/date';
 import { useEnsAddress } from 'wagmi';
 
 interface MessagesProps {
-  providedPeerAddress?: string;
+  peerAddress?: string;
+  peerName?: string;
   onXmptReady: () => unknown;
 }
 
-const Messages = ({ providedPeerAddress, onXmptReady }: MessagesProps) => {
-  const { data: peerAddress } = useEnsAddress({
-    name: providedPeerAddress
-  })
-
+const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
   const xmtp = useXmtp();
 
   const messages = useMessages(peerAddress);
@@ -87,7 +84,7 @@ const Messages = ({ providedPeerAddress, onXmptReady }: MessagesProps) => {
     } else {
       return (
         <Card title="All Set  🎉">
-          <Text>{`This is the beginning of your conversation with ${providedPeerAddress}`}</Text>
+          <Text>{`This is the beginning of your conversation with ${peerName}`}</Text>
         </Card>
       )
     }

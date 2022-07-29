@@ -17,7 +17,7 @@ import {
   Status as SendMessageStatus,
 } from '../../xmtp-react/conversations';
 import React from 'react';
-import { useEnsAddress } from 'wagmi';
+import { useEnsName } from 'wagmi';
 
 interface ChatButtonProps {
   visible: boolean;
@@ -26,18 +26,18 @@ interface ChatButtonProps {
   peerAddress?: string;
   headerText?: string;
   isUserConnected: boolean;
-  closeReceiver: () => unknown;
+  toggleReceiver: () => unknown;
 }
 
-const ChatBox = ({ style, isUserConnected, visible, as, peerAddress, headerText, closeReceiver}: ChatButtonProps) => {
+const ChatBox = ({ style, isUserConnected, visible, as, peerAddress, headerText, toggleReceiver}: ChatButtonProps) => {
   const isMetaMask = useIsMetaMask();
   const [xmtpReady, setXmptReady] = useState<boolean>(false);
   const [userDidConnect, setUserDidConnect] = useState<boolean>(false);
   const { connect, connectors, status } = useConnect();
   const { isConnected } = useAccount();
 
-  const { data: peerEnsAddress, isError, isLoading } = useEnsAddress({
-    name: peerAddress
+  const { data: peerName, isError, isLoading } = useEnsName({
+    address: peerAddress
   })
 
   const sendMessage = useSendMessage();
@@ -80,22 +80,22 @@ const ChatBox = ({ style, isUserConnected, visible, as, peerAddress, headerText,
 
   const doSendMessage = useCallback(
     async (message: string) => {
-      if (peerEnsAddress && sendMessage.status === SendMessageStatus.ready) {
-        sendMessage.send(peerEnsAddress, message);
+      if (peerAddress && sendMessage.status === SendMessageStatus.ready) {
+        sendMessage.send(peerAddress, message);
       }
     },
-    [sendMessage, peerEnsAddress]
+    [sendMessage, peerAddress]
   );
 
-  const textForHeader = (isConnected && userDidConnect) ? peerAddress : headerText;
+  const textForHeader = (isConnected && userDidConnect) ? (peerName ? peerName : peerAddress) : headerText;
 
   return (
-    <ChatContainer visible={visible} as={as} style={style} closeReceiver={closeReceiver}>
-      <Header visible={visible} text={textForHeader} closeReceiver={closeReceiver} />
+    <ChatContainer visible={visible} as={as} style={style}>
+      <Header visible={visible} text={textForHeader} toggleReceiver={toggleReceiver} />
 
       <RelayRelativeContainer>
         {(isUserConnected || (isConnected && userDidConnect)) ? (
-          <Messages onXmptReady={handleOnXmtpReady} providedPeerAddress={peerAddress} />
+          <Messages onXmptReady={handleOnXmtpReady} peerName={peerName || peerAddress} peerAddress={peerAddress} />
         ) : (
           <Card title='Connect your wallet to start a converation!'>
             <ConnectorList>
@@ -167,6 +167,7 @@ const ChatContainer = styled.div<ChatButtonProps>`
   z-index: 1000;
   width: 375px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px 8px 0 0;
   ${({ style }) => style };
 `;
 

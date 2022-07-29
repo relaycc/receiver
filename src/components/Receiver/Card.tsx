@@ -24,6 +24,7 @@ const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  overflow-wrap: break-word;
 `;
 
 const Title = styled.div`

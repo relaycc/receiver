@@ -83,7 +83,7 @@ const Receiver = ({ buttonText = '', inlineLaunchLogo = false, launchButtonStyle
         <Container>
           <LaunchButton inlineLogo={inlineLaunchLogo} onClick={toggle} text={buttonText} style={launchButtonStyle}></LaunchButton>
           <div style={chatBoxContainerStyle}>
-            <ChatBox isUserConnected={signer != undefined} style={receiverContainerStyle} closeReceiver={toggle} peerAddress={peerAddress} visible={showBox}></ChatBox>
+            <ChatBox isUserConnected={signer != undefined} style={receiverContainerStyle} toggleReceiver={toggle} peerAddress={peerAddress} visible={showBox}></ChatBox>
           </div>
         </Container>
       </XmtpContextProvider>
