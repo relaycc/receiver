@@ -14,7 +14,6 @@ const LaunchButton = ({ inlineLogo, text, style, as, onClick }: ButtonProps) => 
   return (
     inlineLogo ? (
       <InlineLogo as={as} style={style} onClick={() => onClick()}>
-        <img src={Logo} height={30} width={30} />
       </InlineLogo>
     ) : (
       <ButtonElem onClick={() => onClick()} as={as} style={style}>
@@ -25,9 +24,13 @@ const LaunchButton = ({ inlineLogo, text, style, as, onClick }: ButtonProps) => 
 };
 
 const InlineLogo = styled.div<ButtonProps>`
+  background-image: url("${Logo}");
   height: 30px;
   width: 30px;
-  display: inline;
+  display: inline-block;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
   ${({ style }) => style };
 
   &:hover {
