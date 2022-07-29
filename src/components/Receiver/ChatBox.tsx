@@ -25,10 +25,11 @@ interface ChatButtonProps {
   style?: Interpolation<React.CSSProperties>;
   peerAddress?: string;
   headerText?: string;
+  isUserConnected: boolean;
   closeReceiver: () => unknown;
 }
 
-const ChatBox = ({ style, visible, as, peerAddress, headerText, closeReceiver}: ChatButtonProps) => {
+const ChatBox = ({ style, isUserConnected, visible, as, peerAddress, headerText, closeReceiver}: ChatButtonProps) => {
   const isMetaMask = useIsMetaMask();
   const [xmtpReady, setXmptReady] = useState<boolean>(false);
   const [userDidConnect, setUserDidConnect] = useState<boolean>(false);
@@ -93,7 +94,7 @@ const ChatBox = ({ style, visible, as, peerAddress, headerText, closeReceiver}: 
       <Header visible={visible} text={textForHeader} closeReceiver={closeReceiver} />
 
       <RelayRelativeContainer>
-        {(isConnected && userDidConnect) ? (
+        {(isUserConnected || (isConnected && userDidConnect)) ? (
           <Messages onXmptReady={handleOnXmtpReady} providedPeerAddress={peerAddress} />
         ) : (
           <Card title='Connect your wallet to start a converation!'>
