@@ -9,7 +9,7 @@ interface HeaderProps {
 }
 
 export default function RelayHeader({
-  text = 'Welcome to DaoPanel Receiver',
+  text = 'Relay Receiver',
   visible,
   toggleReceiver
 }: HeaderProps) {
@@ -37,7 +37,7 @@ export default function RelayHeader({
 const Header = styled.div`
   background-color: #5A46C6;
   color: white;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   padding: 10px 24px;
   font-family: 'Inter', sans-serif;;
