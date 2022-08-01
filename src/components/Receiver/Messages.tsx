@@ -25,7 +25,7 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
   const messages = useMessages(peerAddress);
   const messageArray = Object.values(messages).reverse();
   const buckets = getMessageBuckets(messageArray);
-  console.log(buckets);
+
   if (xmtp.status === Status.ready) {
     onXmptReady();
   }

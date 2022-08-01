@@ -1,45 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { Interpolation } from 'styled-components';
-import ChatBox from './ChatBox';
 import LaunchButton from './LaunchButton';
-import CSS from 'csstype';
-import { Signer } from 'ethers';
+import { ReceiverContext } from "../ReceiverConfig";
 
 interface ContainerProps {
   buttonText?: string;
   inlineLaunchLogo?: boolean;
-  launchButtonStyle?: Interpolation<React.CSSProperties>;
-  receiverContainerStyle?: Interpolation<React.CSSProperties>;
   peerAddress?: string;
-  signer?: Signer;
+  launchButtonStyle?: Interpolation<React.CSSProperties>;
+  toggle: () => void;
 }
-
-const Receiver = ({ buttonText = '', inlineLaunchLogo = false, launchButtonStyle, receiverContainerStyle, peerAddress, signer }: ContainerProps) => {
-  const [showBox, setShowBox] = useState<boolean>(false);
-  const [hasLaunched, setHasLaunched] = useState<boolean>(false);
-
-  const toggle = () => {
-    setShowBox(!showBox);
-    if (!hasLaunched) setHasLaunched(true);
-  };
-
-  const chatBoxContainerStyle:CSS.Properties = {
-    maxHeight: showBox ? '480px' : (hasLaunched ? '62px' : '0px'),
-    height: '480px', 
-    position: 'fixed', 
-    bottom: '0px', 
-    right: '150px',
-    transition: 'max-height 0.25s ease-in',
-    zIndex: 1000
-  }
-
+const Receiver = ({ peerAddress = '0xe7925D190aea9279400cD9a005E33CEB9389Cc2b', buttonText = '', inlineLaunchLogo = false, launchButtonStyle }: ContainerProps) => {
+  const receiverContext = useContext(ReceiverContext);
+  receiverContext.setPeerAddress(peerAddress);
+  
   return (
     <Container>
-      <LaunchButton inlineLogo={inlineLaunchLogo} onClick={toggle} text={buttonText} style={launchButtonStyle}></LaunchButton>
-      <div style={chatBoxContainerStyle}>
-        <ChatBox isUserConnected={signer != undefined} style={receiverContainerStyle} toggleReceiver={toggle} peerAddress={peerAddress} visible={showBox}></ChatBox>
-      </div>
+      <LaunchButton inlineLogo={inlineLaunchLogo} onClick={ receiverContext.toggle } text={buttonText} style={launchButtonStyle}></LaunchButton>
     </Container>
   );
 };

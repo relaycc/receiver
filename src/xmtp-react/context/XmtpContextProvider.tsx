@@ -26,7 +26,6 @@ export const XmtpContextProvider: FunctionComponent<{
 
   if (connectedWallet) {
     wallet = connectedWallet;
-    console.log('i found a connected wallet');
   } 
 
   const [status, setStatus] = useState<Status>(Status.disconnected);
