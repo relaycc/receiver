@@ -9,9 +9,8 @@ interface ContainerProps {
   inlineLaunchLogo?: boolean;
   peerAddress?: string;
   launchButtonStyle?: Interpolation<React.CSSProperties>;
-  toggle: () => void;
 }
-const Receiver = ({ peerAddress = '0xe7925D190aea9279400cD9a005E33CEB9389Cc2b', buttonText = '', inlineLaunchLogo = false, launchButtonStyle }: ContainerProps) => {
+const Receiver = ({ peerAddress = '0xECa4065c53071ff0c50D2E0347CDaAf8D2Cc37dA', buttonText = '', inlineLaunchLogo = false, launchButtonStyle }: ContainerProps) => {
   const receiverContext = useContext(ReceiverContext);
   receiverContext.setPeerAddress(peerAddress);
   
