@@ -15,8 +15,10 @@ const ReceiverLaunch = ({ peerAddress = '0x45c9a201e2937608905fef17de9a67f25f9f9
   const receiverContext = useContext(ReceiverContext);
 
   useEffect(() => {
+    console.log('using address')
+    console.log(peerAddress)
     receiverContext.setPeerAddress(peerAddress);
-  }, [peerAddress])
+  })
 
   return (
     inlineLaunch ? (

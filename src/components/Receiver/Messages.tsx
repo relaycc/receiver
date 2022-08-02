@@ -39,7 +39,7 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
       };
       effect();
     }
-  }, [xmtp, peerAddress]);
+  });
   
   if (typeof peerAddress !== 'string') {
     return (
