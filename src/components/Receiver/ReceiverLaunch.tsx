@@ -16,7 +16,7 @@ const ReceiverLaunch = ({ peerAddress = '0x45c9a201e2937608905fef17de9a67f25f9f9
 
   useEffect(() => {
     receiverContext.setPeerAddress(peerAddress);
-  })
+  }, [peerAddress])
 
   return (
     inlineLaunch ? (
