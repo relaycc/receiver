@@ -74,9 +74,10 @@ const ChatBox = ({ style, isUserConnected, visible, as, peerAddress, headerText,
     /* eslint-disable-next-line */
   }, []);
 
-  const handleOnXmtpReady = useCallback(() => {
-    setXmptReady(true);
+  const handleOnXmtpReady = useCallback((isReady: boolean) => {
+    setXmptReady(isReady);
   }, []);
+  
 
   const doSendMessage = useCallback(
     async (message: string) => {

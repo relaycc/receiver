@@ -17,7 +17,7 @@ import { useEnsAddress } from 'wagmi';
 interface MessagesProps {
   peerAddress?: string;
   peerName?: string;
-  onXmptReady: () => unknown;
+  onXmptReady: (isReady: boolean) => unknown;
 }
 
 const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
@@ -28,13 +28,13 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
   const buckets = getMessageBuckets(messageArray);
   const [peerIsAvailable, setPeerIsAvailable] = useState<boolean | undefined>();
 
-  const [ status, setStatus ] = useState('');
-
   useEffect(() => {
     if (xmtp.status === Status.ready && peerAddress) {
       const effect = async () => {
         const peerIsAvailable = await xmtp.client.canMessage(ethers.utils.getAddress(peerAddress));
-        if (peerIsAvailable === true) onXmptReady() 
+        console.log('checked address: ' + peerAddress);
+        console.log(peerIsAvailable);
+        onXmptReady(peerIsAvailable);
         setPeerIsAvailable(peerIsAvailable);
       };
       effect();
@@ -79,7 +79,7 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
     return (
       <LoadingMessages />
     );
-  } else if (xmtp.status === Status.ready) {
+  } else if (xmtp.status === Status.ready && peerIsAvailable === true) {
     if (Object.values(messages).length > 0) {
       return (    
         <List>
