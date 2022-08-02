@@ -25,34 +25,23 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
   const messages = useMessages(peerAddress);
   const messageArray = Object.values(messages).reverse();
   const buckets = getMessageBuckets(messageArray);
+  const [peerIsAvailable, setPeerIsAvailable] = useState<boolean | undefined>();
 
   const [ status, setStatus ] = useState('');
 
   useEffect(() => {
-    getStatus();
-  })
-
-  const getStatus = async () => {
     if (xmtp.status === Status.ready && peerAddress) {
-      console.log('ima fetch status')
-      const result = await xmtp.client?.canMessage(peerAddress);
-      const result2 = await xmtp.client?.canMessage('0x45c9a201e2937608905fef17de9a67f25f9f98e0');
-      console.log(xmtp.client)
-      console.log(result2)
-      console.log('result2');
-      if (Boolean(result) === false) {
-        console.log('ima update status to false')
-        setStatus('not registered');
-      } else {
-        console.log('ima update status to pos')
-        setStatus('registered');
-        onXmptReady();
-      }
-      console.log(result);
-      console.log(status);
+      const effect = async () => {
+        const peerIsAvailable = await xmtp.client.canMessage(peerAddress);
+        console.log(peerIsAvailable)
+        console.log('i fetched')
+        setPeerIsAvailable(peerIsAvailable);
+      };
+      effect();
     }
-  } 
+  }, [xmtp, peerAddress]);
 
+  
   console.log(status)
 
   if (typeof peerAddress !== 'string') {
@@ -61,7 +50,7 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
         <Text>Make sure to include the ".eth" suffix.</Text>
       </Card>
     );
-  } else if (status === 'not registered') {
+  } else if (peerIsAvailable === false) {
     return (
       <Card title="User not on network">
         <Text>This user is not on the XMTP messaging network yet.</Text>
