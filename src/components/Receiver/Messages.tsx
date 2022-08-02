@@ -34,7 +34,7 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
     if (xmtp.status === Status.ready && peerAddress) {
       const effect = async () => {
         const peerIsAvailable = await xmtp.client.canMessage(ethers.utils.getAddress(peerAddress));
-        console.log(peerIsAvailable)
+        if (peerIsAvailable === true) onXmptReady() 
         setPeerIsAvailable(peerIsAvailable);
       };
       effect();
