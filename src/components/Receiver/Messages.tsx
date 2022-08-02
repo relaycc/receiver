@@ -33,27 +33,16 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
     if (xmtp.status === Status.ready && peerAddress) {
       const effect = async () => {
         const peerIsAvailable = await xmtp.client.canMessage(peerAddress);
-        console.log(peerIsAvailable)
-        console.log('i fetched')
         setPeerIsAvailable(peerIsAvailable);
       };
       effect();
     }
   }, [xmtp, peerAddress]);
-
   
-  console.log(status)
-
   if (typeof peerAddress !== 'string') {
     return (
       <Card title="Could not resolve ENS name">
         <Text>Make sure to include the ".eth" suffix.</Text>
-      </Card>
-    );
-  } else if (peerIsAvailable === false) {
-    return (
-      <Card title="User not on network">
-        <Text>This user is not on the XMTP messaging network yet.</Text>
       </Card>
     );
   } else if (xmtp.status === Status.idle) {
