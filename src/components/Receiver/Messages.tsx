@@ -3,7 +3,7 @@ import { Message } from '@xmtp/xmtp-js';
 import MessagesBucket from './MessagesBucket';
 import LoadingMessages from './LoadingMessages';
 import { Status, useXmtp } from '../../xmtp-react/context';
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   useMessages,
 } from '../../xmtp-react/conversations';
@@ -26,9 +26,11 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
   const messageArray = Object.values(messages).reverse();
   const buckets = getMessageBuckets(messageArray);
 
-  if (xmtp.status === Status.ready) {
-    onXmptReady();
-  }
+  useEffect(() => {
+    if (xmtp.status === Status.ready) {
+      onXmptReady();
+    }
+  })
 
   if (typeof peerAddress !== 'string') {
     return (

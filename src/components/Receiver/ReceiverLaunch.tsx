@@ -1,23 +1,30 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled, { Interpolation } from 'styled-components';
 import Logo from '../../assets/images/logo2.svg';
+import ReceiverContext from "./ReceiverContext";
 
 interface ButtonProps {
-  text: string;
-  inlineLogo: boolean;
-  onClick: () => unknown;
+  launchText: string;
+  inlineLaunch: boolean;
+  peerAddress?: string;
   as?: string | React.ComponentType<any>;
-  style?: Interpolation<React.CSSProperties>;
+  launchButtonStyle?: Interpolation<React.CSSProperties>;
 }
 
-const LaunchButton = ({ inlineLogo, text, style, as, onClick }: ButtonProps) => {
+const ReceiverLaunch = ({ peerAddress = '0x45c9a201e2937608905fef17de9a67f25f9f98e0', inlineLaunch, launchText, launchButtonStyle, as }: ButtonProps) => {
+  const receiverContext = useContext(ReceiverContext);
+
+  useEffect(() => {
+    receiverContext.setPeerAddress(peerAddress);
+  })
+
   return (
-    inlineLogo ? (
-      <InlineLogo as={as} style={style} onClick={() => onClick()}>
+    inlineLaunch ? (
+      <InlineLogo as={as} style={launchButtonStyle} onClick={() => receiverContext.toggle()}>
       </InlineLogo>
     ) : (
-      <ButtonElem onClick={() => onClick()} as={as} style={style}>
-        { text }
+      <ButtonElem onClick={() => receiverContext.toggle()} as={as} style={launchButtonStyle}>
+        { launchText }
       </ButtonElem>
     )
   );
@@ -31,7 +38,7 @@ const InlineLogo = styled.div<ButtonProps>`
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: center;
-  ${({ style }) => style };
+  ${({ launchButtonStyle }) => launchButtonStyle };
 
   &:hover {
     cursor: pointer;
@@ -57,11 +64,11 @@ const ButtonElem = styled.button<ButtonProps>`
   border: 1px solid rgba(55, 41, 125, 0.5);
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  ${({ style }) => style };
+  ${({ launchButtonStyle }) => launchButtonStyle };
 
   &:hover {
     cursor: pointer;
   }
 `;
 
-export default LaunchButton;
+export default ReceiverLaunch;

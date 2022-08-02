@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "A simple template for a custom React component library",
   "scripts": {
     "rollup": "rollup -c"
