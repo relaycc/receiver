@@ -10,6 +10,7 @@ import {
 import Card from './Card';
 import Button from './Button';
 import { shortDate } from '../../utls/date';
+import {ethers} from 'ethers';
 
 import { useEnsAddress } from 'wagmi';
 
@@ -32,7 +33,8 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
   useEffect(() => {
     if (xmtp.status === Status.ready && peerAddress) {
       const effect = async () => {
-        const peerIsAvailable = await xmtp.client.canMessage(peerAddress);
+        const peerIsAvailable = await xmtp.client.canMessage(ethers.utils.getAddress(peerAddress));
+        console.log(peerIsAvailable)
         setPeerIsAvailable(peerIsAvailable);
       };
       effect();
@@ -43,6 +45,12 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
     return (
       <Card title="Could not resolve ENS name">
         <Text>Make sure to include the ".eth" suffix.</Text>
+      </Card>
+    );
+  } else if (peerIsAvailable === false) {
+    return (
+      <Card title="User not on network">
+        <Text>This user is not on the XMTP messaging network yet.</Text>
       </Card>
     );
   } else if (xmtp.status === Status.idle) {
