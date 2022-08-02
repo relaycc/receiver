@@ -33,10 +33,10 @@ const ChatBox = ({ style, isUserConnected, visible, as, peerAddress, headerText,
   const isMetaMask = useIsMetaMask();
   const [xmtpReady, setXmptReady] = useState<boolean>(false);
   const [userDidConnect, setUserDidConnect] = useState<boolean>(false);
-  const { connect, connectors, status } = useConnect();
+  const { connect, connectors } = useConnect();
   const { isConnected } = useAccount();
 
-  const { data: peerName, isError, isLoading } = useEnsName({
+  const { data: peerName } = useEnsName({
     address: peerAddress
   })
 
