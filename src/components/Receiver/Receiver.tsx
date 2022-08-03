@@ -17,6 +17,7 @@ import CSS from 'csstype';
 import { Interpolation } from 'styled-components';
 import ReceiverContext from './ReceiverContext';
 import styled from 'styled-components';
+import { getAddress } from '@ethersproject/address'
 
 const alchemyKey = 'kmMb00nhQ0SWModX6lJLjXy_pVtiQnjx';
 
@@ -61,6 +62,11 @@ const Receiver = ({ signer, children, receiverContainerStyle }: ConfigProps) => 
   const [hasLaunched, setHasLaunched] = useState<boolean>(false);
   const [peerAddress, setPeerAddress] = useState<string>('');
 
+  const convertAndSetPeerAddress = (peerAddress: string) => {
+    const cleanAddress = getAddress(peerAddress);
+    setPeerAddress(cleanAddress);
+  }
+
   const toggle = () => {
     setShowBox(!showBox);
     if (!hasLaunched) setHasLaunched(true);
@@ -79,7 +85,7 @@ const Receiver = ({ signer, children, receiverContainerStyle }: ConfigProps) => 
   return (
     <WagmiConfig client={wagmi}>
       <XmtpContextProvider connectedWallet={signer}>
-        <ReceiverContext.Provider value={{ setPeerAddress: setPeerAddress, toggle: toggle }}>
+        <ReceiverContext.Provider value={{ setPeerAddress: convertAndSetPeerAddress, toggle: toggle }}>
           <Container>
             <div style={chatBoxContainerStyle}>
               <ChatBox isUserConnected={signer != undefined} style={receiverContainerStyle} toggleReceiver={toggle} peerAddress={peerAddress} visible={showBox}></ChatBox>
