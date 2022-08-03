@@ -27,12 +27,13 @@ export default function Avatar(props: AvatarProps) {
 
   if (!ensAvatar) {
     return (
-      <Blockies
-        seed={props.address || ''}
-        size={10}
-        scale={4}
-        className={'circle'}
-      />
+      <AvatarBlockieContainer>
+        <Blockies
+          seed={props.address || ''}
+          size={10}
+          scale={4}
+        />
+      </AvatarBlockieContainer>
     );
   } else {
     return <AvatarImage src={ensAvatar} size={props.size} alt="user" />;
@@ -43,4 +44,11 @@ const AvatarImage = styled.img<{ size?: 'large' | 'small' | 'medium' }>`
   border-radius: 50%;
   width: ${(p) => (p.size === 'large' ? '40px' : '40px')};
   height: ${(p) => (p.size === 'large' ? '40px' : '40px')};
+`;
+
+const AvatarBlockieContainer = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
 `;

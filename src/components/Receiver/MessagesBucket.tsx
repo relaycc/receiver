@@ -27,6 +27,7 @@ export default function MessagesBucket(props: MessagesBucketProps) {
               messageTime={message.sent}
               sentByMe={sentByMe}
             />
+            { sentByMe && (<AvatarContainer><Avatar address={message.senderAddress} /></AvatarContainer>)}
           </MessagePosition>
         );
       })}
