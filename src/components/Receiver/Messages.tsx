@@ -10,7 +10,6 @@ import {
 import Card from './Card';
 import Button from './Button';
 import { shortDate } from '../../utls/date';
-import {ethers} from 'ethers';
 
 import { useEnsAddress } from 'wagmi';
 
@@ -31,9 +30,7 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
   useEffect(() => {
     if (xmtp.status === Status.ready && peerAddress) {
       const effect = async () => {
-        const peerIsAvailable = await xmtp.client.canMessage(ethers.utils.getAddress(peerAddress));
-        console.log('checked address: ' + peerAddress);
-        console.log(peerIsAvailable);
+        const peerIsAvailable = await xmtp.client.canMessage(peerAddress);
         onXmptReady(peerIsAvailable);
         setPeerIsAvailable(peerIsAvailable);
       };
