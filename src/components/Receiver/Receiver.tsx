@@ -84,7 +84,7 @@ const Receiver = ({ signer, children, receiverContainerStyle }: ConfigProps) => 
 
   return (
     <WagmiConfig client={wagmi}>
-      <XmtpContextProvider connectedWallet={signer}>
+      <XmtpContextProvider connectedWallet={signer} peerAddress={peerAddress}>
         <ReceiverContext.Provider value={{ setPeerAddress: convertAndSetPeerAddress, toggle: toggle }}>
           <Container>
             <div style={chatBoxContainerStyle}>
