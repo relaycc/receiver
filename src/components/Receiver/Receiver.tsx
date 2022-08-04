@@ -84,16 +84,16 @@ const Receiver = ({ signer, children, receiverContainerStyle }: ConfigProps) => 
 
   return (
     <WagmiConfig client={wagmi}>
-      <XmtpContextProvider connectedWallet={signer} peerAddress={peerAddress}>
-        <ReceiverContext.Provider value={{ setPeerAddress: convertAndSetPeerAddress, toggle: toggle }}>
+      <ReceiverContext.Provider value={{ setPeerAddress: convertAndSetPeerAddress, toggle: toggle }}>
+        <XmtpContextProvider peerAddress={peerAddress} connectedWallet={signer} enableMultipleConversations={false}>
           <Container>
             <div style={chatBoxContainerStyle}>
               <ChatBox isUserConnected={signer != undefined} style={receiverContainerStyle} toggleReceiver={toggle} peerAddress={peerAddress} visible={showBox}></ChatBox>
             </div>
           </Container>
           { children }
-        </ReceiverContext.Provider>
-      </XmtpContextProvider>
+        </XmtpContextProvider>
+      </ReceiverContext.Provider>
     </WagmiConfig>
   );
 };

@@ -6,7 +6,8 @@ const gmc = new GroupMessageCodec();
 
 export const initialize = async (
   wallet: Signer,
-  peerAddress: string,
+  enableMultipleConversations: boolean,
+  peerAddress: string | undefined,
   onWaitingForSignature: () => unknown,
   onClientConnect: (client: Client) => unknown,
   onClientError: (error: unknown) => unknown,
@@ -21,6 +22,7 @@ export const initialize = async (
      * Trigger loading state...
      */
     onWaitingForSignature();
+
     /*
      * Initialize client...
      */
@@ -28,52 +30,81 @@ export const initialize = async (
       codecs: [gmc],
       env: 'production'
     });
+
     onClientConnect(client);
 
-    /*
-     * Load all existing conversations and messages
-     */
-    const conversations = await client.conversations.list();
-    /*const conversations = allConversations.filter((conversation) => 
-      conversation.peerAddress == peerAddress
-    )*/
+    if (enableMultipleConversations) {
+      /*
+      * Load all existing conversations and messages
+      */
+      const conversations = await client.conversations.list();
+    
+      onConversationsLoaded(conversations);
+      for (const conversation of conversations) {
+        await loadConversation(
+          conversation,
+          onNewConversation,
+          onNewMessage,
+          onNewGroupMessage
+        );
+      }
+      onMessagesLoaded();
 
-    onConversationsLoaded(conversations);
-    for (const conversation of conversations) {
-      await loadConversation(
-        conversation,
-        onNewConversation,
-        onNewMessage,
-        onNewGroupMessage
-      );
-    }
-    onMessagesLoaded();
+      /*
+      * Stream messages for each existing conversation...
+      */
+      for (const conversation of conversations) {
+        streamConversation(conversation, onNewMessage, onNewGroupMessage);
+      }
 
-    /*
-     * Stream messages for each existing conversation...
-     */
-    for (const conversation of conversations) {
-      streamConversation(conversation, onNewMessage, onNewGroupMessage);
+      /*
+      * Stream new conversations
+      */
+      const conversationsStream = await client.conversations.stream();
+      for await (const conversation of conversationsStream) {
+        loadConversation(
+          conversation,
+          onNewConversation,
+          onNewMessage,
+          onNewGroupMessage,
+          2000
+        );
+        streamConversation(conversation, onNewMessage, onNewGroupMessage);
+      }
     }
-
-    /*
-     * Stream new conversations
-     */
-    const conversationsStream = await client.conversations.stream();
-    for await (const conversation of conversationsStream) {
-      loadConversation(
-        conversation,
-        onNewConversation,
-        onNewMessage,
-        onNewGroupMessage,
-        2000
-      );
-      streamConversation(conversation, onNewMessage, onNewGroupMessage);
-    }
-  } catch (error) {
+  }
+  catch (error) {
     onClientError(error);
   }
 };
+
+export const initializeMessages = async (
+  onMessagesLoaded: () => unknown,
+  client: Client,
+  peerAddress: string,
+  onNewConversation: (conversation: Conversation) => unknown,
+  onNewMessage: (conversation: Conversation, message: Message) => unknown,
+  onNewGroupMessage: (message: GroupMessage) => unknown
+) => {
+  /*
+  * Load peer conversation
+  */
+  const conversation = await client.conversations.newConversation(peerAddress)
+
+  await loadConversation(
+    conversation,
+    onNewConversation,
+    onNewMessage,
+    onNewGroupMessage
+  );
+
+  onMessagesLoaded();
+  console.log('i loaded messages')
+  /*
+  * Stream messages for each existing conversation...
+  */
+  streamConversation(conversation, onNewMessage, onNewGroupMessage);
+}
 
 const loadConversation = async (
   conversation: Conversation,

@@ -9,7 +9,7 @@ import React, {
 import { Client, Conversation, Message } from '@xmtp/xmtp-js';
 import { Signer } from 'ethers';
 import { Status, XmtpContext } from './XmtpContext';
-import { initialize } from './initialize';
+import { initialize, initializeMessages } from './initialize';
 import { useSigner } from 'wagmi';
 import { GroupMessage, GroupMessageDecodeError } from '../groups';
 import { useImmer } from 'use-immer';
@@ -17,8 +17,9 @@ import { useImmer } from 'use-immer';
 export const XmtpContextProvider: FunctionComponent<{
   children: React.ReactNode;
   connectedWallet?: Signer;
-  peerAddress: string;
-}> = ({ children, connectedWallet, peerAddress }) => {
+  enableMultipleConversations: boolean;
+  peerAddress?: string;
+}> = ({ children, connectedWallet, enableMultipleConversations, peerAddress }) => {
   /*
    * Hooks
    */
@@ -168,6 +169,7 @@ export const XmtpContextProvider: FunctionComponent<{
     } else {
       await initialize(
         wallet,
+        enableMultipleConversations,
         peerAddress,
         handleClientWaitingForSignature,
         handleClientConnect,
@@ -200,6 +202,23 @@ export const XmtpContextProvider: FunctionComponent<{
     setStatus(Status.idle);
   }, [setConversations, setGroupMessages, setMessages]);
 
+  const fetchMessages = useMemo(async() => {
+    if (client) { console.log('client here')}
+    if (peerAddress) { console.log('peer address here')}
+
+    if (client && peerAddress) {
+      console.log('im fetching')
+      initializeMessages(
+        handleMessagesLoaded,
+        client,
+        peerAddress,
+        handleNewConversation,
+        handleNewMessage,
+        handleNewGroupMessage
+      );
+    }
+  }, [client, peerAddress]);
+  
   /*
    * Strongly Typed Output
    */
@@ -244,6 +263,7 @@ export const XmtpContextProvider: FunctionComponent<{
     messages,
     groupMessages,
     activity,
+    peerAddress
   ]);
 
   return (
