@@ -12,4 +12,5 @@ import { Receiver } from '@daopanel/receiver';
 
 Wrap your app in Receiver component.
 If your site connects to a wallet, and the user has connected, you can pass the wallet in using the signer prop.
-Ex. <Receiver signer={signer} />
+
+
