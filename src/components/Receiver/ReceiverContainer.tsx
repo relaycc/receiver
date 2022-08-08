@@ -29,12 +29,10 @@ interface ConfigProps {
 }
 
 const Receiver = ({ signer, children, receiverContainerStyle }: ConfigProps) => {
-  const { setWallet, setPeerName, peerAddress } = receiverStore();
+  const { setPeerName, peerAddress } = receiverStore();
   const { data: wagmiSigner } = useSigner();
   const wallet = signer ? signer : wagmiSigner;
   const { connect, connectors } = useConnect();
-
-  if (wallet) setWallet(wallet);
 
   if (peerAddress) {
     //const { data: peerName } = useEnsName({address: peerAddress})

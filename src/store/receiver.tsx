@@ -24,13 +24,11 @@ interface ReceiverState {
   messages: Record<string, Record<string, Message>>,
   peerAddress: string | null,
   peerName: string | null,
-  wallet: Signer | null,
   xmtpStatus: Status,
 
   setPeerAddress: (address: string) => void,
   setPeerName: (name: string) => void,
-  setWallet: (signer: Signer | undefined) => void,
-  xmtpInit: () => void,
+  xmtpInit: (wallet: Signer) => void,
 }
 
 export const receiverStore = create<ReceiverState>((set, get) => ({
@@ -41,7 +39,6 @@ export const receiverStore = create<ReceiverState>((set, get) => ({
   messages: {},
   peerAddress: null,
   peerName: null,
-  wallet: null,
   xmtpStatus: Status.disconnected,
 
   setPeerAddress: (address) => {
@@ -52,14 +49,8 @@ export const receiverStore = create<ReceiverState>((set, get) => ({
 
   setPeerName: (name) => set(() => ({ peerName: name })),
 
-  setWallet: (wallet) => {
-    if (get().wallet !== wallet) {
-      set({ wallet: wallet });
-    }
-  },
-
-  xmtpInit: () => {
-
+  xmtpInit: (wallet) => {
+    initializeXmtp(wallet);
   }
 }))
 

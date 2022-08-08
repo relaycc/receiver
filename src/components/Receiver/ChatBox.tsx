@@ -24,11 +24,10 @@ interface ChatButtonProps {
   as?: string | React.ComponentType<any>;
   style?: Interpolation<React.CSSProperties>;
   isUserConnected: boolean;
-  handleClickMetamask: () => unknown;
   toggleReceiver: () => unknown;
 }
 
-const ChatBox = ({ handleClickMetamask, style, isUserConnected, visible, as, toggleReceiver}: ChatButtonProps) => {
+const ChatBox = ({ style, isUserConnected, visible, as, toggleReceiver}: ChatButtonProps) => {
   const { peerAddress, peerName } = receiverStore();
   
   const isMetaMask = useIsMetaMask();
@@ -51,20 +50,28 @@ const ChatBox = ({ handleClickMetamask, style, isUserConnected, visible, as, tog
     (connector) => connector.id === 'coinbaseWallet'
   );
 
+  // TODO prevent connection if already connected.
+  const handleClickMetamask = useCallback(() => {
+    setUserDidConnect(true);
+    connect({connector: metamaskConnector});
+
+    /* eslint-disable-next-line */
+  }, []);
+
   const handleClickCoinbase = useCallback(() => {
-    //setUserDidConnect(true);
-    //connect({connector: coinbaseConnector});
+    setUserDidConnect(true);
+    connect({connector: coinbaseConnector});
     /* eslint-disable-next-line */
   }, []);
 
   const handleClickWalletConnect = useCallback(() => {
-    //setUserDidConnect(true);
-    //connect({connector: walletConnectConnector});
+    setUserDidConnect(true);
+    connect({connector: walletConnectConnector});
     /* eslint-disable-next-line */
   }, []);
 
   const handleOnXmtpReady = useCallback((isReady: boolean) => {
-    //setXmptReady(isReady);
+    setXmptReady(isReady);
   }, []);
   
 
