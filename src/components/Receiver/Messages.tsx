@@ -2,25 +2,24 @@ import styled from 'styled-components';
 import { Message } from '@xmtp/xmtp-js';
 import MessagesBucket from './MessagesBucket';
 import LoadingMessages from './LoadingMessages';
-import { Status, useXmtp } from '../../xmtp-react/context';
+import { Status, useXmtp } from '../../store/xmtp-react/context';
 import React, { useEffect, useState } from 'react'
 import {
   useMessages,
-} from '../../xmtp-react/conversations';
+} from '../../store/xmtp-react/conversations';
 import Card from './Card';
 import Button from './Button';
 import { shortDate } from '../../utls/date';
-
-import { useEnsAddress } from 'wagmi';
+import { receiverStore } from '../../store';
 
 interface MessagesProps {
-  peerAddress?: string;
-  peerName?: string;
+  peerAddress: string | null;
+  peerName: string | null;
   onXmptReady: (isReady: boolean) => unknown;
 }
 
 const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
-  const xmtp = useXmtp();
+  const { xmtpStatus, client, xmtpInit } = receiverStore();
 
   const messages = useMessages(peerAddress);
   const messageArray = Object.values(messages).reverse();
@@ -28,9 +27,9 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
   const [peerIsAvailable, setPeerIsAvailable] = useState<boolean | undefined>();
 
   useEffect(() => {
-    if (xmtp.status === Status.ready && peerAddress) {
+    if (xmtpStatus === Status.ready && peerAddress && client) {
       const effect = async () => {
-        const peerIsAvailable = await xmtp.client.canMessage(peerAddress);
+        const peerIsAvailable = await client.canMessage(peerAddress);
         onXmptReady(peerIsAvailable);
         setPeerIsAvailable(peerIsAvailable);
       };
@@ -50,33 +49,33 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
         <Text>This user is not on the XMTP messaging network yet.</Text>
       </Card>
     );
-  } else if (xmtp.status === Status.idle) {
+  } else if (xmtpStatus === Status.idle) {
     return (
       <Card title="Initialize XMTP Client">
         <Text>To begin messaging, you must first initialize the XMTP client.</Text>
-        <Button onClick={xmtp.init} text='Initialize'/>
+        <Button onClick={ xmtpInit } text='Initialize'/>
       </Card>
     );
-  } else if (xmtp.status === Status.waiting) {
+  } else if (xmtpStatus === Status.waiting) {
     return (
       <Card title="Initialize XMTP Client">
         <Text><b>Initializing.</b></Text>
         <Text>To continue, please sign the wallet prompt.</Text>
       </Card>
     );
-  } else if (xmtp.status === Status.denied) {
+  } else if (xmtpStatus === Status.denied) {
     return (
       <Card title="Initialize XMTP Client">
         <Text><b>Initializing.</b></Text>
         <Text>Signature request cancelled. Try again...</Text>
-        <Button onClick={xmtp.init} text='Initialize'/>
+        <Button onClick={ xmtpInit } text='Initialize'/>
       </Card>
     );
-  } else if (xmtp.status === Status.loading) {
+  } else if (xmtpStatus === Status.loading) {
     return (
       <LoadingMessages />
     );
-  } else if (xmtp.status === Status.ready && peerIsAvailable === true) {
+  } else if (xmtpStatus === Status.ready && peerIsAvailable === true) {
     if (Object.values(messages).length > 0) {
       return (    
         <List>

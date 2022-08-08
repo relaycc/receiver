@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useXmtp, Status as ClientStatus } from './../context';
+import { useXmtp, Status as ClientStatus } from '../context';
 
 export enum Status {
   ready = 'ready',

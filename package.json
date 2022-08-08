@@ -61,5 +61,8 @@
   "files": [
     "dist"
   ],
-  "types": "dist/index.d.ts"
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "zustand": "^4.0.0"
+  }
 }

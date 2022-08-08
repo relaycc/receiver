@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useXmtp, Status } from './../context';
+import { useXmtp, Status } from '../context';
 import { Message } from '@xmtp/xmtp-js';
 
 export const useMessages = (peerAddress: string | null | undefined) => {

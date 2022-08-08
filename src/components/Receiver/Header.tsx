@@ -3,7 +3,7 @@ import CloseReceiverLine from '../../assets/images/close-receiver-line.svg';
 import React from 'react'
 
 interface HeaderProps {
-  text?: string;
+  text: string | null;
   visible: boolean;
   toggleReceiver: () => unknown;
 }

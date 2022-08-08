@@ -1,5 +1,5 @@
 import { useMemo, useContext } from 'react';
-import { Group, fromGroupMessage } from '../groups';
+import { Group, fromGroupMessage } from '.';
 import { XmtpContext, Status } from '../context';
 
 export const useGroups = () => {

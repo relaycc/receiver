@@ -15,30 +15,27 @@ import Logo from '../../assets/images/logo2.svg';
 import {
   useSendMessage,
   Status as SendMessageStatus,
-} from '../../xmtp-react/conversations';
+} from '../../store/xmtp-react/conversations';
 import React from 'react';
-import { useEnsName } from 'wagmi';
+import { receiverStore } from '../../store';
 
 interface ChatButtonProps {
   visible: boolean;
   as?: string | React.ComponentType<any>;
   style?: Interpolation<React.CSSProperties>;
-  peerAddress?: string;
-  headerText?: string;
   isUserConnected: boolean;
+  handleClickMetamask: () => unknown;
   toggleReceiver: () => unknown;
 }
 
-const ChatBox = ({ style, isUserConnected, visible, as, peerAddress, headerText, toggleReceiver}: ChatButtonProps) => {
+const ChatBox = ({ handleClickMetamask, style, isUserConnected, visible, as, toggleReceiver}: ChatButtonProps) => {
+  const { peerAddress, peerName } = receiverStore();
+  
   const isMetaMask = useIsMetaMask();
   const [xmtpReady, setXmptReady] = useState<boolean>(false);
   const [userDidConnect, setUserDidConnect] = useState<boolean>(false);
   const { connect, connectors } = useConnect();
   const { isConnected } = useAccount();
-
-  const { data: peerName } = useEnsName({
-    address: peerAddress
-  })
 
   const sendMessage = useSendMessage();
 
@@ -54,28 +51,20 @@ const ChatBox = ({ style, isUserConnected, visible, as, peerAddress, headerText,
     (connector) => connector.id === 'coinbaseWallet'
   );
 
-  // TODO prevent connection if already connected.
-  const handleClickMetamask = useCallback(() => {
-    setUserDidConnect(true);
-    connect({connector: metamaskConnector});
-
-    /* eslint-disable-next-line */
-  }, []);
-
   const handleClickCoinbase = useCallback(() => {
-    setUserDidConnect(true);
-    connect({connector: coinbaseConnector});
+    //setUserDidConnect(true);
+    //connect({connector: coinbaseConnector});
     /* eslint-disable-next-line */
   }, []);
 
   const handleClickWalletConnect = useCallback(() => {
-    setUserDidConnect(true);
-    connect({connector: walletConnectConnector});
+    //setUserDidConnect(true);
+    //connect({connector: walletConnectConnector});
     /* eslint-disable-next-line */
   }, []);
 
   const handleOnXmtpReady = useCallback((isReady: boolean) => {
-    setXmptReady(isReady);
+    //setXmptReady(isReady);
   }, []);
   
 
@@ -88,7 +77,7 @@ const ChatBox = ({ style, isUserConnected, visible, as, peerAddress, headerText,
     [sendMessage, peerAddress]
   );
 
-  const textForHeader = (isUserConnected || (isConnected && userDidConnect)) ? (peerName ? peerName : peerAddress) : headerText;
+  const textForHeader = (isUserConnected || (isConnected && userDidConnect)) ? (peerName ? peerName : peerAddress) : 'Relay Receiver';
 
   return (
     <ChatContainer visible={visible} as={as} style={style}>

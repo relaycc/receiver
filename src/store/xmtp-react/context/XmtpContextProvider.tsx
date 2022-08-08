@@ -17,8 +17,7 @@ import { useImmer } from 'use-immer';
 export const XmtpContextProvider: FunctionComponent<{
   children: React.ReactNode;
   connectedWallet?: Signer;
-  peerAddress: string;
-}> = ({ children, connectedWallet, peerAddress }) => {
+}> = ({ children, connectedWallet }) => {
   /*
    * Hooks
    */
@@ -168,7 +167,6 @@ export const XmtpContextProvider: FunctionComponent<{
     } else {
       await initialize(
         wallet,
-        peerAddress,
         handleClientWaitingForSignature,
         handleClientConnect,
         handleClientError,
@@ -181,7 +179,6 @@ export const XmtpContextProvider: FunctionComponent<{
     }
   }, [
     wallet,
-    peerAddress,
     handleClientWaitingForSignature,
     handleClientConnect,
     handleClientError,

@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
 import { XmtpContext, Status } from '../context';
-import { Group, sendGroupMessage, fromGroupAndPayload } from '../groups';
+import { Group, sendGroupMessage, fromGroupAndPayload } from '.';
 
 export const useSendGroupMessage = () => {
   const xmtp = useContext(XmtpContext);

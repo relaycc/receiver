@@ -1,23 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   WagmiConfig,
   configureChains,
   createClient,
   defaultChains,
+  useSigner,
 } from 'wagmi';
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-import { XmtpContextProvider } from '../../xmtp-react/context';
+import { XmtpContextProvider } from '../../store/xmtp-react/context';
 import { Signer } from 'ethers';
 import ChatBox from './ChatBox';
 import CSS from 'csstype';
 import { Interpolation } from 'styled-components';
 import ReceiverContext from './ReceiverContext';
 import styled from 'styled-components';
-import { getAddress } from '@ethersproject/address'
+import { receiverStore } from '../../store';
+import ReceiverContainer from './ReceiverContainer';
 
 const alchemyKey = 'kmMb00nhQ0SWModX6lJLjXy_pVtiQnjx';
 
@@ -56,44 +58,10 @@ interface ConfigProps {
   receiverContainerStyle?: Interpolation<React.CSSProperties>;
 }
 
-const Receiver = ({ signer, children, receiverContainerStyle }: ConfigProps) => {
-
-  const [showBox, setShowBox] = useState<boolean>(false);
-  const [hasLaunched, setHasLaunched] = useState<boolean>(false);
-  const [peerAddress, setPeerAddress] = useState<string>('');
-
-  const convertAndSetPeerAddress = (peerAddress: string) => {
-    const cleanAddress = getAddress(peerAddress);
-    setPeerAddress(cleanAddress);
-  }
-
-  const toggle = () => {
-    setShowBox(!showBox);
-    if (!hasLaunched) setHasLaunched(true);
-  };
-
-  const chatBoxContainerStyle:CSS.Properties = {
-    maxHeight: showBox ? '480px' : (hasLaunched ? '62px' : '0px'),
-    height: '480px', 
-    position: 'fixed', 
-    bottom: '0px', 
-    right: '150px',
-    transition: 'max-height 0.25s ease-in',
-    zIndex: 1000
-  }
-
+const Receiver = (props: ConfigProps) => {
   return (
     <WagmiConfig client={wagmi}>
-      <XmtpContextProvider connectedWallet={signer} peerAddress={peerAddress}>
-        <ReceiverContext.Provider value={{ setPeerAddress: convertAndSetPeerAddress, toggle: toggle }}>
-          <Container>
-            <div style={chatBoxContainerStyle}>
-              <ChatBox isUserConnected={signer != undefined} style={receiverContainerStyle} toggleReceiver={toggle} peerAddress={peerAddress} visible={showBox}></ChatBox>
-            </div>
-          </Container>
-          { children }
-        </ReceiverContext.Provider>
-      </XmtpContextProvider>
+      <ReceiverContainer {...props} />
     </WagmiConfig>
   );
 };
