@@ -16,23 +16,19 @@ interface MessagesProps {
 }
 
 const Messages = ({ onXmptReady }: MessagesProps) => {
-  const { peerAddress, peerName } = receiverStore();
+  const { peerAddress, peerName, peerIsAvailable, messages: allMessages } = receiverStore();
   const { xmtpStatus, client } = receiverStore();
-  const messages = useMessages(peerAddress);
+  const [messages, setMessages] = useState<Record<string, Message>>({});
+  
   const messageArray = Object.values(messages).reverse();
   const buckets = getMessageBuckets(messageArray);
-  const [peerIsAvailable, setPeerIsAvailable] = useState<boolean | undefined>();
 
   useEffect(() => {
     if (xmtpStatus === Status.ready && peerAddress && client) {
-      const effect = async () => {
-        const peerIsAvailable = await client.canMessage(peerAddress);
-        onXmptReady(peerIsAvailable);
-        setPeerIsAvailable(peerIsAvailable);
-      };
-      effect();
-    }
-  });
+      setMessages(allMessages[peerAddress])
+      onXmptReady(peerIsAvailable);
+    };
+  }, [xmtpStatus, peerAddress, client]);
   
   if (typeof peerAddress !== 'string') {
     return (

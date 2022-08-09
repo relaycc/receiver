@@ -30,6 +30,7 @@ export const initialize = async (
       codecs: [gmc],
       env: 'production'
     });
+
     onClientConnect(client);
 
     /*
@@ -52,13 +53,13 @@ export const initialize = async (
         onNewGroupMessage
       );
     }
-    onMessagesLoaded();
-
      /* Stream messages for each existing conversation...
      */
     for (const conversation of conversations) {
       streamConversation(conversation, onNewMessage, onNewGroupMessage);
     }
+
+    onMessagesLoaded();
 
     /*
      * Stream new conversations
@@ -74,6 +75,7 @@ export const initialize = async (
       );
       streamConversation(conversation, onNewMessage, onNewGroupMessage);
     }
+
   } catch (error) {
     onClientError(error);
   }

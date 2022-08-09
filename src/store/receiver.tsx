@@ -24,9 +24,9 @@ interface ReceiverState {
   groupMessages: Record<string, Record<string, GroupMessage>>,
   messages: Record<string, Record<string, Message>>,
   peerAddress: string | null,
+  peerIsAvailable: boolean,
   peerName: string | null,
   xmtpStatus: Status,
-
   setPeerAddress: (address: string) => void,
   xmtpInit: (wallet: Signer) => void,
 }
@@ -38,6 +38,7 @@ export const receiverStore = create<ReceiverState>((set, get) => ({
   groupMessages: {},
   messages: {},
   peerAddress: null,
+  peerIsAvailable: true,
   peerName: null,
   xmtpStatus: Status.disconnected,
   
@@ -85,14 +86,15 @@ const handleClientWaitingForSignature = () => {
   receiverStore.setState({xmtpStatus: Status.waiting});
 };
 
-const handleClientConnect = (client: Client) => {
-  receiverStore.setState({client: client});
-  receiverStore.setState({xmtpStatus: Status.loading});
+const handleClientConnect = async (client: Client) => {
+  const { peerAddress } = receiverStore.getState();
+  const peerIsAvailable = (client && peerAddress) ? await client.canMessage(peerAddress) : false;
+ 
+  receiverStore.setState({client: client, peerIsAvailable: peerIsAvailable, xmtpStatus: Status.loading});
 };
 
 const handleClientError = (error: unknown) => {
-  receiverStore.setState({client: null});
-  receiverStore.setState({xmtpStatus: Status.error});
+  receiverStore.setState({client: null, xmtpStatus: Status.error});
 };
 
 const handleConversationsLoaded = () => {
