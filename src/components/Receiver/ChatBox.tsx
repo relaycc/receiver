@@ -1,23 +1,22 @@
+import React, { useCallback, useEffect, useState } from 'react';
 import styled, { Interpolation } from 'styled-components';
-import { useIsMetaMask } from '../../hooks';
-import { useConnect, useAccount, useSigner} from 'wagmi';
 import LightCoinbase from '../../assets/images/LightCoinbase.png';
 import LightWalletConnect from '../../assets/images/LightWalletConnect.png';
 import Metamask from '../../assets/images/Metamask.svg';
 import SignInLink from './Connector';
-import { useCallback, useEffect, useState } from 'react';
 import Messages from './Messages';
 import Card from './Card';
 import MessageInput from './MessageInput';
-
 import Header from './Header';
 import Logo from '../../assets/images/logo2.svg';
+import { useIsMetaMask } from '../../hooks';
+import { useConnect, useAccount, useSigner} from 'wagmi';
 import {
   useSendMessage,
   Status as SendMessageStatus,
 } from '../../xmtp-react/conversations';
-import React from 'react';
 import { receiverStore } from '../../store';
+
 
 interface ChatButtonProps {
   visible: boolean;
@@ -33,12 +32,13 @@ const ChatBox = ({ style, isUserConnected, visible, as, toggleReceiver}: ChatBut
   const isMetaMask = useIsMetaMask();
   const [xmtpReady, setXmptReady] = useState<boolean>(false);
   const [userDidConnect, setUserDidConnect] = useState<boolean>(false);
-  const { connect, connectors, status } = useConnect();
+  const { connect, connectors } = useConnect();
   const { isConnected } = useAccount();
   const { data: wallet } = useSigner();
 
   useEffect(() => {
     if (isConnected && wallet) {
+      // Initialize XMTP once the wallet is connected.
       xmtpInit(wallet);
     }
   }, [wallet, isConnected])
@@ -91,7 +91,7 @@ const ChatBox = ({ style, isUserConnected, visible, as, toggleReceiver}: ChatBut
     [sendMessage, peerAddress]
   );
 
-  const textForHeader = (isUserConnected || (isConnected && userDidConnect)) ? (peerName ? peerName : peerAddress) : 'Relay Receiver';
+  const textForHeader = (isUserConnected || (isConnected && userDidConnect)) ? peerName : 'Relay Receiver';
 
   return (
     <ChatContainer visible={visible} as={as} style={style}>
@@ -99,7 +99,7 @@ const ChatBox = ({ style, isUserConnected, visible, as, toggleReceiver}: ChatBut
 
       <RelayRelativeContainer>
         {(isUserConnected || (isConnected && userDidConnect)) ? (
-          <Messages onXmptReady={handleOnXmtpReady} peerName={peerName || peerAddress} peerAddress={peerAddress} />
+          <Messages onXmptReady={handleOnXmtpReady} />
         ) : (
           <Card title='Connect your wallet to start a converation!'>
             <ConnectorList>

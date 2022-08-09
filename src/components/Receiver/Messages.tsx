@@ -2,26 +2,22 @@ import styled from 'styled-components';
 import { Message } from '@xmtp/xmtp-js';
 import MessagesBucket from './MessagesBucket';
 import LoadingMessages from './LoadingMessages';
-import { useConnect, useAccount, useSigner} from 'wagmi';
 import { Status } from '../../xmtp-react/status';
 import React, { useEffect, useState } from 'react'
 import {
   useMessages,
 } from '../../xmtp-react/conversations';
 import Card from './Card';
-import Button from './Button';
 import { shortDate } from '../../utls/date';
 import { receiverStore } from '../../store';
 
 interface MessagesProps {
-  peerAddress: string | null;
-  peerName: string | null;
   onXmptReady: (isReady: boolean) => unknown;
 }
 
-const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
+const Messages = ({ onXmptReady }: MessagesProps) => {
+  const { peerAddress, peerName } = receiverStore();
   const { xmtpStatus, client } = receiverStore();
-  const { data: wallet } = useSigner();
   const messages = useMessages(peerAddress);
   const messageArray = Object.values(messages).reverse();
   const buckets = getMessageBuckets(messageArray);
@@ -54,7 +50,6 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
     return (
       <Card title="Initialize XMTP Client">
         <Text>To begin messaging, you must first initialize the XMTP client.</Text>
-        <Button  text='Initialize'/>
       </Card>
     );
   } else if (xmtpStatus === Status.waiting) {
@@ -69,7 +64,6 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
       <Card title="Initialize XMTP Client">
         <Text><b>Initializing.</b></Text>
         <Text>Signature request cancelled. Try again...</Text>
-        <Button text='Initialize'/>
       </Card>
     );
   } else if (xmtpStatus === Status.loading) {
@@ -86,7 +80,6 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
                 <MessagesBucket
                   key={index}
                   messages={bucket.messages}
-                  peerAddress={peerAddress}
                   startDate={bucket.date}
                 />
               );

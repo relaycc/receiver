@@ -13,6 +13,7 @@ interface ButtonProps {
   launchButtonStyle?: Interpolation<React.CSSProperties>;
 }
 
+// This is the component used to launch the receiver.
 const ReceiverLaunch = ({ peerAddress = '0x45c9a201e2937608905fef17de9a67f25f9f98e0', inlineLaunch, launchText, launchButtonStyle, as }: ButtonProps) => {
   const receiverContext = useContext(ReceiverContext);
   const { setPeerAddress } = receiverStore();

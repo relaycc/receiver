@@ -1,43 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import {
-  WagmiConfig,
-  configureChains,
-  createClient,
-  defaultChains,
-  useSigner,
-  useConnect,
-  useEnsName,
-} from 'wagmi';
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { publicProvider } from 'wagmi/providers/public'
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
-import { InjectedConnector } from 'wagmi/connectors/injected';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-import { Signer } from 'ethers';
+import React, { useState } from 'react';
 import ChatBox from './ChatBox';
 import CSS from 'csstype';
-import { Interpolation } from 'styled-components';
 import ReceiverContext from './ReceiverContext';
 import styled from 'styled-components';
-import { receiverStore } from '../../store';
+import { Signer } from 'ethers';
+import { Interpolation } from 'styled-components';
 
-interface ConfigProps {
+interface ReceiverContainerProps {
   children: React.ReactNode;
   signer?: Signer;
   receiverContainerStyle?: Interpolation<React.CSSProperties>;
 }
 
-const Receiver = ({ signer, children, receiverContainerStyle }: ConfigProps) => {
-  const { setPeerName, peerAddress } = receiverStore();
-  const { data: wagmiSigner } = useSigner();
-  const wallet = signer ? signer : wagmiSigner;
-  const { connect, connectors } = useConnect();
-
-  if (peerAddress) {
-    //const { data: peerName } = useEnsName({address: peerAddress})
-    //peerName && setPeerName(peerName);
-  } 
-
+const ReceiverContainer = ({ signer, children, receiverContainerStyle }: ReceiverContainerProps) => {
   const [showBox, setShowBox] = useState<boolean>(false);
   const [hasLaunched, setHasLaunched] = useState<boolean>(false);
 
@@ -45,6 +20,7 @@ const Receiver = ({ signer, children, receiverContainerStyle }: ConfigProps) => 
     setShowBox(!showBox);
     if (!hasLaunched) setHasLaunched(true);
   };
+
   const chatBoxContainerStyle:CSS.Properties = {
     maxHeight: showBox ? '480px' : (hasLaunched ? '62px' : '0px'),
     height: '480px', 
@@ -73,4 +49,4 @@ const Container = styled.div`
 `;
 
 
-export default Receiver;
+export default ReceiverContainer;

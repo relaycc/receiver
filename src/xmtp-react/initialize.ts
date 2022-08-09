@@ -1,4 +1,4 @@
-import { Client, Conversation, Message } from '@xmtp/xmtp-js';
+import { Client, Conversation, Message, Conversations } from '@xmtp/xmtp-js';
 import { GroupMessageCodec, GroupMessage, isGroupMessage } from './groups';
 import { Signer } from 'ethers';
 
@@ -40,7 +40,8 @@ export const initialize = async (
       conversation.peerAddress == peerAddress
     )*/
 
-    const conversations = await client.newConversation();
+    let conversations: Conversation[] = []
+    peerAddress && conversations.push(await client.conversations.newConversation(peerAddress));
 
     onConversationsLoaded(conversations);
     for (const conversation of conversations) {

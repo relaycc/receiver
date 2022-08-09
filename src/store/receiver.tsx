@@ -28,7 +28,6 @@ interface ReceiverState {
   xmtpStatus: Status,
 
   setPeerAddress: (address: string) => void,
-  setPeerName: (name: string) => void,
   xmtpInit: (wallet: Signer) => void,
 }
 
@@ -48,11 +47,9 @@ export const receiverStore = create<ReceiverState>((set, get) => ({
         address: address,
       })
 
-      set({ peerAddress: address, peerName: ensName });
+      set({ peerAddress: address, peerName: ensName ? ensName : address });
     }
   },
-
-  setPeerName: (name) => set(() => ({ peerName: name })),
 
   xmtpInit: (wallet) => {
     initializeXmtp(wallet, get().peerAddress);
