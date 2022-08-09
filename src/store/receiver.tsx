@@ -5,6 +5,7 @@ import { getAddress } from '@ethersproject/address'
 import { initialize } from '../xmtp-react/initialize';
 import { useImmer } from 'use-immer';
 import { GroupMessage } from '../xmtp-react/groups';
+import { useEnsName  } from 'wagmi';
 
 enum Status {
   disconnected = 'no signer available',
@@ -43,20 +44,25 @@ export const receiverStore = create<ReceiverState>((set, get) => ({
   
   setPeerAddress: (address) => {
     if (get().peerAddress !== address) {
-      set({ peerAddress: address });
+      const { data: ensName } = useEnsName({
+        address: address,
+      })
+
+      set({ peerAddress: address, peerName: ensName });
     }
   },
 
   setPeerName: (name) => set(() => ({ peerName: name })),
 
   xmtpInit: (wallet) => {
-    initializeXmtp(wallet);
+    initializeXmtp(wallet, get().peerAddress);
   }
 }))
 
-const initializeXmtp = async(wallet: Signer) => {
+const initializeXmtp = async(wallet: Signer, peerAddress: string | null) => {
   await initialize(
     wallet,
+    peerAddress,
     handleClientWaitingForSignature,
     handleClientConnect,
     handleClientError,
