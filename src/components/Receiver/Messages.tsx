@@ -2,11 +2,12 @@ import styled from 'styled-components';
 import { Message } from '@xmtp/xmtp-js';
 import MessagesBucket from './MessagesBucket';
 import LoadingMessages from './LoadingMessages';
-import { Status, useXmtp } from '../../store/xmtp-react/context';
+import { useConnect, useAccount, useSigner} from 'wagmi';
+import { Status } from '../../xmtp-react/status';
 import React, { useEffect, useState } from 'react'
 import {
   useMessages,
-} from '../../store/xmtp-react/conversations';
+} from '../../xmtp-react/conversations';
 import Card from './Card';
 import Button from './Button';
 import { shortDate } from '../../utls/date';
@@ -19,8 +20,8 @@ interface MessagesProps {
 }
 
 const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
-  const { xmtpStatus, client, xmtpInit } = receiverStore();
-
+  const { xmtpStatus, client } = receiverStore();
+  const { data: wallet } = useSigner();
   const messages = useMessages(peerAddress);
   const messageArray = Object.values(messages).reverse();
   const buckets = getMessageBuckets(messageArray);
@@ -53,7 +54,7 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
     return (
       <Card title="Initialize XMTP Client">
         <Text>To begin messaging, you must first initialize the XMTP client.</Text>
-        <Button onClick={ xmtpInit } text='Initialize'/>
+        <Button  text='Initialize'/>
       </Card>
     );
   } else if (xmtpStatus === Status.waiting) {
@@ -68,7 +69,7 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
       <Card title="Initialize XMTP Client">
         <Text><b>Initializing.</b></Text>
         <Text>Signature request cancelled. Try again...</Text>
-        <Button onClick={ xmtpInit } text='Initialize'/>
+        <Button text='Initialize'/>
       </Card>
     );
   } else if (xmtpStatus === Status.loading) {

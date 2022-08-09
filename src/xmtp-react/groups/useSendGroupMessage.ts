@@ -1,22 +1,23 @@
 import { useCallback, useContext } from 'react';
-import { XmtpContext, Status } from '../context';
+import { Status } from '../status';
 import { Group, sendGroupMessage, fromGroupAndPayload } from '.';
+import { receiverStore } from '../../store';
 
 export const useSendGroupMessage = () => {
-  const xmtp = useContext(XmtpContext);
+  const { xmtpStatus, client } = receiverStore();
 
   const callback = useCallback(
     async (group: Group, payload: string) => {
-      if (xmtp.status === Status.ready) {
+      if (xmtpStatus === Status.ready) {
         const content = fromGroupAndPayload(group, payload);
         try {
-          await sendGroupMessage(xmtp.client, content);
+          client && await sendGroupMessage(client, content);
         } catch (err) {
           console.error(err);
         }
       }
     },
-    [xmtp]
+    [xmtpStatus]
   );
 
   return callback;

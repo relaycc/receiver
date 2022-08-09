@@ -1,9 +1,11 @@
 import { useMemo } from 'react';
-import { useXmtp, Status as ClientStatus } from '../context';
+import { receiverStore } from '../../store';
+import { Status as ClientStatus } from '../status';
 
 export enum Status {
   ready = 'ready',
   idle = 'idle',
+  error = 'error'
 }
 
 export interface ReadySendMessage {
@@ -15,22 +17,27 @@ export interface IdleSendMessage {
   status: Status.idle;
 }
 
-export type SendMessage = ReadySendMessage | IdleSendMessage;
+export interface ErrorSendMessage {
+  status: Status.error;
+}
+
+export type SendMessage = ReadySendMessage | IdleSendMessage | ErrorSendMessage;
 
 export const useSendMessage = () => {
-  const xmtp = useXmtp();
+  const { client, xmtpStatus } = receiverStore();
 
   const sendMessage: SendMessage = useMemo(() => {
-    if (xmtp.status !== ClientStatus.ready) {
+    if (xmtpStatus !== ClientStatus.ready) {
       return { status: Status.idle };
-    } else {
+    } else if (client) {
       return {
         status: Status.ready,
         send: (peerAddress: string, content: string) =>
-          xmtp.client.sendMessage(peerAddress, content),
+          client.sendMessage(peerAddress, content),
       };
+    } else {
+      return { status: Status.error };
     }
-  }, [xmtp]);
-
+  }, [xmtpStatus]);
   return sendMessage;
 };

@@ -1,23 +1,24 @@
 import { useMemo } from 'react';
-import { useXmtp, Status } from '../context';
+import { Status } from '../status';
 import { Message } from '@xmtp/xmtp-js';
+import { receiverStore } from '../../store';
 
 export const useMessages = (peerAddress: string | null | undefined) => {
-  const xmtp = useXmtp();
+  const { messages, xmtpStatus } = receiverStore();
 
-  const messages = useMemo(() => {
+  const alMessages = useMemo(() => {
     if (
-      xmtp.status !== Status.ready ||
+      xmtpStatus !== Status.ready ||
       peerAddress === undefined ||
       peerAddress === null
     ) {
       return {};
     } else {
-      return xmtp.messages[peerAddress] || {};
+      return messages[peerAddress] || {};
     }
-  }, [xmtp, peerAddress]);
+  }, [xmtpStatus, peerAddress]);
 
-  return messages;
+  return alMessages;
 };
 
 export const getLastMessage = (

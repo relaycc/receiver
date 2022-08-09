@@ -1,5 +1,5 @@
 import { Client, Conversation, Message } from '@xmtp/xmtp-js';
-import { GroupMessageCodec, GroupMessage, isGroupMessage } from '../groups';
+import { GroupMessageCodec, GroupMessage, isGroupMessage } from './groups';
 import { Signer } from 'ethers';
 
 const gmc = new GroupMessageCodec();
@@ -16,6 +16,8 @@ export const initialize = async (
   onMessagesLoaded: () => unknown
 ) => {
   try {
+    if (!wallet) return;
+    
     /*
      * Trigger loading state...
      */
@@ -37,6 +39,8 @@ export const initialize = async (
       conversation.peerAddress == peerAddress
     )*/
 
+
+
     onConversationsLoaded(conversations);
     for (const conversation of conversations) {
       await loadConversation(
@@ -48,8 +52,7 @@ export const initialize = async (
     }
     onMessagesLoaded();
 
-    /*
-     * Stream messages for each existing conversation...
+     /* Stream messages for each existing conversation...
      */
     for (const conversation of conversations) {
       streamConversation(conversation, onNewMessage, onNewGroupMessage);

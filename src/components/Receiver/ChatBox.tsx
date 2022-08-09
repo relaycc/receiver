@@ -1,11 +1,11 @@
 import styled, { Interpolation } from 'styled-components';
 import { useIsMetaMask } from '../../hooks';
-import { useConnect, useAccount} from 'wagmi';
+import { useConnect, useAccount, useSigner} from 'wagmi';
 import LightCoinbase from '../../assets/images/LightCoinbase.png';
 import LightWalletConnect from '../../assets/images/LightWalletConnect.png';
 import Metamask from '../../assets/images/Metamask.svg';
 import SignInLink from './Connector';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Messages from './Messages';
 import Card from './Card';
 import MessageInput from './MessageInput';
@@ -15,7 +15,7 @@ import Logo from '../../assets/images/logo2.svg';
 import {
   useSendMessage,
   Status as SendMessageStatus,
-} from '../../store/xmtp-react/conversations';
+} from '../../xmtp-react/conversations';
 import React from 'react';
 import { receiverStore } from '../../store';
 
@@ -28,13 +28,20 @@ interface ChatButtonProps {
 }
 
 const ChatBox = ({ style, isUserConnected, visible, as, toggleReceiver}: ChatButtonProps) => {
-  const { peerAddress, peerName } = receiverStore();
+  const { peerAddress, peerName, xmtpInit } = receiverStore();
   
   const isMetaMask = useIsMetaMask();
   const [xmtpReady, setXmptReady] = useState<boolean>(false);
   const [userDidConnect, setUserDidConnect] = useState<boolean>(false);
-  const { connect, connectors } = useConnect();
+  const { connect, connectors, status } = useConnect();
   const { isConnected } = useAccount();
+  const { data: wallet } = useSigner();
+
+  useEffect(() => {
+    if (isConnected && wallet) {
+      xmtpInit(wallet);
+    }
+  }, [wallet, isConnected])
 
   const sendMessage = useSendMessage();
 
@@ -54,7 +61,7 @@ const ChatBox = ({ style, isUserConnected, visible, as, toggleReceiver}: ChatBut
   const handleClickMetamask = useCallback(() => {
     setUserDidConnect(true);
     connect({connector: metamaskConnector});
-
+  
     /* eslint-disable-next-line */
   }, []);
 

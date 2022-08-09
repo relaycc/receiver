@@ -1,16 +1,17 @@
 import { useMemo, useContext } from 'react';
 import { Group, fromGroupMessage } from '.';
-import { XmtpContext, Status } from '../context';
+import { receiverStore } from '../../store';
+import { Status } from '../status';
 
 export const useGroups = () => {
-  const xmtp = useContext(XmtpContext);
+  const { xmtpStatus, groupMessages } = receiverStore();
 
   const groups = useMemo(() => {
-    if (xmtp.status === Status.ready) {
+    if (xmtpStatus === Status.ready) {
       const groups: Record<string, Group> = {};
       // We derive the groups from the groupMessages because a "group" is not a
       // native XMTP construct.
-      for (const [groupId, messages] of Object.entries(xmtp.groupMessages)) {
+      for (const [groupId, messages] of Object.entries(groupMessages)) {
         const aMessageFromTheGroup = Object.values(messages)[0];
         const group = fromGroupMessage(aMessageFromTheGroup);
         groups[groupId] = group;
@@ -19,7 +20,7 @@ export const useGroups = () => {
     } else {
       return {};
     }
-  }, [xmtp]);
+  }, [xmtpStatus]);
 
   return groups;
 };

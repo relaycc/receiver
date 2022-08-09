@@ -13,7 +13,6 @@ import { publicProvider } from 'wagmi/providers/public'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-import { XmtpContextProvider } from '../../store/xmtp-react/context';
 import { Signer } from 'ethers';
 import ChatBox from './ChatBox';
 import CSS from 'csstype';
@@ -46,19 +45,6 @@ const Receiver = ({ signer, children, receiverContainerStyle }: ConfigProps) => 
     setShowBox(!showBox);
     if (!hasLaunched) setHasLaunched(true);
   };
-
-  const metamaskConnector = connectors.find(
-    (connector) => connector.id === 'injected'
-  );
-
-   // TODO prevent connection if already connected.
-   const handleClickMetamask = () => {
-    //setUserDidConnect(true);
-    connect({connector: metamaskConnector});
-
-    /* eslint-disable-next-line */
-  };
-
   const chatBoxContainerStyle:CSS.Properties = {
     maxHeight: showBox ? '480px' : (hasLaunched ? '62px' : '0px'),
     height: '480px', 
@@ -73,7 +59,7 @@ const Receiver = ({ signer, children, receiverContainerStyle }: ConfigProps) => 
     <ReceiverContext.Provider value={{ toggle: toggle }}>
       <Container>
         <div style={chatBoxContainerStyle}>
-          <ChatBox handleClickMetamask={handleClickMetamask} isUserConnected={signer != undefined} style={receiverContainerStyle} toggleReceiver={toggle} visible={showBox}></ChatBox>
+          <ChatBox  isUserConnected={signer != undefined} style={receiverContainerStyle} toggleReceiver={toggle} visible={showBox}></ChatBox>
         </div>
       </Container>
       { children }

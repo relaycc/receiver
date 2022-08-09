@@ -3,6 +3,7 @@ import styled, { Interpolation } from 'styled-components';
 import Logo from '../../assets/images/logo2.svg';
 import ReceiverContext from "./ReceiverContext";
 import { receiverStore } from '../../store';
+import { getAddress } from '@ethersproject/address'
 
 interface ButtonProps {
   launchText: string;
@@ -16,7 +17,7 @@ const ReceiverLaunch = ({ peerAddress = '0x45c9a201e2937608905fef17de9a67f25f9f9
   const receiverContext = useContext(ReceiverContext);
   const { setPeerAddress } = receiverStore();
 
-  setPeerAddress(peerAddress);
+  setPeerAddress(getAddress(peerAddress));
   
   return (
     inlineLaunch ? (

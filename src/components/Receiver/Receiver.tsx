@@ -11,7 +11,6 @@ import { publicProvider } from 'wagmi/providers/public'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-import { XmtpContextProvider } from '../../store/xmtp-react/context';
 import { Signer } from 'ethers';
 import ChatBox from './ChatBox';
 import CSS from 'csstype';

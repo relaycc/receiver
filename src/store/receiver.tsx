@@ -2,9 +2,9 @@ import create from 'zustand'
 import { Client, Conversation, Message } from '@xmtp/xmtp-js';
 import { Signer } from 'ethers';
 import { getAddress } from '@ethersproject/address'
-import { initialize } from './xmtp-react/context/initialize';
+import { initialize } from '../xmtp-react/initialize';
 import { useImmer } from 'use-immer';
-import { GroupMessage } from './xmtp-react/groups';
+import { GroupMessage } from '../xmtp-react/groups';
 
 enum Status {
   disconnected = 'no signer available',
@@ -40,7 +40,7 @@ export const receiverStore = create<ReceiverState>((set, get) => ({
   peerAddress: null,
   peerName: null,
   xmtpStatus: Status.disconnected,
-
+  
   setPeerAddress: (address) => {
     if (get().peerAddress !== address) {
       set({ peerAddress: address });
@@ -97,10 +97,10 @@ const handleConversationsLoaded = () => {
 };
 
 const handleNewConversation = (conversation: Conversation) => {  
-  const { conversations } = receiverStore();
-  conversations[conversation.peerAddress] = conversation;
-
-  receiverStore.setState({conversations: conversations});
+  receiverStore.setState((prev) => {
+    prev.conversations[conversation.peerAddress] = conversation;
+    return { conversations: prev.conversations }
+  })
 };
 
 const handleMessagesLoaded = () => {
@@ -110,33 +110,21 @@ const handleMessagesLoaded = () => {
 const handleNewMessage = (conversation: Conversation, message: Message) => {
   const { sent } = message;
   const { peerAddress } = conversation;
-  
   if (sent === undefined) {
     return;
   } else {
-    // TODO You need to incorporate activity into group messages also.
-    const { activity: prevActivity, messages: prevMessages } = receiverStore();
-    
-    if (prevActivity[peerAddress] === undefined) {
-      prevActivity[peerAddress] = sent;
-    } else {
-      if (prevActivity[peerAddress].getTime() < sent.getTime()) {
-        prevActivity[peerAddress] = sent;
-      }
-    }
-
-    prevMessages[peerAddress] = prevMessages[peerAddress] || {};
-    prevMessages[peerAddress][message.id] = message;
-    
-    receiverStore.setState({ activity: prevActivity, messages: prevMessages });
+    receiverStore.setState((prev) => {
+      prev.messages[peerAddress] = prev.messages[peerAddress] || {};
+      prev.messages[peerAddress][message.id] = message;
+      return { messages: prev.messages }
+    })
   }
 }
 
 const handleNewGroupMessage = (message: GroupMessage) => {
-  const { groupMessages: prevGroupMessages } = receiverStore();
-
-  prevGroupMessages[message.content.groupId] = prevGroupMessages[message.content.groupId] || {};
-  prevGroupMessages[message.content.groupId][message.content.groupMessageId] = message;
-  
-  receiverStore.setState({ groupMessages: prevGroupMessages });
+  receiverStore.setState((prev) => {
+    prev.groupMessages[message.content.groupId] = prev.groupMessages[message.content.groupId] || {};
+    prev.groupMessages[message.content.groupId][message.content.groupMessageId] = message;
+    return { groupMessages: prev.groupMessages }
+  })
 };

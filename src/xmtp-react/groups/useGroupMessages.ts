@@ -1,16 +1,17 @@
 import { useMemo, useContext } from 'react';
-import { XmtpContext, Status } from '../context';
+import { receiverStore } from '../../store';
+import { Status } from '../status';
 
 export const useGroupMessages = (groupId: string | null) => {
-  const xmtp = useContext(XmtpContext);
+  const { xmtpStatus, groupMessages } = receiverStore();
 
   const messages = useMemo(() => {
-    if (groupId === null || xmtp.status !== Status.ready) {
+    if (groupId === null || xmtpStatus !== Status.ready) {
       return {};
     } else {
-      return xmtp.groupMessages[groupId] || {};
+      return groupMessages[groupId] || {};
     }
-  }, [groupId, xmtp]);
+  }, [groupId, xmtpStatus]);
 
   return messages;
 };
