@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ChatBox from './ChatBox';
 import CSS from 'csstype';
-import ReceiverContext from './ReceiverContext';
+import ReceiverContext from '../ReceiverContext';
 import styled from 'styled-components';
 import { Signer } from 'ethers';
 import { Interpolation } from 'styled-components';

@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { Message } from '@xmtp/xmtp-js';
 import MessagesBucket from './MessagesBucket';
-import LoadingMessages from './LoadingMessages';
+import LoadingMessages from '../LoadingMessages';
 import { Status } from '../../xmtp-react/status';
 import React, { useEffect, useState } from 'react'
 import {
   useMessages,
 } from '../../xmtp-react/conversations';
-import Card from './Card';
+import Card from '../Card';
 import { shortDate } from '../../utls/date';
 import { receiverStore } from '../../store';
 
@@ -16,7 +16,11 @@ interface MessagesProps {
 }
 
 const Messages = ({ onXmptReady }: MessagesProps) => {
-  const { peerAddress, peerName, peerIsAvailable, messages: allMessages } = receiverStore();
+  const { peerAddress, peerName, peerIsAvailable, messages: allMessages, conversations } = receiverStore();
+  console.log(conversations);
+  console.log('CONVOS');
+  console.log(allMessages);
+  console.log('MESSAGES');
   const { xmtpStatus, client } = receiverStore();
   const [messages, setMessages] = useState<Record<string, Message>>({});
   
@@ -67,20 +71,17 @@ const Messages = ({ onXmptReady }: MessagesProps) => {
       <LoadingMessages />
     );
   } else if (xmtpStatus === Status.ready && peerIsAvailable === true) {
-    if (Object.values(messages).length > 0) {
+    if (buckets.length > 0) {
       return (    
         <List>
           {buckets.map((bucket, index) => {
-            if (bucket.messages.length > 0) {
-              return (
-                <MessagesBucket
-                  key={index}
-                  messages={bucket.messages}
-                  startDate={bucket.date}
-                />
-              );
-            }
-            return null;
+            return (
+              <MessagesBucket
+                key={index}
+                messages={bucket.messages}
+                startDate={bucket.date}
+              />
+            );
           })}
         </List>
       ) 

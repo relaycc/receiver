@@ -4,11 +4,10 @@ import LightCoinbase from '../../assets/images/LightCoinbase.png';
 import LightWalletConnect from '../../assets/images/LightWalletConnect.png';
 import Metamask from '../../assets/images/Metamask.svg';
 import SignInLink from '../Connector';
-import Messages from './Messages';
 import Card from '../Card';
-import MessageInput from '../MessageInput';
-import Header from './Header';
 import Logo from '../../assets/images/logo2.svg';
+import MessageInput from '../MessageInput';
+import ConversationsHeader from './ConversationsHeader';
 import { useIsMetaMask } from '../../hooks';
 import { useConnect, useAccount, useSigner} from 'wagmi';
 import {
@@ -16,6 +15,7 @@ import {
   Status as SendMessageStatus,
 } from '../../xmtp-react/conversations';
 import { receiverStore } from '../../store';
+import Conversations from './Conversations';
 
 
 interface ChatButtonProps {
@@ -77,11 +77,6 @@ const ChatBox = ({ style, isUserConnected, visible, as, toggleReceiver}: ChatBut
     /* eslint-disable-next-line */
   }, []);
 
-  const handleOnXmtpReady = useCallback((isReady: boolean) => {
-    setXmptReady(isReady);
-  }, []);
-  
-
   const doSendMessage = useCallback(
     async (message: string) => {
       if (peerAddress && sendMessage.status === SendMessageStatus.ready) {
@@ -91,15 +86,13 @@ const ChatBox = ({ style, isUserConnected, visible, as, toggleReceiver}: ChatBut
     [sendMessage, peerAddress]
   );
 
-  const textForHeader = (isUserConnected || (isConnected && userDidConnect)) ? peerName : 'Relay Receiver';
-
   return (
     <ChatContainer visible={visible} as={as} style={style}>
-      <Header visible={visible} text={textForHeader} toggleReceiver={toggleReceiver} />
+      <ConversationsHeader visible={visible} toggleReceiver={toggleReceiver} />
 
       <RelayRelativeContainer>
         {(isUserConnected || (isConnected && userDidConnect)) ? (
-          <Messages onXmptReady={handleOnXmtpReady} />
+          <Conversations />
         ) : (
           <Card title='Connect your wallet to start a converation!'>
             <ConnectorList>

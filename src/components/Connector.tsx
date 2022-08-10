@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import LoadingText from './LoadingText';
+import LoadingText from './Receiver/LoadingText';
 import React from 'react'
 
 interface ConnectorProps {

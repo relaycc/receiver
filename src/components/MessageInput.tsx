@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import MessageSend from '../../assets/images/MessageSend.svg';
+import MessageSend from '../assets/images/MessageSend.svg';
 import React, { useCallback } from 'react';
 
 interface MessageInputProps {

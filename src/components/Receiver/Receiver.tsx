@@ -3,7 +3,7 @@ import ReceiverContainer from './ReceiverContainer';
 import WagmiWrapper from '../WagmiWrapper';
 import { Signer } from 'ethers';
 import { Interpolation } from 'styled-components';
-import ReceiverContext from './ReceiverContext';
+import ReceiverContext from '../ReceiverContext';
 import ChatBox from './ChatBox';
 import CSS from 'csstype';
 import styled from 'styled-components';
@@ -32,7 +32,6 @@ const Receiver = ({children, signer, receiverContainerStyle}: ReceiverProps) => 
     transition: 'max-height 0.25s ease-in',
     zIndex: 1000
   }
-
 
   return (
     <WagmiWrapper>

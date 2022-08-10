@@ -1,9 +1,7 @@
 import create from 'zustand'
 import { Client, Conversation, Message } from '@xmtp/xmtp-js';
 import { Signer } from 'ethers';
-import { getAddress } from '@ethersproject/address'
 import { initialize } from '../xmtp-react/initialize';
-import { useImmer } from 'use-immer';
 import { GroupMessage } from '../xmtp-react/groups';
 import { useEnsName  } from 'wagmi';
 
@@ -54,7 +52,7 @@ export const receiverStore = create<ReceiverState>((set, get) => ({
 
   xmtpInit: (wallet) => {
     initializeXmtp(wallet, get().peerAddress);
-  }
+  },
 }))
 
 const initializeXmtp = async(wallet: Signer, peerAddress: string | null) => {

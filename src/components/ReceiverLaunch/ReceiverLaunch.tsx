@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import styled, { Interpolation } from 'styled-components';
 import Logo from '../../assets/images/logo2.svg';
-import ReceiverContext from "../Receiver/ReceiverContext";
+import ReceiverContext from "../ReceiverContext";
 import { receiverStore } from '../../store';
 import { getAddress } from '@ethersproject/address'
 
