@@ -33,10 +33,10 @@ export const initialize = async (
     /*
      * Load all existing conversations and messages
      */
-    const conversations = await client.conversations.list();
-    /*const conversations = allConversations.filter((conversation) => 
+    const allConversations = await client.conversations.list();
+    const conversations = allConversations.filter((conversation) => 
       conversation.peerAddress == peerAddress
-    )*/
+    )
 
     onConversationsLoaded(conversations);
     for (const conversation of conversations) {
