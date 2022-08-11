@@ -42,7 +42,7 @@ const ChatBox = ({ style, isUserConnected, visible, as, toggleReceiver, closeRec
       // Initialize XMTP once the wallet is connected.
       xmtpInit(wallet);
     }
-  }, [wallet, isConnected, userDidConnect])
+  }, [wallet, isConnected, userDidConnect, peerAddress])
 
   const sendMessage = useSendMessage();
 
