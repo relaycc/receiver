@@ -99,7 +99,7 @@ const ChatBox = ({ style, isUserConnected, visible, as, toggleReceiver, closeRec
       <Header visible={visible} peerName={peerName} peerAddress={peerAddress} text={textForHeader} closeReceiver={ closeReceiver } toggleReceiver={toggleReceiver} />
 
       <RelayRelativeContainer>
-        {(isUserConnected || (isConnected && userDidConnect)) ? (
+        {((isUserConnected || isConnected) && userDidConnect) ? (
           <Messages onXmptReady={handleOnXmtpReady} />
         ) : (
           <Card title='Connect your wallet to start a converation!'>

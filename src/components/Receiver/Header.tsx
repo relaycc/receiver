@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import CloseReceiverLine from '../../assets/images/close-receiver-line.svg';
 import CloseReceiverX from '../../assets/images/close-x.svg'
+import ArrowUp from '../../assets/images/arrowUp.svg'
+
 import React from 'react';
 import { truncated } from '../../utls/strings';
 
@@ -50,19 +52,30 @@ export default function RelayHeader({
   }
 
   return (
-    <Header onClick={toggleReceiver}>
+    <Header>
       { headerText() }
       
-      { visible && 
-        <Minimizeontainer>
+      { visible ? (
+        <MinimizeContainer>
           <img
             src={CloseReceiverLine}
             width={12}
             height={13}
             alt="relay"
+            onClick={toggleReceiver}
           />
-        </Minimizeontainer>
-      }
+        </MinimizeContainer>
+      ) : (
+        <MinimizeContainer>
+          <img
+            src={ArrowUp}
+            width={18}
+            height={13}
+            alt="relay"
+            onClick={toggleReceiver}
+          />
+        </MinimizeContainer>
+      )}
 
       <CloseContainer>
         <img
@@ -88,10 +101,6 @@ const Header = styled.div`
   z-index: 1000;
   text-align: left;
   border-radius: 20px 20px 0 0;
-  
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
 const TextContainer = styled.div`
@@ -130,10 +139,18 @@ const CloseContainer = styled.div`
   position: absolute;
   right: 25px;
   top: 33px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
-const Minimizeontainer = styled.div`
+const MinimizeContainer = styled.div`
   position: absolute;
   right: 55px;
   top: 33px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
