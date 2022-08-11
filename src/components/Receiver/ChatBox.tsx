@@ -38,11 +38,11 @@ const ChatBox = ({ style, isUserConnected, visible, as, toggleReceiver, closeRec
   const { data: wallet } = useSigner();
 
   useEffect(() => {
-    if (isConnected && wallet) {
+    if (userDidConnect && isConnected && wallet) {
       // Initialize XMTP once the wallet is connected.
       xmtpInit(wallet);
     }
-  }, [wallet, isConnected])
+  }, [wallet, isConnected, userDidConnect])
 
   const sendMessage = useSendMessage();
 
