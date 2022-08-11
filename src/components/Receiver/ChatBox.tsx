@@ -24,9 +24,10 @@ interface ChatButtonProps {
   style?: Interpolation<React.CSSProperties>;
   isUserConnected: boolean;
   toggleReceiver: () => unknown;
+  closeReceiver: () => unknown;
 }
 
-const ChatBox = ({ style, isUserConnected, visible, as, toggleReceiver}: ChatButtonProps) => {
+const ChatBox = ({ style, isUserConnected, visible, as, toggleReceiver, closeReceiver}: ChatButtonProps) => {
   const { peerAddress, peerName, xmtpInit } = receiverStore();
   
   const isMetaMask = useIsMetaMask();
@@ -91,11 +92,11 @@ const ChatBox = ({ style, isUserConnected, visible, as, toggleReceiver}: ChatBut
     [sendMessage, peerAddress]
   );
 
-  const textForHeader = (isUserConnected || (isConnected && userDidConnect)) ? peerName : 'Relay Receiver';
+  const textForHeader = (isUserConnected || (isConnected && userDidConnect)) ? null : 'Relay Receiver';
 
   return (
     <ChatContainer visible={visible} as={as} style={style}>
-      <Header visible={visible} text={textForHeader} toggleReceiver={toggleReceiver} />
+      <Header visible={visible} peerName={peerName} peerAddress={peerAddress} text={textForHeader} closeReceiver={ closeReceiver } toggleReceiver={toggleReceiver} />
 
       <RelayRelativeContainer>
         {(isUserConnected || (isConnected && userDidConnect)) ? (
@@ -182,7 +183,7 @@ const RelayRelativeContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: #FBFAFF;
 `;
 
 const RelayFooter = styled.div`
@@ -192,10 +193,10 @@ const RelayFooter = styled.div`
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
-  height: 35px;
+  height: 45px;
   width: 100%;
-  background: #F7F7F7;
-  line-height: 35px;
+  background-color: #FBFAFF;
+  line-height: 45px;
 
   img {
     display:inline-block;

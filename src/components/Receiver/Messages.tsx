@@ -71,7 +71,7 @@ const Messages = ({ onXmptReady }: MessagesProps) => {
       <LoadingMessages />
     );
   } else if (xmtpStatus === Status.ready && peerIsAvailable === true) {
-    if (buckets.length > 0) {
+    if (messageArray.length > 0) {
       return (    
         <List>
           {buckets.map((bucket, index) => {

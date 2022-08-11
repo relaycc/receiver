@@ -42,7 +42,6 @@ const Header = styled.div`
   background-color: #F7F7F7;
   font-size: 16px;
   font-weight: 600;
-  padding: 13px 16px;
   font-family: 'Inter', sans-serif;;
   padding: 24px;
   font-family: 'Inter',sans-serif;

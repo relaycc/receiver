@@ -36,13 +36,13 @@ export const initialize = async (
     /*
      * Load all existing conversations and messages
      */
-    /*const allConversations = await client.conversations.list();
+    const allConversations = await client.conversations.list();
     const conversations = allConversations.filter((conversation) => 
       conversation.peerAddress == peerAddress
-    )*/
+    )
 
-    let conversations: Conversation[] = []
-    peerAddress && conversations.push(await client.conversations.newConversation(peerAddress));
+    /*let conversations: Conversation[] = []
+    peerAddress && conversations.push(await client.conversations.newConversation(peerAddress));*/
 
     onConversationsLoaded(conversations);
     for (const conversation of conversations) {
@@ -76,6 +76,7 @@ export const initialize = async (
       streamConversation(conversation, onNewMessage, onNewGroupMessage);
     }
 
+
   } catch (error) {
     onClientError(error);
   }
@@ -90,7 +91,7 @@ const loadConversation = async (
 ) => {
   // TODO This might be a bug in XMTP, reach out to them.
   await new Promise((_) => setTimeout(_, waitForMessagesMs));
-  const messages = await conversation.messages({ pageSize: 100 });
+  const messages = await conversation.messages({ pageSize: 10 });
   for (const message of messages) {
     if (isGroupMessage(message)) {
       onNewGroupMessage(message);

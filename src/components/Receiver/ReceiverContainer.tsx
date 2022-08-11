@@ -32,10 +32,10 @@ const ReceiverContainer = ({ signer, children, receiverContainerStyle }: Receive
   }
 
   return (
-    <ReceiverContext.Provider value={{ toggle: toggle }}>
+    <ReceiverContext.Provider value={{ toggle: toggle, close: close }}>
       <Container>
         <div style={chatBoxContainerStyle}>
-          <ChatBox  isUserConnected={signer != undefined} style={receiverContainerStyle} toggleReceiver={toggle} visible={showBox}></ChatBox>
+          <ChatBox  isUserConnected={signer != undefined} style={receiverContainerStyle} closeReceiver={close} toggleReceiver={toggle} visible={showBox}></ChatBox>
         </div>
       </Container>
       { children }
