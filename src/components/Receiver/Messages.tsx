@@ -23,7 +23,7 @@ const Messages = ({ onXmptReady }: MessagesProps) => {
   console.log('MESSAGES');
   const [messages, setMessages] = useState<Record<string, Message>>({});
   const [messagesHaveBeenCalculated, setMessagesHaveBeenCalculated] = useState<boolean>(false);
-  const messageArray = Object.values(messages).reverse();
+  const messageArray = messages ? Object.values(messages).reverse() : [];
   const buckets = getMessageBuckets(messageArray);
 
   useEffect(() => {

@@ -46,7 +46,7 @@ export const receiverStore = create<ReceiverState>((set, get) => ({
         address: address,
       })
 
-      set({ peerAddress: address, peerName: ensName ? ensName : address });
+      set({ peerAddress: address, peerName: ensName ? ensName : null });
     }
   },
 
