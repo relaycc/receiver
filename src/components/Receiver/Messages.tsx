@@ -16,19 +16,19 @@ interface MessagesProps {
 }
 
 const Messages = ({ onXmptReady }: MessagesProps) => {
-  const { peerAddress, peerName, peerIsAvailable, messages: allMessages, conversations } = receiverStore();
+  const { xmtpStatus, client, peerAddress, peerName, peerIsAvailable, messages: allMessages, conversations } = receiverStore();
   console.log(conversations);
   console.log('CONVOS');
   console.log(allMessages);
   console.log('MESSAGES');
-  const { xmtpStatus, client } = receiverStore();
   const [messages, setMessages] = useState<Record<string, Message>>({});
-  
+  const [messagesHaveBeenCalculated, setMessagesHaveBeenCalculated] = useState<boolean>(false);
   const messageArray = Object.values(messages).reverse();
   const buckets = getMessageBuckets(messageArray);
 
   useEffect(() => {
     if (xmtpStatus === Status.ready && peerAddress && client) {
+      setMessagesHaveBeenCalculated(true);
       setMessages(allMessages[peerAddress])
       onXmptReady(peerIsAvailable);
     };
@@ -70,7 +70,7 @@ const Messages = ({ onXmptReady }: MessagesProps) => {
     return (
       <LoadingMessages />
     );
-  } else if (xmtpStatus === Status.ready && peerIsAvailable === true) {
+  } else if (messagesHaveBeenCalculated) {
     if (messageArray.length > 0) {
       return (    
         <List>

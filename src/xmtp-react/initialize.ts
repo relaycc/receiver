@@ -64,6 +64,8 @@ export const initialize = async (
     /*
      * Stream new conversations
      */
+    /*
+    /// TODO Uncomment this for multiple convos
     const conversationsStream = await client.conversations.stream();
     for await (const conversation of conversationsStream) {
       loadConversation(
@@ -74,7 +76,7 @@ export const initialize = async (
         2000
       );
       streamConversation(conversation, onNewMessage, onNewGroupMessage);
-    }
+    }*/
 
 
   } catch (error) {
