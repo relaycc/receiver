@@ -172,7 +172,7 @@ const ChatContainer = styled.div<ChatButtonProps>`
   z-index: 1000;
   width: 375px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 8px 8px 0 0;
+  border-radius: 20px 20px 0 0;
   ${({ style }) => style };
 `;
 
