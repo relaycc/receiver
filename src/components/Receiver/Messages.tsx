@@ -16,7 +16,7 @@ interface MessagesProps {
 }
 
 const Messages = ({ onXmptReady }: MessagesProps) => {
-  const { xmtpStatus, client, peerAddress, peerName, peerIsAvailable, messages: allMessages, conversations } = receiverStore();
+  const { xmtpStatus, client, peerAddress, peerName, messages: allMessages, conversations } = receiverStore();
   console.log(conversations);
   console.log('CONVOS');
   console.log(allMessages);
@@ -25,12 +25,20 @@ const Messages = ({ onXmptReady }: MessagesProps) => {
   const [messagesHaveBeenCalculated, setMessagesHaveBeenCalculated] = useState<boolean>(false);
   const messageArray = messages ? Object.values(messages).reverse() : [];
   const buckets = getMessageBuckets(messageArray);
+  const [peerIsAvailable, setPeerIsAvailable] = useState<boolean>(false);
 
   useEffect(() => {
     if (xmtpStatus === Status.ready && peerAddress && client) {
-      setMessagesHaveBeenCalculated(true);
       setMessages(allMessages[peerAddress])
-      onXmptReady(peerIsAvailable);
+
+      const fetchPeerAvailability = async () => {
+        const available = await client.canMessage(peerAddress);
+        setPeerIsAvailable(available)
+        onXmptReady(available);
+        setMessagesHaveBeenCalculated(true);
+      }
+      
+      fetchPeerAvailability();
     };
   }, [xmtpStatus, peerAddress, client]);
   
@@ -40,7 +48,7 @@ const Messages = ({ onXmptReady }: MessagesProps) => {
         <Text>Make sure to include the ".eth" suffix.</Text>
       </Card>
     );
-  } else if (peerIsAvailable === false) {
+  } else if (messagesHaveBeenCalculated && peerIsAvailable === false) {
     return (
       <Card title="User not on network">
         <Text>This user is not on the XMTP messaging network yet.</Text>

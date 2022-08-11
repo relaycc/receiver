@@ -12,7 +12,7 @@ import { receiverStore } from '../../store';
 import ConversationCard from './ConversationCard';
 
 const Messages = () => {
-  const { xmtpStatus, client, peerName, peerIsAvailable, conversations } = receiverStore();
+  const { xmtpStatus, client, peerName, conversations } = receiverStore();
   
   const conversationArray = Object.values(conversations).reverse();
   console.log(conversationArray);

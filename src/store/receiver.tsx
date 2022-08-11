@@ -22,7 +22,6 @@ interface ReceiverState {
   groupMessages: Record<string, Record<string, GroupMessage>>,
   messages: Record<string, Record<string, Message>>,
   peerAddress: string | null,
-  peerIsAvailable: boolean,
   peerName: string | null,
   xmtpStatus: Status,
   setPeerAddress: (address: string) => void,
@@ -36,7 +35,6 @@ export const receiverStore = create<ReceiverState>((set, get) => ({
   groupMessages: {},
   messages: {},
   peerAddress: null,
-  peerIsAvailable: true,
   peerName: null,
   xmtpStatus: Status.disconnected,
   
@@ -44,9 +42,9 @@ export const receiverStore = create<ReceiverState>((set, get) => ({
     if (get().peerAddress !== address) {
       const { data: ensName } = useEnsName({
         address: address,
-      })
+      })      
 
-      set({ peerAddress: address, peerName: ensName ? ensName : null });
+      set({ peerAddress: address, peerName: ensName ? ensName : null});
     }
   },
 
@@ -86,9 +84,8 @@ const handleClientWaitingForSignature = () => {
 
 const handleClientConnect = async (client: Client) => {
   const { peerAddress } = receiverStore.getState();
-  const peerIsAvailable = (client && peerAddress) ? await client.canMessage(peerAddress) : false;
  
-  receiverStore.setState({client: client, peerIsAvailable: peerIsAvailable, xmtpStatus: Status.loading});
+  receiverStore.setState({client: client, xmtpStatus: Status.loading});
 };
 
 const handleClientError = (error: unknown) => {
