@@ -4,6 +4,7 @@ import Logo from '../../assets/images/logo2.svg';
 import ReceiverContext from "../ReceiverContext";
 import { receiverStore } from '../../store';
 import { getAddress } from '@ethersproject/address'
+import { useEnsName } from 'wagmi';
 
 interface ButtonProps {
   launchText: string;
@@ -17,15 +18,27 @@ interface ButtonProps {
 const ReceiverLaunch = ({ peerAddress = '0x45c9a201e2937608905fef17de9a67f25f9f98e0', inlineLaunch, launchText, launchButtonStyle, as }: ButtonProps) => {
   const receiverContext = useContext(ReceiverContext);
   const { setPeerAddress } = receiverStore();
-
-  setPeerAddress(getAddress(peerAddress));
+  const formattedAddress = getAddress(peerAddress)
+  const { data: ensName } = useEnsName({
+    address: formattedAddress,
+  })    
   
+  useEffect(() => {
+    ensName ? setPeerAddress(formattedAddress, ensName) : setPeerAddress(formattedAddress, '');
+  }, [formattedAddress])
+  
+
+  const handleToggle = () => {
+    receiverContext.toggle();
+  }
+
+
   return (
     inlineLaunch ? (
-      <InlineLogo as={as} style={launchButtonStyle} onClick={() => receiverContext.toggle()}>
+      <InlineLogo as={as} style={launchButtonStyle} onClick={ handleToggle }>
       </InlineLogo>
     ) : (
-      <ButtonElem onClick={() => receiverContext.toggle()} as={as} style={launchButtonStyle}>
+      <ButtonElem onClick={ handleToggle } as={as} style={launchButtonStyle}>
         { launchText }
       </ButtonElem>
     )

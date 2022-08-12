@@ -27,7 +27,7 @@ interface ReceiverState {
   peerName: string | null,
   xmtpStatus: Status,
   wallet: Signer | null,
-  setPeerAddress: (address: string) => void,
+  setPeerAddress: (address: string, name: string | null) => void,
   setXmtpConnected: (wallet: Signer) => void,
   xmtpInit: (wallet: Signer) => void,
 }
@@ -68,12 +68,8 @@ export const receiverStore = create<ReceiverState>((set, get) => ({
     }
   },
 
-  setPeerAddress: (address) => {
-    if (get().peerAddress !== address) {
-      const { data: ensName } = useEnsName({
-        address: address,
-      })      
-
+  setPeerAddress: (address, name) => {
+    if (get().peerAddress !== address) {  
       const client = get().client;
 
       if (client) {
@@ -88,7 +84,7 @@ export const receiverStore = create<ReceiverState>((set, get) => ({
         );
       }
 
-      set({ peerAddress: address, peerName: ensName ? ensName : null});
+      set({ peerAddress: address, peerName: name ? name : null});
     }
   },
 
