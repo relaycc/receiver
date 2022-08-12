@@ -41,7 +41,7 @@ export default function Avatar(props: AvatarProps) {
 }
 
 const AvatarImage = styled.img<{ size?: 'large' | 'small' | 'medium' }>`
-  border-radius: 50%;
+  border-radius: 16px;
   width: ${(p) => (p.size === 'large' ? '40px' : '40px')};
   height: ${(p) => (p.size === 'large' ? '40px' : '40px')};
 `;
@@ -49,6 +49,6 @@ const AvatarImage = styled.img<{ size?: 'large' | 'small' | 'medium' }>`
 const AvatarBlockieContainer = styled.div`
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: 16px;
   overflow: hidden;
 `;
