@@ -26,14 +26,17 @@ const TextWrapper = styled.div<{ sentByMe: boolean }>`
   padding: 10px;
   border-radius: 8px;
   width: 100%;
-  background-color: ${(props) => (props.sentByMe ? '#5A46C6' : '#F7F7F7')};
-  border-radius: ${(props) => (props.sentByMe ? '8px 8px 0px 8px' : '8px 8px 8px 0px')};
+  background-color: ${(props) => (props.sentByMe ? '#5A46C6' : '#F8F7FF')};
+  border-radius: ${(props) => (props.sentByMe ? '16px 16px 4px 16px' : '16px 16px 16px 4px')};
+  border: ${(props) => (props.sentByMe ? '1px solid rgba(255, 255, 255, 0.2)' : '1px solid #FBFBFB')};
+  box-shadow: ${(props) => (props.sentByMe ? '0px 0px 4px rgba(0, 0, 0, 0.1)' : '0px 0px 4px rgba(0, 0, 0, 0.1)')};
+
   hyphens: auto;
 `;
 
 const MessageText = styled.div<{ sentByMe: boolean }>`
-  color: ${(props) => (props.sentByMe ? 'white' : '#000000')};
-  font-family: sans-serif;
+  color: ${(props) => (props.sentByMe ? '#FFFFFF' : '#060028')};
+  font-family: 'Circular Std', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -42,8 +45,8 @@ const MessageText = styled.div<{ sentByMe: boolean }>`
 `;
 
 const MessageTime = styled.div<{ sentByMe: boolean }>`
-  color: ${(props) => (props.sentByMe ? 'white' : '#333333')};
-  font-family: sans-serif;
+  color: ${(props) => (props.sentByMe ? '#CFC6FF' : '#4E4773')};
+  font-family: 'Circular Std', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 10px;
