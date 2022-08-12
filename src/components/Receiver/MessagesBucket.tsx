@@ -37,7 +37,7 @@ export default function MessagesBucket(props: MessagesBucketProps) {
 }
 
 const BucketTimestamp = styled.div`
-  font-family: 'Inter', sans-serif;
+  font-family: 'Circular Std', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 10px;
