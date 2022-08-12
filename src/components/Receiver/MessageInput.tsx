@@ -56,8 +56,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   height: 45px;
-  background: #F7F7F7;
-  backdrop-filter: blur(100px);
+  background-color: #F3F0FF;
   padding-left: 20px;
   padding-right: 20px;
   gap: 20px;
@@ -71,7 +70,7 @@ const Container = styled.div`
 const StyledInput = styled.input`
   flex: 1;
   border-radius: 2px;
-  background-color: transparent;
+  background-color: #F3F0FF;
   border: none;
   outline: none;
   &::placeholder {
@@ -80,12 +79,16 @@ const StyledInput = styled.input`
     font-family: sans-serif;
   }
   color: #333333;
-  font-family: sans-serif;
+  font-family: 'Circular Std', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;
   letter-spacing: 1px;
+
+  &::placeholder {
+    color: #C8C1F2;
+  }
 `;
 
 const SvgContainer = styled.div<StyleProps>`
