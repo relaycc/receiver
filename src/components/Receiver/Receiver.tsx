@@ -72,9 +72,14 @@ const Receiver = ({ signer, children, receiverContainerStyle }: ConfigProps) => 
     if (!hasLaunched) setHasLaunched(true);
   };
 
+  const close = () => {
+    setShowBox(false);
+    setHasLaunched(false);
+  }
+
   const chatBoxContainerStyle:CSS.Properties = {
-    maxHeight: showBox ? '480px' : (hasLaunched ? '62px' : '0px'),
-    height: '480px', 
+    maxHeight: showBox ? '500px' : (hasLaunched ? '80px' : '0px'),
+    height: '500px', 
     position: 'fixed', 
     bottom: '0px', 
     right: '150px',
@@ -85,10 +90,10 @@ const Receiver = ({ signer, children, receiverContainerStyle }: ConfigProps) => 
   return (
     <WagmiConfig client={wagmi}>
       <XmtpContextProvider connectedWallet={signer} peerAddress={peerAddress}>
-        <ReceiverContext.Provider value={{ setPeerAddress: convertAndSetPeerAddress, toggle: toggle }}>
+        <ReceiverContext.Provider value={{ setPeerAddress: convertAndSetPeerAddress, close: close, toggle: toggle }}>
           <Container>
             <div style={chatBoxContainerStyle}>
-              <ChatBox isUserConnected={signer != undefined} style={receiverContainerStyle} toggleReceiver={toggle} peerAddress={peerAddress} visible={showBox}></ChatBox>
+              <ChatBox isUserConnected={signer != undefined} style={receiverContainerStyle} closeReceiver={ close } toggleReceiver={toggle} peerAddress={peerAddress} visible={showBox}></ChatBox>
             </div>
           </Container>
           { children }
