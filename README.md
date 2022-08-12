@@ -1,10 +1,10 @@
 ### Install
 ```
-npm i --save-dev @daopanel/receiver @xmtp/xmtp-js use-immer wagmi styled-components
+npm i @daopanel/receiver @xmtp/xmtp-js use-immer wagmi styled-components
 ```
 OR
 ```
-yarn add --dev @daopanel/receiver @xmtp/xmtp-js use-immer wagmi styled-components
+yarn add @daopanel/receiver @xmtp/xmtp-js use-immer wagmi styled-components
 ```
 ### Configure
 ```
