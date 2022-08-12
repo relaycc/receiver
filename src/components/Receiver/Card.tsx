@@ -15,7 +15,7 @@ export default function Card({children, title}: CardProps) {
 }
 
 const CardContainer = styled.div`
-  background: #F7F7F7;
+  background: #FBFAFF;
   border: 1px dashed #A6A6A6;
   border-radius: 8px;
   width: 227px;

@@ -218,7 +218,7 @@ const Connector = styled.div`
   width: 206px;
   height: 58px;
   border-radius: 5px;
-  background: white;
+  background: #FBFAFF;
   justify-content: space-between;
   display: flex;
   align-items: center;
