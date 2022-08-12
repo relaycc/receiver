@@ -11,6 +11,7 @@ interface HeaderProps {
   peerAddress: string | null;
   peerName: string | null;
   toggleReceiver: () => unknown;
+  closeReceiver: () => unknown;
 }
 
 export default function RelayHeader({
@@ -18,8 +19,18 @@ export default function RelayHeader({
   visible,
   peerAddress,
   peerName,
-  toggleReceiver
+  toggleReceiver,
+  closeReceiver
 }: HeaderProps) {
+
+const truncated = (str: string):string => {
+  if (str.length < 13) {
+    return str;
+  } else {
+    return str.slice(0, 6) + '...' + str.slice(-4);
+  }
+}
+
   const headerText = () => {
     if (text) {
       return (
