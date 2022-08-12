@@ -5,30 +5,80 @@ import React from 'react'
 interface HeaderProps {
   text?: string;
   visible: boolean;
+  peerAddress: string;
+  peerName?: string;
   toggleReceiver: () => unknown;
 }
 
 export default function RelayHeader({
   text = 'Relay Receiver',
   visible,
+  peerAddress,
+  peerName,
   toggleReceiver
 }: HeaderProps) {
+  const headerText = () => {
+    if (text) {
+      return (
+        <SoloTextContainer>
+          {text}
+        </SoloTextContainer>
+    )}
+
+    if (peerName) {
+      return (
+        <TextContainer>
+          <MainText>
+            {peerName}
+          </MainText>
+          <SubText>
+            {peerAddress && truncated(peerAddress)}
+          </SubText>
+        </TextContainer>
+      )
+    } else {
+      return (
+        <SoloTextContainer>
+          {peerAddress && truncated(peerAddress)}
+        </SoloTextContainer>
+    )}
+  }
+
   return (
-    <Header onClick={toggleReceiver}>
-      <TextContainer>
-        {text}
-      </TextContainer>
+    <Header>
+      { headerText() }
       
-      { visible && 
-        <CloseContainer>
+      { visible ? (
+        <MinimizeContainer>
           <img
             src={CloseReceiverLine}
-            width={22}
-            height={20}
+            width={12}
+            height={13}
             alt="relay"
+            onClick={toggleReceiver}
           />
-        </CloseContainer>
-    }
+        </MinimizeContainer>
+      ) : (
+        <MinimizeContainer>
+          <img
+            src={ArrowUp}
+            width={18}
+            height={13}
+            alt="relay"
+            onClick={toggleReceiver}
+          />
+        </MinimizeContainer>
+      )}
+
+      <CloseContainer>
+        <img
+          src={CloseReceiverX}
+          width={13}
+          height={13}
+          alt="relay"
+          onClick={closeReceiver}
+        />
+      </CloseContainer>
 
     </Header>
   );
@@ -36,20 +86,14 @@ export default function RelayHeader({
 
 const Header = styled.div`
   background-color: #5A46C6;
-  color: white;
+  color: #F7F7F7;
   font-size: 16px;
   font-weight: 600;
-  padding: 10px 24px;
-  font-family: 'Inter', sans-serif;;
-  padding: 24px;
-  font-family: 'Inter',sans-serif;
+  padding: 22px;
+  font-family: 'Circular Std', sans-serif;;
   z-index: 1000;
   text-align: left;
-  border-radius: 8px 8px 0 0;
-  
-  &:hover {
-    cursor: pointer;
-  }
+  border-radius: 20px 20px 0 0;
 `;
 
 const TextContainer = styled.div`
@@ -59,8 +103,47 @@ const TextContainer = styled.div`
   text-overflow: ellipsis;
 `;
 
+const SoloTextContainer = styled.div`
+  margin-right: 35px;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 10px 0;
+`;
+
+const MainText = styled.div`
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  padding-bottom: 4px;
+  color: #F7F7F7;
+`;
+
+const SubText = styled.div`
+  font-weight: 450;
+  font-size: 10px;
+  line-height: 15px;
+  color: #F7F7F7;
+`;
+
 const CloseContainer = styled.div`
   position: absolute;
   right: 25px;
-  top: 22px;
+  top: 33px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const MinimizeContainer = styled.div`
+  position: absolute;
+  right: 55px;
+  top: 33px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
