@@ -40,7 +40,7 @@ const Messages = ({ onXmptReady }: MessagesProps) => {
       
       fetchPeerAvailability();
     };
-  }, [xmtpStatus, peerAddress, client]);
+  }, [xmtpStatus, peerAddress]);
   
   if (typeof peerAddress !== 'string') {
     return (

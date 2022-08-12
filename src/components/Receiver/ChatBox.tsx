@@ -28,7 +28,7 @@ interface ChatButtonProps {
 }
 
 const ChatBox = ({ style, isUserConnected, visible, as, toggleReceiver, closeReceiver}: ChatButtonProps) => {
-  const { peerAddress, peerName, xmtpInit } = receiverStore();
+  const { peerAddress, peerName, setXmtpConnected } = receiverStore();
   
   const isMetaMask = useIsMetaMask();
   const [xmtpReady, setXmptReady] = useState<boolean>(false);
@@ -38,11 +38,11 @@ const ChatBox = ({ style, isUserConnected, visible, as, toggleReceiver, closeRec
   const { data: wallet } = useSigner();
 
   useEffect(() => {
-    if (userDidConnect && isConnected && wallet) {
+    if (wallet) {
       // Initialize XMTP once the wallet is connected.
-      xmtpInit(wallet);
+      setXmtpConnected(wallet);
     }
-  }, [wallet, isConnected, userDidConnect, peerAddress])
+  }, [wallet])
 
   const sendMessage = useSendMessage();
 

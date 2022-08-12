@@ -2,6 +2,8 @@ import create from 'zustand'
 import { Client, Conversation, Message } from '@xmtp/xmtp-js';
 import { Signer } from 'ethers';
 import { initialize } from '../xmtp-react/initialize';
+import { initializeMessages } from '../xmtp-react/messages/initialize';
+
 import { GroupMessage } from '../xmtp-react/groups';
 import { useEnsName  } from 'wagmi';
 
@@ -24,7 +26,9 @@ interface ReceiverState {
   peerAddress: string | null,
   peerName: string | null,
   xmtpStatus: Status,
+  wallet: Signer | null,
   setPeerAddress: (address: string) => void,
+  setXmtpConnected: (wallet: Signer) => void,
   xmtpInit: (wallet: Signer) => void,
 }
 
@@ -37,34 +41,68 @@ export const receiverStore = create<ReceiverState>((set, get) => ({
   peerAddress: null,
   peerName: null,
   xmtpStatus: Status.disconnected,
-  
+  wallet: null,
+
+  setXmtpConnected: async (wallet: Signer) => {
+    set({ wallet: wallet })
+
+    // initialize xmtp 
+    if (get().peerAddress && wallet) {
+      console.log('i made it this far')
+      await initializeXmtp(wallet);
+
+      const client = get().client;
+      const address = get().peerAddress;
+      console.log(client);
+      if (address && client) {
+        initializeMessages(
+          client, 
+          address, 
+          handleNewConversation,
+          handleConversationsLoaded,
+          handleNewMessage,
+          handleNewGroupMessage,
+          handleMessagesLoaded
+        );
+      }
+    }
+  },
+
   setPeerAddress: (address) => {
     if (get().peerAddress !== address) {
       const { data: ensName } = useEnsName({
         address: address,
       })      
 
+      const client = get().client;
+
+      if (client) {
+        initializeMessages(
+          client, 
+          address, 
+          handleNewConversation,
+          handleConversationsLoaded,
+          handleNewMessage,
+          handleNewGroupMessage,
+          handleMessagesLoaded
+        );
+      }
+
       set({ peerAddress: address, peerName: ensName ? ensName : null});
     }
   },
 
   xmtpInit: (wallet) => {
-    initializeXmtp(wallet, get().peerAddress);
+    initializeXmtp(wallet);
   },
 }))
 
-const initializeXmtp = async(wallet: Signer, peerAddress: string | null) => {
+const initializeXmtp = async(wallet: Signer) => {
   await initialize(
     wallet,
-    peerAddress,
     handleClientWaitingForSignature,
     handleClientConnect,
-    handleClientError,
-    handleNewConversation,
-    handleConversationsLoaded,
-    handleNewMessage,
-    handleNewGroupMessage,
-    handleMessagesLoaded
+    handleClientError
   );
 }
 
