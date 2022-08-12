@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 import CloseReceiverLine from '../../assets/images/close-receiver-line.svg';
+import CloseReceiverX from '../../assets/images/close-x.svg';
+import ArrowUp from '../../assets/images/arrowUp.svg';
+
 import React from 'react'
 
 interface HeaderProps {
-  text?: string;
+  text: string | null;
   visible: boolean;
-  peerAddress: string;
-  peerName?: string;
+  peerAddress: string | null;
+  peerName: string | null;
   toggleReceiver: () => unknown;
 }
 
