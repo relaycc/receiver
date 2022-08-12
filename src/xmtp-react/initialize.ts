@@ -20,7 +20,6 @@ export const initialize = async (
     /*
      * Initialize client...
      */
-    console.log('im trying to create')
     const client = await Client.create(wallet, {
       codecs: [gmc],
       env: 'production'

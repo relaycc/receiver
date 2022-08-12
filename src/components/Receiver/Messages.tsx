@@ -17,10 +17,6 @@ interface MessagesProps {
 
 const Messages = ({ onXmptReady }: MessagesProps) => {
   const { xmtpStatus, client, peerAddress, peerName, messages: allMessages, conversations } = receiverStore();
-  console.log(conversations);
-  console.log('CONVOS');
-  console.log(allMessages);
-  console.log('MESSAGES');
   const [messages, setMessages] = useState<Record<string, Message>>({});
   const [messagesHaveBeenCalculated, setMessagesHaveBeenCalculated] = useState<boolean>(false);
   const messageArray = messages ? Object.values(messages).reverse() : [];
@@ -30,7 +26,7 @@ const Messages = ({ onXmptReady }: MessagesProps) => {
   useEffect(() => {
     if (xmtpStatus === Status.ready && peerAddress && client) {
       setMessages(allMessages[peerAddress])
-
+      
       const fetchPeerAvailability = async () => {
         const available = await client.canMessage(peerAddress);
         setPeerIsAvailable(available)

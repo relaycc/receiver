@@ -48,12 +48,10 @@ export const receiverStore = create<ReceiverState>((set, get) => ({
 
     // initialize xmtp 
     if (get().peerAddress && wallet) {
-      console.log('i made it this far')
       await initializeXmtp(wallet);
 
       const client = get().client;
       const address = get().peerAddress;
-      console.log(client);
       if (address && client) {
         initializeMessages(
           client, 
@@ -73,15 +71,19 @@ export const receiverStore = create<ReceiverState>((set, get) => ({
       const client = get().client;
 
       if (client) {
-        initializeMessages(
-          client, 
-          address, 
-          handleNewConversation,
-          handleConversationsLoaded,
-          handleNewMessage,
-          handleNewGroupMessage,
-          handleMessagesLoaded
-        );
+       if (!get().conversations[address]) {
+        set({xmtpStatus: Status.loading});
+
+          initializeMessages(
+            client, 
+            address, 
+            handleNewConversation,
+            handleConversationsLoaded,
+            handleNewMessage,
+            handleNewGroupMessage,
+            handleMessagesLoaded
+          );
+        }
       }
 
       set({ peerAddress: address, peerName: name ? name : null});
