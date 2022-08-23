@@ -113,6 +113,7 @@ const List = styled.div`
   overflow: scroll;
   gap: 0.75rem;
   width: 100%;
+  height: 100%;
   z-index: 10;
   max-height: 345px;
   padding: 12px;
