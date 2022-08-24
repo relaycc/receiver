@@ -50,7 +50,7 @@ export default function RelayHeader({
       {headerText()}
 
       {visible ? (
-        <MinimizeContainer>
+        <MinimizeContainerLine>
           <img
             src={CloseReceiverLine}
             width={12}
@@ -58,7 +58,7 @@ export default function RelayHeader({
             alt="relay"
             onClick={toggleReceiver}
           />
-        </MinimizeContainer>
+        </MinimizeContainerLine>
       ) : (
         <MinimizeContainer>
           <img
@@ -140,9 +140,13 @@ const CloseContainer = styled.div`
 const MinimizeContainer = styled.div`
   position: absolute;
   right: 55px;
-  top: 38px;
+  top: 33px;
 
   &:hover {
     cursor: pointer;
   }
+`;
+
+const MinimizeContainerLine = styled(MinimizeContainer)`
+  top: 38px;
 `;
