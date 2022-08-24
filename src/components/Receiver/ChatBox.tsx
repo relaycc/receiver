@@ -169,7 +169,7 @@ const ChatContainer = styled.div<ChatButtonProps>`
   z-index: 1000;
   width: 375px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 20px 20px 0 0;
+  border-radius: 4px 4px 0 0;
   ${({ style }) => style };
 `;
 
@@ -180,7 +180,7 @@ const RelayRelativeContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #FBFAFF;
+  /* background-color: #FBFAFF; */
 `;
 
 const RelayFooter = styled.div`
@@ -192,7 +192,7 @@ const RelayFooter = styled.div`
   font-size: 13px;
   height: 45px;
   width: 100%;
-  background-color: #FBFAFF;
+  /* background-color: #FBFAFF; */
   line-height: 45px;
 
   img {

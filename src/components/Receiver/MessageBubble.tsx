@@ -1,20 +1,30 @@
-import styled from 'styled-components';
-import React from 'react'
-import { time } from '../../utls/date'
+import styled from "styled-components";
+import React from "react";
+import { time } from "../../utls/date";
+import { truncate } from "../../utls/address";
 
 interface TextBubbleProps {
   message: string;
   sentByMe: boolean;
   messageTime: Date | undefined;
+  senderAddress?: string;
+  peerAddress?: string;
 }
 
 const MessageBubble = (props: TextBubbleProps) => {
   return (
     <TextWrapper sentByMe={props.sentByMe}>
+      <MessageHeader>
+        <SenderName sentByMe={props.sentByMe}>
+          {props.sentByMe ? truncate(props.senderAddress) : truncate(props.peerAddress)}
+        </SenderName>
+        {props.messageTime && (
+          <MessageTime sentByMe={props.sentByMe}>
+            {time(props.messageTime)}
+          </MessageTime>
+        )}
+      </MessageHeader>
       <MessageText sentByMe={props.sentByMe}>{props.message}</MessageText>
-      { props.messageTime &&
-        <MessageTime sentByMe={props.sentByMe}>{time(props.messageTime)}</MessageTime>
-      }
     </TextWrapper>
   );
 };
@@ -22,38 +32,46 @@ const MessageBubble = (props: TextBubbleProps) => {
 const TextWrapper = styled.div<{ sentByMe: boolean }>`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  padding: 10px;
-  border-radius: 8px;
+  align-items: flex-start;
   width: 100%;
-  background-color: ${(props) => (props.sentByMe ? '#5A46C6' : '#F8F7FF')};
-  border-radius: ${(props) => (props.sentByMe ? '16px 16px 4px 16px' : '16px 16px 16px 4px')};
-  border: ${(props) => (props.sentByMe ? '1px solid rgba(255, 255, 255, 0.2)' : '1px solid #FBFBFB')};
-  box-shadow: ${(props) => (props.sentByMe ? '0px 0px 4px rgba(0, 0, 0, 0.1)' : '0px 0px 4px rgba(0, 0, 0, 0.1)')};
-
   hyphens: auto;
 `;
 
 const MessageText = styled.div<{ sentByMe: boolean }>`
-  color: ${(props) => (props.sentByMe ? '#FFFFFF' : '#060028')};
-  font-family: 'Circular Std', sans-serif;
+  color: #060028;
+  font-family: "Circular Std", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 18px;
   word-break: break-word;
+  text-align: start;
+  padding-left: 4px;
 `;
 
 const MessageTime = styled.div<{ sentByMe: boolean }>`
-  color: ${(props) => (props.sentByMe ? '#CFC6FF' : '#4E4773')};
-  font-family: 'Circular Std', sans-serif;
+  font-family: "Circular Std", sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 18px;
-  word-break: break-word;
   padding-top: 5px;
   letter-spacing: 1px;
+  margin-left: 8px;
+  color: #060028;
 `;
 
+const MessageHeader = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const SenderName = styled.div<{ sentByMe: boolean }>`
+  border-radius: 99rem;
+  font-weight: 900;
+  font-size: 10px;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+  background-color: ${(props) => (props.sentByMe ? "white" : "#F1F2FD")};
+  color: ${(props) => (props.sentByMe ? "black" : "#6E6B99")};
+  padding: 3px 6px;
+`;
 export default MessageBubble;

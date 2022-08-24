@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import MessageSend from '../../assets/images/MessageSend.svg';
 import React, { useCallback } from 'react';
+import arrowup from '../../assets/images/arrowUp.svg'
 
 interface MessageInputProps {
   onSendMessage: (val: string) => unknown;
@@ -55,11 +56,13 @@ interface StyleProps {
 const Container = styled.div`
   display: flex;
   align-items: center;
-  height: 45px;
-  background-color: #F3F0FF;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 5px 5px 5px 15px;
+  /* background-color: #F3F0FF; */
+  margin-right: 5px;
+  margin-left: 5px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   gap: 20px;
+  border-radius: 99rem;
 
   @media (max-width: 335px) {
     padding-left: 10px;
@@ -70,7 +73,7 @@ const Container = styled.div`
 const StyledInput = styled.input`
   flex: 1;
   border-radius: 2px;
-  background-color: #F3F0FF;
+  /* background-color: #F3F0FF; */
   border: none;
   outline: none;
   &::placeholder {
@@ -93,19 +96,10 @@ const StyledInput = styled.input`
 
 const SvgContainer = styled.div<StyleProps>`
   cursor: pointer;
-
-  &:nth-of-type(2) > :first-child > :first-child {
-    stroke: ${({ inputTextCount }) =>
-      inputTextCount > 0 ? '#333333' : '#4F5E7B'};
-  }
-
-  img {
-    vertical-align: middle;
-  }
-
-  @media (hover: none), (pointer: coarse) {
-    display: none;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
 `;
 
 export default MessageInput;

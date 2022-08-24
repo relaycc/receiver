@@ -100,15 +100,15 @@ const truncated = (str: string):string => {
 }
 
 const Header = styled.div`
-  background-color: #5A46C6;
-  color: #F7F7F7;
   font-size: 16px;
   font-weight: 600;
   padding: 22px;
   font-family: 'Circular Std', sans-serif;;
   z-index: 1000;
   text-align: left;
-  border-radius: 20px 20px 0 0;
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
+  color: black;
 `;
 
 const TextContainer = styled.div`
@@ -129,18 +129,17 @@ const SoloTextContainer = styled.div`
 `;
 
 const MainText = styled.div`
-  font-weight: 500;
+  font-weight: 700;
   font-size: 14px;
   line-height: 18px;
   padding-bottom: 4px;
-  color: #F7F7F7;
+  color: black;
 `;
 
 const SubText = styled.div`
-  font-weight: 450;
+  font-weight: 400;
   font-size: 10px;
   line-height: 15px;
-  color: #F7F7F7;
 `;
 
 const CloseContainer = styled.div`
@@ -156,7 +155,7 @@ const CloseContainer = styled.div`
 const MinimizeContainer = styled.div`
   position: absolute;
   right: 55px;
-  top: 33px;
+  top: 38px;
 
   &:hover {
     cursor: pointer;

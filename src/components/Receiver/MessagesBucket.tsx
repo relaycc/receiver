@@ -18,16 +18,17 @@ export default function MessagesBucket(props: MessagesBucketProps) {
       {props.messages.map((message: Message) => {
         let sentByMe = message.senderAddress !== props.peerAddress;
         return (
-          <MessagePosition key={message.id} left={sentByMe}>
-            { sentByMe || (<AvatarContainer><Avatar address={message.senderAddress} /></AvatarContainer>)}
+          <MessagePosition key={message.id}>
+            <AvatarContainer><Avatar address={message.senderAddress} /></AvatarContainer>
             <MessageBubble
               message={
                 message.content
               }
               messageTime={message.sent}
               sentByMe={sentByMe}
+              senderAddress={message.senderAddress}
+              peerAddress={props.peerAddress}
             />
-            { sentByMe && (<AvatarContainer><Avatar address={message.senderAddress} /></AvatarContainer>)}
           </MessagePosition>
         );
       })}
@@ -47,14 +48,12 @@ const BucketTimestamp = styled.div`
 `;
 
 const MessagePosition = styled.div`
-  max-width: 80%;
   display: flex;
-  gap: 15px;
-  align-self: ${(props: { left: boolean }) =>
-    props.left ? 'flex-end' : 'flex-start'};
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  align-self: flex-start;
 `;
 
 const AvatarContainer = styled.div`
-  align-self: flex-end;
 `;
-

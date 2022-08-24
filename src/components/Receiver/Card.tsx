@@ -17,7 +17,7 @@ export default function Card({children, title}: CardProps) {
 const CardContainer = styled.div`
   background: #FBFAFF;
   border: 1px dashed #A6A6A6;
-  border-radius: 8px;
+  border-radius: 4px;
   width: 227px;
   padding: 10px;
   text-align: center;
