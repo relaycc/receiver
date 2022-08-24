@@ -57,9 +57,8 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   padding: 5px 5px 5px 15px;
-  /* background-color: #F3F0FF; */
-  margin-right: 5px;
-  margin-left: 5px;
+  margin-right: 10px;
+  margin-left: 10px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   gap: 20px;
   border-radius: 99rem;
@@ -77,7 +76,7 @@ const StyledInput = styled.input`
   border: none;
   outline: none;
   &::placeholder {
-    color: #4F5E7B;
+    color: #333c4f;
     font-weight: 400;
     font-family: sans-serif;
   }
@@ -90,7 +89,7 @@ const StyledInput = styled.input`
   letter-spacing: 1px;
 
   &::placeholder {
-    color: #C8C1F2;
+    color: #333c4f;
   }
 `;
 

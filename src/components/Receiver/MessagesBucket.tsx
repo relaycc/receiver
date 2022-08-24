@@ -3,16 +3,16 @@ import { Message } from '@xmtp/xmtp-js';
 import MessageBubble from './MessageBubble';
 import Avatar from './Avatar';
 import React from 'react'
-
 interface MessagesBucketProps {
   peerAddress: string;
   startDate: string;
   messages: Message[];
+  peerName?: string | undefined;
 }
 
 export default function MessagesBucket(props: MessagesBucketProps) {
   if (props.messages.length === 0) return null;
-
+ 
   return (
     <>
       {props.messages.map((message: Message) => {
@@ -28,6 +28,7 @@ export default function MessagesBucket(props: MessagesBucketProps) {
               sentByMe={sentByMe}
               senderAddress={message.senderAddress}
               peerAddress={props.peerAddress}
+              peerName={props.peerName}
             />
           </MessagePosition>
         );

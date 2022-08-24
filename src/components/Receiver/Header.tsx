@@ -1,10 +1,11 @@
-import styled from 'styled-components';
-import CloseReceiverLine from '../../assets/images/close-receiver-line.svg';
-import CloseReceiverX from '../../assets/images/close-x.svg';
-import ArrowUp from '../../assets/images/arrowUp.svg';
+import styled from "styled-components";
+import CloseReceiverLine from "../../assets/images/close-receiver-line.svg";
+import CloseReceiverX from "../../assets/images/close-x.svg";
+import ArrowUp from "../../assets/images/arrowUp.svg";
+import { truncateAddress } from "../../utls/address";
 
-import React from 'react'
-import { FetchEnsNameResult } from '@wagmi/core';
+import React from "react";
+import { FetchEnsNameResult } from "@wagmi/core";
 
 interface HeaderProps {
   text: string | null;
@@ -16,54 +17,39 @@ interface HeaderProps {
 }
 
 export default function RelayHeader({
-  text = 'Relay Receiver',
+  text = "Relay Receiver",
   visible,
   peerAddress,
   peerName,
   toggleReceiver,
-  closeReceiver
+  closeReceiver,
 }: HeaderProps) {
-
-const truncated = (str: string):string => {
-  if (str.length < 13) {
-    return str;
-  } else {
-    return str.slice(0, 6) + '...' + str.slice(-4);
-  }
-}
-
   const headerText = () => {
     if (text) {
-      return (
-        <SoloTextContainer>
-          {text}
-        </SoloTextContainer>
-    )}
+      return <SoloTextContainer>{text}</SoloTextContainer>;
+    }
 
     if (peerName) {
       return (
         <TextContainer>
-          <MainText>
-            {peerName}
-          </MainText>
-          <SubText>
-            {peerAddress && truncated(peerAddress)}
-          </SubText>
+          <MainText>{peerName}</MainText>
+          <SubText>{peerAddress && truncateAddress(peerAddress)}</SubText>
         </TextContainer>
-      )
+      );
     } else {
       return (
         <SoloTextContainer>
-          {peerAddress && truncated(peerAddress)}
+          {peerAddress && truncateAddress(peerAddress)}
         </SoloTextContainer>
-    )}
-  }
+      );
+    }
+  };
 
   return (
     <Header>
-      { headerText() }
-      
-      { visible ? (
+      {headerText()}
+
+      {visible ? (
         <MinimizeContainer>
           <img
             src={CloseReceiverLine}
@@ -94,7 +80,6 @@ const truncated = (str: string):string => {
           onClick={closeReceiver}
         />
       </CloseContainer>
-
     </Header>
   );
 }
@@ -103,7 +88,7 @@ const Header = styled.div`
   font-size: 16px;
   font-weight: 600;
   padding: 22px;
-  font-family: 'Circular Std', sans-serif;;
+  font-family: "Circular Std", sans-serif;
   z-index: 1000;
   text-align: left;
   border-radius: 4px 4px 0 0;

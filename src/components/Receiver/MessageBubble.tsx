@@ -1,22 +1,35 @@
 import styled from "styled-components";
 import React from "react";
 import { time } from "../../utls/date";
-import { truncate } from "../../utls/address";
-
+import { truncateName, truncateAddress } from "../../utls/address";
+import { useEnsName } from "wagmi";
 interface TextBubbleProps {
   message: string;
   sentByMe: boolean;
   messageTime: Date | undefined;
   senderAddress?: string;
   peerAddress?: string;
+  peerName?: string | undefined;
 }
 
 const MessageBubble = (props: TextBubbleProps) => {
+  const { data: senderName } = useEnsName({
+    address: props.senderAddress,
+  });
+
+  console.log(senderName + " my sender name");
+
   return (
     <TextWrapper sentByMe={props.sentByMe}>
       <MessageHeader>
         <SenderName sentByMe={props.sentByMe}>
-          {props.sentByMe ? truncate(props.senderAddress) : truncate(props.peerAddress)}
+          {props.sentByMe
+            ? senderName
+              ? truncateName(senderName)
+              : truncateAddress(props.senderAddress)
+            : props.peerName
+            ? truncateName(props.peerName)
+            : truncateAddress(props.peerAddress)}
         </SenderName>
         {props.messageTime && (
           <MessageTime sentByMe={props.sentByMe}>

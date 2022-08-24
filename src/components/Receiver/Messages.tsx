@@ -21,7 +21,6 @@ interface MessagesProps {
 
 const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
   const xmtp = useXmtp();
-
   const messages = useMessages(peerAddress);
   const messageArray = Object.values(messages).reverse();
   const buckets = getMessageBuckets(messageArray);
@@ -88,6 +87,7 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
                   messages={bucket.messages}
                   peerAddress={peerAddress}
                   startDate={bucket.date}
+                  peerName={peerName}
                 />
               );
             }
@@ -113,6 +113,7 @@ const List = styled.div`
   overflow: scroll;
   gap: 0.75rem;
   width: 100%;
+  height: 100%;
   z-index: 10;
   max-height: 345px;
   padding: 12px;
