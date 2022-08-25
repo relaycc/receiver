@@ -116,7 +116,8 @@ const List = styled.div`
   height: 100%;
   z-index: 10;
   max-height: 345px;
-  padding: 12px;
+  padding: 0px 12px;
+  box-sizing: border-box;
 `;
 
 const Text = styled.div`

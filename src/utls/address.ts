@@ -12,6 +12,5 @@ export function truncateAddress(e: string | undefined) {
   if (e === undefined) {
     return "Name or address not found";
   }
-
     return e.slice(0, 5) + "..." + e.substring(e.length - 5);
 }

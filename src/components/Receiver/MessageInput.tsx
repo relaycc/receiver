@@ -81,7 +81,7 @@ const StyledInput = styled.input`
     font-family: sans-serif;
   }
   color: #333333;
-  font-family: 'Circular Std', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;

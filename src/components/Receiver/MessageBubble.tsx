@@ -17,8 +17,6 @@ const MessageBubble = (props: TextBubbleProps) => {
     address: props.senderAddress,
   });
 
-  console.log(senderName + " my sender name");
-
   return (
     <TextWrapper sentByMe={props.sentByMe}>
       <MessageHeader>
@@ -52,7 +50,7 @@ const TextWrapper = styled.div<{ sentByMe: boolean }>`
 
 const MessageText = styled.div<{ sentByMe: boolean }>`
   color: #060028;
-  font-family: "Circular Std", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -60,10 +58,11 @@ const MessageText = styled.div<{ sentByMe: boolean }>`
   word-break: break-word;
   text-align: start;
   padding-left: 4px;
+  /* letter-spacing: normal; */
 `;
 
 const MessageTime = styled.div<{ sentByMe: boolean }>`
-  font-family: "Circular Std", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -78,6 +77,7 @@ const MessageHeader = styled.div`
   display: flex;
   align-items: center;
 `;
+
 const SenderName = styled.div<{ sentByMe: boolean }>`
   border-radius: 99rem;
   font-weight: 900;
@@ -87,4 +87,5 @@ const SenderName = styled.div<{ sentByMe: boolean }>`
   color: ${(props) => (props.sentByMe ? "black" : "#6E6B99")};
   padding: 3px 6px;
 `;
+
 export default MessageBubble;

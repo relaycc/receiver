@@ -18,7 +18,7 @@ import {
 } from '../../xmtp-react/conversations';
 import React from 'react';
 import { useEnsName } from 'wagmi';
-
+import { ConversationsList } from './Conversations/ConversationsList';
 interface ChatButtonProps {
   visible: boolean;
   as?: string | React.ComponentType<any>;
@@ -97,7 +97,9 @@ const ChatBox = ({ style, isUserConnected, visible, as, peerAddress, headerText,
 
       <RelayRelativeContainer>
         {(isUserConnected || (isConnected && userDidConnect)) ? (
+          <div>
           <Messages onXmptReady={handleOnXmtpReady} peerName={peerName || peerAddress} peerAddress={peerAddress} />
+          </div>
         ) : (
           <Card title='Connect your wallet to start a converation!'>
             <ConnectorList>
