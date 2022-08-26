@@ -1,17 +1,13 @@
-import styled from 'styled-components';
-import { Message } from '@xmtp/xmtp-js';
-import MessagesBucket from './MessagesBucket';
-import LoadingMessages from './LoadingMessages';
-import { Status, useXmtp } from '../../xmtp-react/context';
-import React, { useEffect, useState } from 'react'
-import {
-  useMessages,
-} from '../../xmtp-react/conversations';
-import Card from './Card';
-import Button from './Button';
-import { shortDate } from '../../utls/date';
-
-import { useEnsAddress } from 'wagmi';
+import styled from "styled-components";
+import { Message } from "@xmtp/xmtp-js";
+import MessagesBucket from "./MessagesBucket";
+import LoadingMessages from "./LoadingMessages";
+import { Status, useXmtp } from "../../xmtp-react/context";
+import React, { useEffect, useState } from "react";
+import { useMessages } from "../../xmtp-react/conversations";
+import Card from "./Card";
+import Button from "./Button";
+import { shortDate } from "../../utls/date";
 
 interface MessagesProps {
   peerAddress?: string;
@@ -36,8 +32,8 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
       effect();
     }
   });
-  
-  if (typeof peerAddress !== 'string') {
+
+  if (typeof peerAddress !== "string") {
     return (
       <Card title="Could not resolve ENS name">
         <Text>Make sure to include the ".eth" suffix.</Text>
@@ -52,32 +48,36 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
   } else if (xmtp.status === Status.idle) {
     return (
       <Card title="Initialize XMTP Client">
-        <Text>To begin messaging, you must first initialize the XMTP client.</Text>
-        <Button onClick={xmtp.init} text='Initialize'/>
+        <Text>
+          To begin messaging, you must first initialize the XMTP client.
+        </Text>
+        <Button onClick={xmtp.init} text="Initialize" />
       </Card>
     );
   } else if (xmtp.status === Status.waiting) {
     return (
       <Card title="Initialize XMTP Client">
-        <Text><b>Initializing.</b></Text>
+        <Text>
+          <b>Initializing.</b>
+        </Text>
         <Text>To continue, please sign the wallet prompt.</Text>
       </Card>
     );
   } else if (xmtp.status === Status.denied) {
     return (
       <Card title="Initialize XMTP Client">
-        <Text><b>Initializing.</b></Text>
+        <Text>
+          <b>Initializing.</b>
+        </Text>
         <Text>Signature request cancelled. Try again...</Text>
-        <Button onClick={xmtp.init} text='Initialize'/>
+        <Button onClick={xmtp.init} text="Initialize" />
       </Card>
     );
   } else if (xmtp.status === Status.loading) {
-    return (
-      <LoadingMessages />
-    );
+    return <LoadingMessages />;
   } else if (xmtp.status === Status.ready && peerIsAvailable === true) {
     if (Object.values(messages).length > 0) {
-      return (    
+      return (
         <List>
           {buckets.map((bucket, index) => {
             if (bucket.messages.length > 0) {
@@ -94,18 +94,18 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
             return null;
           })}
         </List>
-      ) 
+      );
     } else {
       return (
         <Card title="All Set  🎉">
           <Text>{`This is the beginning of your conversation with ${peerName}`}</Text>
         </Card>
-      )
+      );
     }
   } else {
-    return <></>
+    return <></>;
   }
-}
+};
 
 const List = styled.div`
   display: flex;
@@ -115,18 +115,17 @@ const List = styled.div`
   width: 100%;
   height: 100%;
   z-index: 10;
-  max-height: 345px;
   padding: 0px 12px;
   box-sizing: border-box;
 `;
 
 const Text = styled.div`
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 18px;
-  color: #2D2D2D;
+  color: #2d2d2d;
 `;
 
 class Bucket {
@@ -139,8 +138,8 @@ function getMessageBuckets(messages: Message[]): Bucket[] {
   return messages.reduce((buckets: Bucket[], message: Message) => {
     if (message.sent) {
       let dateString = shortDate(message.sent);
-      
-      let bucket = buckets.find(bucket => bucket.date === dateString);
+
+      let bucket = buckets.find((bucket) => bucket.date === dateString);
 
       if (bucket) {
         bucket.messages.push(message);

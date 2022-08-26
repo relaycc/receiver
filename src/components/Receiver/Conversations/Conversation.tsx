@@ -7,9 +7,13 @@ import { useResponsiveName } from "../../../hooks/useResponsiveName";
 
 interface ConversationProps {
   peerAddress: string;
+  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Conversation({ peerAddress }: ConversationProps) {
+export default function Conversation({
+  peerAddress,
+  setShowConversations,
+}: ConversationProps) {
   const messages = useMessages(peerAddress);
   const lastMessage = getLastMessage(messages);
   console.log(lastMessage + " last");
@@ -17,37 +21,47 @@ export default function Conversation({ peerAddress }: ConversationProps) {
     address: peerAddress,
   });
   const responsiveName = useResponsiveName(ensName, peerAddress, "");
+
+  const handleClick = () => {
+    setShowConversations(false);
+  };
+
   return (
-    <Container>
-      <ListItem>
-        <Avatar peerAddress={peerAddress} />
-        <TextContainer>
-          <Title>{responsiveName}</Title>
-          <Subtitle>{lastMessage?.content}</Subtitle>
-        </TextContainer>
-      </ListItem>
-    </Container>
+    <ListItem onClick={handleClick}>
+      <Avatar peerAddress={peerAddress} />
+      <TextContainer>
+        <Title>{responsiveName}</Title>
+        <Subtitle>{lastMessage?.content}</Subtitle>
+      </TextContainer>
+    </ListItem>
   );
 }
-
-const Container = styled.div``;
 
 const ListItem = styled.li`
   display: flex;
   align-items: center;
   gap: 10px;
+  box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
+  padding: 15px;
+  cursor: pointer;
+  width: 100%;
 `;
 
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 4px;
 `;
 
-const Title = styled.span``;
+const Title = styled.span`
+  font-weight: bold;
+  text-align: start;
+`;
 
 const Subtitle = styled.span`
   max-width: 250px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: start;
 `;

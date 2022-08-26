@@ -57,8 +57,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   padding: 5px 5px 5px 15px;
-  margin-right: 10px;
-  margin-left: 10px;
+  margin: 5px 10px 0px 10px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   gap: 20px;
   border-radius: 99rem;

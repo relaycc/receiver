@@ -14,7 +14,6 @@ export default function Button({text, onClick}: ButtonProps) {
 }
 
 const ButtonContainer = styled.div`
-  box-sizing: border-box;
   padding: 8px 12px;
   background: #5A46C6;
   border: 1px solid rgba(55, 41, 125, 0.5);

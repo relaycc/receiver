@@ -53,12 +53,11 @@ const MessageText = styled.div<{ sentByMe: boolean }>`
   font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 18px;
   word-break: break-word;
   text-align: start;
   padding-left: 4px;
-  /* letter-spacing: normal; */
 `;
 
 const MessageTime = styled.div<{ sentByMe: boolean }>`
@@ -66,9 +65,6 @@ const MessageTime = styled.div<{ sentByMe: boolean }>`
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
-  line-height: 18px;
-  padding-top: 5px;
-  letter-spacing: 1px;
   margin-left: 8px;
   color: #060028;
 `;
@@ -80,8 +76,8 @@ const MessageHeader = styled.div`
 
 const SenderName = styled.div<{ sentByMe: boolean }>`
   border-radius: 99rem;
-  font-weight: 900;
-  font-size: 10px;
+  font-weight: bold;
+  font-size: 14px;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
   background-color: ${(props) => (props.sentByMe ? "white" : "#F1F2FD")};
   color: ${(props) => (props.sentByMe ? "black" : "#6E6B99")};

@@ -14,6 +14,7 @@ interface HeaderProps {
   peerName: FetchEnsNameResult | undefined;
   toggleReceiver: () => unknown;
   closeReceiver: () => unknown;
+  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function RelayHeader({
@@ -23,6 +24,7 @@ export default function RelayHeader({
   peerName,
   toggleReceiver,
   closeReceiver,
+  setShowConversations,
 }: HeaderProps) {
   const headerText = () => {
     if (text) {
@@ -45,62 +47,68 @@ export default function RelayHeader({
     }
   };
 
+  const handleClick = () => {
+    setShowConversations(true);
+  };
+
   return (
     <Header>
-      <GoBackSvgContainer>
-      <svg
-        version="1.1"
-        id="Capa_1"
-        xmlns="http://www.w3.org/2000/svg"
-        x="0px"
-        y="0px"
-        width="20px"
-        height="20px"
-        viewBox="0 0 493.578 493.578"
-        xmlSpace="preserve"
-      >
-        <g>
-          <path
-            d="M487.267,225.981c0-17.365-13.999-31.518-31.518-31.518H194.501L305.35,83.615c12.24-12.24,12.24-32.207,0-44.676
+      <GoBackSvgContainer onClick={handleClick}>
+        <svg
+          version="1.1"
+          id="Capa_1"
+          xmlns="http://www.w3.org/2000/svg"
+          x="0px"
+          y="0px"
+          width="20px"
+          height="20px"
+          viewBox="0 0 493.578 493.578"
+          xmlSpace="preserve"
+        >
+          <g>
+            <path
+              d="M487.267,225.981c0-17.365-13.999-31.518-31.518-31.518H194.501L305.35,83.615c12.24-12.24,12.24-32.207,0-44.676
 		L275.592,9.18c-12.24-12.24-32.207-12.24-44.676,0L15.568,224.527c-6.12,6.12-9.256,14.153-9.256,22.262
 		c0,8.032,3.136,16.142,9.256,22.262l215.348,215.348c12.24,12.239,32.207,12.239,44.676,0l29.758-29.759
 		c12.24-12.24,12.24-32.207,0-44.676L194.501,299.498h261.094c17.366,0,31.519-14.153,31.519-31.519L487.267,225.981z"
-          />
-        </g>
-      </svg>
-      {headerText()}
+            />
+          </g>
+        </svg>
+        {headerText()}
       </GoBackSvgContainer>
-      {visible ? (
-        <MinimizeContainer>
-          <img
-            src={CloseReceiverLine}
-            width={12}
-            height={13}
-            alt="relay"
-            onClick={toggleReceiver}
-          />
-        </MinimizeContainer>
-      ) : (
-        <MinimizeContainer>
-          <img
-            src={ArrowUp}
-            width={18}
-            height={13}
-            alt="relay"
-            onClick={toggleReceiver}
-          />
-        </MinimizeContainer>
-      )}
+      <RightIconContainer>
+        {visible ? (
+          <MinimizeContainer>
+            <img
+              src={CloseReceiverLine}
+              width={12}
+              height={13}
+              alt="relay"
+              onClick={toggleReceiver}
+            />
+          </MinimizeContainer>
+        ) : (
+          <MinimizeContainer>
+            <img
+              src={ArrowUp}
+              width={18}
+              height={13}
+              alt="relay"
+              onClick={toggleReceiver}
+            />
+          </MinimizeContainer>
+        )}
 
-      <CloseContainer>
-        <img
-          src={CloseReceiverX}
-          width={13}
-          height={13}
-          alt="relay"
-          onClick={closeReceiver}
-        />
-      </CloseContainer>
+        <CloseContainer>
+          <img
+            src={CloseReceiverX}
+            width={13}
+            height={13}
+            alt="relay"
+            onClick={closeReceiver}
+          />
+        </CloseContainer>
+      </RightIconContainer>
     </Header>
   );
 }
@@ -108,13 +116,18 @@ export default function RelayHeader({
 const Header = styled.div`
   font-size: 16px;
   font-weight: 600;
-  padding: 22px;
   font-family: "Roboto", sans-serif;
   z-index: 1000;
   text-align: left;
   border-radius: 4px 4px 0 0;
   box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
   color: black;
+  display: flex;
+  height: 69px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 22px;
 `;
 
 const TextContainer = styled.div`
@@ -149,23 +162,13 @@ const SubText = styled.div`
 `;
 
 const CloseContainer = styled.div`
-  position: absolute;
-  right: 25px;
-  top: 33px;
-
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
 
 const MinimizeContainer = styled.div`
-  position: absolute;
-  right: 55px;
-  top: 38px;
-
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
 `;
 
 const GoBackSvgContainer = styled.div`
@@ -174,4 +177,12 @@ const GoBackSvgContainer = styled.div`
   height: 25px;
   width: 100%;
   gap: 15px;
-`
+  cursor: pointer;
+`;
+
+const RightIconContainer = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 10px;
+`;

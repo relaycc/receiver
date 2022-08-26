@@ -14,7 +14,7 @@ export default function MessagesBucket(props: MessagesBucketProps) {
   if (props.messages.length === 0) return null;
  
   return (
-    <>
+    <Container>
       {props.messages.map((message: Message) => {
         let sentByMe = message.senderAddress !== props.peerAddress;
         return (
@@ -34,9 +34,15 @@ export default function MessagesBucket(props: MessagesBucketProps) {
         );
       })}
       <BucketTimestamp>{props.startDate}</BucketTimestamp>
-    </>
+    </Container>
   );
 }
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 15px;
+`
 
 const BucketTimestamp = styled.div`
   font-family: 'Roboto', sans-serif;
