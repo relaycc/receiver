@@ -6,6 +6,7 @@ import { truncateAddress } from "../../utls/address";
 
 import React from "react";
 import { FetchEnsNameResult } from "@wagmi/core";
+import { ConversationsList } from "./Conversations/ConversationsList";
 
 interface HeaderProps {
   text: string | null;
@@ -15,6 +16,8 @@ interface HeaderProps {
   toggleReceiver: () => unknown;
   closeReceiver: () => unknown;
   setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
+  setMinimizedConvoList: any;
+  minimizedConvoList: any;
 }
 
 export default function RelayHeader({
@@ -25,6 +28,8 @@ export default function RelayHeader({
   toggleReceiver,
   closeReceiver,
   setShowConversations,
+  setMinimizedConvoList,
+  minimizedConvoList,
 }: HeaderProps) {
   const headerText = () => {
     if (text) {
@@ -47,14 +52,26 @@ export default function RelayHeader({
     }
   };
 
-  const handleClick = () => {
+  const handleGoBackClick = () => {
     setShowConversations(true);
+  };
+
+  const handleMinimizeClick = () => {
+    toggleReceiver();
+    setMinimizedConvoList((list: any) => {
+      if (list.indexOf(peerAddress) === -1) {
+        return [...list, peerAddress];
+      } else {
+        return [...list];
+      }
+    });
   };
 
   return (
     <Header>
-      <GoBackSvgContainer onClick={handleClick}>
+      <GoBackSvgContainer>
         <svg
+          onClick={handleGoBackClick}
           version="1.1"
           id="Capa_1"
           xmlns="http://www.w3.org/2000/svg"
@@ -78,14 +95,8 @@ export default function RelayHeader({
       </GoBackSvgContainer>
       <RightIconContainer>
         {visible ? (
-          <MinimizeContainer>
-            <img
-              src={CloseReceiverLine}
-              width={12}
-              height={13}
-              alt="relay"
-              onClick={toggleReceiver}
-            />
+          <MinimizeContainer onClick={handleMinimizeClick}>
+            <img src={CloseReceiverLine} width={12} height={13} alt="relay" />
           </MinimizeContainer>
         ) : (
           <MinimizeContainer>
@@ -98,7 +109,6 @@ export default function RelayHeader({
             />
           </MinimizeContainer>
         )}
-
         <CloseContainer>
           <img
             src={CloseReceiverX}
@@ -182,7 +192,7 @@ const GoBackSvgContainer = styled.div`
 
 const RightIconContainer = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-end;
   gap: 10px;
 `;

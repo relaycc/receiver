@@ -8,6 +8,8 @@ import React from 'react'
 interface AvatarProps {
   address?: string | undefined;
   size?: 'small' | 'medium' | 'large';
+  setPeerAddress?: any;
+  setShowBox?: any;
 }
 export default function Avatar(props: AvatarProps) {
   const {
@@ -25,9 +27,14 @@ export default function Avatar(props: AvatarProps) {
     return <LoadingSpinner width={40} height={40} />;
   }
 
+  const handleClick = () =>  {
+    props.setShowBox(true);
+    props.setPeerAddress(props.address)
+  }
+
   if (!ensAvatar) {
     return (
-      <AvatarBlockieContainer>
+      <AvatarBlockieContainer onClick={handleClick}>
         <Blockies
           seed={props.address || ''}
           size={10}
@@ -36,12 +43,12 @@ export default function Avatar(props: AvatarProps) {
       </AvatarBlockieContainer>
     );
   } else {
-    return <AvatarImage src={ensAvatar} size={props.size} alt="user" />;
+    return <AvatarImage onClick={handleClick} src={ensAvatar} size={props.size} alt="user" />;
   }
 }
 
 const AvatarImage = styled.img<{ size?: 'large' | 'small' | 'medium' }>`
-  border-radius: 16px;
+  border-radius: 50%;
   width: ${(p) => (p.size === 'large' ? '40px' : '40px')};
   height: ${(p) => (p.size === 'large' ? '40px' : '40px')};
 `;
@@ -49,6 +56,7 @@ const AvatarImage = styled.img<{ size?: 'large' | 'small' | 'medium' }>`
 const AvatarBlockieContainer = styled.div`
   width: 40px;
   height: 40px;
-  border-radius: 16px;
+  border-radius: 50%;
   overflow: hidden;
+  background: yellow;
 `;

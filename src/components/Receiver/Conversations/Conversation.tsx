@@ -8,15 +8,16 @@ import { useResponsiveName } from "../../../hooks/useResponsiveName";
 interface ConversationProps {
   peerAddress: string;
   setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
+  setPeerAddress: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function Conversation({
   peerAddress,
   setShowConversations,
+  setPeerAddress,
 }: ConversationProps) {
   const messages = useMessages(peerAddress);
   const lastMessage = getLastMessage(messages);
-  console.log(lastMessage + " last");
   const { data: ensName, isLoading } = useEnsName({
     address: peerAddress,
   });
@@ -24,6 +25,7 @@ export default function Conversation({
 
   const handleClick = () => {
     setShowConversations(false);
+    setPeerAddress(peerAddress)
   };
 
   return (

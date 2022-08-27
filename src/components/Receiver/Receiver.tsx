@@ -20,6 +20,7 @@ import styled from "styled-components";
 import { getAddress } from "@ethersproject/address";
 import { GlobalStyles } from "../../styles/global";
 import { ConversationsList } from "./Conversations/ConversationsList";
+import Avatar from "./Avatar";
 
 const alchemyKey = "kmMb00nhQ0SWModX6lJLjXy_pVtiQnjx";
 
@@ -67,6 +68,7 @@ const Receiver = ({
   const [hasLaunched, setHasLaunched] = useState<boolean>(false);
   const [peerAddress, setPeerAddress] = useState<string>("");
   const [showConversations, setShowConversations] = useState(false);
+  const [minimizedConvoList, setMinimizeConvoList] = useState([]);
 
   const convertAndSetPeerAddress = (peerAddress: string) => {
     const cleanAddress = getAddress(peerAddress);
@@ -83,8 +85,13 @@ const Receiver = ({
     setHasLaunched(false);
   };
 
+  const removeFromList = (e: any) => {
+    setMinimizeConvoList((items) => items.filter((_, i) => i !== e));
+  };
+
+
   const chatBoxContainerStyle: CSS.Properties = {
-    maxHeight: showBox ? "500px" : hasLaunched ? "80px" : "0px",
+    maxHeight: showBox ? "500px" : hasLaunched ? "0px" : "0px",
     height: "500px",
     position: "fixed",
     bottom: "0px",
@@ -106,8 +113,14 @@ const Receiver = ({
           <Container>
             <div style={chatBoxContainerStyle}>
               <GlobalStyles />
-              <ConversationsList setShowConversations={setShowConversations} showConversations={showConversations} />
+              <ConversationsList
+                setPeerAddress={setPeerAddress}
+                setShowConversations={setShowConversations}
+                showConversations={showConversations}
+              />
               <ChatBox
+                minimizedConvoList={minimizedConvoList}
+                setMinimizedConvoList={setMinimizeConvoList}
                 setShowConversations={setShowConversations}
                 isUserConnected={signer != undefined}
                 style={receiverContainerStyle}
@@ -116,6 +129,31 @@ const Receiver = ({
                 peerAddress={peerAddress}
                 visible={showBox}
               ></ChatBox>
+              <MinimizedIconList>
+                {minimizedConvoList.map((e, index) => (
+                  <AvatarContainer key={e}>
+                    <Avatar
+                      setPeerAddress={setPeerAddress}
+                      setShowBox={setShowBox}
+                      address={e}
+                    />
+                    <AvatarHoverDetails onClick={() => removeFromList(index)}>
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6.99974 5.58599L11.9497 0.635986L13.3637 2.04999L8.41374 6.99999L13.3637 11.95L11.9497 13.364L6.99974 8.41399L2.04974 13.364L0.635742 11.95L5.58574 6.99999L0.635742 2.04999L2.04974 0.635986L6.99974 5.58599Z"
+                          fill="black"
+                        />
+                      </svg>
+                    </AvatarHoverDetails>
+                  </AvatarContainer>
+                ))}
+              </MinimizedIconList>
             </div>
           </Container>
           {children}
@@ -124,6 +162,37 @@ const Receiver = ({
     </WagmiConfig>
   );
 };
+const MinimizedIconList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  bottom: 123px;
+  right: 45px;
+  gap: 10px;
+`;
+
+const AvatarHoverDetails = styled.div`
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  display: none;
+  z-index: 100000;
+  cursor: pointer;
+`;
+
+const AvatarContainer = styled.div`
+  position: relative;
+  border-radius: 50%;
+  cursor: pointer;
+
+  :hover ${AvatarHoverDetails} {
+    display: block;
+  }
+`;
 
 const Container = styled.div`
   @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600&family=Montserrat:ital,wght@0,100;0,300;0,400;0,500;1,400&family=Roboto:wght@100;300;500;700&display=swap");

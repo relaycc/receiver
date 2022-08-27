@@ -27,7 +27,9 @@ interface ChatButtonProps {
   isUserConnected: boolean;
   toggleReceiver: () => unknown;
   closeReceiver: () => unknown;
-  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>
+  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
+  setMinimizedConvoList: any;
+  minimizedConvoList: any;
 }
 
 const ChatBox = ({
@@ -40,6 +42,8 @@ const ChatBox = ({
   headerText,
   closeReceiver,
   toggleReceiver,
+  setMinimizedConvoList,
+  minimizedConvoList
 }: ChatButtonProps) => {
   const isMetaMask = useIsMetaMask();
   const [xmtpReady, setXmptReady] = useState<boolean>(false);
@@ -106,6 +110,8 @@ const ChatBox = ({
   return (
     <ChatContainer visible={visible} as={as} style={style}>
       <Header
+        setMinimizedConvoList={setMinimizedConvoList}
+        minimizedConvoList={minimizedConvoList}
         setShowConversations={setShowConversations}
         visible={visible}
         peerName={peerName}
@@ -265,10 +271,10 @@ const MaybeHideOnConnector = styled(Connector)<{ shouldHide: boolean }>`
 `;
 
 const MessagesContainer = styled.div`
-height: 100%;
-width: 100%;
-display: flex;
-align-items: center;
-justify-content: center;
-`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 export default ChatBox;
