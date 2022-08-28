@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React from "react";
 import { useEnsName } from "wagmi";
 import { useMessages, getLastMessage } from "../../../xmtp-react/conversations";
-import Avatar from "./Avatar";
+import Avatar from "../Avatar";
 import { useResponsiveName } from "../../../hooks/useResponsiveName";
 
 interface ConversationProps {
@@ -30,7 +30,7 @@ export default function Conversation({
 
   return (
     <ListItem onClick={handleClick}>
-      <Avatar peerAddress={peerAddress} />
+      <Avatar address={peerAddress} />
       <TextContainer>
         <Title>{responsiveName}</Title>
         <Subtitle>{lastMessage?.content}</Subtitle>

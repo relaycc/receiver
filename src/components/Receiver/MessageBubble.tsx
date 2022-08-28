@@ -3,52 +3,48 @@ import React from "react";
 import { time } from "../../utls/date";
 import { truncateName, truncateAddress } from "../../utls/address";
 import { useEnsName } from "wagmi";
+import { useResponsiveName } from "../../hooks/useResponsiveName";
 interface TextBubbleProps {
   message: string;
-  sentByMe: boolean;
+  sentByMe?: boolean;
   messageTime: Date | undefined;
   senderAddress?: string;
   peerAddress?: string;
   peerName?: string | undefined;
 }
 
-const MessageBubble = (props: TextBubbleProps) => {
+const MessageBubble = ({
+  message,
+  sentByMe,
+  messageTime,
+  senderAddress,
+  peerAddress,
+  peerName,
+}: TextBubbleProps) => {
   const { data: senderName } = useEnsName({
-    address: props.senderAddress,
+    address: senderAddress,
+  });
+  const { data: peerEns } = useEnsName({
+    address: peerAddress,
   });
 
   return (
-    <TextWrapper sentByMe={props.sentByMe}>
-      <MessageHeader>
-        <SenderName sentByMe={props.sentByMe}>
-          {props.sentByMe
-            ? senderName
-              ? truncateName(senderName)
-              : truncateAddress(props.senderAddress)
-            : props.peerName
-            ? truncateName(props.peerName)
-            : truncateAddress(props.peerAddress)}
-        </SenderName>
-        {props.messageTime && (
-          <MessageTime sentByMe={props.sentByMe}>
-            {time(props.messageTime)}
-          </MessageTime>
-        )}
-      </MessageHeader>
-      <MessageText sentByMe={props.sentByMe}>{props.message}</MessageText>
+    <TextWrapper>
+      <MessageText>{message}</MessageText>
     </TextWrapper>
   );
 };
 
-const TextWrapper = styled.div<{ sentByMe: boolean }>`
+const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
   hyphens: auto;
+  padding-left: 50px;
 `;
 
-const MessageText = styled.div<{ sentByMe: boolean }>`
+const MessageText = styled.div`
   color: #060028;
   font-family: "Roboto", sans-serif;
   font-style: normal;
@@ -60,14 +56,7 @@ const MessageText = styled.div<{ sentByMe: boolean }>`
   padding-left: 4px;
 `;
 
-const MessageTime = styled.div<{ sentByMe: boolean }>`
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  margin-left: 8px;
-  color: #060028;
-`;
+
 
 const MessageHeader = styled.div`
   display: flex;

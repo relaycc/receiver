@@ -14,7 +14,7 @@ import { XmtpContextProvider } from "../../xmtp-react/context";
 import { Signer } from "ethers";
 import ChatBox from "./ChatBox";
 import CSS from "csstype";
-import { Interpolation, ThemeProvider } from "styled-components";
+import { Interpolation } from "styled-components";
 import ReceiverContext from "./ReceiverContext";
 import styled from "styled-components";
 import { getAddress } from "@ethersproject/address";
@@ -88,7 +88,6 @@ const Receiver = ({
   const removeFromList = (e: any) => {
     setMinimizeConvoList((items) => items.filter((_, i) => i !== e));
   };
-
 
   const chatBoxContainerStyle: CSS.Properties = {
     maxHeight: showBox ? "500px" : hasLaunched ? "0px" : "0px",
@@ -164,7 +163,7 @@ const Receiver = ({
 };
 const MinimizedIconList = styled.ul`
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: center;
   position: fixed;
   bottom: 123px;

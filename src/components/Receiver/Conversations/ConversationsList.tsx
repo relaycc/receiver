@@ -20,6 +20,7 @@ export function ConversationsList({
   const [showNewMessageDropdown, setShowMewMessageDropdown] = useState(false);
   const [newConversationInput, setNewConversationInput] = useState("");
   const userInput: any = useRef();
+  const [count, setCount] = useState(0);
 
   const handleDropDownToggle = () => {
     setShowMewMessageDropdown(
@@ -29,6 +30,16 @@ export function ConversationsList({
 
   const { data, isError, isLoading } = useEnsAddress({
     name: newConversationInput,
+    onSuccess(data) {
+      if (data === null) {
+        setPeerAddress(data);
+      } else {
+        setPeerAddress(data);
+      }
+    },
+    onError(error) {
+      console.log("Error", error);
+    },
   });
 
   useEffect(() => {
@@ -41,17 +52,23 @@ export function ConversationsList({
     if (isError) {
       console.log(isError + " myError");
     }
-    if (!isLoading && !isError && data) {
+    if (data) {
       setPeerAddress(data);
-      setShowMewMessageDropdown((e) => !e);
-      setShowConversations((e) => !e);
       console.log("whow");
+    } else {
+      console.log('end')
+      setPeerAddress(data);
     }
-  }, [newConversationInput]);
+  }, [count]);
 
   const handleSubmit = () => {
     setNewConversationInput(userInput.current.value);
+    setCount((count) => count + 1);
+    setShowMewMessageDropdown(false);
+    setShowConversations(false);
   };
+
+  
 
   return (
     <Container showConversations={showConversations}>

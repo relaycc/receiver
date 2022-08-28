@@ -43,13 +43,14 @@ const ChatBox = ({
   closeReceiver,
   toggleReceiver,
   setMinimizedConvoList,
-  minimizedConvoList
+  minimizedConvoList,
 }: ChatButtonProps) => {
   const isMetaMask = useIsMetaMask();
   const [xmtpReady, setXmptReady] = useState<boolean>(false);
   const [userDidConnect, setUserDidConnect] = useState<boolean>(false);
   const { connect, connectors } = useConnect();
   const { isConnected } = useAccount();
+  const [peerIsAvailable, setPeerIsAvailable] = useState<boolean | undefined>();
 
   const { data: peerName } = useEnsName({
     address: peerAddress,
@@ -110,6 +111,7 @@ const ChatBox = ({
   return (
     <ChatContainer visible={visible} as={as} style={style}>
       <Header
+        peerIsAvailable={peerIsAvailable}
         setMinimizedConvoList={setMinimizedConvoList}
         minimizedConvoList={minimizedConvoList}
         setShowConversations={setShowConversations}
@@ -124,6 +126,8 @@ const ChatBox = ({
         {isUserConnected || (isConnected && userDidConnect) ? (
           <MessagesContainer>
             <Messages
+              peerIsAvailable={peerIsAvailable}
+              setPeerIsAvailable={setPeerIsAvailable}
               onXmptReady={handleOnXmtpReady}
               peerName={peerName || peerAddress}
               peerAddress={peerAddress}

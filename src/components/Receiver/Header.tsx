@@ -3,10 +3,9 @@ import CloseReceiverLine from "../../assets/images/close-receiver-line.svg";
 import CloseReceiverX from "../../assets/images/close-x.svg";
 import ArrowUp from "../../assets/images/arrowUp.svg";
 import { truncateAddress } from "../../utls/address";
-
 import React from "react";
 import { FetchEnsNameResult } from "@wagmi/core";
-import { ConversationsList } from "./Conversations/ConversationsList";
+import Avatar from './Avatar'
 
 interface HeaderProps {
   text: string | null;
@@ -18,6 +17,7 @@ interface HeaderProps {
   setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
   setMinimizedConvoList: any;
   minimizedConvoList: any;
+  peerIsAvailable: boolean | undefined;
 }
 
 export default function RelayHeader({
@@ -30,6 +30,7 @@ export default function RelayHeader({
   setShowConversations,
   setMinimizedConvoList,
   minimizedConvoList,
+  peerIsAvailable
 }: HeaderProps) {
   const headerText = () => {
     if (text) {
@@ -59,6 +60,9 @@ export default function RelayHeader({
   const handleMinimizeClick = () => {
     toggleReceiver();
     setMinimizedConvoList((list: any) => {
+      if (peerAddress === null || peerIsAvailable === false) {
+        return [...list];
+      }
       if (list.indexOf(peerAddress) === -1) {
         return [...list, peerAddress];
       } else {
@@ -81,6 +85,7 @@ export default function RelayHeader({
           height="20px"
           viewBox="0 0 493.578 493.578"
           xmlSpace="preserve"
+          style={{cursor: 'pointer'}}
         >
           <g>
             <path
@@ -91,6 +96,7 @@ export default function RelayHeader({
             />
           </g>
         </svg>
+        <Avatar address={peerAddress}/>
         {headerText()}
       </GoBackSvgContainer>
       <RightIconContainer>
@@ -187,7 +193,6 @@ const GoBackSvgContainer = styled.div`
   height: 25px;
   width: 100%;
   gap: 15px;
-  cursor: pointer;
 `;
 
 const RightIconContainer = styled.div`
