@@ -3,6 +3,7 @@ import styled, { Interpolation } from "styled-components";
 import Logo from "../../assets/images/logo2.svg";
 import ReceiverContext from "./ReceiverContext";
 
+
 interface ButtonProps {
   launchText: string;
   inlineLaunch: boolean;
@@ -62,8 +63,7 @@ const ButtonElem = styled.button<ButtonProps>`
   border: none;
   border-radius: 10px;
   font-size: 16px;
-  letter-spacing: 0.1em;
-  font-family: sans-serif;
+  font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -76,6 +76,8 @@ const ButtonElem = styled.button<ButtonProps>`
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   ${({ launchButtonStyle }) => launchButtonStyle};
+  letter-spacing: normal;
+  font-family: "Poppins", sans-serif;
 
   &:hover {
     cursor: pointer;

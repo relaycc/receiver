@@ -5,7 +5,7 @@ import ArrowUp from "../../assets/images/arrowUp.svg";
 import { truncateAddress } from "../../utls/address";
 import React from "react";
 import { FetchEnsNameResult } from "@wagmi/core";
-import Avatar from './Avatar'
+import Avatar from "./Avatar";
 
 interface HeaderProps {
   text: string | null;
@@ -30,7 +30,7 @@ export default function RelayHeader({
   setShowConversations,
   setMinimizedConvoList,
   minimizedConvoList,
-  peerIsAvailable
+  peerIsAvailable,
 }: HeaderProps) {
   const headerText = () => {
     if (text) {
@@ -75,55 +75,53 @@ export default function RelayHeader({
     <Header>
       <GoBackSvgContainer>
         <svg
+          fill="none"
+          viewBox="0 0 34 34"
+          strokeWidth={2.5}
+          stroke="black"
+          height="34"
+          width="34"
           onClick={handleGoBackClick}
-          version="1.1"
-          id="Capa_1"
-          xmlns="http://www.w3.org/2000/svg"
-          x="0px"
-          y="0px"
-          width="20px"
-          height="20px"
-          viewBox="0 0 493.578 493.578"
-          xmlSpace="preserve"
-          style={{cursor: 'pointer'}}
         >
-          <g>
-            <path
-              d="M487.267,225.981c0-17.365-13.999-31.518-31.518-31.518H194.501L305.35,83.615c12.24-12.24,12.24-32.207,0-44.676
-		L275.592,9.18c-12.24-12.24-32.207-12.24-44.676,0L15.568,224.527c-6.12,6.12-9.256,14.153-9.256,22.262
-		c0,8.032,3.136,16.142,9.256,22.262l215.348,215.348c12.24,12.239,32.207,12.239,44.676,0l29.758-29.759
-		c12.24-12.24,12.24-32.207,0-44.676L194.501,299.498h261.094c17.366,0,31.519-14.153,31.519-31.519L487.267,225.981z"
-            />
-          </g>
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+          />
         </svg>
-        <Avatar address={peerAddress}/>
+        <HeaderInfo>
+        <Avatar address={peerAddress} />
         {headerText()}
+        </HeaderInfo>
       </GoBackSvgContainer>
       <RightIconContainer>
-        {visible ? (
-          <MinimizeContainer onClick={handleMinimizeClick}>
-            <img src={CloseReceiverLine} width={12} height={13} alt="relay" />
-          </MinimizeContainer>
-        ) : (
-          <MinimizeContainer>
-            <img
-              src={ArrowUp}
-              width={18}
-              height={13}
-              alt="relay"
-              onClick={toggleReceiver}
-            />
-          </MinimizeContainer>
-        )}
-        <CloseContainer>
-          <img
-            src={CloseReceiverX}
-            width={13}
-            height={13}
-            alt="relay"
-            onClick={closeReceiver}
+        <MinimizeSvg
+          onClick={handleMinimizeClick}
+          fill="none"
+          viewBox="0 0 28 28"
+          strokeWidth={2.5}
+          stroke="black"
+          height="28"
+          width={28}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15" />
+        </MinimizeSvg>
+
+        <svg
+          onClick={closeReceiver}
+          fill="none"
+          viewBox="0 0 28 28"
+          strokeWidth={2.5}
+          stroke="black"
+          height="28"
+          width="28"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6 18L18 6M6 6l12 12"
           />
-        </CloseContainer>
+        </svg>
       </RightIconContainer>
     </Header>
   );
@@ -132,18 +130,18 @@ export default function RelayHeader({
 const Header = styled.div`
   font-size: 16px;
   font-weight: 600;
-  font-family: "Roboto", sans-serif;
-  z-index: 1000;
+  font-family: 'Poppins', sans-serif;
   text-align: left;
   border-radius: 4px 4px 0 0;
   box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
   color: black;
   display: flex;
-  height: 69px;
+  height: 62px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 22px;
+  padding: 0px 10px;
+  z-index: 1011;
 `;
 
 const TextContainer = styled.div`
@@ -157,14 +155,14 @@ const SoloTextContainer = styled.div`
   margin-right: 35px;
   overflow: hidden;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
   white-space: nowrap;
   text-overflow: ellipsis;
   padding: 10px 0;
 `;
 
 const MainText = styled.div`
-  font-weight: 700;
+  font-weight: 600;
   font-size: 14px;
   line-height: 18px;
   padding-bottom: 4px;
@@ -177,27 +175,25 @@ const SubText = styled.div`
   line-height: 15px;
 `;
 
-const CloseContainer = styled.div`
-  cursor: pointer;
-`;
-
-const MinimizeContainer = styled.div`
-  cursor: pointer;
-  display: flex;
-  align-items: flex-end;
-`;
-
 const GoBackSvgContainer = styled.div`
   display: flex;
   align-items: center;
   height: 25px;
   width: 100%;
-  gap: 15px;
 `;
 
 const RightIconContainer = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 5px;
 `;
+
+const MinimizeSvg = styled.svg`
+  transform: translateY(6px);
+`
+const HeaderInfo = styled.div`
+display: flex;
+align-items: center;
+gap: 10px;
+`

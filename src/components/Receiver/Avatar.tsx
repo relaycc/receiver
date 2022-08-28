@@ -60,13 +60,13 @@ export default function Avatar({
 }
 
 const AvatarImage = styled.img<{ size?: "large" | "small" | "medium" }>`
-  width: ${(p) => (p.size === "large" ? "35px" : "35px")};
-  height: ${(p) => (p.size === "large" ? "35px" : "35px")};
+  width: ${(p) => (p.size === "large" ? "40px" : "40px")};
+  height: ${(p) => (p.size === "large" ? "40px" : "40px")};
 `;
 
 const AvatarContainer = styled.div`
-  min-width: 35px;
-  min-height: 35px;
+  min-width: 40px;
+  min-height: 40px;
   border-radius: 50%;
   display: grid;
   place-content: center;

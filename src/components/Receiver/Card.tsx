@@ -29,7 +29,7 @@ const CardContainer = styled.div`
 
 const Title = styled.div`
   color: #686868;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 12px;

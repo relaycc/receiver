@@ -123,12 +123,12 @@ const List = styled.div`
   width: 100%;
   height: 100%;
   z-index: 10;
-  padding: 0px 12px;
+  padding: 0px 10px;
   box-sizing: border-box;
 `;
 
 const Text = styled.div`
-  font-family: "Inter", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -136,15 +136,11 @@ const Text = styled.div`
   color: #2d2d2d;
 `;
 
-class Bucket {
-  date: string;
-  messages: Message[];
-}
-
 // This assumets messages are sorted by date already.
 function getMessageBuckets(messages: Message[]): Array<Message[]> {
   return messages.reduce(
     (buckets: Array<Message[]>, message: Message) => {
+
       // If sent isn't set, always add it as it's own bucket
       if (message.sent === undefined) {
         return [...buckets, [message]];

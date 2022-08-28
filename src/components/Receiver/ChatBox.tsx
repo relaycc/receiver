@@ -8,7 +8,7 @@ import SignInLink from "./Connector";
 import { useCallback, useState } from "react";
 import Messages from "./Messages";
 import Card from "./Card";
-import MessageInput from "./MessageInput";
+import { MessageInputFooter } from "./Footers/MessageInputFooter";
 
 import Header from "./Header";
 import Logo from "../../assets/images/logo2.svg";
@@ -18,6 +18,7 @@ import {
 } from "../../xmtp-react/conversations";
 import React from "react";
 import { useEnsName } from "wagmi";
+import { RelayFooter } from "./Footers/RelayFooter";
 interface ChatButtonProps {
   visible: boolean;
   as?: string | React.ComponentType<any>;
@@ -170,30 +171,14 @@ const ChatBox = ({
         )}
       </RelayRelativeContainer>
       {!xmtpReady ? (
-        <RelayFooter>
-          Powered by Relay
-          <img src={Logo} height={30} width={30} />
-        </RelayFooter>
+        <RelayFooter />
       ) : (
-        <RelayInputFooter>
-          <MessageInput onSendMessage={doSendMessage} />
-        </RelayInputFooter>
+        <MessageInputFooter onSendMessage={doSendMessage} />
       )}
     </ChatContainer>
   );
 };
 
-const RelayInputFooter = styled.div`
-  color: #333333;
-  text-align: center;
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
-  height: 45px;
-  width: 100%;
-  background-color: white;
-`;
 
 const ChatContainer = styled.div<ChatButtonProps>`
   background-color: transparent;
@@ -201,7 +186,6 @@ const ChatContainer = styled.div<ChatButtonProps>`
   border: none;
   padding: 0px;
   font-size: 16px;
-  letter-spacing: 0.1em;
   height: 100%;
   z-index: 1000;
   width: 375px;
@@ -212,32 +196,12 @@ const ChatContainer = styled.div<ChatButtonProps>`
 `;
 
 const RelayRelativeContainer = styled.div`
-  height: 375px;
+  height: 376px;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const RelayFooter = styled.div`
-  color: #333333;
-  text-align: center;
-  font-family: sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
-  height: 45px;
-  width: 100%;
-  /* background-color: #FBFAFF; */
-  line-height: 45px;
-
-  img {
-    display: inline-block;
-    height: 15px;
-    width: 15px;
-    vertical-align: sub;
-    margin-left: 5px;
-  }
+  padding: 1px 0px;
 `;
 
 const ConnectorList = styled.div`
@@ -259,7 +223,7 @@ const Connector = styled.div`
   display: flex;
   align-items: center;
   padding: 0 10px;
-  font-family: sans-serif;
+  font-family: "poppins", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;

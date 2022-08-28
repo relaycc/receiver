@@ -44,7 +44,7 @@ const ListItem = styled.li`
   align-items: center;
   gap: 10px;
   box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
-  padding: 15px;
+  padding: 10px;
   cursor: pointer;
   width: 100%;
 `;
@@ -66,4 +66,5 @@ const Subtitle = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: start;
+  padding: 2px 0px;
 `;

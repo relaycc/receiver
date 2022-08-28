@@ -22,7 +22,7 @@ const ButtonContainer = styled.div`
   text-align: center;
   display: inline-block;
   font-size: 12px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 500;
   line-height: 15px;

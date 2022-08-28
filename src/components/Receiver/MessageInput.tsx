@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import styled from 'styled-components';
-import MessageSend from '../../assets/images/MessageSend.svg';
-import React, { useCallback } from 'react';
-import arrowup from '../../assets/images/arrowUp.svg'
+import { useState } from "react";
+import styled from "styled-components";
+import MessageSend from "../../assets/images/MessageSend.svg";
+import React, { useCallback } from "react";
+import arrowup from "../../assets/images/arrowUp.svg";
 
 interface MessageInputProps {
   onSendMessage: (val: string) => unknown;
 }
 
 const MessageInput = ({ onSendMessage }: MessageInputProps) => {
-  const [inputVal, setInputVal] = useState<string>('');
+  const [inputVal, setInputVal] = useState<string>("");
 
   const clearInput = useCallback(() => {
-    setInputVal('');
+    setInputVal("");
   }, []);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,12 +22,12 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
   const handleSend = useCallback(() => {
     if (inputVal.length < 1) return;
     onSendMessage(inputVal);
-    setInputVal('');
+    setInputVal("");
   }, [inputVal, onSendMessage]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter') handleSend();
+      if (e.key === "Enter") handleSend();
     },
     [handleSend]
   );
@@ -43,29 +43,35 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
-      <SvgContainer inputTextCount={inputTextCount} onClick={handleSend}>
-        <img src={MessageSend} width={20} height={20} />
+      <SvgContainer
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 28 28"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        height={28}
+        width={28}
+        onClick={handleSend}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+        />
       </SvgContainer>
     </Container>
   );
 };
-interface StyleProps {
-  inputTextCount: number;
-}
 
 const Container = styled.div`
   display: flex;
   align-items: center;
-  padding: 5px 5px 5px 15px;
-  margin: 5px 10px 0px 10px;
+  justify-content: space-between;
+  padding: 3px 0px 3px 10px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   gap: 20px;
   border-radius: 99rem;
-
-  @media (max-width: 335px) {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
+  width: 100%;
 `;
 
 const StyledInput = styled.input`
@@ -77,27 +83,19 @@ const StyledInput = styled.input`
   &::placeholder {
     color: #333c4f;
     font-weight: 400;
-    font-family: sans-serif;
+    font-family: "Poppins", sans-serif;
   }
   color: #333333;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
-  line-height: 14px;
-  letter-spacing: 1px;
 
   &::placeholder {
     color: #333c4f;
   }
 `;
 
-const SvgContainer = styled.div<StyleProps>`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 5px;
-`;
+const SvgContainer = styled.svg``;
 
 export default MessageInput;

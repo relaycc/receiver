@@ -4,6 +4,7 @@ import { time } from "../../utls/date";
 import { truncateName, truncateAddress } from "../../utls/address";
 import { useEnsName } from "wagmi";
 import { useResponsiveName } from "../../hooks/useResponsiveName";
+
 interface TextBubbleProps {
   message: string;
   sentByMe?: boolean;
@@ -46,7 +47,7 @@ const TextWrapper = styled.div`
 
 const MessageText = styled.div`
   color: #060028;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;

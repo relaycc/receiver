@@ -5,10 +5,12 @@ import Avatar from "./Avatar";
 import React from "react";
 import { useResponsiveName } from "../../hooks/useResponsiveName";
 import { useEnsName } from "wagmi";
+import { time } from '../../utls/date'
+import { shortDate } from '../../utls/date'
 
 interface MessagesBucketProps {
   peerAddress: string;
-  startDate: string | Date | undefined;
+  startDate: Date | undefined;
   messages: Message[];
   peerName?: string | undefined;
   sentByAddress: any;
@@ -34,6 +36,7 @@ export default function MessagesBucket({
 
   return (
     <Container>
+
       <SentByInfo sentByMe={sentByMe}>
         <MessageHeader>
           <div style={{ marginRight: "10px" }}>
@@ -45,7 +48,7 @@ export default function MessagesBucket({
               : useResponsiveName(peerEns, peerAddress, "")}
           </SenderName>
           {/* <MessageTime>{startDate?.toString()}</MessageTime> */}
-          <MessageTime>time</MessageTime>
+          <MessageTime>{time(startDate)}</MessageTime>
         </MessageHeader>
       </SentByInfo>
       <FlexColReverseContainer>
@@ -78,7 +81,7 @@ const Container = styled.div`
 `;
 
 const BucketTimestamp = styled.div`
-  font-family: "Roboto", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 10px;
@@ -98,6 +101,8 @@ const MessagePosition = styled.div`
 const MessageHeader = styled.div`
   display: flex;
   align-items: flex-start;
+  margin-bottom: -18px;
+
 `;
 
 const SenderName = styled.div<StyleProps>`
@@ -112,16 +117,16 @@ const SenderName = styled.div<StyleProps>`
 
 const SentByInfo = styled.div<StyleProps>`
   display: flex;
-  margin-bottom: -18px;
 `;
 
 const MessageTime = styled.div`
-  font-family: "Roboto", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
+  font-weight: 500;
+  font-size: 14px;
   margin-left: 8px;
-  color: #060028;
+  color: rgb(6, 0, 40, 0.4);
+  transform: translateY(2px);
 `;
 
 const Messages = styled.div`

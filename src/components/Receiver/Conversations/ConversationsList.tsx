@@ -4,17 +4,20 @@ import { useConversations } from "../../../xmtp-react/conversations";
 import Conversation from "./Conversation";
 import { useEnsAddress } from "wagmi";
 import { useEffect } from "react";
+import { RelayFooter } from "../Footers/RelayFooter";
 
 interface ConversationsListProps {
   showConversations: boolean;
   setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
   setPeerAddress: any;
+  showBox: boolean;
 }
 
 export function ConversationsList({
   showConversations,
   setShowConversations,
   setPeerAddress,
+  showBox,
 }: ConversationsListProps) {
   const conversations = useConversations();
   const [showNewMessageDropdown, setShowMewMessageDropdown] = useState(false);
@@ -56,7 +59,7 @@ export function ConversationsList({
       setPeerAddress(data);
       console.log("whow");
     } else {
-      console.log('end')
+      console.log("end");
       setPeerAddress(data);
     }
   }, [count]);
@@ -68,36 +71,93 @@ export function ConversationsList({
     setShowConversations(false);
   };
 
-  
+  useEffect(() => {
+    const keyDownHandler = (e: KeyboardEvent) => {
+      console.log("User pressed: ", e.key);
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleSubmit();
+      }
+    };
+
+    document.addEventListener("keydown", keyDownHandler);
+
+    return () => {
+      document.removeEventListener("keydown", keyDownHandler);
+    };
+  }, []);
 
   return (
     <Container showConversations={showConversations}>
       <Header>
-        <TopTitle>Conversations</TopTitle>
+        <IconTitleContainer>
+          <svg
+            onClick={() => setShowConversations(false)}
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="black"
+            height={"24px"}
+            width={"24px"}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5"
+            />
+          </svg>
+
+          <TopTitle>Conversations</TopTitle>
+        </IconTitleContainer>
+
         <TopButton onClick={handleDropDownToggle}>
           <svg
-            fill="#000000"
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 48 48"
-            width="15px"
-            height="15px"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2.5}
+            stroke="currentColor"
+            height={"18px"}
+            width={"18px"}
           >
-            <path d="M 24 4 C 12.972066 4 4 12.972074 4 24 C 4 35.027926 12.972066 44 24 44 C 35.027934 44 44 35.027926 44 24 C 44 12.972074 35.027934 4 24 4 z M 24 7 C 33.406615 7 41 14.593391 41 24 C 41 33.406609 33.406615 41 24 41 C 14.593385 41 7 33.406609 7 24 C 7 14.593391 14.593385 7 24 7 z M 23.976562 13.978516 A 1.50015 1.50015 0 0 0 22.5 15.5 L 22.5 22.5 L 15.5 22.5 A 1.50015 1.50015 0 1 0 15.5 25.5 L 22.5 25.5 L 22.5 32.5 A 1.50015 1.50015 0 1 0 25.5 32.5 L 25.5 25.5 L 32.5 25.5 A 1.50015 1.50015 0 1 0 32.5 22.5 L 25.5 22.5 L 25.5 15.5 A 1.50015 1.50015 0 0 0 23.976562 13.978516 z" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
           </svg>
+
           <ButtonText>New Message</ButtonText>
         </TopButton>
       </Header>
       {showNewMessageDropdown && (
         <NewMessageDropdown showNewMessageDropdown={showNewMessageDropdown}>
+          <ExitSvg
+            onClick={handleDropDownToggle}
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            height={"24px"}
+            width={"24px"}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </ExitSvg>
+
           <NewMessageHeader>
-            Enter the ens name or wallet address of the person you would like to
-            chat with
+            Enter an ens name or wallet address
           </NewMessageHeader>
           <Input ref={userInput} placeholder="type here" type="text" />
           <Button onClick={handleSubmit}>Create Conversation</Button>
           <Paragraph>
-            You are only able to reach people who have previously signed into
-            the XMTP network
+            * Only people who have previously signed into the XMTP network are
+            reachable *
           </Paragraph>
         </NewMessageDropdown>
       )}
@@ -111,6 +171,7 @@ export function ConversationsList({
           />
         ))}
       </List>
+      <RelayFooter />
     </Container>
   );
 }
@@ -140,7 +201,7 @@ const Header = styled.header`
   justify-content: space-between;
   box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
   background: white;
-  min-height: 69px;
+  min-height: 62px;
   padding: 0px 22px;
 `;
 
@@ -167,6 +228,7 @@ const ButtonText = styled.span`
 
 const List = styled.ul`
   display: flex;
+  height: 100%;
   flex-direction: column;
   overflow: scroll;
 `;
@@ -176,37 +238,28 @@ const NewMessageDropdown = styled.div<StyleProps>`
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   background-color: white;
+  box-shadow: 0px -4px 4px -5px rgba(0, 0, 0, 0.25);
   position: absolute;
-  top: 71px;
+  top: 62px;
+  z-index: 1010;
   left: 0;
   padding: 0px 10px;
   gap: 20px;
-  animation: scale 300ms ease-in-out forwards;
-
-  @keyframes scale {
-    0% {
-      transform: scale(0.5);
-      opacity: 0.5;
-    }
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
 `;
 
 const NewMessageHeader = styled.h2`
   font-size: 18px;
   text-align: center;
   margin-top: 80px;
+  width: 100%;
 `;
 
 const Input = styled.input`
   background-color: white;
   border-radius: 4px;
-  width: 90%;
+  width: 100%;
   border: none;
   outline: none;
   padding: 5px 10px;
@@ -215,10 +268,25 @@ const Input = styled.input`
 
 const Paragraph = styled.p`
   text-align: center;
+  width: 100%;
+  line-height: 1.25;
 `;
 
 const Button = styled.button`
   padding: 5px;
   border-radius: 4px;
   border: 2px solid #313030;
+  width: 100%;
+`;
+
+const ExitSvg = styled.svg`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+`;
+
+const IconTitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `;
