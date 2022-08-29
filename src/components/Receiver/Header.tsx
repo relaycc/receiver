@@ -73,11 +73,11 @@ export default function RelayHeader({
       <GoBackSvgContainer>
         <svg
           fill="none"
-          viewBox="0 0 34 34"
+          viewBox="0 0 24 24"
           strokeWidth={2.5}
           stroke="black"
-          height="34"
-          width="34"
+          height="24"
+          width="24"
           onClick={handleGoBackClick}
         >
           <path
@@ -87,8 +87,8 @@ export default function RelayHeader({
           />
         </svg>
         <HeaderInfo>
-        <Avatar address={peerAddress} />
-        {headerText()}
+          <Avatar address={peerAddress} />
+          {headerText()}
         </HeaderInfo>
       </GoBackSvgContainer>
       <RightIconContainer>
@@ -127,7 +127,7 @@ export default function RelayHeader({
 const Header = styled.div`
   font-size: 16px;
   font-weight: 600;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   text-align: left;
   border-radius: 4px 4px 0 0;
   box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
@@ -188,9 +188,9 @@ const RightIconContainer = styled.div`
 
 const MinimizeSvg = styled.svg`
   transform: translateY(6px);
-`
+`;
 const HeaderInfo = styled.div`
-display: flex;
-align-items: center;
-gap: 10px;
-`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;

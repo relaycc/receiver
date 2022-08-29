@@ -46,7 +46,6 @@ export default function MessagesBucket({
               ? useResponsiveName(senderName, sentByAddress, "")
               : useResponsiveName(peerEns, peerAddress, "")}
           </SenderName>
-          {/* <MessageTime>{startDate?.toString()}</MessageTime> */}
           <MessageTime>{shortDate(startDate) + ", " + time(startDate)}</MessageTime>
         </MessageHeader>
       </SentByInfo>

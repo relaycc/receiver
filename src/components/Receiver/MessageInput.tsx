@@ -96,6 +96,8 @@ const StyledInput = styled.input`
   }
 `;
 
-const SvgContainer = styled.svg``;
+const SvgContainer = styled.svg`
+transform: translateY(1px);
+`;
 
 export default MessageInput;

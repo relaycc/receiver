@@ -5,8 +5,11 @@ import Logo from "../../../assets/images/logo2.svg";
 export function RelayFooter() {
   return (
     <Container>
-      Powered by Relay
-      <img src={Logo} />
+      <Span>Powered by</Span>
+      <Div>
+        Relay
+        <img src={Logo} />
+      </Div>
     </Container>
   );
 }
@@ -17,6 +20,7 @@ const Container = styled.div`
   min-height: 62px;
   box-shadow: 0px -4px 4px -4px rgba(0, 0, 0, 0.25);
   display: flex;
+  gap: 5px;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -36,3 +40,23 @@ const Container = styled.div`
     margin-left: 2px;
   }
 `;
+
+
+const Span = styled.span`
+    text-align: center;
+  font-family: "Poppins" sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  color: rgb(0, 0, 0, 0.4);
+`
+
+const Div = styled.div`
+  text-align: center;
+  font-family: "Poppins" sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+`
