@@ -53,16 +53,12 @@ export function ConversationsList({
       return;
     }
     if (isLoading) {
-      console.log("Loading");
     }
     if (isError) {
-      console.log(isError + " myError");
     }
     if (data) {
       setPeerAddress(data);
-      console.log("whow");
     } else {
-      console.log("end");
       setPeerAddress(data);
     }
   }, [count]);
@@ -76,7 +72,6 @@ export function ConversationsList({
 
   useEffect(() => {
     const keyDownHandler = (e: KeyboardEvent) => {
-      console.log("User pressed: ", e.key);
       if (e.key === "Enter") {
         e.preventDefault();
         handleSubmit();

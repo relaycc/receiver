@@ -36,7 +36,6 @@ export default function MessagesBucket({
 
   return (
     <Container>
-
       <SentByInfo sentByMe={sentByMe}>
         <MessageHeader>
           <div style={{ marginRight: "10px" }}>
@@ -48,7 +47,7 @@ export default function MessagesBucket({
               : useResponsiveName(peerEns, peerAddress, "")}
           </SenderName>
           {/* <MessageTime>{startDate?.toString()}</MessageTime> */}
-          <MessageTime>{time(startDate)}</MessageTime>
+          <MessageTime>{shortDate(startDate) + ", " + time(startDate)}</MessageTime>
         </MessageHeader>
       </SentByInfo>
       <FlexColReverseContainer>

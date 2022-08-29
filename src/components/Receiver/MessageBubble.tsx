@@ -3,6 +3,7 @@ import React from "react";
 import { time } from "../../utls/date";
 import { truncateName, truncateAddress } from "../../utls/address";
 import { useEnsName } from "wagmi";
+import { useRef } from 'react'
 import { useResponsiveName } from "../../hooks/useResponsiveName";
 
 interface TextBubbleProps {
