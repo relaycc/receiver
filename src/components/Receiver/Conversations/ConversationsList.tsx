@@ -156,7 +156,7 @@ export function ConversationsList({
           <Input ref={userInput} placeholder="type here" type="text" />
           <Button onClick={handleSubmit}>Create Conversation</Button>
           <Paragraph>
-            * Only people who have previously signed into the XMTP network are
+            * Only those who have previously signed into the XMTP network are
             reachable *
           </Paragraph>
         </NewMessageDropdown>
@@ -202,12 +202,12 @@ const Header = styled.header`
   box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
   background: white;
   min-height: 62px;
-  padding: 0px 22px;
+  padding: 0px 10px;
 `;
 
 const TopTitle = styled.h1`
-  font-weight: bold;
-  font-size: 18px;
+  font-weight: 500;
+  font-size: 22px;
 `;
 
 const TopButton = styled.button`
