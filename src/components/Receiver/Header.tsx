@@ -1,7 +1,4 @@
 import styled from "styled-components";
-import CloseReceiverLine from "../../assets/images/close-receiver-line.svg";
-import CloseReceiverX from "../../assets/images/close-x.svg";
-import ArrowUp from "../../assets/images/arrowUp.svg";
 import { truncateAddress } from "../../utls/address";
 import React from "react";
 import { FetchEnsNameResult } from "@wagmi/core";

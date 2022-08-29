@@ -69,6 +69,8 @@ const Receiver = ({
   const [peerAddress, setPeerAddress] = useState<string>("");
   const [showConversations, setShowConversations] = useState(false);
   const [minimizedConvoList, setMinimizeConvoList] = useState([]);
+  const [showNewMessageDropdown, setShowMewMessageDropdown] = useState(false);
+
 
   const convertAndSetPeerAddress = (peerAddress: string) => {
     const cleanAddress = getAddress(peerAddress);
@@ -111,8 +113,10 @@ const Receiver = ({
               <ConversationsList
                 setPeerAddress={setPeerAddress}
                 setShowConversations={setShowConversations}
+                setShowMewMessageDropdown={setShowMewMessageDropdown}
                 showConversations={showConversations}
                 showBox={showBox}
+                showNewMessageDropdown={showNewMessageDropdown}
               />
               <ChatBox
                 minimizedConvoList={minimizedConvoList}
@@ -130,6 +134,8 @@ const Receiver = ({
                 setPeerAddress={setPeerAddress}
                 setShowBox={setShowBox}
                 minimizedConvoList={minimizedConvoList}
+                setShowConversations={setShowConversations}
+                setShowMewMessageDropdown={setShowMewMessageDropdown}
               />
             </div>
           </Container>

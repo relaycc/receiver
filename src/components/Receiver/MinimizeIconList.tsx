@@ -7,12 +7,16 @@ interface MinimizeIconListProps {
   setShowBox: any;
   setPeerAddress: any;
   setMinimizeConvoList: any;
+  setShowConversations: any;
+  setShowMewMessageDropdown: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export function MinimizeIconList({
   minimizedConvoList,
   setShowBox,
   setPeerAddress,
   setMinimizeConvoList,
+  setShowConversations,
+  setShowMewMessageDropdown,
 }: MinimizeIconListProps) {
   const removeFromList = (e: any) => {
     setMinimizeConvoList((items: any) =>
@@ -28,6 +32,8 @@ export function MinimizeIconList({
             setPeerAddress={setPeerAddress}
             setShowBox={setShowBox}
             address={e}
+            setShowConversations={setShowConversations}
+            setShowMewMessageDropdown={setShowMewMessageDropdown}
           />
           <AvatarHoverDetails onClick={() => removeFromList(index)}>
             <svg

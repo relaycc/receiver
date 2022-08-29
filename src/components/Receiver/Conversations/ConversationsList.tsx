@@ -9,18 +9,21 @@ import { RelayFooter } from "../Footers/RelayFooter";
 interface ConversationsListProps {
   showConversations: boolean;
   setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowMewMessageDropdown: React.Dispatch<React.SetStateAction<boolean>>;
   setPeerAddress: any;
   showBox: boolean;
+  showNewMessageDropdown: boolean;
 }
 
 export function ConversationsList({
   showConversations,
   setShowConversations,
+  setShowMewMessageDropdown,
   setPeerAddress,
   showBox,
+  showNewMessageDropdown,
 }: ConversationsListProps) {
   const conversations = useConversations();
-  const [showNewMessageDropdown, setShowMewMessageDropdown] = useState(false);
   const [newConversationInput, setNewConversationInput] = useState("");
   const userInput: any = useRef();
   const [count, setCount] = useState(0);

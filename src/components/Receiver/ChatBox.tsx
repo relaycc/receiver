@@ -9,7 +9,6 @@ import { useCallback, useState } from "react";
 import Messages from "./Messages";
 import Card from "./Card";
 import { MessageInputFooter } from "./Footers/MessageInputFooter";
-
 import Header from "./Header";
 import Logo from "../../assets/images/logo2.svg";
 import {
@@ -111,18 +110,45 @@ const ChatBox = ({
 
   return (
     <ChatContainer visible={visible} as={as} style={style}>
-      <Header
-        peerIsAvailable={peerIsAvailable}
-        setMinimizedConvoList={setMinimizedConvoList}
-        minimizedConvoList={minimizedConvoList}
-        setShowConversations={setShowConversations}
-        visible={visible}
-        peerName={peerName}
-        peerAddress={peerAddress}
-        text={textForHeader}
-        closeReceiver={closeReceiver}
-        toggleReceiver={toggleReceiver}
-      />
+      {peerIsAvailable ? (
+        <Header
+          peerIsAvailable={peerIsAvailable}
+          setMinimizedConvoList={setMinimizedConvoList}
+          minimizedConvoList={minimizedConvoList}
+          setShowConversations={setShowConversations}
+          visible={visible}
+          peerName={peerName}
+          peerAddress={peerAddress}
+          text={textForHeader}
+          closeReceiver={closeReceiver}
+          toggleReceiver={toggleReceiver}
+        />
+      ) : (
+        <UnConnectedHeader>
+          <LeftContainer>
+            <HeaderLogo>
+              <img src={Logo} alt="RelayReceiver"></img>
+            </HeaderLogo>
+            <CompanyName>Relay Receiver</CompanyName>
+          </LeftContainer>
+          <svg
+            onClick={closeReceiver}
+            fill="none"
+            viewBox="0 0 28 28"
+            strokeWidth={2.5}
+            stroke="black"
+            height="28"
+            width="28"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </UnConnectedHeader>
+      )}
+
       <RelayRelativeContainer>
         {isUserConnected || (isConnected && userDidConnect) ? (
           <MessagesContainer>
@@ -178,7 +204,6 @@ const ChatBox = ({
     </ChatContainer>
   );
 };
-
 
 const ChatContainer = styled.div<ChatButtonProps>`
   background-color: transparent;
@@ -243,6 +268,43 @@ const MessagesContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 `;
+
+const LeftContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const UnConnectedHeader = styled.div`
+  color: black;
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 10px;
+`;
+
+const CompanyName = styled.h1`
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  text-align: left;
+`;
+
+const HeaderLogo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+  > img {
+    height: 35px;
+    width: 35px;
+  }
+`;
+
 export default ChatBox;

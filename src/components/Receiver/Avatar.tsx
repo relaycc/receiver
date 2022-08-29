@@ -10,12 +10,16 @@ interface AvatarProps {
   size?: "small" | "medium" | "large";
   setPeerAddress?: any;
   setShowBox?: any;
+  setShowConversations?: any;
+  setShowMewMessageDropdown?: React.Dispatch<React.SetStateAction<boolean>>
 }
 export default function Avatar({
   address,
   size,
   setPeerAddress,
   setShowBox,
+  setShowConversations,
+  setShowMewMessageDropdown,
 }: AvatarProps) {
   const {
     data: ensAvatar,
@@ -36,6 +40,8 @@ export default function Avatar({
     if (setShowBox) {
       setShowBox(true);
       setPeerAddress(address);
+      setShowConversations(false);
+      setShowMewMessageDropdown!(false);
     }
   };
 
