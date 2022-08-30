@@ -117,6 +117,7 @@ const Receiver = ({
                 showConversations={showConversations}
                 showBox={showBox}
                 showNewMessageDropdown={showNewMessageDropdown}
+                setShowBox={setShowBox}
               />
               <ChatBox
                 minimizedConvoList={minimizedConvoList}

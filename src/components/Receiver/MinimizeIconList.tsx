@@ -1,6 +1,7 @@
 import React from "react";
 import Avatar from "./Avatar";
 import styled from "styled-components";
+import { EnsName } from "./EnsName";
 
 interface MinimizeIconListProps {
   minimizedConvoList: any;
@@ -37,19 +38,22 @@ export function MinimizeIconList({
           />
           <AvatarHoverDetails onClick={() => removeFromList(index)}>
             <svg
-              fill="none"
-              viewBox="0 0 28 28"
-              strokeWidth={2.5}
-              stroke="black"
-              height="16px"
-              width="16px"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="black"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="white"
+              height={'16px'}
+              width={'16px'}
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
+                d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
+
+            <EnsName setShowMewMessageDropdown={setShowMewMessageDropdown} setShowBox={setShowBox} setPeerAddress={setPeerAddress} setShowConversations={setShowConversations} address={e} />
           </AvatarHoverDetails>
         </AvatarContainer>
       ))}
@@ -63,7 +67,7 @@ const Container = styled.ul`
   align-items: center;
   position: fixed;
   bottom: 123px;
-  right: 45px;
+  right: 40px;
   gap: 10px;
 `;
 
@@ -71,8 +75,8 @@ const AvatarHoverDetails = styled.div`
   position: absolute;
   right: -5px;
   top: -5px;
-  height: 14px;
-  width: 14px;
+  height: 16px;
+  width: 16px;
   border-radius: 50%;
   display: none;
   z-index: 100000;

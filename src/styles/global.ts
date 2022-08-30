@@ -28,6 +28,7 @@ body {
   background: white;
   line-height: 1;
   overflow-y: hidden;
+  background-color: white;
 }
 ol,
 ul {

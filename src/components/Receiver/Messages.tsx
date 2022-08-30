@@ -106,7 +106,7 @@ const Messages = ({
     } else {
       return (
         <Card title="All Set  🎉">
-          <Text>{`This is the beginning of your conversation with ${peerName}`}</Text>
+          <Text>{`This is the beginning of your encrypted conversation with ${peerName}`}</Text>
         </Card>
       );
     }

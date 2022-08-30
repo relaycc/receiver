@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled, { Interpolation } from "styled-components";
-import Logo from "../../assets/images/logo2.svg";
+import smallLogo from "../../assets/images/smallLogo.png";
 import ReceiverContext from "./ReceiverContext";
 
 
@@ -43,7 +43,7 @@ const ReceiverLaunch = ({
 };
 
 const InlineLogo = styled.div<ButtonProps>`
-  background-image: url("${Logo}");
+  background-image: url("${smallLogo}");
   height: 30px;
   width: 30px;
   display: inline-block;
@@ -58,15 +58,15 @@ const InlineLogo = styled.div<ButtonProps>`
 `;
 
 const ButtonElem = styled.button<ButtonProps>`
-  background-color: #5a46c6;
+  background: #5203fc;
+  font-size: 14px;
   color: white;
+  font-weight: 500;
   border: none;
   border-radius: 10px;
   font-size: 16px;
   font-family: "Poppins", sans-serif;
   font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
   line-height: 15px;
   padding: 8px 12px;
   position: fixed;

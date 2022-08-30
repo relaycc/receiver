@@ -94,6 +94,11 @@ const MessagePosition = styled.div`
   justify-content: flex-start;
   gap: 10px;
   align-self: flex-start;
+
+  //bottom message because of column reverse format
+  :first-of-type {
+    padding-bottom: 4px;
+  }
 `;
 
 const MessageHeader = styled.div`

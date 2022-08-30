@@ -13,6 +13,7 @@ interface ConversationsListProps {
   setPeerAddress: any;
   showBox: boolean;
   showNewMessageDropdown: boolean;
+  setShowBox: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export function ConversationsList({
@@ -21,6 +22,7 @@ export function ConversationsList({
   setShowMewMessageDropdown,
   setPeerAddress,
   showBox,
+  setShowBox,
   showNewMessageDropdown,
 }: ConversationsListProps) {
   const conversations = useConversations();
@@ -84,17 +86,20 @@ export function ConversationsList({
       document.removeEventListener("keydown", keyDownHandler);
     };
   }, []);
-
+const handleMinimizeConversations = () => {
+  setShowBox(false)
+  setShowMewMessageDropdown(false)
+  setTimeout(() => setShowConversations(false), 1000)
+}
   return (
     <Container showConversations={showConversations}>
       <Header>
         <IconTitleContainer>
           <svg
-            onClick={() => setShowConversations(false)}
-            xmlns="http://www.w3.org/2000/svg"
+            onClick={handleMinimizeConversations}
             fill="none"
             viewBox="0 0 24 24"
-            strokeWidth={1.5}
+            strokeWidth={2.5}
             stroke="black"
             height={"24px"}
             width={"24px"}
@@ -102,10 +107,9 @@ export function ConversationsList({
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5"
+              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
             />
           </svg>
-
           <TopTitle>Conversations</TopTitle>
         </IconTitleContainer>
 
@@ -149,9 +153,14 @@ export function ConversationsList({
           </ExitSvg>
 
           <NewMessageHeader>
-            Enter an ens name or wallet address
+            Enter an ENS name or wallet address
           </NewMessageHeader>
-          <Input ref={userInput} placeholder="type here" type="text" />
+          <Input
+            autoFocus={true}
+            ref={userInput}
+            placeholder="type here"
+            type="text"
+          />
           <Button onClick={handleSubmit}>Create Conversation</Button>
           <Paragraph>
             * Only those who have previously signed into the XMTP network are
@@ -169,7 +178,7 @@ export function ConversationsList({
           />
         ))}
       </List>
-      <RelayFooter />
+      {/* <RelayFooter /> */}
     </Container>
   );
 }
@@ -271,10 +280,14 @@ const Paragraph = styled.p`
 `;
 
 const Button = styled.button`
-  padding: 5px;
+  padding: 8px;
   border-radius: 4px;
-  border: 2px solid #313030;
   width: 100%;
+  background: #5203fc;
+  font-size: 15px;
+  color: white;
+  font-weight: 600;
+  border: none;
 `;
 
 const ExitSvg = styled.svg`

@@ -72,18 +72,18 @@ export default function RelayHeader({
     <Header>
       <GoBackSvgContainer>
         <svg
+          onClick={handleGoBackClick}
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={2.5}
-          stroke="black"
-          height="24"
-          width="24"
-          onClick={handleGoBackClick}
+          stroke="currentColor"
+          height={'24px'}
+          width={'24px'}
         >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+            d="M15.75 19.5L8.25 12l7.5-7.5"
           />
         </svg>
         <HeaderInfo>
@@ -104,7 +104,7 @@ export default function RelayHeader({
           <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15" />
         </MinimizeSvg>
 
-        <svg
+        <ExitSvg
           onClick={closeReceiver}
           fill="none"
           viewBox="0 0 28 28"
@@ -118,7 +118,7 @@ export default function RelayHeader({
             strokeLinejoin="round"
             d="M6 18L18 6M6 6l12 12"
           />
-        </svg>
+        </ExitSvg>
       </RightIconContainer>
     </Header>
   );
@@ -139,6 +139,7 @@ const Header = styled.div`
   justify-content: space-between;
   padding: 0px 10px;
   z-index: 1011;
+  background-color: white;
 `;
 
 const TextContainer = styled.div`
@@ -194,3 +195,5 @@ const HeaderInfo = styled.div`
   align-items: center;
   gap: 10px;
 `;
+
+const ExitSvg = styled.svg``;

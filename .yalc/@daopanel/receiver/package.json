@@ -23,5 +23,8 @@
     "dist"
   ],
   "types": "dist/index.d.ts",
-  "yalcSig": "36864da4e7f6b28088ea88b9a88739ef"
+  "dependencies": {
+    "@daopanel/receiver": "file:.yalc/@daopanel/receiver"
+  },
+  "yalcSig": "953cf4cb53bfb8d08f0c0afbe78b2ac3"
 }

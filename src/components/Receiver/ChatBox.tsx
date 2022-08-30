@@ -10,7 +10,6 @@ import Messages from "./Messages";
 import Card from "./Card";
 import { MessageInputFooter } from "./Footers/MessageInputFooter";
 import Header from "./Header";
-import Logo from "../../assets/images/logo2.svg";
 import {
   useSendMessage,
   Status as SendMessageStatus,
@@ -18,6 +17,8 @@ import {
 import React from "react";
 import { useEnsName } from "wagmi";
 import { RelayFooter } from "./Footers/RelayFooter";
+import LoadingMessages from './LoadingMessages'
+import smallLogo from '../../assets/images/smallLogo.png'
 interface ChatButtonProps {
   visible: boolean;
   as?: string | React.ComponentType<any>;
@@ -127,11 +128,11 @@ const ChatBox = ({
         <UnConnectedHeader>
           <LeftContainer>
             <HeaderLogo>
-              <img src={Logo} alt="RelayReceiver"></img>
+              <img src={smallLogo} alt="RelayReceiver"></img>
             </HeaderLogo>
             <CompanyName>Relay Receiver</CompanyName>
           </LeftContainer>
-          <svg
+          <ExitSvg
             onClick={closeReceiver}
             fill="none"
             viewBox="0 0 28 28"
@@ -145,7 +146,7 @@ const ChatBox = ({
               strokeLinejoin="round"
               d="M6 18L18 6M6 6l12 12"
             />
-          </svg>
+          </ExitSvg>
         </UnConnectedHeader>
       )}
 
@@ -160,6 +161,7 @@ const ChatBox = ({
               peerAddress={peerAddress}
             />
           </MessagesContainer>
+          // <LoadingMessages />
         ) : (
           <Card title="Connect your wallet to start a converation!">
             <ConnectorList>
@@ -206,8 +208,7 @@ const ChatBox = ({
 };
 
 const ChatContainer = styled.div<ChatButtonProps>`
-  background-color: transparent;
-  color: white;
+  background-color: white;
   border: none;
   padding: 0px;
   font-size: 16px;
@@ -274,6 +275,8 @@ const MessagesContainer = styled.div`
 const LeftContainer = styled.div`
   display: flex;
   align-items: center;
+  gap: 7px;
+  margin-left: 10px;
 `;
 
 const UnConnectedHeader = styled.div`
@@ -286,6 +289,7 @@ const UnConnectedHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0px 10px;
+  background-color: white;
 `;
 
 const CompanyName = styled.h1`
@@ -299,12 +303,15 @@ const HeaderLogo = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 50px;
-  width: 50px;
+  height: 27px;
+  width: 29px;
   > img {
-    height: 35px;
-    width: 35px;
+    height: 27px;
+    width: 29px;
   }
 `;
+
+const ExitSvg = styled.svg`
+`
 
 export default ChatBox;

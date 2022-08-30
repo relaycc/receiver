@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "@daopanel/receiver": {
-      "signature": "36864da4e7f6b28088ea88b9a88739ef",
+      "signature": "953cf4cb53bfb8d08f0c0afbe78b2ac3",
       "file": true
     }
   }

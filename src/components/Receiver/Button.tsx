@@ -15,7 +15,6 @@ export default function Button({text, onClick}: ButtonProps) {
 
 const ButtonContainer = styled.div`
   padding: 8px 12px;
-  background: #5A46C6;
   border: 1px solid rgba(55, 41, 125, 0.5);
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
@@ -27,6 +26,9 @@ const ButtonContainer = styled.div`
   font-weight: 500;
   line-height: 15px;
   align-self: center;
+  background: #5203fc;
+  font-size: 14px;
+  color: white;
 
   &:hover {
     cursor: pointer;
