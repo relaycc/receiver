@@ -24,8 +24,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup": "^2.60.0",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-polyfill-node": "^0.10.2",
     "rollup-plugin-postcss": "^4.0.1",
     "tslib": "^2.4.0",
     "typescript": "^4.7.4"
@@ -36,6 +34,8 @@
     "styled-components": "^5.3.5"
   },
   "dependencies": {
+    "@ethersproject/abstract-signer": "^5.7.0",
+    "@ethersproject/address": "^5.7.0",
     "@xmtp/xmtp-js": "^6.0.2",
     "react-blockies": "^1.4.1",
     "use-immer": "^0.7.0",

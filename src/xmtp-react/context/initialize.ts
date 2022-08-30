@@ -1,6 +1,6 @@
 import { Client, Conversation, Message } from '@xmtp/xmtp-js';
 import { GroupMessageCodec, GroupMessage, isGroupMessage } from '../groups';
-import { Signer } from 'ethers';
+import { Signer } from '@ethersproject/abstract-signer';
 
 const gmc = new GroupMessageCodec();
 

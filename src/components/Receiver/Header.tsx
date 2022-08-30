@@ -4,13 +4,12 @@ import CloseReceiverX from '../../assets/images/close-x.svg';
 import ArrowUp from '../../assets/images/arrowUp.svg';
 
 import React from 'react'
-import { FetchEnsNameResult } from '@wagmi/core';
 
 interface HeaderProps {
   text: string | null;
   visible: boolean;
   peerAddress: string | undefined;
-  peerName: FetchEnsNameResult | undefined;
+  peerName: string | undefined;
   toggleReceiver: () => unknown;
   closeReceiver: () => unknown;
 }

@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { Conversation, Message, Client } from '@xmtp/xmtp-js';
-import { Signer } from 'ethers';
+import { Signer } from '@ethersproject/abstract-signer';
 import { GroupMessage } from '../groups';
 
 export enum Status {
