@@ -9,7 +9,7 @@ interface HeaderProps {
   text: string | null;
   visible: boolean;
   peerAddress: string | undefined;
-  peerName: string | undefined;
+  peerName: string | undefined | null;
   toggleReceiver: () => unknown;
   closeReceiver: () => unknown;
 }
