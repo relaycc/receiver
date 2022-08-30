@@ -1,14 +1,13 @@
-import styled from "styled-components";
 import { truncateAddress } from "../../utls/address";
 import React, { useState } from "react";
-import { FetchEnsNameResult } from "@wagmi/core";
 import Avatar from "./Avatar";
+import styled from 'styled-components';
 
 interface HeaderProps {
   text: string | null;
   visible: boolean;
   peerAddress: string | undefined;
-  peerName: FetchEnsNameResult | undefined;
+  peerName: string | undefined | null;
   toggleReceiver: () => unknown;
   closeReceiver: () => unknown;
   setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;

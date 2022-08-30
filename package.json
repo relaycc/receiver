@@ -1,60 +1,45 @@
 {
-  "name": "@daopanel/receiver",
+  "name": "@relaycc/receiver",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "version": "0.5.0",
-  "description": "A simple template for a custom React component library",
+  "version": "0.1.14",
+  "description": "The best way to add wallet messaging to your site.",
   "scripts": {
-    "rollup": "rollup -c"
+    "build": "rollup -c",
+    "patch": "npm version patch -m 'patch: Bump version to %s'"
   },
-  "author": "daopanel",
-  "license": "ISC",
+  "author": "Relay",
+  "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.16.0",
-    "@babel/plugin-transform-runtime": "^7.18.9",
-    "@babel/preset-env": "^7.16.4",
-    "@babel/preset-react": "^7.16.0",
-    "@babel/preset-typescript": "^7.16.0",
-    "@mdx-js/react": "^2.1.2",
-    "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-image": "^2.1.1",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.0.6",
     "@rollup/plugin-typescript": "^8.3.0",
     "@rollup/plugin-url": "^7.0.0",
-    "@testing-library/react": "^13.3.0",
-    "@types/jest": "^28.1.6",
-    "@types/react": "^18.0.15",
+    "@types/react": "^18.0.1",
     "@types/react-blockies": "^1.4.1",
     "@types/styled-components": "^5.1.25",
     "@types/uuid": "^8.3.4",
-    "@xmtp/xmtp-js": "^5.1.0",
-    "babel-jest": "^27.3.1",
-    "babel-loader": "^8.2.3",
-    "babel-plugin-styled-components": "^2.0.7",
-    "css-loader": "^6.5.1",
-    "react-blockies": "^1.4.1",
+    "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup": "^2.60.0",
-    "rollup-plugin-dts": "^4.0.1",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-polyfill-node": "^0.10.2",
     "rollup-plugin-postcss": "^4.0.1",
-    "sass": "^1.43.5",
-    "sass-loader": "^12.3.0",
-    "style-loader": "^3.3.1",
     "tslib": "^2.4.0",
-    "typescript": "^4.7.4",
-    "wagmi": "^0.6.0",
-    "webpack-bundle-analyzer": "^4.6.1"
+    "typescript": "^4.7.4"
   },
   "peerDependencies": {
-    "@xmtp/xmtp-js": "^5.1.0",
-    "react": "^18.2.0",
-    "styled-components": "^5.3.5",
+    "react": "^16 || ^17 || ^18",
+    "react-dom": "^16 || ^17 || ^18",
+    "styled-components": "^5.3.5"
+  },
+  "dependencies": {
+    "@ethersproject/abstract-signer": "^5.7.0",
+    "@ethersproject/address": "^5.7.0",
+    "@xmtp/xmtp-js": "^6.0.2",
+    "react-blockies": "^1.4.1",
     "use-immer": "^0.7.0",
+    "uuid": "^8.3.2",
     "wagmi": "^0.6.0"
   },
   "main": "dist/cjs/index.js",
@@ -62,8 +47,5 @@
   "files": [
     "dist"
   ],
-  "types": "dist/index.d.ts",
-  "dependencies": {
-    "@daopanel/receiver": "file:.yalc/@daopanel/receiver"
-  }
+  "types": "dist/types/index.d.ts"
 }

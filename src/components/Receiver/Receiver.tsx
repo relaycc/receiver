@@ -11,13 +11,12 @@ import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 import { XmtpContextProvider } from "../../xmtp-react/context";
-import { Signer } from "ethers";
+import { Signer } from '@ethersproject/abstract-signer';
+import { getAddress } from '@ethersproject/address'
 import ChatBox from "./ChatBox";
-import CSS from "csstype";
 import { Interpolation } from "styled-components";
 import ReceiverContext from "./ReceiverContext";
 import styled from "styled-components";
-import { getAddress } from "@ethersproject/address";
 import { GlobalStyles } from "../../styles/global";
 import { ConversationsList } from "./Conversations/ConversationsList";
 import { MinimizeIconList } from "./MinimizeIconList";
@@ -86,7 +85,7 @@ const Receiver = ({
     setHasLaunched(false);
   };
 
-  const chatBoxContainerStyle: CSS.Properties = {
+  const chatBoxContainerStyle: React.CSSProperties = {
     maxHeight: showBox ? "500px" : hasLaunched ? "0px" : "0px",
     height: "500px",
     position: "fixed",

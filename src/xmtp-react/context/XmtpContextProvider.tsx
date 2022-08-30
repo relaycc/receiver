@@ -7,7 +7,7 @@ import React, {
   FunctionComponent,
 } from 'react';
 import { Client, Conversation, Message } from '@xmtp/xmtp-js';
-import { Signer } from 'ethers';
+import { Signer } from '@ethersproject/abstract-signer';
 import { Status, XmtpContext } from './XmtpContext';
 import { initialize } from './initialize';
 import { useSigner } from 'wagmi';
