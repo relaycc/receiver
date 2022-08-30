@@ -6,6 +6,7 @@ import { useEnsAddress } from "wagmi";
 import { useEffect } from "react";
 import { RelayFooter } from "../Footers/RelayFooter";
 
+
 interface ConversationsListProps {
   showConversations: boolean;
   setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
@@ -50,6 +51,7 @@ export function ConversationsList({
     },
   });
 
+  
   useEffect(() => {
     if (newConversationInput.length === 0) {
       return;
@@ -89,7 +91,6 @@ export function ConversationsList({
 const handleMinimizeConversations = () => {
   setShowBox(false)
   setShowMewMessageDropdown(false)
-  setTimeout(() => setShowConversations(false), 1000)
 }
   return (
     <Container showConversations={showConversations}>

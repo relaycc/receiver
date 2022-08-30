@@ -66,8 +66,8 @@ const Container = styled.ul`
   flex-direction: column-reverse;
   align-items: center;
   position: fixed;
-  bottom: 123px;
-  right: 40px;
+  bottom: 126px;
+  right: 20px;
   gap: 10px;
 `;
 

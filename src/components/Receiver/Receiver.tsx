@@ -71,7 +71,6 @@ const Receiver = ({
   const [minimizedConvoList, setMinimizeConvoList] = useState([]);
   const [showNewMessageDropdown, setShowMewMessageDropdown] = useState(false);
 
-
   const convertAndSetPeerAddress = (peerAddress: string) => {
     const cleanAddress = getAddress(peerAddress);
     setPeerAddress(cleanAddress);

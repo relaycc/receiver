@@ -17,8 +17,8 @@ import {
 import React from "react";
 import { useEnsName } from "wagmi";
 import { RelayFooter } from "./Footers/RelayFooter";
-import LoadingMessages from './LoadingMessages'
-import smallLogo from '../../assets/images/smallLogo.png'
+import LoadingMessages from "./LoadingMessages";
+import smallLogo from "../../assets/images/smallLogo.png";
 interface ChatButtonProps {
   visible: boolean;
   as?: string | React.ComponentType<any>;
@@ -109,9 +109,12 @@ const ChatBox = ({
       ? null
       : "Relay Receiver";
 
+  const test = () => {
+    console.log(peerIsAvailable);
+  };
   return (
     <ChatContainer visible={visible} as={as} style={style}>
-      {peerIsAvailable ? (
+      {isConnected && userDidConnect ? (
         <Header
           peerIsAvailable={peerIsAvailable}
           setMinimizedConvoList={setMinimizedConvoList}
@@ -125,7 +128,7 @@ const ChatBox = ({
           toggleReceiver={toggleReceiver}
         />
       ) : (
-        <UnConnectedHeader>
+        <UnConnectedHeader onClick={test}>
           <LeftContainer>
             <HeaderLogo>
               <img src={smallLogo} alt="RelayReceiver"></img>
@@ -161,8 +164,8 @@ const ChatBox = ({
               peerAddress={peerAddress}
             />
           </MessagesContainer>
-          // <LoadingMessages />
         ) : (
+          // <LoadingMessages />
           <Card title="Connect your wallet to start a converation!">
             <ConnectorList>
               {isMetaMask && (
@@ -311,7 +314,6 @@ const HeaderLogo = styled.div`
   }
 `;
 
-const ExitSvg = styled.svg`
-`
+const ExitSvg = styled.svg``;
 
 export default ChatBox;
