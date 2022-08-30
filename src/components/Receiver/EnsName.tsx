@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useEnsName } from "wagmi";
+import { useResponsiveName } from "../../hooks/useResponsiveName";
 
 interface EnsNameProps {
   address: string;
@@ -20,6 +21,7 @@ export function EnsName({
   const { data, isError, isLoading } = useEnsName({
     address: address,
   });
+
   const handleClick = () => {
     if (setShowBox) {
       setShowBox(true);
@@ -31,7 +33,9 @@ export function EnsName({
 
   if (isLoading) return <div>Fetching name…</div>;
   if (isError) return <div>Error fetching name</div>;
-  return <Span onClick={handleClick}>{data}</Span>;
+  return (
+      <Span onClick={handleClick}>{data || useResponsiveName(null, address, '')}</Span>
+  );
 }
 
 const Span = styled.span`

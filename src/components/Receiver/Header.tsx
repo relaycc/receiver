@@ -117,7 +117,7 @@ export default function RelayHeader({
               />
             </DropdownSvg>
           )}
-          {showMenu && (
+          {showMenu && peerIsAvailable && (
             <DropdownMenu>
               <DropDownItemCopy
                 onClick={() => navigator.clipboard.writeText(peerAddress!)}

@@ -109,9 +109,6 @@ const ChatBox = ({
       ? null
       : "Relay Receiver";
 
-  const test = () => {
-    console.log(peerIsAvailable);
-  };
   return (
     <ChatContainer visible={visible} as={as} style={style}>
       {isConnected && userDidConnect ? (
@@ -128,7 +125,7 @@ const ChatBox = ({
           toggleReceiver={toggleReceiver}
         />
       ) : (
-        <UnConnectedHeader onClick={test}>
+        <UnConnectedHeader>
           <LeftContainer>
             <HeaderLogo>
               <img src={smallLogo} alt="RelayReceiver"></img>

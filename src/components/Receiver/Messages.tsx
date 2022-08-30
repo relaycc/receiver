@@ -41,6 +41,7 @@ const Messages = ({
   });
 
   if (typeof peerAddress !== "string") {
+    setPeerIsAvailable(false);
     return (
       <Card title="Could not resolve ENS name">
         <Text>Make sure to include the ".eth" suffix.</Text>
@@ -140,7 +141,6 @@ const Text = styled.div`
 function getMessageBuckets(messages: Message[]): Array<Message[]> {
   return messages.reduce(
     (buckets: Array<Message[]>, message: Message) => {
-
       // If sent isn't set, always add it as it's own bucket
       if (message.sent === undefined) {
         return [...buckets, [message]];
