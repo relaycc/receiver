@@ -1,9 +1,7 @@
-// import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
-// import resolve from '@rollup/plugin-node-resolve';
 import postcss from "rollup-plugin-postcss";
-import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+// import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import image from '@rollup/plugin-image';
 import json from '@rollup/plugin-json';
 
@@ -30,7 +28,7 @@ export default [
       image(),
       // resolve({ browser: true, preferBuiltins: false }),
       json(),
-      peerDepsExternal(),
+      // peerDepsExternal(),
       commonjs(),
       typescript({ tsconfig: "./tsconfig.json" }),
       postcss(),
