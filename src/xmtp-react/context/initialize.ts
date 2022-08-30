@@ -84,7 +84,7 @@ const loadConversation = async (
 ) => {
   // TODO This might be a bug in XMTP, reach out to them.
   await new Promise((_) => setTimeout(_, waitForMessagesMs));
-  const messages = await conversation.messages({ pageSize: 100 });
+  const messages = await conversation.messages({ limit: 100 });
   for (const message of messages) {
     if (isGroupMessage(message)) {
       onNewGroupMessage(message);

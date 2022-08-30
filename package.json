@@ -42,9 +42,7 @@
     "@xmtp/xmtp-js": "^6.0.2",
     "react": "^16 || ^17 || ^18",
     "react-dom": "^16 || ^17 || ^18",
-    "styled-components": "^5.3.5"
-  },
-  "dependencies": {
+    "styled-components": "^5.3.5",
     "wagmi": "^0.6.0",
     "use-immer": "^0.7.0",
     "react-blockies": "^1.4.1"
