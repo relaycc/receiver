@@ -27,7 +27,7 @@ export default [
     ],
     plugins: [
       image(),
-      resolve(),
+      resolve({ browser: true, preferBuiltins: false }),
       json(),
       peerDepsExternal(),
       commonjs(),
