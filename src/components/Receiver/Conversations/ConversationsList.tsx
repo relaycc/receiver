@@ -200,6 +200,7 @@ const Container = styled.div<StyleProps>`
   left: 0;
   z-index: 1001;
   background: white;
+  border-radius: 4px 4px 0 0;
   display: ${(props) => (props.showConversations ? "flex" : "none")};
 `;
 

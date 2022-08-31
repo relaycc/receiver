@@ -11,6 +11,7 @@ interface MinimizeIconListProps {
   setShowConversations: any;
   setShowMewMessageDropdown: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 export function MinimizeIconList({
   minimizedConvoList,
   setShowBox,
@@ -85,14 +86,15 @@ const AvatarHoverDetails = styled.div`
   width: 16px;
   border-radius: 50%;
   display: none;
-  z-index: 100000;
   cursor: pointer;
-`;
+  `;
 
 const AvatarContainer = styled.div`
   position: relative;
   border-radius: 50%;
   cursor: pointer;
+  z-index: 100000;
+
 
   :hover ${AvatarHoverDetails} {
     display: block;
