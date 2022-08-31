@@ -73,8 +73,8 @@ const Container = styled.ul`
   flex-direction: column-reverse;
   align-items: center;
   position: fixed;
-  bottom: 126px;
-  right: 20px;
+  bottom: 136px;
+  right: 25px;
   gap: 10px;
 `;
 
