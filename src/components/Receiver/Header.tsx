@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 import { truncateAddress } from '../../utls/address';
 import React, { useState } from 'react';
 import Avatar from './Avatar';
-=======
-import { truncateAddress } from "../../utls/address";
-import React, { useState } from "react";
-import Avatar from "./Avatar";
->>>>>>> main
 import styled from 'styled-components';
 
 interface HeaderProps {
@@ -20,6 +14,10 @@ interface HeaderProps {
   setMinimizedConvoList: any;
   minimizedConvoList: any;
   peerIsAvailable: boolean | undefined;
+  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
+  setMinimizedConvoList: any;
+  minimizedConvoList: any;
+  peerIsAvailable: boolean | undefined;
 }
 
 export default function RelayHeader({
@@ -29,6 +27,10 @@ export default function RelayHeader({
   peerName,
   toggleReceiver,
   closeReceiver,
+  setShowConversations,
+  setMinimizedConvoList,
+  minimizedConvoList,
+  peerIsAvailable,,
   setShowConversations,
   setMinimizedConvoList,
   minimizedConvoList,
@@ -46,7 +48,7 @@ export default function RelayHeader({
           <MainText>{peerName}</MainText>
           <SubText>{peerAddress && truncateAddress(peerAddress)}</SubText>
         </TextContainer>
-      );
+      );;
     } else {
       return (
         <SoloTextContainer>
@@ -90,16 +92,9 @@ export default function RelayHeader({
           viewBox="0 0 24 24"
           strokeWidth={2.5}
           stroke="currentColor"
-<<<<<<< HEAD
           height={'24px'}
           width={'24px'}
           style={{ marginRight: '5px' }}>
-=======
-          height={"24px"}
-          width={"24px"}
-          style={{ marginRight: "5px" }}
-        >
->>>>>>> main
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -118,14 +113,8 @@ export default function RelayHeader({
               viewBox="0 0 24 24"
               strokeWidth={2.5}
               stroke="currentColor"
-<<<<<<< HEAD
               height={'24px'}
               width={'24px'}>
-=======
-              height={"24px"}
-              width={"24px"}
-            >
->>>>>>> main
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -136,26 +125,15 @@ export default function RelayHeader({
           {showMenu && (
             <DropdownMenu>
               <DropDownItemCopy
-<<<<<<< HEAD
                 onClick={() => navigator.clipboard.writeText(peerAddress!)}>
-=======
-                onClick={() => navigator.clipboard.writeText(peerAddress!)}
-              >
->>>>>>> main
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-<<<<<<< HEAD
                   height={'24px'}
                   width={'24px'}>
-=======
-                  height={"24px"}
-                  width={"24px"}
-                >
->>>>>>> main
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -166,28 +144,16 @@ export default function RelayHeader({
               </DropDownItemCopy>
               <DropDownItem>
                 <LiLink
-<<<<<<< HEAD
                   href={'https://relay.cc/' + peerAddress}
                   target="_blank">
-=======
-                  href={"https://relay.cc/" + peerAddress}
-                  target="_blank"
-                >
->>>>>>> main
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-<<<<<<< HEAD
                     height={'24px'}
                     width={'24px'}>
-=======
-                    height={"24px"}
-                    width={"24px"}
-                  >
->>>>>>> main
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -199,28 +165,16 @@ export default function RelayHeader({
               </DropDownItem>
               <DropDownItem>
                 <LiLink
-<<<<<<< HEAD
                   href={'https://etherscan.io/address/' + peerAddress}
                   target="_blank">
-=======
-                  href={"https://etherscan.io/address/" + peerAddress}
-                  target="_blank"
-                >
->>>>>>> main
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-<<<<<<< HEAD
                     height={'24px'}
                     width={'24px'}>
-=======
-                    height={"24px"}
-                    width={"24px"}
-                  >
->>>>>>> main
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -242,12 +196,7 @@ export default function RelayHeader({
           strokeWidth={2.5}
           stroke="black"
           height="28"
-<<<<<<< HEAD
           width={28}>
-=======
-          width={28}
-        >
->>>>>>> main
           <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15" />
         </MinimizeSvg>
 
@@ -258,12 +207,7 @@ export default function RelayHeader({
           strokeWidth={2.5}
           stroke="black"
           height="28"
-<<<<<<< HEAD
           width="28">
-=======
-          width="28"
-        >
->>>>>>> main
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -278,11 +222,7 @@ export default function RelayHeader({
 const Header = styled.div`
   font-size: 16px;
   font-weight: 600;
-<<<<<<< HEAD
   font-family: 'Poppins', sans-serif;
-=======
-  font-family: "Poppins", sans-serif;
->>>>>>> main
   text-align: left;
   border-radius: 4px 4px 0 0;
   box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
@@ -404,6 +344,26 @@ const HeaderInfo = styled.div`
     visibility: visible;
     opacity: 1;
   }
+`;
+
+const ExitSvg = styled.svg``;
+
+const LiLink = styled.a`
+  color: black;
+  text-decoration: none;
+  height: 100%;
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  gap: 8px;
+`;
+
+const UserInfoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
 
 const ExitSvg = styled.svg``;

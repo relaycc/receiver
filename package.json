@@ -3,7 +3,6 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-<<<<<<< HEAD
   "version": "0.1.18",
   "description": "The best way to add wallet messaging to your site.",
   "scripts": {
@@ -12,12 +11,6 @@
     "lint": "eslint src/",
     "prettier": "prettier --check .",
     "typecheck": "tsc --emitDeclarationOnly false --noEmit",
-=======
-  "version": "0.1.14",
-  "description": "The best way to add wallet messaging to your site.",
-  "scripts": {
-    "build": "rollup -c",
->>>>>>> main
     "patch": "npm version patch -m 'patch: Bump version to %s'"
   },
   "author": "Relay",
@@ -33,7 +26,6 @@
     "@types/styled-components": "^5.1.25",
     "@types/uuid": "^8.3.4",
     "eslint": "^8.23.0",
-<<<<<<< HEAD
     "@typescript-eslint/eslint-plugin": "5.17.0",
     "@typescript-eslint/parser": "5.17.0",
     "eslint-config-airbnb": "19.0.4",
@@ -43,8 +35,6 @@
     "eslint-plugin-jsx-a11y": "6.5.1",
     "eslint-plugin-react": "7.29.4",
     "eslint-plugin-react-hooks": "4.4.0",
-=======
->>>>>>> main
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -65,6 +55,7 @@
     "react-blockies": "^1.4.1",
     "use-immer": "^0.7.0",
     "uuid": "^8.3.2",
+    "uuid": "^8.3.2",
     "wagmi": "^0.6.0"
   },
   "main": "dist/cjs/index.js",
@@ -72,5 +63,5 @@
   "files": [
     "dist"
   ],
-  "types": "dist/types/index.d.ts"
+  "types": "dist/types/types/index.d.ts"
 }

@@ -1,24 +1,16 @@
-<<<<<<< HEAD
 import { useState } from 'react';
 import styled from 'styled-components';
 import React, { useCallback } from 'react';
-=======
-import { useState } from "react";
-import styled from "styled-components";
-import MessageSend from "../../assets/images/MessageSend.svg";
-import React, { useCallback } from "react";
-import arrowup from "../../assets/images/arrowUp.svg";
->>>>>>> main
 
 interface MessageInputProps {
   onSendMessage: (val: string) => unknown;
 }
 
 const MessageInput = ({ onSendMessage }: MessageInputProps) => {
-  const [inputVal, setInputVal] = useState<string>("");
+  const [inputVal, setInputVal] = useState<string>('');
 
   const clearInput = useCallback(() => {
-    setInputVal("");
+    setInputVal('');
   }, []);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,12 +20,12 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
   const handleSend = useCallback(() => {
     if (inputVal.length < 1) return;
     onSendMessage(inputVal);
-    setInputVal("");
+    setInputVal('');
   }, [inputVal, onSendMessage]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter") handleSend();
+      if (e.key === 'Enter') handleSend();
     },
     [handleSend]
   );
@@ -57,12 +49,7 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
         stroke="currentColor"
         height={28}
         width={28}
-<<<<<<< HEAD
         onClick={handleSend}>
-=======
-        onClick={handleSend}
-      >
->>>>>>> main
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -87,23 +74,16 @@ const Container = styled.div`
 const StyledInput = styled.input`
   flex: 1;
   border-radius: 2px;
-  /* background-color: #F3F0FF; */
+  /* /* background-color: #F3F0FF; */ */
   border: none;
   outline: none;
   &::placeholder {
     color: #333c4f;
     font-weight: 400;
-<<<<<<< HEAD
     font-family: 'Poppins', sans-serif;
   }
   color: #333333;
   font-family: 'Poppins', sans-serif;
-=======
-    font-family: "Poppins", sans-serif;
-  }
-  color: #333333;
-  font-family: "Poppins", sans-serif;
->>>>>>> main
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -114,11 +94,7 @@ const StyledInput = styled.input`
 `;
 
 const SvgContainer = styled.svg`
-<<<<<<< HEAD
   transform: translateY(1px);
-=======
-transform: translateY(1px);
->>>>>>> main
 `;
 
 export default MessageInput;

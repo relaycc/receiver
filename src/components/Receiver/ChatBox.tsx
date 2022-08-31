@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import styled, { Interpolation } from 'styled-components';
 import { useIsMetaMask } from '../../hooks';
 import { useConnect, useAccount } from 'wagmi';
@@ -16,29 +15,6 @@ import React from 'react';
 import { useEnsName } from 'wagmi';
 import { RelayFooter } from './Footers/RelayFooter';
 import LoadingMessages from './LoadingMessages';
-=======
-import styled, { Interpolation } from "styled-components";
-import { useIsMetaMask } from "../../hooks";
-import { useConnect, useAccount } from "wagmi";
-import LightCoinbase from "../../assets/images/LightCoinbase.png";
-import LightWalletConnect from "../../assets/images/LightWalletConnect.png";
-import Metamask from "../../assets/images/Metamask.svg";
-import SignInLink from "./Connector";
-import { useCallback, useState } from "react";
-import Messages from "./Messages";
-import Card from "./Card";
-import { MessageInputFooter } from "./Footers/MessageInputFooter";
-import Header from "./Header";
-import {
-  useSendMessage,
-  Status as SendMessageStatus,
-} from "../../xmtp-react/conversations";
-import React from "react";
-import { useEnsName } from "wagmi";
-import { RelayFooter } from "./Footers/RelayFooter";
-import LoadingMessages from "./LoadingMessages";
-import smallLogo from "../../assets/images/smallLogo.png";
->>>>>>> main
 interface ChatButtonProps {
   visible: boolean;
   as?: string | React.ComponentType<any>;
@@ -51,18 +27,33 @@ interface ChatButtonProps {
   setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
   setMinimizedConvoList: any;
   minimizedConvoList: any;
+  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
+  setMinimizedConvoList: any;
+  minimizedConvoList: any;
 }
 
 const ChatBox = ({
   setShowConversations,
+ 
+  setShowConversations,
   style,
+ 
   isUserConnected,
+ 
   visible,
+ 
   as,
+ 
   peerAddress,
+ 
   headerText,
+ 
   closeReceiver,
+ 
   toggleReceiver,
+  setMinimizedConvoList,
+  minimizedConvoList,
+,
   setMinimizedConvoList,
   minimizedConvoList,
 }: ChatButtonProps) => {
@@ -72,10 +63,11 @@ const ChatBox = ({
   const { connect, connectors } = useConnect();
   const { isConnected } = useAccount();
   const [peerIsAvailable, setPeerIsAvailable] = useState<boolean | undefined>();
+  const [peerIsAvailable, setPeerIsAvailable] = useState<boolean | undefined>();
 
   const { data: peerName } = useEnsName({
-    address: peerAddress,
-  });
+    address: peerAddress,,
+  });;
 
   const sendMessage = useSendMessage();
 
@@ -94,20 +86,20 @@ const ChatBox = ({
   // TODO prevent connection if already connected.
   const handleClickMetamask = useCallback(() => {
     setUserDidConnect(true);
-    connect({ connector: metamaskConnector });
+    connect({  connector: metamaskConnector  });
 
     /* eslint-disable-next-line */
   }, []);
 
   const handleClickCoinbase = useCallback(() => {
     setUserDidConnect(true);
-    connect({ connector: coinbaseConnector });
+    connect({  connector: coinbaseConnector  });
     /* eslint-disable-next-line */
   }, []);
 
   const handleClickWalletConnect = useCallback(() => {
     setUserDidConnect(true);
-    connect({ connector: walletConnectConnector });
+    connect({  connector: walletConnectConnector  });
     /* eslint-disable-next-line */
   }, []);
 
@@ -127,12 +119,11 @@ const ChatBox = ({
   const textForHeader =
     isUserConnected || (isConnected && userDidConnect)
       ? null
-<<<<<<< HEAD
       : 'Relay Receiver';
-=======
-      : "Relay Receiver";
->>>>>>> main
 
+  const test = () => {
+    console.log(peerIsAvailable);
+  };
   const test = () => {
     console.log(peerIsAvailable);
   };
@@ -155,15 +146,11 @@ const ChatBox = ({
         <UnConnectedHeader onClick={test}>
           <LeftContainer>
             <HeaderLogo>
-<<<<<<< HEAD
               <img
                 src={
                   'https://relay-receiver-prod.s3.amazonaws.com/smallLogo.png'
                 }
                 alt="RelayReceiver"></img>
-=======
-              <img src={smallLogo} alt="RelayReceiver"></img>
->>>>>>> main
             </HeaderLogo>
             <CompanyName>Relay Receiver</CompanyName>
           </LeftContainer>
@@ -174,12 +161,7 @@ const ChatBox = ({
             strokeWidth={2.5}
             stroke="black"
             height="28"
-<<<<<<< HEAD
             width="28">
-=======
-            width="28"
-          >
->>>>>>> main
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -201,63 +183,38 @@ const ChatBox = ({
             />
           </MessagesContainer>
         ) : (
-<<<<<<< HEAD
-=======
-          // <LoadingMessages />
->>>>>>> main
           <Card title="Connect your wallet to start a converation!">
             <ConnectorList>
               {isMetaMask && (
                 <Connector onClick={handleClickMetamask}>
                   <SignInLink
-<<<<<<< HEAD
                     hoverLogo={
                       'https://relay-receiver-prod.s3.amazonaws.com/Metamask.svg'
                     }
                     name={'Metamask'}
-=======
-                    hoverLogo={Metamask}
-                    name={"Metamask"}
->>>>>>> main
                     onClick={handleClickMetamask}
                   />
                 </Connector>
               )}
               <MaybeHideOnConnector
                 onClick={handleClickWalletConnect}
-<<<<<<< HEAD
                 shouldHide={isMetaMask}>
                 <SignInLink
                   hoverLogo={
                     'https://relay-receiver-prod.s3.amazonaws.com/LighWalletConnect.svg'
                   }
                   name={'Wallet Connect'}
-=======
-                shouldHide={isMetaMask}
-              >
-                <SignInLink
-                  hoverLogo={LightWalletConnect}
-                  name={"Wallet Connect"}
->>>>>>> main
                   onClick={handleClickWalletConnect}
                 />
               </MaybeHideOnConnector>
               <MaybeHideOnConnector
                 onClick={handleClickCoinbase}
-<<<<<<< HEAD
                 shouldHide={isMetaMask}>
                 <SignInLink
                   hoverLogo={
                     'https://relay-receiver-prod.s3.amazonaws.com/LightCoinbase.png'
                   }
                   name={'Coinbase'}
-=======
-                shouldHide={isMetaMask}
-              >
-                <SignInLink
-                  hoverLogo={LightCoinbase}
-                  name={"Coinbase"}
->>>>>>> main
                   onClick={handleClickCoinbase}
                 />
               </MaybeHideOnConnector>
@@ -316,11 +273,7 @@ const Connector = styled.div`
   display: flex;
   align-items: center;
   padding: 0 10px;
-<<<<<<< HEAD
   font-family: 'poppins', sans-serif;
-=======
-  font-family: "poppins", sans-serif;
->>>>>>> main
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -331,58 +284,10 @@ const Connector = styled.div`
 
 const MaybeHideOnConnector = styled(Connector)<{ shouldHide: boolean }>`
   @media (pointer: coarse) {
-    display: ${(p) => (p.shouldHide ? "none" : "flex")};
+    display: ${(p) => (p.shouldHide ? 'none' : 'flex')};
   }
 `;
 
-const MessagesContainer = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const LeftContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin-left: 10px;
-`;
-
-const UnConnectedHeader = styled.div`
-  color: black;
-  border-radius: 4px 4px 0 0;
-  box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
-  display: flex;
-  height: 62px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0px 10px;
-  background-color: white;
-`;
-
-const CompanyName = styled.h1`
-  font-size: 16px;
-  font-weight: 600;
-  font-family: "Poppins", sans-serif;
-  text-align: left;
-`;
-
-const HeaderLogo = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 27px;
-  width: 29px;
-  > img {
-    height: 27px;
-    width: 29px;
-  }
-`;
-
-<<<<<<< HEAD
 const MessagesContainer = styled.div`
   height: 100%;
   width: 100%;
@@ -430,8 +335,7 @@ const HeaderLogo = styled.div`
   }
 `;
 
-=======
->>>>>>> main
 const ExitSvg = styled.svg``;
 
 export default ChatBox;
+
