@@ -1,8 +1,5 @@
 import { Client, Conversation, Message } from '@xmtp/xmtp-js';
-import { GroupMessageCodec, GroupMessage, isGroupMessage } from '../groups';
 import { Signer } from '@ethersproject/abstract-signer';
-
-const gmc = new GroupMessageCodec();
 
 export const initialize = async (
   wallet: Signer,
@@ -13,7 +10,6 @@ export const initialize = async (
   onNewConversation: (conversation: Conversation) => unknown,
   onConversationsLoaded: (conversations: Conversation[]) => unknown,
   onNewMessage: (conversation: Conversation, message: Message) => unknown,
-  onNewGroupMessage: (message: GroupMessage) => unknown,
   onMessagesLoaded: () => unknown
 ) => {
   try {
@@ -25,8 +21,7 @@ export const initialize = async (
      * Initialize client...
      */
     const client = await Client.create(wallet, {
-      codecs: [gmc],
-      env: 'production'
+      env: 'production',
     });
     onClientConnect(client);
 
@@ -34,16 +29,11 @@ export const initialize = async (
      * Load all existing conversations and messages
      */
     const allConversations = await client.conversations.list();
-    const conversations = allConversations
+    const conversations = allConversations;
 
     onConversationsLoaded(conversations);
     for (const conversation of conversations) {
-      await loadConversation(
-        conversation,
-        onNewConversation,
-        onNewMessage,
-        onNewGroupMessage
-      );
+      await loadConversation(conversation, onNewConversation, onNewMessage);
     }
     onMessagesLoaded();
 
@@ -51,7 +41,7 @@ export const initialize = async (
      * Stream messages for each existing conversation...
      */
     for (const conversation of conversations) {
-      streamConversation(conversation, onNewMessage, onNewGroupMessage);
+      streamConversation(conversation, onNewMessage);
     }
 
     /*
@@ -59,14 +49,8 @@ export const initialize = async (
      */
     const conversationsStream = await client.conversations.stream();
     for await (const conversation of conversationsStream) {
-      loadConversation(
-        conversation,
-        onNewConversation,
-        onNewMessage,
-        onNewGroupMessage,
-        2000
-      );
-      streamConversation(conversation, onNewMessage, onNewGroupMessage);
+      loadConversation(conversation, onNewConversation, onNewMessage, 2000);
+      streamConversation(conversation, onNewMessage);
     }
   } catch (error) {
     onClientError(error);
@@ -77,35 +61,25 @@ const loadConversation = async (
   conversation: Conversation,
   onNewConversation: (conversation: Conversation) => unknown,
   onNewMessage: (conversation: Conversation, message: Message) => unknown,
-  onNewGroupMessage: (message: GroupMessage) => unknown,
   waitForMessagesMs = 0
 ) => {
   // TODO This might be a bug in XMTP, reach out to them.
   await new Promise((_) => setTimeout(_, waitForMessagesMs));
   const messages = await conversation.messages({ limit: 100 });
   for (const message of messages) {
-    if (isGroupMessage(message)) {
-      onNewGroupMessage(message);
-    } else {
-      onNewMessage(conversation, message);
-    }
+    onNewMessage(conversation, message);
   }
   onNewConversation(conversation);
 };
 
 const streamConversation = async (
   conversation: Conversation,
-  onNewMessage: (conversation: Conversation, message: Message) => unknown,
-  onNewGroupMessage: (message: GroupMessage) => unknown
+  onNewMessage: (conversation: Conversation, message: Message) => unknown
 ) => {
   // TODO This might be a bug in XMTP, reach out to them.
   await new Promise((_) => setTimeout(_, 2000));
   const messagesStream = await conversation.streamMessages();
   for await (const message of messagesStream) {
-    if (isGroupMessage(message)) {
-      onNewGroupMessage(message);
-    } else {
-      onNewMessage(conversation, message);
-    }
+    onNewMessage(conversation, message);
   }
 };

@@ -1,13 +1,12 @@
-import React from "react";
-import styled from "styled-components";
-import xmtp from "../../../assets/images/xmtp.png";
+import React from 'react';
+import styled from 'styled-components';
 
 export function RelayFooter() {
   return (
     <Container>
       <Span>Powered by</Span>
       <Div>
-        <img src={xmtp} />
+        <img src={'https://relay-receiver-prod.s3.amazonaws.com/xmtp.png'} />
         <CompanyName>Xmtp</CompanyName>
       </Div>
     </Container>
@@ -27,7 +26,7 @@ const Container = styled.div`
   left: 0px;
   bottom: 0px;
   text-align: center;
-  font-family: "Poppins" sans-serif;
+  font-family: 'Poppins' sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
@@ -44,7 +43,7 @@ const Container = styled.div`
 
 const Span = styled.span`
   text-align: center;
-  font-family: "Poppins" sans-serif;
+  font-family: 'Poppins' sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
@@ -70,7 +69,7 @@ const CompanyName = styled.span`
   font-weight: 700;
   font-size: 24px;
   text-align: center;
-  font-family: "Poppins" sans-serif;
+  font-family: 'Poppins' sans-serif;
   font-style: normal;
   text-transform: uppercase;
 `;
