@@ -9,17 +9,19 @@ export const shortDate = (d: Date | undefined): string => {
 export const time = (d: Date | undefined): string => {
   if (!d) return 'N/A';
   let hour = d.getHours() % 12 || 12;
-  let minute = (d.getMinutes()<10?'0':'') + d.getMinutes();
+  let minute = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
   //const formattedDayDate = d.toLocaleTimeString('en-us').replace('AM', '').replace('PM', '').replace(';', '.');
 
   return `${hour}:${minute}`;
 };
 
-export const isBeforeDate = (dateToCheck: Date, dateToCheckAgainst: Date): boolean => {
+export const isBeforeDate = (
+  dateToCheck: Date,
+  dateToCheckAgainst: Date
+): boolean => {
   dateToCheckAgainst.setHours(0, 0, 0, 0);
   return dateToCheck < dateToCheckAgainst;
-}
-
+};
 
 const checkDateIsTodayOrYesterday = (someDate: Date) => {
   const dateWithoutTime = (d: Date) => new Date(d.toDateString());

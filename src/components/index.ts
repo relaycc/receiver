@@ -1,1 +1,1 @@
-export { Receiver, ReceiverLaunch } from "./Receiver";
+export { Receiver, ReceiverLaunch } from './Receiver';

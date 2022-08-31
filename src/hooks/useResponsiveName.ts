@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 export const useResponsiveName = (
   ensName: string | null | undefined,
   address: string | null | undefined,
@@ -25,16 +25,16 @@ export const useResponsiveName = (
 
 function truncateName(e: string | undefined) {
   if (e === undefined) {
-    return "ENS name or address not found";
+    return 'ENS name or address not found';
   }
   if (e.length > 25) {
-    return e.slice(0, 17) + "..." + e.substring(e.length - 4);
+    return e.slice(0, 17) + '...' + e.substring(e.length - 4);
   } else return e;
 }
 
 function truncateAddress(e: string | undefined) {
   if (e === undefined) {
-    return "Name or address not found";
+    return 'Name or address not found';
   }
-  return e.slice(0, 5) + "..." + e.substring(e.length - 5);
+  return e.slice(0, 5) + '...' + e.substring(e.length - 5);
 }

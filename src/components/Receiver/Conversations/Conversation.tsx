@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import React from "react";
-import { useEnsName } from "wagmi";
-import { useMessages, getLastMessage } from "../../../xmtp-react/conversations";
-import Avatar from "../Avatar";
-import { useResponsiveName } from "../../../hooks/useResponsiveName";
+import styled from 'styled-components';
+import React from 'react';
+import { useEnsName } from 'wagmi';
+import { useMessages, getLastMessage } from '../../../xmtp-react/conversations';
+import Avatar from '../Avatar';
+import { useResponsiveName } from '../../../hooks/useResponsiveName';
 
 interface ConversationProps {
   peerAddress: string;
@@ -21,11 +21,11 @@ export default function Conversation({
   const { data: ensName, isLoading } = useEnsName({
     address: peerAddress,
   });
-  const responsiveName = useResponsiveName(ensName, peerAddress, "");
+  const responsiveName = useResponsiveName(ensName, peerAddress, '');
 
   const handleClick = () => {
     setShowConversations(false);
-    setPeerAddress(peerAddress)
+    setPeerAddress(peerAddress);
   };
 
   return (
@@ -51,9 +51,8 @@ const ListItem = styled.li`
   transition: background-color 300ms ease-in-out;
 
   :hover {
-    background-color: #eeeeee ;
+    background-color: #eeeeee;
     transition: background-color 300ms ease-in-out;
-
   }
 `;
 

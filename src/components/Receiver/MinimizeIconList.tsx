@@ -1,7 +1,7 @@
-import React from "react";
-import Avatar from "./Avatar";
-import styled from "styled-components";
-import { EnsName } from "./EnsName";
+import React from 'react';
+import Avatar from './Avatar';
+import styled from 'styled-components';
+import { EnsName } from './EnsName';
 
 interface MinimizeIconListProps {
   minimizedConvoList: any;
@@ -44,8 +44,7 @@ export function MinimizeIconList({
               strokeWidth={1.5}
               stroke="white"
               height={'16px'}
-              width={'16px'}
-            >
+              width={'16px'}>
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -53,7 +52,13 @@ export function MinimizeIconList({
               />
             </svg>
 
-            <EnsName setShowMewMessageDropdown={setShowMewMessageDropdown} setShowBox={setShowBox} setPeerAddress={setPeerAddress} setShowConversations={setShowConversations} address={e} />
+            <EnsName
+              setShowMewMessageDropdown={setShowMewMessageDropdown}
+              setShowBox={setShowBox}
+              setPeerAddress={setPeerAddress}
+              setShowConversations={setShowConversations}
+              address={e}
+            />
           </AvatarHoverDetails>
         </AvatarContainer>
       ))}

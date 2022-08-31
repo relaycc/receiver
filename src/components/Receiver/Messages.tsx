@@ -1,13 +1,13 @@
-import styled from "styled-components";
-import { Message } from "@xmtp/xmtp-js";
-import MessagesBucket from "./MessagesBucket";
-import LoadingMessages from "./LoadingMessages";
-import { Status, useXmtp } from "../../xmtp-react/context";
-import React, { useEffect, useState } from "react";
-import { useMessages } from "../../xmtp-react/conversations";
-import Card from "./Card";
-import Button from "./Button";
-import { shortDate } from "../../utls/date";
+import styled from 'styled-components';
+import { Message } from '@xmtp/xmtp-js';
+import MessagesBucket from './MessagesBucket';
+import LoadingMessages from './LoadingMessages';
+import { Status, useXmtp } from '../../xmtp-react/context';
+import React, { useEffect, useState } from 'react';
+import { useMessages } from '../../xmtp-react/conversations';
+import Card from './Card';
+import Button from './Button';
+import { shortDate } from '../../utls/date';
 
 interface MessagesProps {
   peerAddress?: string;
@@ -40,7 +40,7 @@ const Messages = ({
     }
   });
 
-  if (typeof peerAddress !== "string") {
+  if (typeof peerAddress !== 'string') {
     return (
       <Card title="Could not resolve ENS name">
         <Text>Make sure to include the ".eth" suffix.</Text>
@@ -128,7 +128,7 @@ const List = styled.div`
 `;
 
 const Text = styled.div`
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -140,7 +140,6 @@ const Text = styled.div`
 function getMessageBuckets(messages: Message[]): Array<Message[]> {
   return messages.reduce(
     (buckets: Array<Message[]>, message: Message) => {
-
       // If sent isn't set, always add it as it's own bucket
       if (message.sent === undefined) {
         return [...buckets, [message]];

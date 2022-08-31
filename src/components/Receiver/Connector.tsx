@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import LoadingText from './LoadingText';
-import React from 'react'
+import React from 'react';
 
 interface ConnectorProps {
   hoverLogo: string;
   name: string;
   onClick: () => unknown;
-  connectState?: 'connecting' | 'connected'; 
+  connectState?: 'connecting' | 'connected';
 }
 
 interface LogoProps {

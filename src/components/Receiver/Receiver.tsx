@@ -1,27 +1,27 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   WagmiConfig,
   configureChains,
   createClient,
   defaultChains,
-} from "wagmi";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
-import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
-import { InjectedConnector } from "wagmi/connectors/injected";
-import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
-import { XmtpContextProvider } from "../../xmtp-react/context";
+} from 'wagmi';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { publicProvider } from 'wagmi/providers/public';
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+import { XmtpContextProvider } from '../../xmtp-react/context';
 import { Signer } from '@ethersproject/abstract-signer';
-import { getAddress } from '@ethersproject/address'
-import ChatBox from "./ChatBox";
-import { Interpolation } from "styled-components";
-import ReceiverContext from "./ReceiverContext";
-import styled from "styled-components";
-import { GlobalStyles } from "../../styles/global";
-import { ConversationsList } from "./Conversations/ConversationsList";
-import { MinimizeIconList } from "./MinimizeIconList";
+import { getAddress } from '@ethersproject/address';
+import ChatBox from './ChatBox';
+import { Interpolation } from 'styled-components';
+import ReceiverContext from './ReceiverContext';
+import styled from 'styled-components';
+import { GlobalStyles } from '../../styles/global';
+import { ConversationsList } from './Conversations/ConversationsList';
+import { MinimizeIconList } from './MinimizeIconList';
 
-const alchemyKey = "kmMb00nhQ0SWModX6lJLjXy_pVtiQnjx";
+const alchemyKey = 'kmMb00nhQ0SWModX6lJLjXy_pVtiQnjx';
 
 const { chains, provider } = configureChains(defaultChains, [
   alchemyProvider({ apiKey: alchemyKey }),
@@ -35,7 +35,7 @@ const wagmi = createClient({
     new CoinbaseWalletConnector({
       chains,
       options: {
-        appName: "wagmi",
+        appName: 'wagmi',
       },
     }),
     new WalletConnectConnector({
@@ -65,7 +65,7 @@ const Receiver = ({
 }: ConfigProps) => {
   const [showBox, setShowBox] = useState<boolean>(false);
   const [hasLaunched, setHasLaunched] = useState<boolean>(false);
-  const [peerAddress, setPeerAddress] = useState<string>("");
+  const [peerAddress, setPeerAddress] = useState<string>('');
   const [showConversations, setShowConversations] = useState(false);
   const [minimizedConvoList, setMinimizeConvoList] = useState([]);
   const [showNewMessageDropdown, setShowMewMessageDropdown] = useState(false);
@@ -86,12 +86,12 @@ const Receiver = ({
   };
 
   const chatBoxContainerStyle: React.CSSProperties = {
-    maxHeight: showBox ? "500px" : hasLaunched ? "0px" : "0px",
-    height: "500px",
-    position: "fixed",
-    bottom: "0px",
-    right: "150px",
-    transition: "max-height 0.25s ease-in",
+    maxHeight: showBox ? '500px' : hasLaunched ? '0px' : '0px',
+    height: '500px',
+    position: 'fixed',
+    bottom: '0px',
+    right: '150px',
+    transition: 'max-height 0.25s ease-in',
     zIndex: 1000,
   };
 
@@ -103,8 +103,7 @@ const Receiver = ({
             setPeerAddress: convertAndSetPeerAddress,
             close: close,
             toggle: toggle,
-          }}
-        >
+          }}>
           <Container>
             <div style={chatBoxContainerStyle}>
               <GlobalStyles />
@@ -126,8 +125,7 @@ const Receiver = ({
                 closeReceiver={close}
                 toggleReceiver={toggle}
                 peerAddress={peerAddress}
-                visible={showBox}
-              ></ChatBox>
+                visible={showBox}></ChatBox>
               <MinimizeIconList
                 setMinimizeConvoList={setMinimizeConvoList}
                 setPeerAddress={setPeerAddress}
@@ -146,7 +144,7 @@ const Receiver = ({
 };
 
 const Container = styled.div`
-  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 `;
 
 export default Receiver;

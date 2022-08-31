@@ -1,11 +1,10 @@
-import styled from "styled-components";
-import React, { useState, useRef } from "react";
-import { useConversations } from "../../../xmtp-react/conversations";
-import Conversation from "./Conversation";
-import { useEnsAddress } from "wagmi";
-import { useEffect } from "react";
-import { RelayFooter } from "../Footers/RelayFooter";
-
+import styled from 'styled-components';
+import React, { useState, useRef } from 'react';
+import { useConversations } from '../../../xmtp-react/conversations';
+import Conversation from './Conversation';
+import { useEnsAddress } from 'wagmi';
+import { useEffect } from 'react';
+import { RelayFooter } from '../Footers/RelayFooter';
 
 interface ConversationsListProps {
   showConversations: boolean;
@@ -14,7 +13,7 @@ interface ConversationsListProps {
   setPeerAddress: any;
   showBox: boolean;
   showNewMessageDropdown: boolean;
-  setShowBox: React.Dispatch<React.SetStateAction<boolean>>
+  setShowBox: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function ConversationsList({
@@ -27,7 +26,7 @@ export function ConversationsList({
   showNewMessageDropdown,
 }: ConversationsListProps) {
   const conversations = useConversations();
-  const [newConversationInput, setNewConversationInput] = useState("");
+  const [newConversationInput, setNewConversationInput] = useState('');
   const userInput: any = useRef();
   const [count, setCount] = useState(0);
 
@@ -47,11 +46,10 @@ export function ConversationsList({
       }
     },
     onError(error) {
-      console.log("Error", error);
+      console.log('Error', error);
     },
   });
 
-  
   useEffect(() => {
     if (newConversationInput.length === 0) {
       return;
@@ -76,22 +74,22 @@ export function ConversationsList({
 
   useEffect(() => {
     const keyDownHandler = (e: KeyboardEvent) => {
-      if (e.key === "Enter") {
+      if (e.key === 'Enter') {
         e.preventDefault();
         handleSubmit();
       }
     };
 
-    document.addEventListener("keydown", keyDownHandler);
+    document.addEventListener('keydown', keyDownHandler);
 
     return () => {
-      document.removeEventListener("keydown", keyDownHandler);
+      document.removeEventListener('keydown', keyDownHandler);
     };
   }, []);
-const handleMinimizeConversations = () => {
-  setShowBox(false)
-  setShowMewMessageDropdown(false)
-}
+  const handleMinimizeConversations = () => {
+    setShowBox(false);
+    setShowMewMessageDropdown(false);
+  };
   return (
     <Container showConversations={showConversations}>
       <Header>
@@ -102,9 +100,8 @@ const handleMinimizeConversations = () => {
             viewBox="0 0 24 24"
             strokeWidth={2.5}
             stroke="black"
-            height={"24px"}
-            width={"24px"}
-          >
+            height={'24px'}
+            width={'24px'}>
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -121,9 +118,8 @@ const handleMinimizeConversations = () => {
             viewBox="0 0 24 24"
             strokeWidth={2.5}
             stroke="currentColor"
-            height={"18px"}
-            width={"18px"}
-          >
+            height={'18px'}
+            width={'18px'}>
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -143,9 +139,8 @@ const handleMinimizeConversations = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            height={"24px"}
-            width={"24px"}
-          >
+            height={'24px'}
+            width={'24px'}>
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -200,7 +195,7 @@ const Container = styled.div<StyleProps>`
   left: 0;
   z-index: 1001;
   background: white;
-  display: ${(props) => (props.showConversations ? "flex" : "none")};
+  display: ${(props) => (props.showConversations ? 'flex' : 'none')};
 `;
 
 const Header = styled.header`

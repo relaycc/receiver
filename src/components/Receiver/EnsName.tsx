@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { useEnsName } from "wagmi";
+import React from 'react';
+import styled from 'styled-components';
+import { useEnsName } from 'wagmi';
 
 interface EnsNameProps {
   address: string;

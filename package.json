@@ -10,6 +10,7 @@
     "watch": "rollup -c -w",
     "lint": "eslint src/",
     "prettier": "prettier --check .",
+    "prettier:fix": "prettier . --write",
     "typecheck": "tsc --emitDeclarationOnly false --noEmit",
     "patch": "npm version patch -m 'patch: Bump version to %s'"
   },

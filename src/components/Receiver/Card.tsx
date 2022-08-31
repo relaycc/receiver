@@ -1,17 +1,17 @@
 import styled from 'styled-components';
-import React from 'react'
+import React from 'react';
 
 export interface CardProps {
   children: React.ReactNode;
   title: string;
 }
-export default function Card({children, title}: CardProps) {
+export default function Card({ children, title }: CardProps) {
   return (
     <FullMiddleSection>
-    <CardContainer>
-      <Title>{title}</Title>
-      { children }
-    </CardContainer>
+      <CardContainer>
+        <Title>{title}</Title>
+        {children}
+      </CardContainer>
     </FullMiddleSection>
   );
 }
@@ -22,11 +22,11 @@ const FullMiddleSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
 const CardContainer = styled.div`
-  background: #FBFAFF;
-  border: 1px dashed #A6A6A6;
+  background: #fbfaff;
+  border: 1px dashed #a6a6a6;
   border-radius: 4px;
   width: 227px;
   padding: 10px;
@@ -46,5 +46,5 @@ const Title = styled.div`
   line-height: 18px;
   text-align: center;
   padding-bottom: 10px;
-  border-bottom: 1px solid #E4E4E4;
+  border-bottom: 1px solid #e4e4e4;
 `;

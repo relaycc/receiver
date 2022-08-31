@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
-import { useEnsAvatar } from "wagmi";
-import styled from "styled-components";
-import Blockies from "react-blockies";
-import LoadingSpinner from "./LoadingSpinner";
-import React from "react";
+import { useState, useEffect } from 'react';
+import { useEnsAvatar } from 'wagmi';
+import styled from 'styled-components';
+import Blockies from 'react-blockies';
+import LoadingSpinner from './LoadingSpinner';
+import React from 'react';
 
 interface AvatarProps {
   address?: any;
-  size?: "small" | "medium" | "large";
+  size?: 'small' | 'medium' | 'large';
   setPeerAddress?: any;
   setShowBox?: any;
   setShowConversations?: any;
-  setShowMewMessageDropdown?: React.Dispatch<React.SetStateAction<boolean>>
+  setShowMewMessageDropdown?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export default function Avatar({
   address,
@@ -65,9 +65,9 @@ export default function Avatar({
   }
 }
 
-const AvatarImage = styled.img<{ size?: "large" | "small" | "medium" }>`
-  width: ${(p) => (p.size === "large" ? "40px" : "40px")};
-  height: ${(p) => (p.size === "large" ? "40px" : "40px")};
+const AvatarImage = styled.img<{ size?: 'large' | 'small' | 'medium' }>`
+  width: ${(p) => (p.size === 'large' ? '40px' : '40px')};
+  height: ${(p) => (p.size === 'large' ? '40px' : '40px')};
 `;
 
 const AvatarContainer = styled.div`

@@ -1,16 +1,12 @@
 import styled from 'styled-components';
-import React from 'react'
+import React from 'react';
 
 export interface ButtonProps {
   text: string;
   onClick?: () => void;
 }
-export default function Button({text, onClick}: ButtonProps) {
-  return (
-    <ButtonContainer onClick={onClick}>
-      {text}
-    </ButtonContainer>
-  );
+export default function Button({ text, onClick }: ButtonProps) {
+  return <ButtonContainer onClick={onClick}>{text}</ButtonContainer>;
 }
 
 const ButtonContainer = styled.div`

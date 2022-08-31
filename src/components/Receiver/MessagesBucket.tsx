@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import { Message } from "@xmtp/xmtp-js";
-import MessageBubble from "./MessageBubble";
-import Avatar from "./Avatar";
-import React from "react";
-import { useResponsiveName } from "../../hooks/useResponsiveName";
-import { useEnsName } from "wagmi";
-import { time } from '../../utls/date'
-import { shortDate } from '../../utls/date'
+import styled from 'styled-components';
+import { Message } from '@xmtp/xmtp-js';
+import MessageBubble from './MessageBubble';
+import Avatar from './Avatar';
+import React from 'react';
+import { useResponsiveName } from '../../hooks/useResponsiveName';
+import { useEnsName } from 'wagmi';
+import { time } from '../../utls/date';
+import { shortDate } from '../../utls/date';
 
 interface MessagesBucketProps {
   peerAddress: string;
@@ -38,15 +38,17 @@ export default function MessagesBucket({
     <Container>
       <SentByInfo sentByMe={sentByMe}>
         <MessageHeader>
-          <div style={{ marginRight: "10px" }}>
+          <div style={{ marginRight: '10px' }}>
             <Avatar address={sentByMe ? sentByAddress : peerAddress} />
           </div>
           <SenderName sentByMe={sentByMe}>
             {sentByMe
-              ? useResponsiveName(senderName, sentByAddress, "")
-              : useResponsiveName(peerEns, peerAddress, "")}
+              ? useResponsiveName(senderName, sentByAddress, '')
+              : useResponsiveName(peerEns, peerAddress, '')}
           </SenderName>
-          <MessageTime>{shortDate(startDate) + ", " + time(startDate)}</MessageTime>
+          <MessageTime>
+            {shortDate(startDate) + ', ' + time(startDate)}
+          </MessageTime>
         </MessageHeader>
       </SentByInfo>
       <FlexColReverseContainer>
@@ -79,7 +81,7 @@ const Container = styled.div`
 `;
 
 const BucketTimestamp = styled.div`
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 10px;
@@ -105,7 +107,6 @@ const MessageHeader = styled.div`
   display: flex;
   align-items: flex-start;
   margin-bottom: -18px;
-
 `;
 
 const SenderName = styled.div<StyleProps>`
@@ -113,8 +114,8 @@ const SenderName = styled.div<StyleProps>`
   font-weight: bold;
   font-size: 14px;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
-  background-color: ${(props) => (props.sentByMe ? "white" : "#F1F2FD")};
-  color: ${(props) => (props.sentByMe ? "black" : "#6E6B99")};
+  background-color: ${(props) => (props.sentByMe ? 'white' : '#F1F2FD')};
+  color: ${(props) => (props.sentByMe ? 'black' : '#6E6B99')};
   padding: 3px 6px;
 `;
 
@@ -123,7 +124,7 @@ const SentByInfo = styled.div<StyleProps>`
 `;
 
 const MessageTime = styled.div`
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;

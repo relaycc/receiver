@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import React from "react";
-import { time } from "../../utls/date";
-import { truncateName, truncateAddress } from "../../utls/address";
-import { useEnsName } from "wagmi";
-import { useRef } from 'react'
-import { useResponsiveName } from "../../hooks/useResponsiveName";
+import styled from 'styled-components';
+import React from 'react';
+import { time } from '../../utls/date';
+import { truncateName, truncateAddress } from '../../utls/address';
+import { useEnsName } from 'wagmi';
+import { useRef } from 'react';
+import { useResponsiveName } from '../../hooks/useResponsiveName';
 
 interface TextBubbleProps {
   message: string;
@@ -58,8 +58,6 @@ const MessageText = styled.div`
   padding-left: 4px;
 `;
 
-
-
 const MessageHeader = styled.div`
   display: flex;
   align-items: center;
@@ -70,8 +68,8 @@ const SenderName = styled.div<{ sentByMe: boolean }>`
   font-weight: bold;
   font-size: 14px;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
-  background-color: ${(props) => (props.sentByMe ? "white" : "#F1F2FD")};
-  color: ${(props) => (props.sentByMe ? "black" : "#6E6B99")};
+  background-color: ${(props) => (props.sentByMe ? 'white' : '#F1F2FD')};
+  color: ${(props) => (props.sentByMe ? 'black' : '#6E6B99')};
   padding: 3px 6px;
 `;
 

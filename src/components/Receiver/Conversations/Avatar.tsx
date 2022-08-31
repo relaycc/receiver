@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { useEnsAvatar } from "wagmi";
-import Blockies from "react-blockies";
+import React from 'react';
+import styled from 'styled-components';
+import { useEnsAvatar } from 'wagmi';
+import Blockies from 'react-blockies';
 
 interface AvatarProps {
   peerAddress: string;
@@ -18,10 +18,10 @@ export default function Avatar({ peerAddress }: AvatarProps) {
     return (
       <BlockiesContainer>
         <Blockies
-          seed={peerAddress?.toLowerCase() || ""}
+          seed={peerAddress?.toLowerCase() || ''}
           size={10}
           scale={4}
-          className={"circle"}
+          className={'circle'}
         />
       </BlockiesContainer>
     );

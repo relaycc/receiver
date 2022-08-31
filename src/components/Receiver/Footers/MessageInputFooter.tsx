@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import MessageInput from "../MessageInput";
+import React from 'react';
+import styled from 'styled-components';
+import MessageInput from '../MessageInput';
 
 interface MessageInputFooterProps {
   onSendMessage: (message: string) => Promise<void>;
@@ -17,7 +17,7 @@ export function MessageInputFooter({ onSendMessage }: MessageInputFooterProps) {
 const RelayInputFooter = styled.div`
   color: #333333;
   text-align: center;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
