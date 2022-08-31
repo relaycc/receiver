@@ -7,6 +7,7 @@
   "description": "The best way to add wallet messaging to your site.",
   "scripts": {
     "build": "rollup -c",
+    "watch": "rollup -c -w",
     "patch": "npm version patch -m 'patch: Bump version to %s'"
   },
   "author": "Relay",
