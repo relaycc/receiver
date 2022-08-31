@@ -14,7 +14,10 @@
 
 # production
 /build
+<<<<<<< HEAD
 /dist
+=======
+>>>>>>> main
 
 # misc
 .DS_Store
@@ -37,4 +40,8 @@ yarn-error.log*
 .vercel
 
 # typescript
+<<<<<<< HEAD
 *.tsbuildinfo
+=======
+*.tsbuildinfo
+>>>>>>> main
