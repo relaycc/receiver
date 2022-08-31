@@ -1,24 +1,20 @@
-import styled, { Interpolation } from "styled-components";
-import { useIsMetaMask } from "../../hooks";
-import { useConnect, useAccount } from "wagmi";
-import LightCoinbase from "../../assets/images/LightCoinbase.png";
-import LightWalletConnect from "../../assets/images/LightWalletConnect.png";
-import Metamask from "../../assets/images/Metamask.svg";
-import SignInLink from "./Connector";
-import { useCallback, useState } from "react";
-import Messages from "./Messages";
-import Card from "./Card";
-import { MessageInputFooter } from "./Footers/MessageInputFooter";
-import Header from "./Header";
+import styled, { Interpolation } from 'styled-components';
+import { useIsMetaMask } from '../../hooks';
+import { useConnect, useAccount } from 'wagmi';
+import SignInLink from './Connector';
+import { useCallback, useState } from 'react';
+import Messages from './Messages';
+import Card from './Card';
+import { MessageInputFooter } from './Footers/MessageInputFooter';
+import Header from './Header';
 import {
   useSendMessage,
   Status as SendMessageStatus,
-} from "../../xmtp-react/conversations";
-import React from "react";
-import { useEnsName } from "wagmi";
-import { RelayFooter } from "./Footers/RelayFooter";
-import LoadingMessages from "./LoadingMessages";
-import smallLogo from "../../assets/images/smallLogo.png";
+} from '../../xmtp-react/conversations';
+import React from 'react';
+import { useEnsName } from 'wagmi';
+import { RelayFooter } from './Footers/RelayFooter';
+import LoadingMessages from './LoadingMessages';
 interface ChatButtonProps {
   visible: boolean;
   as?: string | React.ComponentType<any>;
@@ -60,15 +56,15 @@ const ChatBox = ({
   const sendMessage = useSendMessage();
 
   const metamaskConnector = connectors.find(
-    (connector) => connector.id === "injected"
+    (connector) => connector.id === 'injected'
   );
 
   const walletConnectConnector = connectors.find(
-    (connector) => connector.id === "walletConnect"
+    (connector) => connector.id === 'walletConnect'
   );
 
   const coinbaseConnector = connectors.find(
-    (connector) => connector.id === "coinbaseWallet"
+    (connector) => connector.id === 'coinbaseWallet'
   );
 
   // TODO prevent connection if already connected.
@@ -107,7 +103,7 @@ const ChatBox = ({
   const textForHeader =
     isUserConnected || (isConnected && userDidConnect)
       ? null
-      : "Relay Receiver";
+      : 'Relay Receiver';
 
   const test = () => {
     console.log(peerIsAvailable);
@@ -131,7 +127,11 @@ const ChatBox = ({
         <UnConnectedHeader onClick={test}>
           <LeftContainer>
             <HeaderLogo>
-              <img src={smallLogo} alt="RelayReceiver"></img>
+              <img
+                src={
+                  'https://relay-receiver-prod.s3.amazonaws.com/smallLogo.png'
+                }
+                alt="RelayReceiver"></img>
             </HeaderLogo>
             <CompanyName>Relay Receiver</CompanyName>
           </LeftContainer>
@@ -142,8 +142,7 @@ const ChatBox = ({
             strokeWidth={2.5}
             stroke="black"
             height="28"
-            width="28"
-          >
+            width="28">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -165,35 +164,38 @@ const ChatBox = ({
             />
           </MessagesContainer>
         ) : (
-          // <LoadingMessages />
           <Card title="Connect your wallet to start a converation!">
             <ConnectorList>
               {isMetaMask && (
                 <Connector onClick={handleClickMetamask}>
                   <SignInLink
-                    hoverLogo={Metamask}
-                    name={"Metamask"}
+                    hoverLogo={
+                      'https://relay-receiver-prod.s3.amazonaws.com/Metamask.svg'
+                    }
+                    name={'Metamask'}
                     onClick={handleClickMetamask}
                   />
                 </Connector>
               )}
               <MaybeHideOnConnector
                 onClick={handleClickWalletConnect}
-                shouldHide={isMetaMask}
-              >
+                shouldHide={isMetaMask}>
                 <SignInLink
-                  hoverLogo={LightWalletConnect}
-                  name={"Wallet Connect"}
+                  hoverLogo={
+                    'https://relay-receiver-prod.s3.amazonaws.com/LighWalletConnect.svg'
+                  }
+                  name={'Wallet Connect'}
                   onClick={handleClickWalletConnect}
                 />
               </MaybeHideOnConnector>
               <MaybeHideOnConnector
                 onClick={handleClickCoinbase}
-                shouldHide={isMetaMask}
-              >
+                shouldHide={isMetaMask}>
                 <SignInLink
-                  hoverLogo={LightCoinbase}
-                  name={"Coinbase"}
+                  hoverLogo={
+                    'https://relay-receiver-prod.s3.amazonaws.com/LightCoinbase.png'
+                  }
+                  name={'Coinbase'}
                   onClick={handleClickCoinbase}
                 />
               </MaybeHideOnConnector>
@@ -252,7 +254,7 @@ const Connector = styled.div`
   display: flex;
   align-items: center;
   padding: 0 10px;
-  font-family: "poppins", sans-serif;
+  font-family: 'poppins', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
@@ -263,7 +265,7 @@ const Connector = styled.div`
 
 const MaybeHideOnConnector = styled(Connector)<{ shouldHide: boolean }>`
   @media (pointer: coarse) {
-    display: ${(p) => (p.shouldHide ? "none" : "flex")};
+    display: ${(p) => (p.shouldHide ? 'none' : 'flex')};
   }
 `;
 
@@ -298,7 +300,7 @@ const UnConnectedHeader = styled.div`
 const CompanyName = styled.h1`
   font-size: 16px;
   font-weight: 600;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   text-align: left;
 `;
 

@@ -1,6 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import React from 'react'
-import MobileLoadingSpinner from '../../assets/images/MobileLoadingSpinner.png'
+import React from 'react';
 
 interface LoaderProps {
   height: number;
@@ -12,7 +11,9 @@ export default function LoadingSpinner(props: LoaderProps) {
   return (
     <Container width={width} height={height}>
       <img
-        src={MobileLoadingSpinner}
+        src={
+          'https://relay-receiver-prod.s3.amazonaws.com/MobileLoadingSpinner.svg'
+        }
         alt="loading"
         width={width}
         height={height}
