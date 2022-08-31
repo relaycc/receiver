@@ -1,31 +1,33 @@
-import styled from 'styled-components';
-import { Message } from '@xmtp/xmtp-js';
-import MessagesBucket from './MessagesBucket';
-import LoadingMessages from './LoadingMessages';
-import { Status, useXmtp } from '../../xmtp-react/context';
-import React, { useEffect, useState } from 'react'
-import {
-  useMessages,
-} from '../../xmtp-react/conversations';
-import Card from './Card';
-import Button from './Button';
-import { shortDate } from '../../utls/date';
-
-import { useEnsAddress } from 'wagmi';
+import styled from "styled-components";
+import { Message } from "@xmtp/xmtp-js";
+import MessagesBucket from "./MessagesBucket";
+import LoadingMessages from "./LoadingMessages";
+import { Status, useXmtp } from "../../xmtp-react/context";
+import React, { useEffect, useState } from "react";
+import { useMessages } from "../../xmtp-react/conversations";
+import Card from "./Card";
+import Button from "./Button";
+import { shortDate } from "../../utls/date";
 
 interface MessagesProps {
   peerAddress?: string;
   peerName?: string;
+  peerIsAvailable: boolean | undefined;
+  setPeerIsAvailable: any;
   onXmptReady: (isReady: boolean) => unknown;
 }
 
-const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
+const Messages = ({
+  peerAddress,
+  peerName,
+  onXmptReady,
+  peerIsAvailable,
+  setPeerIsAvailable,
+}: MessagesProps) => {
   const xmtp = useXmtp();
-
   const messages = useMessages(peerAddress);
   const messageArray = Object.values(messages).reverse();
   const buckets = getMessageBuckets(messageArray);
-  const [peerIsAvailable, setPeerIsAvailable] = useState<boolean | undefined>();
 
   useEffect(() => {
     if (xmtp.status === Status.ready && peerAddress) {
@@ -37,8 +39,8 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
       effect();
     }
   });
-  
-  if (typeof peerAddress !== 'string') {
+
+  if (typeof peerAddress !== "string") {
     return (
       <Card title="Could not resolve ENS name">
         <Text>Make sure to include the ".eth" suffix.</Text>
@@ -53,59 +55,65 @@ const Messages = ({ peerAddress, peerName, onXmptReady }: MessagesProps) => {
   } else if (xmtp.status === Status.idle) {
     return (
       <Card title="Initialize XMTP Client">
-        <Text>To begin messaging, you must first initialize the XMTP client.</Text>
-        <Button onClick={xmtp.init} text='Initialize'/>
+        <Text>
+          To begin messaging, you must first initialize the XMTP client.
+        </Text>
+        <Button onClick={xmtp.init} text="Initialize" />
       </Card>
     );
   } else if (xmtp.status === Status.waiting) {
     return (
       <Card title="Initialize XMTP Client">
-        <Text><b>Initializing.</b></Text>
+        <Text>
+          <b>Initializing.</b>
+        </Text>
         <Text>To continue, please sign the wallet prompt.</Text>
       </Card>
     );
   } else if (xmtp.status === Status.denied) {
     return (
       <Card title="Initialize XMTP Client">
-        <Text><b>Initializing.</b></Text>
+        <Text>
+          <b>Initializing.</b>
+        </Text>
         <Text>Signature request cancelled. Try again...</Text>
-        <Button onClick={xmtp.init} text='Initialize'/>
+        <Button onClick={xmtp.init} text="Initialize" />
       </Card>
     );
   } else if (xmtp.status === Status.loading) {
-    return (
-      <LoadingMessages />
-    );
+    return <LoadingMessages />;
   } else if (xmtp.status === Status.ready && peerIsAvailable === true) {
     if (Object.values(messages).length > 0) {
-      return (    
+      return (
         <List>
           {buckets.map((bucket, index) => {
-            if (bucket.messages.length > 0) {
+            if (bucket.length > 0) {
               return (
                 <MessagesBucket
                   key={index}
-                  messages={bucket.messages}
+                  messages={bucket}
                   peerAddress={peerAddress}
-                  startDate={bucket.date}
+                  startDate={bucket.at(-1)!.sent}
+                  peerName={peerName}
+                  sentByAddress={bucket[0].senderAddress}
                 />
               );
             }
             return null;
           })}
         </List>
-      ) 
+      );
     } else {
       return (
         <Card title="All Set  🎉">
-          <Text>{`This is the beginning of your conversation with ${peerName}`}</Text>
+          <Text>{`This is the beginning of your encrypted conversation with ${peerName}`}</Text>
         </Card>
-      )
+      );
     }
   } else {
-    return <></>
+    return <></>;
   }
-}
+};
 
 const List = styled.div`
   display: flex;
@@ -113,49 +121,71 @@ const List = styled.div`
   overflow: scroll;
   gap: 0.75rem;
   width: 100%;
+  height: 100%;
   z-index: 10;
-  max-height: 345px;
-  padding: 12px;
+  padding: 0px 10px;
+  box-sizing: border-box;
 `;
 
 const Text = styled.div`
-  font-family: 'Inter', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 18px;
-  color: #2D2D2D;
+  color: #2d2d2d;
 `;
 
-class Bucket {
-  date: string;
-  messages: Message[];
-}
+// This assumets messages are sorted by date already.
+function getMessageBuckets(messages: Message[]): Array<Message[]> {
+  return messages.reduce(
+    (buckets: Array<Message[]>, message: Message) => {
 
-// This assumes messages are sorted by date already.
-function getMessageBuckets(messages: Message[]): Bucket[] {
-  return messages.reduce((buckets: Bucket[], message: Message) => {
-    if (message.sent) {
-      let dateString = shortDate(message.sent);
-      
-      let bucket = buckets.find(bucket => bucket.date === dateString);
-
-      if (bucket) {
-        bucket.messages.push(message);
-        return buckets;
-      } else {
-        let bucket = new Bucket();
-        bucket.date = shortDate(message.sent);
-        bucket.messages = [message];
-        buckets.push(bucket);
-        return buckets;
+      // If sent isn't set, always add it as it's own bucket
+      if (message.sent === undefined) {
+        return [...buckets, [message]];
       }
-    } else {
-      return buckets;
-    }
-  }, []);
-}
 
+      // We initialize the reducer with [[]] so buckets should always be non-empty.
+      const lastBucket = buckets[buckets.length - 1] as Message[];
+      if (lastBucket.length === 0) return [[message]];
+
+      // If this is the initial iteration, initialize buckets.
+      if (buckets.length === 1 && buckets[0].length === 0) {
+        const result: Array<Message[]> = [[message]];
+        return result;
+      }
+
+      // If the last message in the last bucket is either sent to a different
+      // address, undefined, sent is not set on it, or it's older than 5 minutes
+      // from the current message, create a new bucket.
+      const lastInLastBucket = buckets[buckets.length - 1]?.[0];
+      if (lastInLastBucket?.recipientAddress !== message.recipientAddress)
+        return [...buckets, [message]];
+      if (lastInLastBucket === undefined) return [...buckets, [message]];
+      if (lastInLastBucket.sent === undefined) return [...buckets, [message]];
+      if (isFiveMinuteDifference(lastInLastBucket.sent, message.sent)) {
+        return [...buckets, [message]];
+      }
+
+      // If the first message in the last bucket is either undefined, sent is
+      // not set on it, or it's older than an hour from the current message,
+      // create a new bucket.
+      const firstInLastBucket = buckets[buckets.length - 1]?.[0];
+      if (firstInLastBucket === undefined) return [...buckets, [message]];
+      if (firstInLastBucket.sent === undefined) return [...buckets, [message]];
+      if (isHourDifference(firstInLastBucket.sent, message.sent))
+        return [...buckets, [message]];
+
+      // If we got here then we just add the current message to the last bucket.
+      lastBucket.push(message);
+      return buckets;
+    },
+    // If you change this you might break this function, in particular the line
+    // where we assert that the last bucket is type Message[].
+    [[]]
+  );
+}
 function isHourDifference(a: Date, b: Date): boolean {
   // 360000 is milliseconds in an hour
   return Math.abs(a.getTime() - b.getTime()) > 3600000;

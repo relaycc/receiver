@@ -12,7 +12,7 @@ export const time = (d: Date | undefined): string => {
   let minute = (d.getMinutes()<10?'0':'') + d.getMinutes();
   //const formattedDayDate = d.toLocaleTimeString('en-us').replace('AM', '').replace('PM', '').replace(';', '.');
 
-  return `${hour}.${minute}`;
+  return `${hour}:${minute}`;
 };
 
 export const isBeforeDate = (dateToCheck: Date, dateToCheckAgainst: Date): boolean => {

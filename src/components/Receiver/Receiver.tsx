@@ -1,30 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   WagmiConfig,
   configureChains,
   createClient,
   defaultChains,
-} from 'wagmi';
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { publicProvider } from 'wagmi/providers/public'
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
-import { InjectedConnector } from 'wagmi/connectors/injected';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-import { XmtpContextProvider } from '../../xmtp-react/context';
-import { Signer } from 'ethers';
-import ChatBox from './ChatBox';
-import CSS from 'csstype';
-import { Interpolation } from 'styled-components';
-import ReceiverContext from './ReceiverContext';
-import styled from 'styled-components';
+} from "wagmi";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
+import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
+import { XmtpContextProvider } from "../../xmtp-react/context";
+import { Signer } from '@ethersproject/abstract-signer';
 import { getAddress } from '@ethersproject/address'
+import ChatBox from "./ChatBox";
+import { Interpolation } from "styled-components";
+import ReceiverContext from "./ReceiverContext";
+import styled from "styled-components";
+import { GlobalStyles } from "../../styles/global";
+import { ConversationsList } from "./Conversations/ConversationsList";
+import { MinimizeIconList } from "./MinimizeIconList";
 
-const alchemyKey = 'kmMb00nhQ0SWModX6lJLjXy_pVtiQnjx';
+const alchemyKey = "kmMb00nhQ0SWModX6lJLjXy_pVtiQnjx";
 
 const { chains, provider } = configureChains(defaultChains, [
   alchemyProvider({ apiKey: alchemyKey }),
   publicProvider(),
-])
+]);
 
 // Set up connectors
 const wagmi = createClient({
@@ -33,7 +35,7 @@ const wagmi = createClient({
     new CoinbaseWalletConnector({
       chains,
       options: {
-        appName: 'wagmi'
+        appName: "wagmi",
       },
     }),
     new WalletConnectConnector({
@@ -47,7 +49,7 @@ const wagmi = createClient({
       options: { shimDisconnect: true },
     }),
   ],
-  provider
+  provider,
 });
 
 interface ConfigProps {
@@ -56,16 +58,22 @@ interface ConfigProps {
   receiverContainerStyle?: Interpolation<React.CSSProperties>;
 }
 
-const Receiver = ({ signer, children, receiverContainerStyle }: ConfigProps) => {
-
+const Receiver = ({
+  signer,
+  children,
+  receiverContainerStyle,
+}: ConfigProps) => {
   const [showBox, setShowBox] = useState<boolean>(false);
   const [hasLaunched, setHasLaunched] = useState<boolean>(false);
-  const [peerAddress, setPeerAddress] = useState<string>('');
+  const [peerAddress, setPeerAddress] = useState<string>("");
+  const [showConversations, setShowConversations] = useState(false);
+  const [minimizedConvoList, setMinimizeConvoList] = useState([]);
+  const [showNewMessageDropdown, setShowMewMessageDropdown] = useState(false);
 
   const convertAndSetPeerAddress = (peerAddress: string) => {
     const cleanAddress = getAddress(peerAddress);
     setPeerAddress(cleanAddress);
-  }
+  };
 
   const toggle = () => {
     setShowBox(!showBox);
@@ -75,38 +83,70 @@ const Receiver = ({ signer, children, receiverContainerStyle }: ConfigProps) => 
   const close = () => {
     setShowBox(false);
     setHasLaunched(false);
-  }
+  };
 
-  const chatBoxContainerStyle:CSS.Properties = {
-    maxHeight: showBox ? '500px' : (hasLaunched ? '80px' : '0px'),
-    height: '500px', 
-    position: 'fixed', 
-    bottom: '0px', 
-    right: '150px',
-    transition: 'max-height 0.25s ease-in',
-    zIndex: 1000
-  }
+  const chatBoxContainerStyle: React.CSSProperties = {
+    maxHeight: showBox ? "500px" : hasLaunched ? "0px" : "0px",
+    height: "500px",
+    position: "fixed",
+    bottom: "0px",
+    right: "150px",
+    transition: "max-height 0.25s ease-in",
+    zIndex: 1000,
+  };
 
   return (
     <WagmiConfig client={wagmi}>
       <XmtpContextProvider connectedWallet={signer} peerAddress={peerAddress}>
-        <ReceiverContext.Provider value={{ setPeerAddress: convertAndSetPeerAddress, close: close, toggle: toggle }}>
+        <ReceiverContext.Provider
+          value={{
+            setPeerAddress: convertAndSetPeerAddress,
+            close: close,
+            toggle: toggle,
+          }}
+        >
           <Container>
             <div style={chatBoxContainerStyle}>
-              <ChatBox isUserConnected={signer != undefined} style={receiverContainerStyle} closeReceiver={ close } toggleReceiver={toggle} peerAddress={peerAddress} visible={showBox}></ChatBox>
+              <GlobalStyles />
+              <ConversationsList
+                setPeerAddress={setPeerAddress}
+                setShowConversations={setShowConversations}
+                setShowMewMessageDropdown={setShowMewMessageDropdown}
+                showConversations={showConversations}
+                showBox={showBox}
+                showNewMessageDropdown={showNewMessageDropdown}
+                setShowBox={setShowBox}
+              />
+              <ChatBox
+                minimizedConvoList={minimizedConvoList}
+                setMinimizedConvoList={setMinimizeConvoList}
+                setShowConversations={setShowConversations}
+                isUserConnected={signer != undefined}
+                style={receiverContainerStyle}
+                closeReceiver={close}
+                toggleReceiver={toggle}
+                peerAddress={peerAddress}
+                visible={showBox}
+              ></ChatBox>
+              <MinimizeIconList
+                setMinimizeConvoList={setMinimizeConvoList}
+                setPeerAddress={setPeerAddress}
+                setShowBox={setShowBox}
+                minimizedConvoList={minimizedConvoList}
+                setShowConversations={setShowConversations}
+                setShowMewMessageDropdown={setShowMewMessageDropdown}
+              />
             </div>
           </Container>
-          { children }
+          {children}
         </ReceiverContext.Provider>
       </XmtpContextProvider>
     </WagmiConfig>
   );
 };
 
-
 const Container = styled.div`
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600&family=Montserrat:ital,wght@0,100;0,300;0,400;0,500;1,400&family=Roboto:wght@100;300;500;700&display=swap');
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 `;
-
 
 export default Receiver;

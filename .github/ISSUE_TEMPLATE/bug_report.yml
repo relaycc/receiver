@@ -1,0 +1,32 @@
+name: Bug Report
+description: File a bug/issue
+title: '<title>'
+body:
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the bug you encountered.
+      options:
+        - label: I have searched the existing issues
+          required: true
+
+  - type: textarea
+    attributes:
+      label: Current Behavior
+      description: Describe what you're experiencing.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: Describe what you expected to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Steps To Reproduce
+      description: Steps to reproduce the behavior.
+    validations:
+      required: true

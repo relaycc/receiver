@@ -7,11 +7,10 @@ import React, {
   FunctionComponent,
 } from 'react';
 import { Client, Conversation, Message } from '@xmtp/xmtp-js';
-import { Signer } from 'ethers';
+import { Signer } from '@ethersproject/abstract-signer';
 import { Status, XmtpContext } from './XmtpContext';
 import { initialize } from './initialize';
 import { useSigner } from 'wagmi';
-import { GroupMessage, GroupMessageDecodeError } from '../groups';
 import { useImmer } from 'use-immer';
 
 export const XmtpContextProvider: FunctionComponent<{
@@ -27,7 +26,7 @@ export const XmtpContextProvider: FunctionComponent<{
 
   if (connectedWallet) {
     wallet = connectedWallet;
-  } 
+  }
 
   const [status, setStatus] = useState<Status>(Status.disconnected);
   const [client, setClient] = useState<Client | null>(null);
@@ -37,9 +36,6 @@ export const XmtpContextProvider: FunctionComponent<{
   >({});
   const [messages, setMessages] = useImmer<
     Record<string, Record<string, Message>>
-  >({});
-  const [groupMessages, setGroupMessages] = useImmer<
-    Record<string, Record<string, GroupMessage>>
   >({});
   const [activity, setActivity] = useImmer<Record<string, Date>>({});
 
@@ -81,12 +77,8 @@ export const XmtpContextProvider: FunctionComponent<{
   }, []);
 
   const handleClientError = useCallback((error: unknown) => {
-    if (error instanceof GroupMessageDecodeError) {
-      // TODO What should we do?
-    } else {
-      setClient(null);
-      setStatus(Status.error);
-    }
+    setClient(null);
+    setStatus(Status.error);
   }, []);
 
   const handleConversationsLoaded = useCallback(() => {
@@ -135,17 +127,6 @@ export const XmtpContextProvider: FunctionComponent<{
     [setMessages, setActivity]
   );
 
-  const handleNewGroupMessage = useCallback(
-    (message: GroupMessage) => {
-      return setGroupMessages((prev) => {
-        prev[message.content.groupId] = prev[message.content.groupId] || {};
-        prev[message.content.groupId][message.content.groupMessageId] = message;
-        return prev;
-      });
-    },
-    [setGroupMessages]
-  );
-
   /*
    * Synchronization
    */
@@ -175,7 +156,6 @@ export const XmtpContextProvider: FunctionComponent<{
         handleNewConversation,
         handleConversationsLoaded,
         handleNewMessage,
-        handleNewGroupMessage,
         handleMessagesLoaded
       );
     }
@@ -188,7 +168,6 @@ export const XmtpContextProvider: FunctionComponent<{
     handleNewConversation,
     handleConversationsLoaded,
     handleNewMessage,
-    handleNewGroupMessage,
     handleMessagesLoaded,
   ]);
 
@@ -196,9 +175,8 @@ export const XmtpContextProvider: FunctionComponent<{
     setClient(null);
     setConversations({});
     setMessages({});
-    setGroupMessages({});
     setStatus(Status.idle);
-  }, [setConversations, setGroupMessages, setMessages]);
+  }, [setConversations, setMessages]);
 
   /*
    * Strongly Typed Output
@@ -226,7 +204,6 @@ export const XmtpContextProvider: FunctionComponent<{
             status,
             conversations,
             messages,
-            groupMessages,
             activity,
             client,
             deinit,
@@ -235,16 +212,7 @@ export const XmtpContextProvider: FunctionComponent<{
       default:
         throw new Error('bad state!');
     }
-  }, [
-    status,
-    init,
-    deinit,
-    client,
-    conversations,
-    messages,
-    groupMessages,
-    activity,
-  ]);
+  }, [status, init, deinit, client, conversations, messages, activity]);
 
   return (
     <XmtpContext.Provider value={clientContext}>

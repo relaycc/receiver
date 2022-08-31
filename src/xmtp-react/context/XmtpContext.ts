@@ -1,7 +1,6 @@
 import { createContext } from 'react';
 import { Conversation, Message, Client } from '@xmtp/xmtp-js';
-import { Signer } from 'ethers';
-import { GroupMessage } from '../groups';
+import { Signer } from '@ethersproject/abstract-signer';
 
 export enum Status {
   disconnected = 'no signer available',
@@ -41,7 +40,6 @@ export interface ReadyXmtp {
   deinit: () => unknown;
   conversations: Record<string, Conversation>;
   messages: Record<string, Record<string, Message>>;
-  groupMessages: Record<string, Record<string, GroupMessage>>;
   activity: Record<string, Date>;
   client: Client;
 }
@@ -61,5 +59,5 @@ export type XmtpContextType =
   | ErrorXmtp;
 
 export const XmtpContext = createContext<XmtpContextType>({
-  status: Status.disconnected
+  status: Status.disconnected,
 });

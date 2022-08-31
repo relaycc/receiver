@@ -31,28 +31,6 @@ export default function LoadingMessages() {
           <FirstMessage />
         </RightMessageContainer>
       </RightContainer>
-      <LeftContainer>
-        <LeftUserInfo>
-          <LogoOutline />
-          <NameOutline />
-          <DateOutline />
-        </LeftUserInfo>
-        <LeftMessageContainer>
-          <FirstMessage />
-        </LeftMessageContainer>
-      </LeftContainer>
-      <RightContainer>
-        <RightUserInfo>
-          <LogoOutline />
-          <NameOutline />
-          <DateOutline />
-        </RightUserInfo>
-        <RightBottomMessageContainer>
-          <FirstMessage />
-          <SecondMessage />
-        </RightBottomMessageContainer>
-      </RightContainer>
-      <div ref={divScrollToRef} />
     </MainContainer>
   );
 }
@@ -109,7 +87,7 @@ const LeftUserInfo = styled.div`
 const RightUserInfo = styled.div`
   display: flex;
   align-items: center;
-  flex-direction: row-reverse;
+  flex-direction: row;
   gap: 13px;
   > * {
     opacity: 0.2;
@@ -145,7 +123,7 @@ const LeftMessageContainer = styled.div`
 const RightMessageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   > * {
     background-color: #777;
     opacity: 0.2;
@@ -153,7 +131,7 @@ const RightMessageContainer = styled.div`
   }
 `;
 const FirstMessage = styled.div`
-  width: 255px;
+  width: 355px;
   height: 60px;
   border-radius: 8px;
 `;

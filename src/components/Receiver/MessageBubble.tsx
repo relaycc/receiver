@@ -1,59 +1,78 @@
-import styled from 'styled-components';
-import React from 'react'
-import { time } from '../../utls/date'
+import styled from "styled-components";
+import React from "react";
+import { time } from "../../utls/date";
+import { truncateName, truncateAddress } from "../../utls/address";
+import { useEnsName } from "wagmi";
+import { useRef } from 'react'
+import { useResponsiveName } from "../../hooks/useResponsiveName";
 
 interface TextBubbleProps {
   message: string;
-  sentByMe: boolean;
+  sentByMe?: boolean;
   messageTime: Date | undefined;
+  senderAddress?: string;
+  peerAddress?: string;
+  peerName?: string | undefined;
 }
 
-const MessageBubble = (props: TextBubbleProps) => {
+const MessageBubble = ({
+  message,
+  sentByMe,
+  messageTime,
+  senderAddress,
+  peerAddress,
+  peerName,
+}: TextBubbleProps) => {
+  const { data: senderName } = useEnsName({
+    address: senderAddress,
+  });
+  const { data: peerEns } = useEnsName({
+    address: peerAddress,
+  });
+
   return (
-    <TextWrapper sentByMe={props.sentByMe}>
-      <MessageText sentByMe={props.sentByMe}>{props.message}</MessageText>
-      { props.messageTime &&
-        <MessageTime sentByMe={props.sentByMe}>{time(props.messageTime)}</MessageTime>
-      }
+    <TextWrapper>
+      <MessageText>{message}</MessageText>
     </TextWrapper>
   );
 };
 
-const TextWrapper = styled.div<{ sentByMe: boolean }>`
+const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  padding: 10px;
-  border-radius: 8px;
+  align-items: flex-start;
   width: 100%;
-  background-color: ${(props) => (props.sentByMe ? '#5A46C6' : '#F8F7FF')};
-  border-radius: ${(props) => (props.sentByMe ? '16px 16px 4px 16px' : '16px 16px 16px 4px')};
-  border: ${(props) => (props.sentByMe ? '1px solid rgba(255, 255, 255, 0.2)' : '1px solid #FBFBFB')};
-  box-shadow: ${(props) => (props.sentByMe ? '0px 0px 4px rgba(0, 0, 0, 0.1)' : '0px 0px 4px rgba(0, 0, 0, 0.1)')};
-
   hyphens: auto;
+  padding-left: 50px;
 `;
 
-const MessageText = styled.div<{ sentByMe: boolean }>`
-  color: ${(props) => (props.sentByMe ? '#FFFFFF' : '#060028')};
-  font-family: 'Circular Std', sans-serif;
+const MessageText = styled.div`
+  color: #060028;
+  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 18px;
   word-break: break-word;
+  text-align: start;
+  padding-left: 4px;
 `;
 
-const MessageTime = styled.div<{ sentByMe: boolean }>`
-  color: ${(props) => (props.sentByMe ? '#CFC6FF' : '#4E4773')};
-  font-family: 'Circular Std', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 10px;
-  line-height: 18px;
-  word-break: break-word;
-  padding-top: 5px;
-  letter-spacing: 1px;
+
+
+const MessageHeader = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const SenderName = styled.div<{ sentByMe: boolean }>`
+  border-radius: 99rem;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+  background-color: ${(props) => (props.sentByMe ? "white" : "#F1F2FD")};
+  color: ${(props) => (props.sentByMe ? "black" : "#6E6B99")};
+  padding: 3px 6px;
 `;
 
 export default MessageBubble;
