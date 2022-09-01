@@ -60,6 +60,7 @@ const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
+  font-size: 1rem;
 `;
 
 const Title = styled.span`
