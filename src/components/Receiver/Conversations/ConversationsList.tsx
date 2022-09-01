@@ -4,13 +4,12 @@ import { useConversations } from '../../../xmtp-react/conversations';
 import Conversation from './Conversation';
 import { useEnsAddress } from 'wagmi';
 import { useEffect } from 'react';
-import { RelayFooter } from '../Footers/RelayFooter';
 
 interface ConversationsListProps {
   showConversations: boolean;
   setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
   setShowMewMessageDropdown: React.Dispatch<React.SetStateAction<boolean>>;
-  setPeerAddress: any;
+  setPeerAddress: (peerAddress: string | null | undefined) => unknown;
   showBox: boolean;
   showNewMessageDropdown: boolean;
   setShowBox: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,13 +20,12 @@ export function ConversationsList({
   setShowConversations,
   setShowMewMessageDropdown,
   setPeerAddress,
-  showBox,
   setShowBox,
   showNewMessageDropdown,
 }: ConversationsListProps) {
   const conversations = useConversations();
   const [newConversationInput, setNewConversationInput] = useState('');
-  const userInput: any = useRef();
+  const userInput = useRef<HTMLInputElement>(null);
   const [count, setCount] = useState(0);
 
   const handleDropDownToggle = () => {
@@ -36,7 +34,7 @@ export function ConversationsList({
     );
   };
 
-  const { data, isError, isLoading } = useEnsAddress({
+  const { data } = useEnsAddress({
     name: newConversationInput,
     onSuccess(data) {
       if (data === null) {
@@ -54,22 +52,16 @@ export function ConversationsList({
     if (newConversationInput.length === 0) {
       return;
     }
-    if (isLoading) {
-    }
-    if (isError) {
-    }
-    if (data) {
-      setPeerAddress(data);
-    } else {
-      setPeerAddress(data);
-    }
+    setPeerAddress(data);
   }, [count]);
 
   const handleSubmit = () => {
-    setNewConversationInput(userInput.current.value);
-    setCount((count) => count + 1);
-    setShowMewMessageDropdown(false);
-    setShowConversations(false);
+    if (userInput.current) {
+      setNewConversationInput(userInput.current.value);
+      setCount((count) => count + 1);
+      setShowMewMessageDropdown(false);
+      setShowConversations(false);
+    }
   };
 
   useEffect(() => {
