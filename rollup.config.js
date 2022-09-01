@@ -1,34 +1,34 @@
-import resolve from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
-import typescript from "@rollup/plugin-typescript";
-import dts from "rollup-plugin-dts";
-
-const packageJson = require("./package.json");
+import commonjs from '@rollup/plugin-commonjs';
+import typescript from '@rollup/plugin-typescript';
+import postcss from 'rollup-plugin-postcss';
+import image from '@rollup/plugin-image';
+import json from '@rollup/plugin-json';
 
 export default [
   {
-    input: "src/index.ts",
+    input: 'src/index.ts',
     output: [
       {
-        file: packageJson.main,
-        format: "cjs",
+        dir: 'dist',
+        format: 'cjs',
         sourcemap: true,
+        entryFileNames: 'cjs/[name].js',
+        chunkFileNames: 'cjs/[name]-[hash].js',
       },
       {
-        file: packageJson.module,
-        format: "esm",
+        dir: 'dist',
+        format: 'esm',
         sourcemap: true,
+        entryFileNames: 'esm/[name].js',
+        chunkFileNames: 'esm/[name]-[hash].js',
       },
     ],
     plugins: [
-      resolve(),
+      image(),
+      json(),
       commonjs(),
-      typescript({ tsconfig: "./tsconfig.json" }),
+      typescript({ tsconfig: './tsconfig.json' }),
+      postcss(),
     ],
-  },
-  {
-    input: "dist/esm/types/index.d.ts",
-    output: [{ file: "dist/index.d.ts", format: "esm" }],
-    plugins: [dts()],
   },
 ];
