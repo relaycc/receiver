@@ -22,7 +22,7 @@ npm start
 
 ## Usage
 
-```TypesScript
+```TypeScript
 import logo from './logo.svg';
 import './App.css';
 import { Receiver, ReceiverLaunch } from '@relaycc/receiver';
