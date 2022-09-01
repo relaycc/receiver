@@ -7,10 +7,10 @@ type MinimizedConvoListSetter = (list: string[]) => string[];
 
 interface MinimizeIconListProps {
   minimizedConvoList: string[];
-  setShowBox: () => unknown;
-  setPeerAddress: () => unknown;
+  setShowBox: (show: boolean) => unknown;
+  setPeerAddress: (peerAddress: string | undefined) => unknown;
   setMinimizeConvoList: (setter: MinimizedConvoListSetter) => unknown;
-  setShowConversations: () => unknown;
+  setShowConversations: (show: boolean) => unknown;
   setShowMewMessageDropdown: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export function MinimizeIconList({
