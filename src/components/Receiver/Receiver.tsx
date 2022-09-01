@@ -67,7 +67,7 @@ const Receiver = ({
   const [hasLaunched, setHasLaunched] = useState<boolean>(false);
   const [peerAddress, setPeerAddress] = useState<string>('');
   const [showConversations, setShowConversations] = useState(false);
-  const [minimizedConvoList, setMinimizeConvoList] = useState([]);
+  const [minimizedConvoList, setMinimizeConvoList] = useState<string[]>([]);
   const [showNewMessageDropdown, setShowMewMessageDropdown] = useState(false);
 
   const convertAndSetPeerAddress = (peerAddress: string) => {
@@ -108,7 +108,9 @@ const Receiver = ({
             <div style={chatBoxContainerStyle}>
               <GlobalStyles />
               <ConversationsList
-                setPeerAddress={setPeerAddress}
+                setPeerAddress={(peerAddress) =>
+                  peerAddress && setPeerAddress(peerAddress)
+                }
                 setShowConversations={setShowConversations}
                 setShowMewMessageDropdown={setShowMewMessageDropdown}
                 showConversations={showConversations}
@@ -117,8 +119,7 @@ const Receiver = ({
                 setShowBox={setShowBox}
               />
               <ChatBox
-                minimizedConvoList={minimizedConvoList}
-                setMinimizedConvoList={setMinimizeConvoList}
+                setMinimizedConvoList={(list) => setMinimizeConvoList(list)}
                 setShowConversations={setShowConversations}
                 isUserConnected={signer != undefined}
                 style={receiverContainerStyle}
@@ -128,8 +129,10 @@ const Receiver = ({
                 visible={showBox}></ChatBox>
               <MinimizeIconList
                 setMinimizeConvoList={setMinimizeConvoList}
-                setPeerAddress={setPeerAddress}
-                setShowBox={setShowBox}
+                setPeerAddress={(peerAddress) =>
+                  peerAddress && setPeerAddress(peerAddress)
+                }
+                setShowBox={(show) => setShowBox(show)}
                 minimizedConvoList={minimizedConvoList}
                 setShowConversations={setShowConversations}
                 setShowMewMessageDropdown={setShowMewMessageDropdown}

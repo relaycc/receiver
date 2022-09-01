@@ -1,7 +1,13 @@
 import React from 'react';
 
-const ReceiverContext = React.createContext({
-  setPeerAddress: (item: string) => ({ item }),
+export interface ReceiverContextType {
+  setPeerAddress: (item: string) => unknown;
+  toggle: () => unknown;
+  close: () => unknown;
+}
+
+const ReceiverContext = React.createContext<ReceiverContextType>({
+  setPeerAddress: (item: string) => item,
   toggle: () => undefined,
   close: () => undefined,
 });
