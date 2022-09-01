@@ -22,7 +22,7 @@ npm start
 
 ## Documentation
 
-For full documentation, visit [docs.relay.cc](https://docs.relay.cc).
+For full documentation, visit [docs.relay.cc](https://docs.relay.cc/relay/relay-receiver).
 
 ### Try it out
 
