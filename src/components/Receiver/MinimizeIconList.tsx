@@ -3,12 +3,14 @@ import Avatar from './Avatar';
 import styled from 'styled-components';
 import { EnsName } from './EnsName';
 
+type MinimizedConvoListSetter = (list: string[]) => string[];
+
 interface MinimizeIconListProps {
-  minimizedConvoList: any;
-  setShowBox: any;
-  setPeerAddress: any;
-  setMinimizeConvoList: any;
-  setShowConversations: any;
+  minimizedConvoList: string[];
+  setShowBox: () => unknown;
+  setPeerAddress: () => unknown;
+  setMinimizeConvoList: (setter: MinimizedConvoListSetter) => unknown;
+  setShowConversations: () => unknown;
   setShowMewMessageDropdown: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export function MinimizeIconList({
@@ -19,22 +21,22 @@ export function MinimizeIconList({
   setShowConversations,
   setShowMewMessageDropdown,
 }: MinimizeIconListProps) {
-  const removeFromList = (e: any) => {
-    setMinimizeConvoList((items: any) =>
-      items.filter((_: any, i: number) => i !== e)
+  const removeFromList = (e: number) => {
+    setMinimizeConvoList((items: string[]) =>
+      items.filter((_: unknown, i: number) => i !== e)
     );
   };
 
   return (
     <Container>
-      {minimizedConvoList.map((e: any, index: number) => (
+      {minimizedConvoList.map((e, index) => (
         <AvatarContainer key={e}>
           <Avatar
             setPeerAddress={setPeerAddress}
             setShowBox={setShowBox}
             address={e}
             setShowConversations={setShowConversations}
-            setShowMewMessageDropdown={setShowMewMessageDropdown}
+            setShowMessageDropdown={setShowMewMessageDropdown}
           />
           <AvatarHoverDetails onClick={() => removeFromList(index)}>
             <svg

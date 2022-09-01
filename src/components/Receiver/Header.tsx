@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import Avatar from './Avatar';
 import styled from 'styled-components';
 
+type MinimizedConvoListSetter = (list: string[]) => string[];
+
 interface HeaderProps {
   text: string | null;
   visible: boolean;
@@ -11,21 +13,18 @@ interface HeaderProps {
   toggleReceiver: () => unknown;
   closeReceiver: () => unknown;
   setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
-  setMinimizedConvoList: any;
-  minimizedConvoList: any;
+  setMinimizedConvoList: (setter: MinimizedConvoListSetter) => unknown;
   peerIsAvailable: boolean | undefined;
 }
 
 export default function RelayHeader({
   text = 'Relay Receiver',
-  visible,
   peerAddress,
   peerName,
   toggleReceiver,
   closeReceiver,
   setShowConversations,
   setMinimizedConvoList,
-  minimizedConvoList,
   peerIsAvailable,
 }: HeaderProps) {
   const [showMenu, setShowMenu] = useState(false);
@@ -58,8 +57,12 @@ export default function RelayHeader({
   const handleMinimizeClick = () => {
     setShowMenu(false);
     toggleReceiver();
-    setMinimizedConvoList((list: any) => {
-      if (peerAddress === null || peerIsAvailable === false) {
+    setMinimizedConvoList((list: string[]) => {
+      if (
+        peerAddress === null ||
+        peerAddress === undefined ||
+        peerIsAvailable === false
+      ) {
         return [...list];
       }
       if (list.indexOf(peerAddress) === -1) {
@@ -117,7 +120,9 @@ export default function RelayHeader({
           {showMenu && (
             <DropdownMenu>
               <DropDownItemCopy
-                onClick={() => navigator.clipboard.writeText(peerAddress!)}>
+                onClick={() =>
+                  navigator.clipboard.writeText(String(peerAddress))
+                }>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

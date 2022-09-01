@@ -14,11 +14,11 @@ import {
 import React from 'react';
 import { useEnsName } from 'wagmi';
 import { RelayFooter } from './Footers/RelayFooter';
-import LoadingMessages from './LoadingMessages';
+
+type MinimizedConvoListSetter = (list: string[]) => string[];
 
 interface ChatButtonProps {
   visible: boolean;
-  as?: string | React.ComponentType<any>;
   style?: Interpolation<React.CSSProperties>;
   peerAddress?: string;
   headerText?: string;
@@ -26,22 +26,17 @@ interface ChatButtonProps {
   toggleReceiver: () => unknown;
   closeReceiver: () => unknown;
   setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
-  setMinimizedConvoList: any;
-  minimizedConvoList: any;
+  setMinimizedConvoList: (setter: MinimizedConvoListSetter) => unknown;
 }
 
 const ChatBox = ({
   setShowConversations,
-  style,
   isUserConnected,
   visible,
-  as,
   peerAddress,
-  headerText,
   closeReceiver,
   toggleReceiver,
   setMinimizedConvoList,
-  minimizedConvoList,
 }: ChatButtonProps) => {
   const isMetaMask = useIsMetaMask();
   const [xmtpReady, setXmptReady] = useState<boolean>(false);
@@ -110,12 +105,11 @@ const ChatBox = ({
     console.log(peerIsAvailable);
   };
   return (
-    <ChatContainer visible={visible} as={as} style={style}>
+    <ChatContainer>
       {isConnected && userDidConnect ? (
         <Header
           peerIsAvailable={peerIsAvailable}
           setMinimizedConvoList={setMinimizedConvoList}
-          minimizedConvoList={minimizedConvoList}
           setShowConversations={setShowConversations}
           visible={visible}
           peerName={peerName}
@@ -213,7 +207,7 @@ const ChatBox = ({
   );
 };
 
-const ChatContainer = styled.div<ChatButtonProps>`
+const ChatContainer = styled.div`
   background-color: white;
   border: none;
   padding: 0px;
@@ -223,7 +217,6 @@ const ChatContainer = styled.div<ChatButtonProps>`
   width: 375px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 4px 4px 0 0;
-  ${({ style }) => style};
   position: relative;
 `;
 

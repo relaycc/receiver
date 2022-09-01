@@ -4,10 +4,10 @@ import { useEnsName } from 'wagmi';
 
 interface EnsNameProps {
   address: string;
-  setShowBox: any;
-  setPeerAddress: any;
-  setShowConversations: any;
-  setShowMewMessageDropdown: any;
+  setShowBox: (show: boolean) => unknown;
+  setPeerAddress: (peerAddress: string) => unknown;
+  setShowConversations: (show: boolean) => unknown;
+  setShowMewMessageDropdown: (show: boolean) => unknown;
 }
 
 export function EnsName({
@@ -25,7 +25,7 @@ export function EnsName({
       setShowBox(true);
       setPeerAddress(address);
       setShowConversations(false);
-      setShowMewMessageDropdown!(false);
+      setShowMewMessageDropdown(false);
     } else return;
   };
 

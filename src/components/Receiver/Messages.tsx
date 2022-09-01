@@ -3,17 +3,16 @@ import { Message } from '@xmtp/xmtp-js';
 import MessagesBucket from './MessagesBucket';
 import LoadingMessages from './LoadingMessages';
 import { Status, useXmtp } from '../../xmtp-react/context';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useMessages } from '../../xmtp-react/conversations';
 import Card from './Card';
 import Button from './Button';
-import { shortDate } from '../../utls/date';
 
 interface MessagesProps {
   peerAddress?: string;
   peerName?: string;
   peerIsAvailable: boolean | undefined;
-  setPeerIsAvailable: any;
+  setPeerIsAvailable: (peerIsAvailable: boolean) => unknown;
   onXmptReady: (isReady: boolean) => unknown;
 }
 
@@ -43,7 +42,7 @@ const Messages = ({
   if (typeof peerAddress !== 'string') {
     return (
       <Card title="Could not resolve ENS name">
-        <Text>Make sure to include the ".eth" suffix.</Text>
+        <Text>{'Make sure to include the ".eth" suffix.'}</Text>
       </Card>
     );
   } else if (peerIsAvailable === false) {
@@ -93,7 +92,7 @@ const Messages = ({
                   key={index}
                   messages={bucket}
                   peerAddress={peerAddress}
-                  startDate={bucket.at(-1)!.sent}
+                  startDate={bucket[bucket.length - 1].sent}
                   peerName={peerName}
                   sentByAddress={bucket[0].senderAddress}
                 />

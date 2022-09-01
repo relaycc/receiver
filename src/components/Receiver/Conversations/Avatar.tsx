@@ -8,11 +8,7 @@ interface AvatarProps {
 }
 
 export default function Avatar({ peerAddress }: AvatarProps) {
-  const {
-    data: ensAvatar,
-    isFetching,
-    isLoading,
-  } = useEnsAvatar({ addressOrName: peerAddress });
+  const { data: ensAvatar } = useEnsAvatar({ addressOrName: peerAddress });
 
   if (!ensAvatar) {
     return (

@@ -13,19 +13,16 @@ interface MessagesBucketProps {
   startDate: Date | undefined;
   messages: Message[];
   peerName?: string | undefined;
-  sentByAddress: any;
+  sentByAddress: string | undefined;
 }
 
 export default function MessagesBucket({
   peerAddress,
   startDate,
   messages,
-  peerName,
   sentByAddress,
 }: MessagesBucketProps) {
   const sentByMe = sentByAddress !== peerAddress;
-
-  if (messages.length === 0) return null;
 
   const { data: senderName } = useEnsName({
     address: sentByAddress,
@@ -33,6 +30,13 @@ export default function MessagesBucket({
   const { data: peerEns } = useEnsName({
     address: peerAddress,
   });
+  const responsiveName = useResponsiveName(
+    sentByMe ? senderName : peerEns,
+    sentByMe ? sentByAddress : peerAddress,
+    ''
+  );
+
+  if (messages.length === 0) return null;
 
   return (
     <Container>
@@ -41,28 +45,17 @@ export default function MessagesBucket({
           <div style={{ marginRight: '10px' }}>
             <Avatar address={sentByMe ? sentByAddress : peerAddress} />
           </div>
-          <SenderName sentByMe={sentByMe}>
-            {sentByMe
-              ? useResponsiveName(senderName, sentByAddress, '')
-              : useResponsiveName(peerEns, peerAddress, '')}
-          </SenderName>
+          <SenderName sentByMe={sentByMe}>{responsiveName}</SenderName>
           <MessageTime>
             {shortDate(startDate) + ', ' + time(startDate)}
           </MessageTime>
         </MessageHeader>
       </SentByInfo>
       <FlexColReverseContainer>
-        {messages.map((e: any) => {
+        {messages.map((e: Message) => {
           return (
             <MessagePosition key={e.id}>
-              <MessageBubble
-                message={e.content}
-                messageTime={e.sent}
-                sentByMe={sentByMe}
-                senderAddress={e.senderAddress}
-                peerAddress={peerAddress}
-                peerName={peerName}
-              />
+              <MessageBubble message={e.content} />
             </MessagePosition>
           );
         })}
@@ -78,16 +71,6 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-`;
-
-const BucketTimestamp = styled.div`
-  font-family: 'Poppins', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 10px;
-  line-height: 12px;
-  text-align: center;
-  color: #333333;
 `;
 
 const MessagePosition = styled.div`
@@ -133,10 +116,6 @@ const MessageTime = styled.div`
   transform: translateY(2px);
 `;
 
-const Messages = styled.div`
-  display: flex;
-  flex-direction: column-reverse;
-`;
 const FlexColReverseContainer = styled.div`
   display: flex;
   flex-direction: column-reverse;

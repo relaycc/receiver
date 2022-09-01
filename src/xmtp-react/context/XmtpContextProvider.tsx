@@ -76,7 +76,7 @@ export const XmtpContextProvider: FunctionComponent<{
     setStatus(Status.loading);
   }, []);
 
-  const handleClientError = useCallback((error: unknown) => {
+  const handleClientError = useCallback(() => {
     setClient(null);
     setStatus(Status.error);
   }, []);

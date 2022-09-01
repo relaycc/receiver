@@ -7,8 +7,8 @@ import { useResponsiveName } from '../../../hooks/useResponsiveName';
 
 interface ConversationProps {
   peerAddress: string;
-  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
-  setPeerAddress: React.Dispatch<React.SetStateAction<string>>;
+  setShowConversations: (show: boolean) => unknown;
+  setPeerAddress: (peerAddress: string) => unknown;
 }
 
 export default function Conversation({
@@ -18,7 +18,7 @@ export default function Conversation({
 }: ConversationProps) {
   const messages = useMessages(peerAddress);
   const lastMessage = getLastMessage(messages);
-  const { data: ensName, isLoading } = useEnsName({
+  const { data: ensName } = useEnsName({
     address: peerAddress,
   });
   const responsiveName = useResponsiveName(ensName, peerAddress, '');
@@ -60,7 +60,6 @@ const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 1rem;
 `;
 
 const Title = styled.span`
