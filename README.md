@@ -19,7 +19,6 @@ cd receiver-example-cra.git
 npm install
 npm start
 ```
-```
 
 ## Documentation
 
