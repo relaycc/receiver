@@ -20,6 +20,40 @@ npm install
 npm start
 ```
 
+## Usage
+
+```TypesScript
+import logo from './logo.svg';
+import './App.css';
+import { Receiver, ReceiverLaunch } from '@relaycc/receiver';
+
+function App() {
+  return (
+    <Receiver>
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Edit <code>src/App.js</code> and save to reload.
+          </p>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+        </header>
+        <ReceiverLaunch />
+      </div>
+    </Receiver>
+  );
+}
+
+export default App;
+```
+
 ## Documentation
 
 For full documentation, visit [docs.relay.cc](https://docs.relay.cc/relay/relay-receiver).
