@@ -18,14 +18,12 @@ interface HeaderProps {
 
 export default function RelayHeader({
   text = 'Relay Receiver',
-  visible,
   peerAddress,
   peerName,
   toggleReceiver,
   closeReceiver,
   setShowConversations,
   setMinimizedConvoList,
-  minimizedConvoList,
   peerIsAvailable,
 }: HeaderProps) {
   const [showMenu, setShowMenu] = useState(false);
