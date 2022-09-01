@@ -22,6 +22,12 @@ npm start
 
 ## Usage
 
+It's quite easy:
+
+* Wrap your `App` component in `Receiver`
+* Add `ReceiverLaunch` component
+
+
 ```TypeScript
 import logo from './logo.svg';
 import './App.css';
