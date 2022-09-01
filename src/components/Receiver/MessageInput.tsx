@@ -74,7 +74,6 @@ const Container = styled.div`
 const StyledInput = styled.input`
   flex: 1;
   border-radius: 2px;
-  /* /* background-color: #F3F0FF; */ */
   border: none;
   outline: none;
   &::placeholder {

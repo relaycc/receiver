@@ -54,7 +54,7 @@ const ButtonElem = styled.button<{
   display: flex;
   align-items: center;
   justify-content: center;
-  bottom: 80px;
+  bottom: 20px;
   right: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.45);
   ${({ launchButtonStyle }) => launchButtonStyle};

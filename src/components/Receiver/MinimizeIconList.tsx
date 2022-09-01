@@ -71,7 +71,7 @@ const Container = styled.ul`
   flex-direction: column-reverse;
   align-items: center;
   position: fixed;
-  bottom: 140px;
+  bottom: 60px;
   right: 24px;
   gap: 10px;
 `;
