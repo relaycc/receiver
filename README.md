@@ -24,9 +24,8 @@ npm start
 
 It's quite easy:
 
-* Wrap your `App` component in `Receiver`
-* Add `ReceiverLaunch` component
-
+- Wrap your `App` component in `Receiver`
+- Add `ReceiverLaunch` component
 
 ```TypeScript
 import logo from './logo.svg';
@@ -68,11 +67,10 @@ For full documentation, visit [docs.relay.cc](https://docs.relay.cc/relay/relay-
 
 ## Examples
 
-*Coming Soon*
+_Coming Soon_
 
 ## License
 
 Licensed under the MIT License, Copyright © 2022-present [Relay](https://relay.cc).
 
 See [LICENSE](./LICENSE) for more information.
-

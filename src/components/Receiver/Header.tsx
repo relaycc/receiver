@@ -14,10 +14,6 @@ interface HeaderProps {
   setMinimizedConvoList: any;
   minimizedConvoList: any;
   peerIsAvailable: boolean | undefined;
-  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
-  setMinimizedConvoList: any;
-  minimizedConvoList: any;
-  peerIsAvailable: boolean | undefined;
 }
 
 export default function RelayHeader({
@@ -27,10 +23,6 @@ export default function RelayHeader({
   peerName,
   toggleReceiver,
   closeReceiver,
-  setShowConversations,
-  setMinimizedConvoList,
-  minimizedConvoList,
-  peerIsAvailable,
   setShowConversations,
   setMinimizedConvoList,
   minimizedConvoList,
@@ -344,26 +336,6 @@ const HeaderInfo = styled.div`
     visibility: visible;
     opacity: 1;
   }
-`;
-
-const ExitSvg = styled.svg``;
-
-const LiLink = styled.a`
-  color: black;
-  text-decoration: none;
-  height: 100%;
-  width: 100%;
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  font-weight: 600;
-  gap: 8px;
-`;
-
-const UserInfoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
 `;
 
 const ExitSvg = styled.svg``;

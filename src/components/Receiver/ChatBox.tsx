@@ -28,13 +28,9 @@ interface ChatButtonProps {
   setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
   setMinimizedConvoList: any;
   minimizedConvoList: any;
-  setShowConversations: React.Dispatch<React.SetStateAction<boolean>>;
-  setMinimizedConvoList: any;
-  minimizedConvoList: any;
 }
 
 const ChatBox = ({
-  setShowConversations,
   setShowConversations,
   style,
   isUserConnected,
@@ -46,8 +42,6 @@ const ChatBox = ({
   toggleReceiver,
   setMinimizedConvoList,
   minimizedConvoList,
-  setMinimizedConvoList,
-  minimizedConvoList,
 }: ChatButtonProps) => {
   const isMetaMask = useIsMetaMask();
   const [xmtpReady, setXmptReady] = useState<boolean>(false);
@@ -55,43 +49,42 @@ const ChatBox = ({
   const { connect, connectors } = useConnect();
   const { isConnected } = useAccount();
   const [peerIsAvailable, setPeerIsAvailable] = useState<boolean | undefined>();
-  const [peerIsAvailable, setPeerIsAvailable] = useState<boolean | undefined>();
 
   const { data: peerName } = useEnsName({
-    address: peerAddress,,
-  });;
+    address: peerAddress,
+  });
 
   const sendMessage = useSendMessage();
 
   const metamaskConnector = connectors.find(
-    (connector) => connector.id === "injected"
+    (connector) => connector.id === 'injected'
   );
 
   const walletConnectConnector = connectors.find(
-    (connector) => connector.id === "walletConnect"
+    (connector) => connector.id === 'walletConnect'
   );
 
   const coinbaseConnector = connectors.find(
-    (connector) => connector.id === "coinbaseWallet"
+    (connector) => connector.id === 'coinbaseWallet'
   );
 
   // TODO prevent connection if already connected.
   const handleClickMetamask = useCallback(() => {
     setUserDidConnect(true);
-    connect({  connector: metamaskConnector  });
+    connect({ connector: metamaskConnector });
 
     /* eslint-disable-next-line */
   }, []);
 
   const handleClickCoinbase = useCallback(() => {
     setUserDidConnect(true);
-    connect({  connector: coinbaseConnector  });
+    connect({ connector: coinbaseConnector });
     /* eslint-disable-next-line */
   }, []);
 
   const handleClickWalletConnect = useCallback(() => {
     setUserDidConnect(true);
-    connect({  connector: walletConnectConnector  });
+    connect({ connector: walletConnectConnector });
     /* eslint-disable-next-line */
   }, []);
 
@@ -113,9 +106,6 @@ const ChatBox = ({
       ? null
       : 'Relay Receiver';
 
-  const test = () => {
-    console.log(peerIsAvailable);
-  };
   const test = () => {
     console.log(peerIsAvailable);
   };
@@ -330,4 +320,3 @@ const HeaderLogo = styled.div`
 const ExitSvg = styled.svg``;
 
 export default ChatBox;
-
