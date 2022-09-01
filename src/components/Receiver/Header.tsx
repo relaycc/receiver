@@ -120,7 +120,9 @@ export default function RelayHeader({
           {showMenu && (
             <DropdownMenu>
               <DropDownItemCopy
-                onClick={() => navigator.clipboard.writeText(peerAddress!)}>
+                onClick={() =>
+                  navigator.clipboard.writeText(String(peerAddress))
+                }>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

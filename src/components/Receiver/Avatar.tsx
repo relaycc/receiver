@@ -6,12 +6,12 @@ import LoadingSpinner from './LoadingSpinner';
 import React from 'react';
 
 interface AvatarProps {
-  address?: any;
+  address?: string;
   size?: 'small' | 'medium' | 'large';
-  setPeerAddress?: any;
-  setShowBox?: any;
-  setShowConversations?: any;
-  setShowMewMessageDropdown?: React.Dispatch<React.SetStateAction<boolean>>;
+  setPeerAddress?: (peerAddress: string | undefined) => unknown;
+  setShowBox?: (show: boolean) => unknown;
+  setShowConversations?: (show: boolean) => unknown;
+  setShowMessageDropdown?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export default function Avatar({
   address,
@@ -19,7 +19,7 @@ export default function Avatar({
   setPeerAddress,
   setShowBox,
   setShowConversations,
-  setShowMewMessageDropdown,
+  setShowMessageDropdown,
 }: AvatarProps) {
   const {
     data: ensAvatar,
@@ -39,9 +39,9 @@ export default function Avatar({
   const handleClick = () => {
     if (setShowBox) {
       setShowBox(true);
-      setPeerAddress(address);
-      setShowConversations(false);
-      setShowMewMessageDropdown!(false);
+      setPeerAddress && setPeerAddress(address);
+      setShowConversations && setShowConversations(false);
+      setShowMessageDropdown && setShowMessageDropdown(false);
     }
   };
 

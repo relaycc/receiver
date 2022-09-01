@@ -36,7 +36,7 @@ export function MinimizeIconList({
             setShowBox={setShowBox}
             address={e}
             setShowConversations={setShowConversations}
-            setShowMewMessageDropdown={setShowMewMessageDropdown}
+            setShowMessageDropdown={setShowMewMessageDropdown}
           />
           <AvatarHoverDetails onClick={() => removeFromList(index)}>
             <svg

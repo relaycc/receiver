@@ -9,10 +9,6 @@ interface MessageInputProps {
 const MessageInput = ({ onSendMessage }: MessageInputProps) => {
   const [inputVal, setInputVal] = useState<string>('');
 
-  const clearInput = useCallback(() => {
-    setInputVal('');
-  }, []);
-
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setInputVal(e.target.value);
   }, []);
@@ -29,8 +25,6 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
     },
     [handleSend]
   );
-
-  const inputTextCount = inputVal.length;
 
   return (
     <Container>
@@ -74,7 +68,7 @@ const Container = styled.div`
 const StyledInput = styled.input`
   flex: 1;
   border-radius: 2px;
-  /* /* background-color: #F3F0FF; */ */
+  /* background-color: #F3F0FF; */
   border: none;
   outline: none;
   &::placeholder {

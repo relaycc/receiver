@@ -140,14 +140,3 @@ const SecondMessage = styled.div`
   height: 60px;
   border-radius: 8px;
 `;
-const RightBottomMessageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 9px;
-  > * {
-    background-color: #777;
-    opacity: 0.2;
-    animation: slide 1500ms ease-in-out infinite;
-  }
-`;

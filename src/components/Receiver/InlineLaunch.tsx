@@ -1,13 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
-import styled, { Interpolation } from 'styled-components';
+import React, { useContext, useEffect } from 'react';
+import styled from 'styled-components';
 import ReceiverContext from './ReceiverContext';
 
 interface ButtonProps {
   launchText: string;
   inlineLaunch: boolean;
   peerAddress?: string;
-  as?: string | React.ComponentType<any>;
-  launchButtonStyle?: Interpolation<React.CSSProperties>;
+  /* TODO We're getting rid of styled components, so this should go away. */
+  /* eslint-disable-next-line */
+  as: any;
+  /* TODO We're getting rid of styled components, so this should go away. */
+  /* eslint-disable-next-line */
+  launchButtonStyle?: any;
 }
 
 export const InlineLaunch = ({
@@ -38,7 +42,9 @@ export const InlineLaunch = ({
   );
 };
 
-const InlineLogo = styled.div<ButtonProps>`
+/* TODO This will go away when we remove styled components */
+/* eslint-disable-next-line */
+const InlineLogo = styled.div<{ launchButtonStyle: any }>`
   background-image: url('https://relay-receiver-prod.s3.amazonaws.com/smallLogo.png');
   height: 30px;
   width: 30px;
@@ -53,7 +59,9 @@ const InlineLogo = styled.div<ButtonProps>`
   }
 `;
 
-const ButtonElem = styled.button<ButtonProps>`
+/* TODO This will go away when we remove styled components */
+/* eslint-disable-next-line */
+const ButtonElem = styled.button<{ launchButtonStyle: any }>`
   background: #5203fc;
   font-size: 14px;
   color: white;

@@ -92,7 +92,7 @@ const Messages = ({
                   key={index}
                   messages={bucket}
                   peerAddress={peerAddress}
-                  startDate={bucket.at(-1)!.sent}
+                  startDate={bucket[bucket.length - 1].sent}
                   peerName={peerName}
                   sentByAddress={bucket[0].senderAddress}
                 />

@@ -8,10 +8,8 @@ export const shortDate = (d: Date | undefined): string => {
 
 export const time = (d: Date | undefined): string => {
   if (!d) return 'N/A';
-  let hour = d.getHours() % 12 || 12;
-  let minute = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
-  //const formattedDayDate = d.toLocaleTimeString('en-us').replace('AM', '').replace('PM', '').replace(';', '.');
-
+  const hour = d.getHours() % 12 || 12;
+  const minute = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
   return `${hour}:${minute}`;
 };
 
