@@ -93,7 +93,6 @@ const LeftUserInfo = styled.div`
   align-items: center;
   gap: 13px;
   > * {
-
     margin: 0;
     padding: 0;
     font-weight: 500;
@@ -150,7 +149,6 @@ const LeftMessageContainer = styled.div`
   flex-direction: column;
   gap: 9px;
   > * {
-
     margin: 0;
     padding: 0;
     font-weight: 500;
@@ -169,7 +167,6 @@ const RightMessageContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   > * {
-
     margin: 0;
     padding: 0;
     font-weight: 500;
