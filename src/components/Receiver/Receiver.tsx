@@ -89,7 +89,7 @@ const Receiver = ({
     height: '500px',
     position: 'fixed',
     bottom: '0px',
-    right: '150px',
+    right: '90px',
     transition: 'max-height 0.25s ease-in',
     zIndex: 1000,
   };

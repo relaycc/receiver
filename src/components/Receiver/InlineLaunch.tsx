@@ -78,7 +78,6 @@ const ButtonElem = styled.button<{ launchButtonStyle: any }>`
   font-size: 14px;
   color: white;
   font-weight: 500;
-  font-weight: 500;
   border: none;
   border-radius: 10px;
   font-size: 16px;

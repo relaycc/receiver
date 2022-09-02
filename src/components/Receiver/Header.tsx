@@ -218,8 +218,6 @@ export default function RelayHeader({
 
 const Header = styled.div`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -242,8 +240,6 @@ const Header = styled.div`
 
 const TextContainer = styled.div`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -254,8 +250,6 @@ const TextContainer = styled.div`
 
 const SoloTextContainer = styled.div`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -269,8 +263,6 @@ const SoloTextContainer = styled.div`
 
 const MainText = styled.div`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -283,8 +275,6 @@ const MainText = styled.div`
 
 const SubText = styled.div`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -295,8 +285,6 @@ const SubText = styled.div`
 
 const GoBackSvgContainer = styled.div`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -308,8 +296,6 @@ const GoBackSvgContainer = styled.div`
 
 const RightIconContainer = styled.div`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -346,8 +332,6 @@ const DropdownSvg = styled.svg`
 
 const DropdownMenu = styled.ul`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -367,8 +351,6 @@ const DropdownMenu = styled.ul`
 
 const DropDownItem = styled.li`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -404,8 +386,6 @@ const DropDownItemCopy = styled(DropDownItem)`
 
 const HeaderInfo = styled.div`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -427,8 +407,6 @@ const HeaderInfo = styled.div`
 
 const ExitSvg = styled.svg`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -437,8 +415,6 @@ const ExitSvg = styled.svg`
 
 const LiLink = styled.a`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;

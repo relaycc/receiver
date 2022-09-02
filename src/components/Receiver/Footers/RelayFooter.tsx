@@ -14,6 +14,12 @@ export function RelayFooter() {
 }
 
 const Container = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+  padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   color: #333333;
   width: 100%;
   min-height: 62px;
@@ -33,6 +39,7 @@ const Container = styled.div`
   position: relative;
   z-index: 1011;
   background-color: white;
+  width: 375px;
 
   img {
     height: 27px;

@@ -208,10 +208,6 @@ const ChatBox = ({
 };
 
 const ChatContainer = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
-  font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   background-color: white;
@@ -227,9 +223,6 @@ const ChatContainer = styled.div`
 `;
 
 const RelayRelativeContainer = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -243,8 +236,6 @@ const RelayRelativeContainer = styled.div`
 
 const ConnectorList = styled.div`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -256,8 +247,6 @@ const ConnectorList = styled.div`
 
 const Connector = styled.div`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -283,8 +272,6 @@ const Connector = styled.div`
 
 const MaybeHideOnConnector = styled(Connector)<{ shouldHide: boolean }>`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -295,8 +282,6 @@ const MaybeHideOnConnector = styled(Connector)<{ shouldHide: boolean }>`
 
 const MessagesContainer = styled.div`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -309,8 +294,6 @@ const MessagesContainer = styled.div`
 
 const LeftContainer = styled.div`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -322,8 +305,6 @@ const LeftContainer = styled.div`
 
 const UnConnectedHeader = styled.div`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -341,8 +322,6 @@ const UnConnectedHeader = styled.div`
 
 const CompanyName = styled.h1`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -354,8 +333,6 @@ const CompanyName = styled.h1`
 
 const HeaderLogo = styled.div`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -372,8 +349,6 @@ const HeaderLogo = styled.div`
 
 const ExitSvg = styled.svg`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;

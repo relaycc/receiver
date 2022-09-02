@@ -1,7 +1,6 @@
 import React from 'react';
 import Avatar from './Avatar';
 import styled from 'styled-components';
-import { EnsName } from './EnsName';
 
 type MinimizedConvoListSetter = (list: string[]) => string[];
 
@@ -53,14 +52,6 @@ export function MinimizeIconList({
                 d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-
-            <EnsName
-              setShowMewMessageDropdown={setShowMewMessageDropdown}
-              setShowBox={setShowBox}
-              setPeerAddress={setPeerAddress}
-              setShowConversations={setShowConversations}
-              address={e}
-            />
           </AvatarHoverDetails>
         </AvatarContainer>
       ))}
@@ -70,8 +61,6 @@ export function MinimizeIconList({
 
 const Container = styled.ul`
   letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -79,7 +68,7 @@ const Container = styled.ul`
   flex-direction: column-reverse;
   align-items: center;
   position: fixed;
-  bottom: 140px;
+  bottom: 60px;
   right: 24px;
   gap: 10px;
   list-style: none;
@@ -87,9 +76,6 @@ const Container = styled.ul`
 `;
 
 const AvatarHoverDetails = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -105,9 +91,6 @@ const AvatarHoverDetails = styled.div`
 `;
 
 const AvatarContainer = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -116,9 +99,6 @@ const AvatarContainer = styled.div`
   cursor: pointer;
 
   :hover ${AvatarHoverDetails} {
-    letter-spacing: normal;
-    margin: 0;
-    padding: 0;
     font-weight: 500;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;

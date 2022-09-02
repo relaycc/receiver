@@ -29,7 +29,7 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
   return (
     <Container>
       <StyledInput
-        placeholder="Write a Message..."
+        placeholder="Write a Message ..."
         required
         value={inputVal}
         onChange={handleChange}
@@ -55,9 +55,6 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
 };
 
 const Container = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -68,21 +65,19 @@ const Container = styled.div`
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   gap: 20px;
   border-radius: 99rem;
+  max-width: 375px;
   width: 100%;
 `;
 
 const StyledInput = styled.input`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   flex: 1;
   border-radius: 2px;
-  /* background-color: #F3F0FF; */
   border: none;
   outline: none;
+  width: 100%;
   &::placeholder {
     letter-spacing: normal;
     margin: 0;
@@ -99,23 +94,10 @@ const StyledInput = styled.input`
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
-
-  &::placeholder {
-    letter-spacing: normal;
-    margin: 0;
-    padding: 0;
-    font-weight: 500;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-    color: #333c4f;
-  }
+  
 `;
 
 const SvgContainer = styled.svg`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
-  font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   transform: translateY(1px);

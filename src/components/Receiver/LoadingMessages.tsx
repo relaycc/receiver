@@ -36,7 +36,6 @@ export default function LoadingMessages() {
 }
 
 const MainContainer = styled.div`
-  letter-spacing: normal;
   margin: 0;
   padding: 0;
   font-weight: 500;
@@ -71,9 +70,6 @@ const MainContainer = styled.div`
   }
 `;
 const LeftContainer = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -82,9 +78,6 @@ const LeftContainer = styled.div`
   gap: 9px;
 `;
 const RightContainer = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -93,9 +86,6 @@ const RightContainer = styled.div`
   gap: 9px;
 `;
 const LeftUserInfo = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -103,7 +93,7 @@ const LeftUserInfo = styled.div`
   align-items: center;
   gap: 13px;
   > * {
-    letter-spacing: normal;
+
     margin: 0;
     padding: 0;
     font-weight: 500;
@@ -115,9 +105,6 @@ const LeftUserInfo = styled.div`
   }
 `;
 const RightUserInfo = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -132,9 +119,6 @@ const RightUserInfo = styled.div`
   }
 `;
 const LogoOutline = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -143,9 +127,6 @@ const LogoOutline = styled.div`
   width: 40px;
 `;
 const NameOutline = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -154,9 +135,6 @@ const NameOutline = styled.div`
   border-radius: 8px;
 `;
 const DateOutline = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -165,9 +143,6 @@ const DateOutline = styled.div`
   border-radius: 8px;
 `;
 const LeftMessageContainer = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -175,7 +150,7 @@ const LeftMessageContainer = styled.div`
   flex-direction: column;
   gap: 9px;
   > * {
-    letter-spacing: normal;
+
     margin: 0;
     padding: 0;
     font-weight: 500;
@@ -187,9 +162,6 @@ const LeftMessageContainer = styled.div`
   }
 `;
 const RightMessageContainer = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -197,7 +169,7 @@ const RightMessageContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   > * {
-    letter-spacing: normal;
+
     margin: 0;
     padding: 0;
     font-weight: 500;
@@ -209,7 +181,6 @@ const RightMessageContainer = styled.div`
   }
 `;
 const FirstMessage = styled.div`
-  letter-spacing: normal;
   margin: 0;
   padding: 0;
   font-weight: 500;
@@ -220,7 +191,6 @@ const FirstMessage = styled.div`
   border-radius: 8px;
 `;
 const SecondMessage = styled.div`
-  letter-spacing: normal;
   margin: 0;
   padding: 0;
   font-weight: 500;

@@ -15,13 +15,19 @@ export function MessageInputFooter({ onSendMessage }: MessageInputFooterProps) {
 }
 
 const RelayInputFooter = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+  padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   color: #333333;
   text-align: center;
   font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
-  width: 100%;
+  width: 375px;
   height: 62px;
   background-color: white;
   display: flex;
@@ -31,4 +37,5 @@ const RelayInputFooter = styled.div`
   padding: 0px 10px;
   position: relative;
   z-index: 1011;
+  box-sizing: border-box;
 `;

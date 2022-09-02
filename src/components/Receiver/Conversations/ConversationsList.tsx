@@ -166,7 +166,6 @@ export function ConversationsList({
           />
         ))}
       </List>
-      {/* <RelayFooter /> */}
     </Container>
   );
 }
@@ -177,9 +176,6 @@ interface StyleProps {
 }
 
 const Container = styled.div<StyleProps>`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -198,9 +194,6 @@ const Container = styled.div<StyleProps>`
 `;
 
 const Header = styled.header`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -220,7 +213,6 @@ const TopTitle = styled.h1`
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
-  font-weight: 500;
   font-size: 22px;
 `;
 

@@ -32,10 +32,6 @@ const spin = keyframes`
 `;
 
 const Container = styled.div<LoaderProps>`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
-  font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   animation: ${spin} 1500ms linear infinite;

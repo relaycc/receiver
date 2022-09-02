@@ -115,9 +115,6 @@ const Messages = ({
 };
 
 const List = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -133,9 +130,6 @@ const List = styled.div`
 `;
 
 const Text = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;

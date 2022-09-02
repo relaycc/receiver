@@ -66,10 +66,6 @@ export default function Avatar({
 }
 
 const AvatarImage = styled.img<{ size?: 'large' | 'small' | 'medium' }>`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
-  font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   width: ${(p) => (p.size === 'large' ? '40px' : '40px')};
@@ -77,9 +73,6 @@ const AvatarImage = styled.img<{ size?: 'large' | 'small' | 'medium' }>`
 `;
 
 const AvatarContainer = styled.div`
-  letter-spacing: normal;
-  margin: 0;
-  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
