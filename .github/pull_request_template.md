@@ -1,13 +1,29 @@
 **Note: Pull requests which don't include the minimum details specified
 in this template will probably be closed out-of-hand.**
 
-# Issue link
+# Issue Link or Description (the "what")
 
-_Links to GitHub issues that this PR closes (if there's no issues, use "N/A")._
+Links to GitHub issues that this PR closes (if there's no issues to link,
+a detailed description must be included). The issues and description should provide a
+detailed, high-level overview of the changes included in the PR. Please do not
+include implementation details in this section.
 
-# Description
+# Motivation Behind the Changes (the "why")
 
-_A detailed description of each change in the changeset._
+Links to GitHub issues that this PR closes (if there's no issues to link,
+include a detailed description). The issues and description should provide a
+detailed, high-level overview of the changes included in the PR. Please do not
+include implementation details in this section.
+
+# Implementation Details (the "how")
+
+A detailed description of each change in the changeset. The description should
+include
+
+- high-level overview of the changes
+- where should the reveiwer start their review, which files?
+- notes on any hacky solutions that were included
+- any pieces left unfinished and why
 
 # How the changeset was tested
 
