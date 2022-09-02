@@ -19,7 +19,7 @@ export default function Card({ children, title }: CardProps) {
 const FullMiddleSection = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -33,7 +33,7 @@ const FullMiddleSection = styled.div`
 const CardContainer = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -52,7 +52,7 @@ const CardContainer = styled.div`
 const Title = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;

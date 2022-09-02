@@ -71,7 +71,7 @@ export function MinimizeIconList({
 const Container = styled.ul`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -89,7 +89,7 @@ const Container = styled.ul`
 const AvatarHoverDetails = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -107,7 +107,7 @@ const AvatarHoverDetails = styled.div`
 const AvatarContainer = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -117,11 +117,11 @@ const AvatarContainer = styled.div`
 
   :hover ${AvatarHoverDetails} {
     letter-spacing: normal;
-  margin: 0;
-	padding: 0;
-  font-weight: 500;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-weight: 500;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
     display: block;
   }
 `;

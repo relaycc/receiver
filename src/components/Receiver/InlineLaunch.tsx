@@ -47,7 +47,7 @@ export const InlineLaunch = ({
 const InlineLogo = styled.div<{ launchButtonStyle: any }>`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -70,7 +70,7 @@ const InlineLogo = styled.div<{ launchButtonStyle: any }>`
 const ButtonElem = styled.button<{ launchButtonStyle: any }>`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;

@@ -179,7 +179,7 @@ interface StyleProps {
 const Container = styled.div<StyleProps>`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -200,7 +200,7 @@ const Container = styled.div<StyleProps>`
 const Header = styled.header`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -216,7 +216,7 @@ const Header = styled.header`
 const TopTitle = styled.h1`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -227,7 +227,7 @@ const TopTitle = styled.h1`
 const TopButton = styled.button`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -246,7 +246,7 @@ const TopButton = styled.button`
 const ButtonText = styled.span`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -256,7 +256,7 @@ const ButtonText = styled.span`
 const List = styled.ul`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -271,7 +271,7 @@ const List = styled.ul`
 const NewMessageDropdown = styled.div<StyleProps>`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -293,7 +293,7 @@ const NewMessageDropdown = styled.div<StyleProps>`
 const NewMessageHeader = styled.h2`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -306,7 +306,7 @@ const NewMessageHeader = styled.h2`
 const Input = styled.input`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -322,7 +322,7 @@ const Input = styled.input`
 const Paragraph = styled.p`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -334,7 +334,7 @@ const Paragraph = styled.p`
 const Button = styled.button`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -352,7 +352,7 @@ const Button = styled.button`
 const ExitSvg = styled.svg`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -365,7 +365,7 @@ const ExitSvg = styled.svg`
 const IconTitleContainer = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;

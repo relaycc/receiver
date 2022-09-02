@@ -42,7 +42,7 @@ export default function Conversation({
 const ListItem = styled.li`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -65,7 +65,7 @@ const ListItem = styled.li`
 const TextContainer = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -77,7 +77,7 @@ const TextContainer = styled.div`
 const Title = styled.span`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -88,7 +88,7 @@ const Title = styled.span`
 const Subtitle = styled.span`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;

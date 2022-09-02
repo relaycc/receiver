@@ -16,7 +16,7 @@ const MessageBubble = ({ message }: TextBubbleProps) => {
 const TextWrapper = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -31,7 +31,7 @@ const TextWrapper = styled.div`
 const MessageText = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;

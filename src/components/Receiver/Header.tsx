@@ -219,7 +219,7 @@ export default function RelayHeader({
 const Header = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -243,7 +243,7 @@ const Header = styled.div`
 const TextContainer = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -255,7 +255,7 @@ const TextContainer = styled.div`
 const SoloTextContainer = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -270,7 +270,7 @@ const SoloTextContainer = styled.div`
 const MainText = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -284,7 +284,7 @@ const MainText = styled.div`
 const SubText = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -296,7 +296,7 @@ const SubText = styled.div`
 const GoBackSvgContainer = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -309,7 +309,7 @@ const GoBackSvgContainer = styled.div`
 const RightIconContainer = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -322,19 +322,18 @@ const RightIconContainer = styled.div`
 const MinimizeSvg = styled.svg`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   transform: translateY(6px);
   cursor: pointer;
-
 `;
 
 const DropdownSvg = styled.svg`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -343,13 +342,12 @@ const DropdownSvg = styled.svg`
   transition: opacity 150ms, visibility 150ms;
   transform: translateX(-6px);
   cursor: pointer;
-
 `;
 
 const DropdownMenu = styled.ul`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -370,7 +368,7 @@ const DropdownMenu = styled.ul`
 const DropDownItem = styled.li`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -383,7 +381,7 @@ const DropDownItem = styled.li`
   display: flex;
   align-items: center;
   gap: 8px;
-text-decoration: none;
+  text-decoration: none;
   :hover {
     background-color: #eeeeee;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
@@ -393,7 +391,7 @@ text-decoration: none;
 const DropDownItemCopy = styled(DropDownItem)`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -407,7 +405,7 @@ const DropDownItemCopy = styled(DropDownItem)`
 const HeaderInfo = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -430,17 +428,17 @@ const HeaderInfo = styled.div`
 const ExitSvg = styled.svg`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   cursor: pointer;
-  `;
+`;
 
 const LiLink = styled.a`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -458,7 +456,7 @@ const LiLink = styled.a`
 const UserInfoContainer = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;

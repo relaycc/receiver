@@ -57,7 +57,7 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
 const Container = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -74,7 +74,7 @@ const Container = styled.div`
 const StyledInput = styled.input`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -85,11 +85,11 @@ const StyledInput = styled.input`
   outline: none;
   &::placeholder {
     letter-spacing: normal;
-  margin: 0;
-	padding: 0;
-  font-weight: 500;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-weight: 500;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
     color: #333c4f;
     font-weight: 400;
     font-family: 'Poppins', sans-serif;
@@ -102,11 +102,11 @@ const StyledInput = styled.input`
 
   &::placeholder {
     letter-spacing: normal;
-  margin: 0;
-	padding: 0;
-  font-weight: 500;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-weight: 500;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
     color: #333c4f;
   }
 `;
@@ -114,7 +114,7 @@ const StyledInput = styled.input`
 const SvgContainer = styled.svg`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;

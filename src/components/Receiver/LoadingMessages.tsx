@@ -38,7 +38,7 @@ export default function LoadingMessages() {
 const MainContainer = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -73,7 +73,7 @@ const MainContainer = styled.div`
 const LeftContainer = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -84,7 +84,7 @@ const LeftContainer = styled.div`
 const RightContainer = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -95,7 +95,7 @@ const RightContainer = styled.div`
 const LeftUserInfo = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -104,11 +104,11 @@ const LeftUserInfo = styled.div`
   gap: 13px;
   > * {
     letter-spacing: normal;
-  margin: 0;
-	padding: 0;
-  font-weight: 500;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-weight: 500;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
     background-color: #777;
     opacity: 0.2;
     animation: slide 1500ms ease-in-out infinite;
@@ -117,7 +117,7 @@ const LeftUserInfo = styled.div`
 const RightUserInfo = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -134,7 +134,7 @@ const RightUserInfo = styled.div`
 const LogoOutline = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -145,7 +145,7 @@ const LogoOutline = styled.div`
 const NameOutline = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -156,7 +156,7 @@ const NameOutline = styled.div`
 const DateOutline = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -167,7 +167,7 @@ const DateOutline = styled.div`
 const LeftMessageContainer = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -176,11 +176,11 @@ const LeftMessageContainer = styled.div`
   gap: 9px;
   > * {
     letter-spacing: normal;
-  margin: 0;
-	padding: 0;
-  font-weight: 500;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-weight: 500;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
     background-color: #777;
     opacity: 0.2;
     animation: slide 1500ms ease-in-out infinite;
@@ -189,7 +189,7 @@ const LeftMessageContainer = styled.div`
 const RightMessageContainer = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -198,11 +198,11 @@ const RightMessageContainer = styled.div`
   align-items: flex-start;
   > * {
     letter-spacing: normal;
-  margin: 0;
-	padding: 0;
-  font-weight: 500;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    font-weight: 500;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
     background-color: #777;
     opacity: 0.2;
     animation: slide 1500ms ease-in-out infinite;
@@ -211,7 +211,7 @@ const RightMessageContainer = styled.div`
 const FirstMessage = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -222,7 +222,7 @@ const FirstMessage = styled.div`
 const SecondMessage = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;

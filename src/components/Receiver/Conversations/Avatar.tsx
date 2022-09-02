@@ -29,20 +29,19 @@ export default function Avatar({ peerAddress }: AvatarProps) {
 const AvatarImage = styled.img`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  
 `;
 
 const BlockiesContainer = styled.div`
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -52,7 +51,7 @@ const BlockiesContainer = styled.div`
   overflow: hidden;
   letter-spacing: normal;
   margin: 0;
-	padding: 0;
+  padding: 0;
   font-weight: 500;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
