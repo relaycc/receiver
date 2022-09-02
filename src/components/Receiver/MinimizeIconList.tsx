@@ -69,6 +69,12 @@ export function MinimizeIconList({
 }
 
 const Container = styled.ul`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
@@ -76,9 +82,17 @@ const Container = styled.ul`
   bottom: 140px;
   right: 24px;
   gap: 10px;
+  list-style: none;
+  list-style-type: none;
 `;
 
 const AvatarHoverDetails = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   position: absolute;
   right: -5px;
   top: -5px;
@@ -91,11 +105,23 @@ const AvatarHoverDetails = styled.div`
 `;
 
 const AvatarContainer = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   position: relative;
   border-radius: 50%;
   cursor: pointer;
 
   :hover ${AvatarHoverDetails} {
+    letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
     display: block;
   }
 `;

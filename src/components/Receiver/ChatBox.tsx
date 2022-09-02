@@ -208,6 +208,12 @@ const ChatBox = ({
 };
 
 const ChatContainer = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   background-color: white;
   border: none;
   padding: 0px;
@@ -221,6 +227,12 @@ const ChatContainer = styled.div`
 `;
 
 const RelayRelativeContainer = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   height: 376px;
   width: 100%;
   display: flex;
@@ -230,6 +242,12 @@ const RelayRelativeContainer = styled.div`
 `;
 
 const ConnectorList = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -237,6 +255,12 @@ const ConnectorList = styled.div`
 `;
 
 const Connector = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   color: #333333;
   list-style-type: none;
   cursor: pointer;
@@ -258,12 +282,24 @@ const Connector = styled.div`
 `;
 
 const MaybeHideOnConnector = styled(Connector)<{ shouldHide: boolean }>`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   @media (pointer: coarse) {
     display: ${(p) => (p.shouldHide ? 'none' : 'flex')};
   }
 `;
 
 const MessagesContainer = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   height: 100%;
   width: 100%;
   display: flex;
@@ -272,6 +308,12 @@ const MessagesContainer = styled.div`
 `;
 
 const LeftContainer = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   align-items: center;
   gap: 7px;
@@ -279,6 +321,12 @@ const LeftContainer = styled.div`
 `;
 
 const UnConnectedHeader = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   color: black;
   border-radius: 4px 4px 0 0;
   box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
@@ -292,6 +340,12 @@ const UnConnectedHeader = styled.div`
 `;
 
 const CompanyName = styled.h1`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   font-size: 16px;
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
@@ -299,6 +353,12 @@ const CompanyName = styled.h1`
 `;
 
 const HeaderLogo = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -310,6 +370,14 @@ const HeaderLogo = styled.div`
   }
 `;
 
-const ExitSvg = styled.svg``;
+const ExitSvg = styled.svg`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  `
 
 export default ChatBox;

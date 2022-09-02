@@ -10,6 +10,12 @@ export default function Button({ text, onClick }: ButtonProps) {
 }
 
 const ButtonContainer = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   padding: 8px 12px;
   border: 1px solid rgba(55, 41, 125, 0.5);
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);

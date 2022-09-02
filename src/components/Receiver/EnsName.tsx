@@ -35,6 +35,12 @@ export function EnsName({
 }
 
 const Span = styled.span`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   font-size: 12px;
   font-weight: 600;
   position: absolute;

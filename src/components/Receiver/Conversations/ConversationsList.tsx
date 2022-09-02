@@ -177,6 +177,12 @@ interface StyleProps {
 }
 
 const Container = styled.div<StyleProps>`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   height: 100%;
   width: 100%;
   display: flex;
@@ -188,9 +194,16 @@ const Container = styled.div<StyleProps>`
   z-index: 1001;
   background: white;
   display: ${(props) => (props.showConversations ? 'flex' : 'none')};
+  overflow-y: hidden;
 `;
 
 const Header = styled.header`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -201,11 +214,23 @@ const Header = styled.header`
 `;
 
 const TopTitle = styled.h1`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   font-weight: 500;
   font-size: 22px;
 `;
 
 const TopButton = styled.button`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
   padding: 5px 8px;
   display: flex;
@@ -215,20 +240,41 @@ const TopButton = styled.button`
   white-space: nowrap;
   border: none;
   background-color: white;
+  cursor: pointer;
 `;
 
 const ButtonText = styled.span`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   font-weight: bold;
 `;
 
 const List = styled.ul`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   height: 100%;
   flex-direction: column;
   overflow: scroll;
+  list-style: none;
+  list-style-type: none;
 `;
 
 const NewMessageDropdown = styled.div<StyleProps>`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   height: 100%;
   width: 100%;
   display: flex;
@@ -245,6 +291,12 @@ const NewMessageDropdown = styled.div<StyleProps>`
 `;
 
 const NewMessageHeader = styled.h2`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   font-size: 18px;
   text-align: center;
   margin-top: 80px;
@@ -252,6 +304,12 @@ const NewMessageHeader = styled.h2`
 `;
 
 const Input = styled.input`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   background-color: white;
   border-radius: 4px;
   width: 100%;
@@ -262,12 +320,24 @@ const Input = styled.input`
 `;
 
 const Paragraph = styled.p`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   text-align: center;
   width: 100%;
   line-height: 1.25;
 `;
 
 const Button = styled.button`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   padding: 8px;
   border-radius: 4px;
   width: 100%;
@@ -276,15 +346,29 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
   border: none;
+  cursor: pointer;
 `;
 
 const ExitSvg = styled.svg`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   position: absolute;
   top: 10px;
   right: 10px;
+  cursor: pointer;
 `;
 
 const IconTitleContainer = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   align-items: center;
   gap: 5px;

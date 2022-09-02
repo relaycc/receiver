@@ -115,6 +115,12 @@ const Messages = ({
 };
 
 const List = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column-reverse;
   overflow: scroll;
@@ -127,6 +133,12 @@ const List = styled.div`
 `;
 
 const Text = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 500;

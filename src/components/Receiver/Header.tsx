@@ -217,6 +217,12 @@ export default function RelayHeader({
 }
 
 const Header = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   font-size: 16px;
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
@@ -235,12 +241,24 @@ const Header = styled.div`
 `;
 
 const TextContainer = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 `;
 
 const SoloTextContainer = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   overflow: hidden;
   font-size: 14px;
   font-weight: 700;
@@ -250,6 +268,12 @@ const SoloTextContainer = styled.div`
 `;
 
 const MainText = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   font-size: 14px;
   line-height: 18px;
@@ -258,12 +282,24 @@ const MainText = styled.div`
 `;
 
 const SubText = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   font-weight: 400;
   font-size: 10px;
   line-height: 15px;
 `;
 
 const GoBackSvgContainer = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   align-items: center;
   height: 25px;
@@ -271,6 +307,12 @@ const GoBackSvgContainer = styled.div`
 `;
 
 const RightIconContainer = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
@@ -278,17 +320,39 @@ const RightIconContainer = styled.div`
 `;
 
 const MinimizeSvg = styled.svg`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   transform: translateY(6px);
+  cursor: pointer;
+
 `;
 
 const DropdownSvg = styled.svg`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   visibility: hidden;
   opacity: 0;
   transition: opacity 150ms, visibility 150ms;
   transform: translateX(-6px);
+  cursor: pointer;
+
 `;
 
 const DropdownMenu = styled.ul`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
   background: white;
@@ -299,9 +363,17 @@ const DropdownMenu = styled.ul`
   z-index: 1100;
   border-radius: 4px;
   transition: opacity 150ms, visibility 150ms;
+  list-style: none;
+  list-style-type: none;
 `;
 
 const DropDownItem = styled.li`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   color: black;
   cursor: pointer;
   font-size: 14px;
@@ -311,7 +383,7 @@ const DropDownItem = styled.li`
   display: flex;
   align-items: center;
   gap: 8px;
-
+text-decoration: none;
   :hover {
     background-color: #eeeeee;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
@@ -319,6 +391,12 @@ const DropDownItem = styled.li`
 `;
 
 const DropDownItemCopy = styled(DropDownItem)`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   color: black;
   text-decoration: none;
   height: 100%;
@@ -327,6 +405,12 @@ const DropDownItemCopy = styled(DropDownItem)`
 `;
 
 const HeaderInfo = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -343,9 +427,23 @@ const HeaderInfo = styled.div`
   }
 `;
 
-const ExitSvg = styled.svg``;
+const ExitSvg = styled.svg`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  `;
 
 const LiLink = styled.a`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   color: black;
   text-decoration: none;
   height: 100%;
@@ -358,6 +456,12 @@ const LiLink = styled.a`
 `;
 
 const UserInfoContainer = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   align-items: center;
   gap: 10px;

@@ -68,12 +68,24 @@ interface StyleProps {
 }
 
 const Container = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   width: 100%;
   display: flex;
   flex-direction: column;
 `;
 
 const MessagePosition = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -87,12 +99,24 @@ const MessagePosition = styled.div`
 `;
 
 const MessageHeader = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   align-items: flex-start;
   margin-bottom: -18px;
 `;
 
 const SenderName = styled.div<StyleProps>`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   border-radius: 99rem;
   font-weight: bold;
   font-size: 14px;
@@ -103,10 +127,21 @@ const SenderName = styled.div<StyleProps>`
 `;
 
 const SentByInfo = styled.div<StyleProps>`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
 `;
 
 const MessageTime = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -117,6 +152,12 @@ const MessageTime = styled.div`
 `;
 
 const FlexColReverseContainer = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column-reverse;
 `;

@@ -40,6 +40,12 @@ export default function Conversation({
 }
 
 const ListItem = styled.li`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -49,7 +55,7 @@ const ListItem = styled.li`
   width: 100%;
   background-color: transparent;
   transition: background-color 300ms ease-in-out;
-
+  text-decoration: none;
   :hover {
     background-color: #eeeeee;
     transition: background-color 300ms ease-in-out;
@@ -57,17 +63,35 @@ const ListItem = styled.li`
 `;
 
 const TextContainer = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
   gap: 4px;
 `;
 
 const Title = styled.span`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   font-weight: bold;
   text-align: start;
 `;
 
 const Subtitle = styled.span`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   max-width: 250px;
   white-space: nowrap;
   overflow: hidden;

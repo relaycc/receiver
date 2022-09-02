@@ -45,6 +45,12 @@ export const InlineLaunch = ({
 /* TODO This will go away when we remove styled components */
 /* eslint-disable-next-line */
 const InlineLogo = styled.div<{ launchButtonStyle: any }>`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   background-image: url('https://relay-receiver-prod.s3.amazonaws.com/smallLogo.png');
   height: 30px;
   width: 30px;
@@ -62,6 +68,12 @@ const InlineLogo = styled.div<{ launchButtonStyle: any }>`
 /* TODO This will go away when we remove styled components */
 /* eslint-disable-next-line */
 const ButtonElem = styled.button<{ launchButtonStyle: any }>`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   background: #5203fc;
   font-size: 14px;
   color: white;
@@ -83,6 +95,7 @@ const ButtonElem = styled.button<{ launchButtonStyle: any }>`
   ${({ launchButtonStyle }) => launchButtonStyle};
   letter-spacing: normal;
   font-family: 'Poppins', sans-serif;
+  cursor: pointer;
 
   &:hover {
     cursor: pointer;

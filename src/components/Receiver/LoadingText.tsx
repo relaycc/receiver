@@ -12,6 +12,12 @@ export default function LoadingText() {
 }
 
 const LoadingCircleContainer = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -19,6 +25,12 @@ const LoadingCircleContainer = styled.div`
 `;
 
 const LoadingCircle = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   color: white;
   height: 5px;
   width: 5px;
@@ -42,6 +54,12 @@ const LoadingCircle = styled.div`
   }
 `;
 const LoadingCircle2 = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   color: white;
   height: 5px;
   width: 5px;
@@ -65,6 +83,12 @@ const LoadingCircle2 = styled.div`
   }
 `;
 const LoadingCircle3 = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   color: white;
   height: 5px;
   width: 5px;

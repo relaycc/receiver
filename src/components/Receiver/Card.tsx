@@ -17,6 +17,12 @@ export default function Card({ children, title }: CardProps) {
 }
 
 const FullMiddleSection = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   height: 100%;
   width: 100%;
   display: flex;
@@ -25,6 +31,12 @@ const FullMiddleSection = styled.div`
 `;
 
 const CardContainer = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   background: #fbfaff;
   border: 1px dashed #a6a6a6;
   border-radius: 4px;
@@ -38,6 +50,12 @@ const CardContainer = styled.div`
 `;
 
 const Title = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   color: #686868;
   font-family: 'Poppins', sans-serif;
   font-style: normal;

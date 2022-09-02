@@ -17,7 +17,6 @@ import ChatBox from './ChatBox';
 import { Interpolation } from 'styled-components';
 import ReceiverContext from './ReceiverContext';
 import styled from 'styled-components';
-import { GlobalStyles } from '../../styles/global';
 import { ConversationsList } from './Conversations/ConversationsList';
 import { MinimizeIconList } from './MinimizeIconList';
 
@@ -106,7 +105,6 @@ const Receiver = ({
           }}>
           <Container>
             <div style={chatBoxContainerStyle}>
-              <GlobalStyles />
               <ConversationsList
                 setPeerAddress={(peerAddress) =>
                   peerAddress && setPeerAddress(peerAddress)

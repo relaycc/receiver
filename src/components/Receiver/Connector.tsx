@@ -30,6 +30,12 @@ export default function Connector(props: ConnectorProps) {
 }
 
 const LogoContainer = styled.div<LogoProps>`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   height: 30px;
   width: 30px;
   justify-self: flex-start;
@@ -39,6 +45,12 @@ const LogoContainer = styled.div<LogoProps>`
 `;
 
 const ConnectStatus = styled.div`
+  letter-spacing: normal;
+  margin: 0;
+	padding: 0;
+  font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
   justify-self: flex-end;
   width: 35px;
 `;
