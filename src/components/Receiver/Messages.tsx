@@ -115,24 +115,28 @@ const Messages = ({
 };
 
 const List = styled.div`
-  display: flex;
-  flex-direction: column-reverse;
-  overflow: scroll;
-  gap: 0.75rem;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  padding: 0px 10px;
-  box-sizing: border-box;
+  &&& {
+    display: flex;
+    flex-direction: column-reverse;
+    overflow: scroll;
+    gap: 0.75rem;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    padding: 0px 10px;
+    box-sizing: border-box;
+  }
 `;
 
 const Text = styled.div`
-  font-family: 'Poppins', sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 18px;
-  color: #2d2d2d;
+  &&& {
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    color: #2d2d2d;
+  }
 `;
 
 // This assumets messages are sorted by date already.

@@ -17,7 +17,7 @@ import ChatBox from './ChatBox';
 import { Interpolation } from 'styled-components';
 import ReceiverContext from './ReceiverContext';
 import styled from 'styled-components';
-import { GlobalStyles } from '../../styles/global';
+import { ROOT_CLASSNAME, GlobalStyles } from '../../styles/global';
 import { ConversationsList } from './Conversations/ConversationsList';
 import { MinimizeIconList } from './MinimizeIconList';
 
@@ -104,7 +104,7 @@ const Receiver = ({
             close: close,
             toggle: toggle,
           }}>
-          <Container>
+          <Container className={ROOT_CLASSNAME}>
             <div style={chatBoxContainerStyle}>
               <GlobalStyles />
               <ConversationsList
