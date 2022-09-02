@@ -55,40 +55,46 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
 };
 
 const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 3px 0px 3px 10px;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  gap: 20px;
-  border-radius: 99rem;
-  width: 100%;
+  &&& {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px 0px 3px 10px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    gap: 20px;
+    border-radius: 99rem;
+    width: 100%;
+  }
 `;
 
 const StyledInput = styled.input`
-  flex: 1;
-  border-radius: 2px;
-  /* background-color: #F3F0FF; */
-  border: none;
-  outline: none;
-  &::placeholder {
-    color: #333c4f;
-    font-weight: 400;
+  &&& {
+    flex: 1;
+    border-radius: 2px;
+    /* background-color: #F3F0FF; */
+    border: none;
+    outline: none;
+    &::placeholder {
+      color: #333c4f;
+      font-weight: 400;
+      font-family: 'Poppins', sans-serif;
+    }
+    color: #333333;
     font-family: 'Poppins', sans-serif;
-  }
-  color: #333333;
-  font-family: 'Poppins', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
 
-  &::placeholder {
-    color: #333c4f;
+    &::placeholder {
+      color: #333c4f;
+    }
   }
 `;
 
 const SvgContainer = styled.svg`
-  transform: translateY(1px);
+  &&& {
+    transform: translateY(1px);
+  }
 `;
 
 export default MessageInput;

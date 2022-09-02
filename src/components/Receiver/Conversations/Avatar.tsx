@@ -27,14 +27,18 @@ export default function Avatar({ peerAddress }: AvatarProps) {
 }
 
 const AvatarImage = styled.img`
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  &&& {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 const BlockiesContainer = styled.div`
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  overflow: hidden;
+  &&& {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+  }
 `;

@@ -45,20 +45,22 @@ export const FixedLaunch: FunctionComponent<ButtonProps> = ({
 const ButtonElem = styled.button<{
   launchButtonStyle: Interpolation<React.CSSProperties>;
 }>`
-  background: white;
-  border: none;
-  border-radius: 50%;
-  font-style: normal;
-  padding: 12px;
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  bottom: 80px;
-  right: 20px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.45);
-  ${({ launchButtonStyle }) => launchButtonStyle};
-  &:hover {
-    cursor: pointer;
+  &&& {
+    background: white;
+    border: none;
+    border-radius: 50%;
+    font-style: normal;
+    padding: 12px;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 80px;
+    right: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.45);
+    ${({ launchButtonStyle }) => launchButtonStyle};
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;

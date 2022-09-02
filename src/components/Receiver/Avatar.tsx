@@ -66,15 +66,19 @@ export default function Avatar({
 }
 
 const AvatarImage = styled.img<{ size?: 'large' | 'small' | 'medium' }>`
-  width: ${(p) => (p.size === 'large' ? '40px' : '40px')};
-  height: ${(p) => (p.size === 'large' ? '40px' : '40px')};
+  &&& {
+    width: ${(p) => (p.size === 'large' ? '40px' : '40px')};
+    height: ${(p) => (p.size === 'large' ? '40px' : '40px')};
+  }
 `;
 
 const AvatarContainer = styled.div`
-  min-width: 40px;
-  min-height: 40px;
-  border-radius: 50%;
-  display: grid;
-  place-content: center;
-  overflow: hidden;
+  &&& {
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+    overflow: hidden;
+  }
 `;

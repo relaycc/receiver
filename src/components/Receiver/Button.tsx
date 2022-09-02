@@ -10,23 +10,25 @@ export default function Button({ text, onClick }: ButtonProps) {
 }
 
 const ButtonContainer = styled.div`
-  padding: 8px 12px;
-  border: 1px solid rgba(55, 41, 125, 0.5);
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 4px;
-  text-align: center;
-  display: inline-block;
-  font-size: 12px;
-  font-family: 'Poppins', sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 15px;
-  align-self: center;
-  background: #5203fc;
-  font-size: 14px;
-  color: white;
+  &&& {
+    padding: 8px 12px;
+    border: 1px solid rgba(55, 41, 125, 0.5);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block;
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 15px;
+    align-self: center;
+    background: #5203fc;
+    font-size: 14px;
+    color: white;
 
-  &:hover {
-    cursor: pointer;
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;

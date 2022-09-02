@@ -208,105 +208,125 @@ const ChatBox = ({
 };
 
 const ChatContainer = styled.div`
-  background-color: white;
-  border: none;
-  padding: 0px;
-  font-size: 16px;
-  height: 100%;
-  z-index: 1000;
-  width: 375px;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 4px 4px 0 0;
-  position: relative;
+  &&& {
+    background-color: white;
+    border: none;
+    padding: 0px;
+    font-size: 16px;
+    height: 100%;
+    z-index: 1000;
+    width: 375px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px 4px 0 0;
+    position: relative;
+  }
 `;
 
 const RelayRelativeContainer = styled.div`
-  height: 376px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1px 0px;
+  &&& {
+    height: 376px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1px 0px;
+  }
 `;
 
 const ConnectorList = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+  &&& {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
 `;
 
 const Connector = styled.div`
-  color: #333333;
-  list-style-type: none;
-  cursor: pointer;
-  width: 206px;
-  height: 58px;
-  border-radius: 5px;
-  background: #fbfaff;
-  justify-content: space-between;
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
-  font-family: 'poppins', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  &:hover {
+  &&& {
+    color: #333333;
+    list-style-type: none;
     cursor: pointer;
+    width: 206px;
+    height: 58px;
+    border-radius: 5px;
+    background: #fbfaff;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-family: 'poppins', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 
 const MaybeHideOnConnector = styled(Connector)<{ shouldHide: boolean }>`
-  @media (pointer: coarse) {
-    display: ${(p) => (p.shouldHide ? 'none' : 'flex')};
+  &&& {
+    @media (pointer: coarse) {
+      display: ${(p) => (p.shouldHide ? 'none' : 'flex')};
+    }
   }
 `;
 
 const MessagesContainer = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  &&& {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 `;
 
 const LeftContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin-left: 10px;
+  &&& {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-left: 10px;
+  }
 `;
 
 const UnConnectedHeader = styled.div`
-  color: black;
-  border-radius: 4px 4px 0 0;
-  box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
-  display: flex;
-  height: 62px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0px 10px;
-  background-color: white;
+  &&& {
+    color: black;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 10px;
+    background-color: white;
+  }
 `;
 
 const CompanyName = styled.h1`
-  font-size: 16px;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  text-align: left;
+  &&& {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    text-align: left;
+  }
 `;
 
 const HeaderLogo = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 27px;
-  width: 29px;
-  > img {
+  &&& {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 27px;
     width: 29px;
+    > img {
+      height: 27px;
+      width: 29px;
+    }
   }
 `;
 
