@@ -22,7 +22,7 @@ export default function LoadingSpinner(props: LoaderProps) {
   );
 }
 
-const spin = keyframes`
+const relayReceiverSpin = keyframes`
   0% {
     transform: rotate(0deg);
   }
@@ -32,12 +32,14 @@ const spin = keyframes`
 `;
 
 const Container = styled.div<LoaderProps>`
-  animation: ${spin} 1500ms linear infinite;
-  width: max-content;
-  height: max-content;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border-radius: 50%;
+  &&& {
+    animation: ${relayReceiverSpin} 1500ms linear infinite;
+    width: max-content;
+    height: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border-radius: 50%;
+  }
 `;

@@ -69,33 +69,39 @@ export function MinimizeIconList({
 }
 
 const Container = styled.ul`
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: center;
-  position: fixed;
-  bottom: 140px;
-  right: 24px;
-  gap: 10px;
+  &&& {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    position: fixed;
+    bottom: 140px;
+    right: 24px;
+    gap: 10px;
+  }
 `;
 
 const AvatarHoverDetails = styled.div`
-  position: absolute;
-  right: -5px;
-  top: -5px;
-  height: 16px;
-  width: 16px;
-  border-radius: 50%;
-  display: none;
-  z-index: 100000;
-  cursor: pointer;
+  &&& {
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    display: none;
+    z-index: 100000;
+    cursor: pointer;
+  }
 `;
 
 const AvatarContainer = styled.div`
-  position: relative;
-  border-radius: 50%;
-  cursor: pointer;
+  &&& {
+    position: relative;
+    border-radius: 50%;
+    cursor: pointer;
 
-  :hover ${AvatarHoverDetails} {
-    display: block;
+    :hover ${AvatarHoverDetails} {
+      display: block;
+    }
   }
 `;

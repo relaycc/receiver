@@ -217,53 +217,65 @@ export default function RelayHeader({
 }
 
 const Header = styled.div`
-  font-size: 16px;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  text-align: left;
-  border-radius: 4px 4px 0 0;
-  box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
-  color: black;
-  display: flex;
-  height: 62px;
-  display: flex;
-  align-items: center;
-  justify-content: space;
-  padding: 0px 10px;
-  z-index: 1011;
-  background-color: white;
+  &&& {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    text-align: left;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
+    color: black;
+    display: flex;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space;
+    padding: 0px 10px;
+    z-index: 1011;
+    background-color: white;
+  }
 `;
 
 const TextContainer = styled.div`
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  &&& {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 `;
 
 const SoloTextContainer = styled.div`
-  overflow: hidden;
-  font-size: 14px;
-  font-weight: 700;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding: 10px 0;
+  &&& {
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 10px 0;
+  }
 `;
 
 const MainText = styled.div`
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 18px;
-  padding-bottom: 4px;
-  color: black;
+  &&& {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    padding-bottom: 4px;
+    color: black;
+  }
 `;
 
 const SubText = styled.div`
-  font-weight: 400;
-  font-size: 10px;
-  line-height: 15px;
+  &&& {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 15px;
+  }
 `;
 
 const GoBackSvgContainer = styled.div`
+  &&& {
+  }
   display: flex;
   align-items: center;
   height: 25px;
@@ -271,94 +283,112 @@ const GoBackSvgContainer = styled.div`
 `;
 
 const RightIconContainer = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  gap: 5px;
+  &&& {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 5px;
+  }
 `;
 
 const MinimizeSvg = styled.svg`
-  transform: translateY(6px);
+  &&& {
+    transform: translateY(6px);
+  }
 `;
 
 const DropdownSvg = styled.svg`
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 150ms, visibility 150ms;
-  transform: translateX(-6px);
+  &&& {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 150ms, visibility 150ms;
+    transform: translateX(-6px);
+  }
 `;
 
 const DropdownMenu = styled.ul`
-  display: flex;
-  flex-direction: column;
-  background: white;
-  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.25);
-  transform: translateY(45px);
-  position: absolute;
-  top: 20px;
-  z-index: 1100;
-  border-radius: 4px;
-  transition: opacity 150ms, visibility 150ms;
+  &&& {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.25);
+    transform: translateY(45px);
+    position: absolute;
+    top: 20px;
+    z-index: 1100;
+    border-radius: 4px;
+    transition: opacity 150ms, visibility 150ms;
+  }
 `;
 
 const DropDownItem = styled.li`
-  color: black;
-  cursor: pointer;
-  font-size: 14px;
-  text-decoration: none;
-  border-bottom: 1px solid #eeeeee;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  &&& {
+    color: black;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    border-bottom: 1px solid #eeeeee;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
-  :hover {
-    background-color: #eeeeee;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    :hover {
+      background-color: #eeeeee;
+      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    }
   }
 `;
 
 const DropDownItemCopy = styled(DropDownItem)`
-  color: black;
-  text-decoration: none;
-  height: 100%;
-  width: 100%;
-  padding: 15px;
+  &&& {
+    color: black;
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+    padding: 15px;
+  }
 `;
 
 const HeaderInfo = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  cursor: pointer;
+  &&& {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    cursor: pointer;
 
-  :hover ${DropdownSvg} {
-    visibility: visible;
-    opacity: 1;
-  }
-  :hover ${DropdownMenu} {
-    visibility: visible;
-    opacity: 1;
+    :hover ${DropdownSvg} {
+      visibility: visible;
+      opacity: 1;
+    }
+    :hover ${DropdownMenu} {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 `;
 
 const ExitSvg = styled.svg``;
 
 const LiLink = styled.a`
-  color: black;
-  text-decoration: none;
-  height: 100%;
-  width: 100%;
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  font-weight: 600;
-  gap: 8px;
+  &&& {
+    color: black;
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    gap: 8px;
+  }
 `;
 
 const UserInfoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  &&& {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 `;

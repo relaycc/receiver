@@ -68,55 +68,69 @@ interface StyleProps {
 }
 
 const Container = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+  &&& {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const MessagePosition = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 10px;
-  align-self: flex-start;
+  &&& {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+    align-self: flex-start;
 
-  //bottom message because of column reverse format
-  :first-of-type {
-    padding-bottom: 4px;
+    //bottom message because of column reverse format
+    :first-of-type {
+      padding-bottom: 4px;
+    }
   }
 `;
 
 const MessageHeader = styled.div`
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: -18px;
+  &&& {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: -18px;
+  }
 `;
 
 const SenderName = styled.div<StyleProps>`
-  border-radius: 99rem;
-  font-weight: bold;
-  font-size: 14px;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
-  background-color: ${(props) => (props.sentByMe ? 'white' : '#F1F2FD')};
-  color: ${(props) => (props.sentByMe ? 'black' : '#6E6B99')};
-  padding: 3px 6px;
+  &&& {
+    border-radius: 99rem;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+    background-color: ${(props) => (props.sentByMe ? 'white' : '#F1F2FD')};
+    color: ${(props) => (props.sentByMe ? 'black' : '#6E6B99')};
+    padding: 3px 6px;
+  }
 `;
 
 const SentByInfo = styled.div<StyleProps>`
-  display: flex;
+  &&& {
+    display: flex;
+  }
 `;
 
 const MessageTime = styled.div`
-  font-family: 'Poppins', sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  margin-left: 8px;
-  color: rgb(6, 0, 40, 0.4);
-  transform: translateY(2px);
+  &&& {
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    margin-left: 8px;
+    color: rgb(6, 0, 40, 0.4);
+    transform: translateY(2px);
+  }
 `;
 
 const FlexColReverseContainer = styled.div`
-  display: flex;
-  flex-direction: column-reverse;
+  &&& {
+    display: flex;
+    flex-direction: column-reverse;
+  }
 `;

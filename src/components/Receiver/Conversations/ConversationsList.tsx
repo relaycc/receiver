@@ -177,115 +177,141 @@ interface StyleProps {
 }
 
 const Container = styled.div<StyleProps>`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  color: black;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1001;
-  background: white;
-  display: ${(props) => (props.showConversations ? 'flex' : 'none')};
+  &&& {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+    background: white;
+    display: ${(props) => (props.showConversations ? 'flex' : 'none')};
+  }
 `;
 
 const Header = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
-  background: white;
-  min-height: 62px;
-  padding: 0px 10px;
+  &&& {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
+    background: white;
+    min-height: 62px;
+    padding: 0px 10px;
+  }
 `;
 
 const TopTitle = styled.h1`
-  font-weight: 500;
-  font-size: 22px;
+  &&& {
+    font-weight: 500;
+    font-size: 22px;
+  }
 `;
 
 const TopButton = styled.button`
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
-  padding: 5px 8px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-radius: 4px;
-  white-space: nowrap;
-  border: none;
-  background-color: white;
+  &&& {
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+    padding: 5px 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    border: none;
+    background-color: white;
+  }
 `;
 
 const ButtonText = styled.span`
-  font-weight: bold;
+  &&& {
+    font-weight: bold;
+  }
 `;
 
 const List = styled.ul`
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  overflow: scroll;
+  &&& {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    overflow: scroll;
+  }
 `;
 
 const NewMessageDropdown = styled.div<StyleProps>`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  background-color: white;
-  box-shadow: 0px -4px 4px -5px rgba(0, 0, 0, 0.25);
-  position: absolute;
-  top: 62px;
-  z-index: 1010;
-  left: 0;
-  padding: 0px 10px;
-  gap: 20px;
+  &&& {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: white;
+    box-shadow: 0px -4px 4px -5px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    top: 62px;
+    z-index: 1010;
+    left: 0;
+    padding: 0px 10px;
+    gap: 20px;
+  }
 `;
 
 const NewMessageHeader = styled.h2`
-  font-size: 18px;
-  text-align: center;
-  margin-top: 80px;
-  width: 100%;
+  &&& {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 80px;
+    width: 100%;
+  }
 `;
 
 const Input = styled.input`
-  background-color: white;
-  border-radius: 4px;
-  width: 100%;
-  border: none;
-  outline: none;
-  padding: 5px 10px;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  &&& {
+    background-color: white;
+    border-radius: 4px;
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  }
 `;
 
 const Paragraph = styled.p`
-  text-align: center;
-  width: 100%;
-  line-height: 1.25;
+  &&& {
+    text-align: center;
+    width: 100%;
+    line-height: 1.25;
+  }
 `;
 
 const Button = styled.button`
-  padding: 8px;
-  border-radius: 4px;
-  width: 100%;
-  background: #5203fc;
-  font-size: 15px;
-  color: white;
-  font-weight: 600;
-  border: none;
+  &&& {
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+    background: #5203fc;
+    font-size: 15px;
+    color: white;
+    font-weight: 600;
+    border: none;
+  }
 `;
 
 const ExitSvg = styled.svg`
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  &&& {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
 `;
 
 const IconTitleContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  &&& {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
 `;

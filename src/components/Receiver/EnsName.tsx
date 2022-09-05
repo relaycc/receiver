@@ -35,14 +35,16 @@ export function EnsName({
 }
 
 const Span = styled.span`
-  font-size: 12px;
-  font-weight: 600;
-  position: absolute;
-  right: 30px;
-  top: 15px;
-  border-radius: 99rem;
-  padding: 2px 4px;
-  border: 1px solid black;
-  background-color: black;
-  color: white;
+  &&& {
+    font-size: 12px;
+    font-weight: 600;
+    position: absolute;
+    right: 30px;
+    top: 15px;
+    border-radius: 99rem;
+    padding: 2px 4px;
+    border: 1px solid black;
+    background-color: black;
+    color: white;
+  }
 `;

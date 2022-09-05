@@ -40,38 +40,46 @@ export default function Conversation({
 }
 
 const ListItem = styled.li`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
-  padding: 17px 10px;
-  cursor: pointer;
-  width: 100%;
-  background-color: transparent;
-  transition: background-color 300ms ease-in-out;
-
-  :hover {
-    background-color: #eeeeee;
+  &&& {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
+    padding: 15px 10px;
+    cursor: pointer;
+    width: 100%;
+    background-color: transparent;
     transition: background-color 300ms ease-in-out;
+
+    :hover {
+      background-color: #eeeeee;
+      transition: background-color 300ms ease-in-out;
+    }
   }
 `;
 
 const TextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  &&& {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
 `;
 
 const Title = styled.span`
-  font-weight: bold;
-  text-align: start;
+  &&& {
+    font-weight: bold;
+    text-align: start;
+  }
 `;
 
 const Subtitle = styled.span`
-  max-width: 250px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: start;
-  padding: 2px 0px;
+  &&& {
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: start;
+    padding: 2px 0px;
+  }
 `;
