@@ -46,14 +46,14 @@
   },
   "peerDependencies": {
     "react": "^16 || ^17 || ^18",
-    "react-dom": "^16 || ^17 || ^18",
-    "styled-components": "^5.3.5"
+    "react-dom": "^16 || ^17 || ^18"
   },
   "dependencies": {
     "@ethersproject/abstract-signer": "^5.7.0",
     "@ethersproject/address": "^5.7.0",
     "@xmtp/xmtp-js": "^6.0.2",
     "react-blockies": "^1.4.1",
+    "styled-components": "^5.3.5",
     "use-immer": "^0.7.0",
     "uuid": "^8.3.2",
     "wagmi": "^0.6.0"
