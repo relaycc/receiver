@@ -1,0 +1,104 @@
+/* ****************************************************************************
+ *
+ * MessageBubble.tsx
+ *
+ * ***************************************************************************/
+
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  hyphens: auto;
+  padding-left: 50px;
+}
+
+.messageText {
+  color: #060028;
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  word-break: break-word;
+  text-align: start;
+  padding-left: 4px;
+}
+
+/* ****************************************************************************
+ *
+ * LoadingText.tsx
+ *
+ * ***************************************************************************/
+
+.loadingCircleContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px;
+}
+
+.loadingCircle {
+  color: white;
+  height: 5px;
+  width: 5px;
+  background: #c3c2c2;
+  border-radius: 50%;
+}
+
+.pulse1 {
+  animation: relayReceiverPulse 1500ms ease-in-out infinite;
+}
+
+.pulse2 {
+  animation: relayReceiverPulse2 1500ms ease-in-out infinite;
+}
+
+.pulse3 {
+  animation: relayReceiverPulse3 1500ms ease-in-out infinite;
+}
+
+@keyframes relayReceiverPulse {
+  0% {
+    transform: scale(0);
+  }
+  25% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes relayReceiverPulse2 {
+  0% {
+    transform: scale(0);
+  }
+  25% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes relayReceiverPulse3 {
+  0% {
+    transform: scale(0);
+  }
+  25% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}

@@ -20,6 +20,7 @@ import styled from 'styled-components';
 import { ConversationsList } from './Conversations/ConversationsList';
 import { MinimizeIconList } from './MinimizeIconList';
 import { ROOT_CLASSNAME, GlobalStyles } from '../styles/global';
+import '../../styles/index.css';
 
 const alchemyKey = 'kmMb00nhQ0SWModX6lJLjXy_pVtiQnjx';
 
