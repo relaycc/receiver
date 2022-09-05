@@ -86,20 +86,38 @@ export function ConversationsList({
     <Container showConversations={showConversations}>
       <Header>
         <IconTitleContainer>
-          <svg
-            onClick={handleMinimizeConversations}
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2.5}
-            stroke="black"
-            height={'24px'}
-            width={'24px'}>
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-            />
-          </svg>
+          {showNewMessageDropdown ? (
+            <svg
+              onClick={handleDropDownToggle}
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2.5}
+              stroke="currentColor"
+              height={'24px'}
+              width={'24px'}
+              style={{ marginRight: '5px' }}>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5L8.25 12l7.5-7.5"
+              />
+            </svg>
+          ) : (
+            <svg
+              onClick={handleMinimizeConversations}
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2.5}
+              stroke="black"
+              height={'24px'}
+              width={'24px'}>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+              />
+            </svg>
+          )}
           <TopTitle>Conversations</TopTitle>
         </IconTitleContainer>
 
@@ -124,22 +142,6 @@ export function ConversationsList({
       </Header>
       {showNewMessageDropdown && (
         <NewMessageDropdown showNewMessageDropdown={showNewMessageDropdown}>
-          <ExitSvg
-            onClick={handleDropDownToggle}
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            height={'24px'}
-            width={'24px'}>
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </ExitSvg>
-
           <NewMessageHeader>
             Enter an ENS name or wallet address
           </NewMessageHeader>
@@ -262,7 +264,7 @@ const NewMessageHeader = styled.h2`
   &&& {
     font-size: 18px;
     text-align: center;
-    margin-top: 80px;
+    margin-top: 1rem;
     width: 100%;
   }
 `;
@@ -271,7 +273,8 @@ const Input = styled.input`
   &&& {
     background-color: white;
     border-radius: 4px;
-    width: 100%;
+    display: flex;
+    align-self: stretch;
     border: none;
     outline: none;
     padding: 5px 10px;
@@ -297,14 +300,6 @@ const Button = styled.button`
     color: white;
     font-weight: 600;
     border: none;
-  }
-`;
-
-const ExitSvg = styled.svg`
-  &&& {
-    position: absolute;
-    top: 10px;
-    right: 10px;
   }
 `;
 

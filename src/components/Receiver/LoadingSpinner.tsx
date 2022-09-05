@@ -12,7 +12,7 @@ export default function LoadingSpinner(props: LoaderProps) {
     <Container width={width} height={height}>
       <img
         src={
-          'https://relay-receiver-prod.s3.amazonaws.com/MobileLoadingSpinner.svg'
+          'https://relay-receiver-prod.s3.amazonaws.com/MobileLoadingSpinner.png'
         }
         alt="loading"
         width={width}
