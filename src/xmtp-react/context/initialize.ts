@@ -3,7 +3,6 @@ import { Signer } from '@ethersproject/abstract-signer';
 
 export const initialize = async (
   wallet: Signer,
-  peerAddress: string,
   onWaitingForSignature: () => unknown,
   onClientConnect: (client: Client) => unknown,
   onClientError: (error: unknown) => unknown,

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React, { useState, useRef } from 'react';
 import { useConversations } from '../../../xmtp-react/conversations';
 import Conversation from './Conversation';
-import { useEnsAddress } from 'wagmi';
+import { useEnsAddress } from '../../../hooks';
 import { useEffect } from 'react';
 
 interface ConversationsListProps {
@@ -36,16 +36,6 @@ export function ConversationsList({
 
   const { data } = useEnsAddress({
     name: newConversationInput,
-    onSuccess(data) {
-      if (data === null) {
-        setPeerAddress(data);
-      } else {
-        setPeerAddress(data);
-      }
-    },
-    onError(error) {
-      console.log('Error', error);
-    },
   });
 
   useEffect(() => {
@@ -140,24 +130,6 @@ export function ConversationsList({
           <ButtonText>New Message</ButtonText>
         </TopButton>
       </Header>
-      {showNewMessageDropdown && (
-        <NewMessageDropdown showNewMessageDropdown={showNewMessageDropdown}>
-          <NewMessageHeader>
-            Enter an ENS name or wallet address
-          </NewMessageHeader>
-          <Input
-            autoFocus={true}
-            ref={userInput}
-            placeholder="type here"
-            type="text"
-          />
-          <Button onClick={handleSubmit}>Create Conversation</Button>
-          <Paragraph>
-            * Only those who have previously signed into the XMTP network are
-            reachable *
-          </Paragraph>
-        </NewMessageDropdown>
-      )}
       <List>
         {conversations.map((peerAddress) => (
           <Conversation
@@ -239,67 +211,6 @@ const List = styled.ul`
     height: 100%;
     flex-direction: column;
     overflow: scroll;
-  }
-`;
-
-const NewMessageDropdown = styled.div<StyleProps>`
-  &&& {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    background-color: white;
-    box-shadow: 0px -4px 4px -5px rgba(0, 0, 0, 0.25);
-    position: absolute;
-    top: 62px;
-    z-index: 1010;
-    left: 0;
-    padding: 0px 10px;
-    gap: 20px;
-  }
-`;
-
-const NewMessageHeader = styled.h2`
-  &&& {
-    font-size: 18px;
-    text-align: center;
-    margin-top: 1rem;
-    width: 100%;
-  }
-`;
-
-const Input = styled.input`
-  &&& {
-    background-color: white;
-    border-radius: 4px;
-    display: flex;
-    align-self: stretch;
-    border: none;
-    outline: none;
-    padding: 5px 10px;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  }
-`;
-
-const Paragraph = styled.p`
-  &&& {
-    text-align: center;
-    width: 100%;
-    line-height: 1.25;
-  }
-`;
-
-const Button = styled.button`
-  &&& {
-    padding: 8px;
-    border-radius: 4px;
-    width: 100%;
-    background: #5203fc;
-    font-size: 15px;
-    color: white;
-    font-weight: 600;
-    border: none;
   }
 `;
 

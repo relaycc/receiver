@@ -10,24 +10,15 @@ import { Client, Conversation, Message } from '@xmtp/xmtp-js';
 import { Signer } from '@ethersproject/abstract-signer';
 import { Status, XmtpContext } from './XmtpContext';
 import { initialize } from './initialize';
-import { useSigner } from 'wagmi';
 import { useImmer } from 'use-immer';
 
 export const XmtpContextProvider: FunctionComponent<{
   children: React.ReactNode;
-  connectedWallet?: Signer;
-  peerAddress: string;
-}> = ({ children, connectedWallet, peerAddress }) => {
+  wallet: Signer | null | undefined;
+}> = ({ children, wallet }) => {
   /*
    * Hooks
    */
-
-  let { data: wallet } = useSigner();
-
-  if (connectedWallet) {
-    wallet = connectedWallet;
-  }
-
   const [status, setStatus] = useState<Status>(Status.disconnected);
   const [client, setClient] = useState<Client | null>(null);
   const prevClientAddress = usePreviousString(client?.address);
@@ -149,7 +140,6 @@ export const XmtpContextProvider: FunctionComponent<{
     } else {
       await initialize(
         wallet,
-        peerAddress,
         handleClientWaitingForSignature,
         handleClientConnect,
         handleClientError,
@@ -161,7 +151,6 @@ export const XmtpContextProvider: FunctionComponent<{
     }
   }, [
     wallet,
-    peerAddress,
     handleClientWaitingForSignature,
     handleClientConnect,
     handleClientError,

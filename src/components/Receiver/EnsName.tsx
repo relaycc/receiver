@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useEnsName } from 'wagmi';
+import { useEnsName } from '../../hooks';
 
 interface EnsNameProps {
   address: string;

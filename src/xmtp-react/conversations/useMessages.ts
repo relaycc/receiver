@@ -17,7 +17,7 @@ export const useMessages = (peerAddress: string | null | undefined) => {
     }
   }, [xmtp, peerAddress]);
 
-  return messages;
+  return { status: 'ready', messages };
 };
 
 export const getLastMessage = (

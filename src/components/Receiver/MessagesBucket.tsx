@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 import { Message } from '@xmtp/xmtp-js';
 import MessageBubble from './MessageBubble';
-import Avatar from './Avatar';
+// import Avatar from './Avatar';
 import React from 'react';
-import { useResponsiveName } from '../../hooks/useResponsiveName';
-import { useEnsName } from 'wagmi';
+import { useResponsiveName, useEnsName } from '../../hooks';
 import { time } from '../../utls/date';
 import { shortDate } from '../../utls/date';
 
@@ -43,7 +42,7 @@ export default function MessagesBucket({
       <SentByInfo sentByMe={sentByMe}>
         <MessageHeader>
           <div style={{ marginRight: '10px' }}>
-            <Avatar address={sentByMe ? sentByAddress : peerAddress} />
+            {/* <Avatar address={sentByMe ? sentByAddress : peerAddress} /> */}
           </div>
           <SenderName sentByMe={sentByMe}>{responsiveName}</SenderName>
           <MessageTime>

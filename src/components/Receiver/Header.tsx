@@ -1,6 +1,6 @@
 import { truncateAddress } from '../../utls/address';
 import React, { useState } from 'react';
-import Avatar from './Avatar';
+// import Avatar from './Avatar';
 import styled from 'styled-components';
 
 type MinimizedConvoListSetter = (list: string[]) => string[];
@@ -23,7 +23,6 @@ export default function RelayHeader({
   peerName,
   toggleReceiver,
   closeReceiver,
-  setShowConversations,
   setMinimizedConvoList,
   peerIsAvailable,
 }: HeaderProps) {
@@ -47,11 +46,6 @@ export default function RelayHeader({
         </SoloTextContainer>
       );
     }
-  };
-
-  const handleGoBackClick = () => {
-    setShowConversations(true);
-    setShowMenu(false);
   };
 
   const handleMinimizeClick = () => {
@@ -81,24 +75,9 @@ export default function RelayHeader({
   return (
     <Header>
       <GoBackSvgContainer>
-        <svg
-          onClick={handleGoBackClick}
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2.5}
-          stroke="currentColor"
-          height={'24px'}
-          width={'24px'}
-          style={{ marginRight: '5px' }}>
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5L8.25 12l7.5-7.5"
-          />
-        </svg>
         <HeaderInfo onClick={() => setShowMenu(!showMenu)}>
           <UserInfoContainer>
-            <Avatar address={peerAddress} />
+            {/* <Avatar address={peerAddress} /> */}
             {headerText()}
           </UserInfoContainer>
           {peerIsAvailable && (
@@ -196,7 +175,6 @@ export default function RelayHeader({
           width={28}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15" />
         </MinimizeSvg>
-
         <ExitSvg
           onClick={handleExitClick}
           fill="none"

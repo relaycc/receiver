@@ -1,5 +1,5 @@
 import React from 'react';
-import Avatar from './Avatar';
+// import Avatar from './Avatar';
 import styled from 'styled-components';
 import { EnsName } from './EnsName';
 
@@ -31,13 +31,13 @@ export function MinimizeIconList({
     <Container>
       {minimizedConvoList.map((e, index) => (
         <AvatarContainer key={e}>
-          <Avatar
+          {/* <Avatar
             setPeerAddress={setPeerAddress}
             setShowBox={setShowBox}
             address={e}
             setShowConversations={setShowConversations}
             setShowMessageDropdown={setShowMewMessageDropdown}
-          />
+          /> */}
           <AvatarHoverDetails onClick={() => removeFromList(index)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"

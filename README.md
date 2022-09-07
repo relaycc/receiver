@@ -7,7 +7,7 @@ add Web3 messaging to your site.
 
 - 🔥 Out-of-the-box wallet-to-wallet messaging.
 - ✅ Easily customizable.
-- 🦄 Built on top of [XMTP](https://xmtp.com) and [wagmi](https://github.com/tmm/wagmi)
+- 🦄 Built on top of [XMTP](https://xmtp.com)
 
 ## Quick start
 

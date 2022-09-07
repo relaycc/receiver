@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { useEnsAvatar } from 'wagmi';
+import { useEnsAvatar } from '../../hooks';
 import Blockies from 'react-blockies';
 
 interface AvatarProps {
   peerAddress: string;
 }
 
-export default function Avatar({ peerAddress }: AvatarProps) {
+export const Avatar: FunctionComponent<AvatarProps> = ({ peerAddress }) => {
   const { data: ensAvatar } = useEnsAvatar({ addressOrName: peerAddress });
 
   if (!ensAvatar) {
@@ -24,7 +24,7 @@ export default function Avatar({ peerAddress }: AvatarProps) {
   } else {
     return <AvatarImage src={ensAvatar} alt="user" />;
   }
-}
+};
 
 const AvatarImage = styled.img`
   &&& {

@@ -1,20 +1,17 @@
 import styled from 'styled-components';
-import React from 'react';
+import React, { FunctionComponent } from 'react';
+import { Avatar } from './Avatar';
 // import { useMessages, getLastMessage } from '../../../xmtp-react/conversations';
-// import Avatar from '../Avatar';
-import { useResponsiveName, useEnsName } from '../../../hooks';
+import { useResponsiveName, useEnsName } from '../../hooks';
 
-interface ConversationProps {
+export interface ConversationListItemProps {
+  onClick: () => unknown;
   peerAddress: string;
-  setShowConversations: (show: boolean) => unknown;
-  setPeerAddress: (peerAddress: string) => unknown;
 }
 
-export default function Conversation({
-  peerAddress,
-  setShowConversations,
-  setPeerAddress,
-}: ConversationProps) {
+export const ConversationListItem: FunctionComponent<
+  ConversationListItemProps
+> = ({ peerAddress, onClick }) => {
   // const messages = useMessages(peerAddress);
   // const lastMessage = Object.values(messages.messages[0]);
   // const lastMessage = getLastMessage(messages);
@@ -23,21 +20,16 @@ export default function Conversation({
   });
   const responsiveName = useResponsiveName(ensName, peerAddress, '');
 
-  const handleClick = () => {
-    setShowConversations(false);
-    setPeerAddress(peerAddress);
-  };
-
   return (
-    <ListItem onClick={handleClick}>
-      {/* <Avatar address={peerAddress} /> */}
+    <ListItem onClick={onClick}>
+      <Avatar peerAddress={peerAddress} />
       <TextContainer>
         <Title>{responsiveName}</Title>
-        {/* <Subtitle>{lastMessage?.content}</Subtitle> */}
+        <Subtitle>Please Implement Me</Subtitle>
       </TextContainer>
     </ListItem>
   );
-}
+};
 
 const ListItem = styled.li`
   &&& {
@@ -74,13 +66,13 @@ const Title = styled.span`
   }
 `;
 
-// const Subtitle = styled.span`
-//   &&& {
-//     max-width: 250px;
-//     white-space: nowrap;
-//     overflow: hidden;
-//     text-overflow: ellipsis;
-//     text-align: start;
-//     padding: 2px 0px;
-//   }
-// `;
+const Subtitle = styled.span`
+  &&& {
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: start;
+    padding: 2px 0px;
+  }
+`;
