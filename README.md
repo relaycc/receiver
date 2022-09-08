@@ -24,6 +24,10 @@ npm start
 
 It's quite easy:
 
+```
+npm install --save @relaycc/receiver
+```
+
 - Wrap your `App` component in `Receiver`
 - Add `ReceiverLaunch` component
 
