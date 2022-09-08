@@ -3,15 +3,15 @@
 **The best way to add Web3 messaging to your site!**
 
 Relay Receiver is a [React](https://reactjs.org/) library that makes it easy to
-add Web3 messaging to your site.
+add a web3 site inbox to your website.
 
-- 🔥 Out-of-the-box wallet-to-wallet messaging.
+- 🔥 Out-of-the-box wallet-to-wallet messaging, to a site admin or between users. 
 - ✅ Easily customizable.
 - 🦄 Built on top of [XMTP](https://xmtp.com) and [wagmi](https://github.com/tmm/wagmi)
 
 ## Quick start
 
-Check out the example using [create-react-app](https://create-react-app.dev/).
+Check out the example using [create-react-app](https://create-react-app.dev/). Installs the same version that is on try.relay.cc 
 
 ```bash
 git clone https://github.com/relaycc/receiver-example-cra.git
@@ -20,7 +20,7 @@ npm install
 npm start
 ```
 
-## Usage
+## Install Guide
 
 It's quite easy:
 
@@ -32,28 +32,12 @@ npm install --save @relaycc/receiver
 - Add `ReceiverLaunch` component
 
 ```TypeScript
-import logo from './logo.svg';
-import './App.css';
 import { Receiver, ReceiverLaunch } from '@relaycc/receiver';
 
 function App() {
   return (
     <Receiver>
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
         <ReceiverLaunch />
       </div>
     </Receiver>
