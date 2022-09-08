@@ -32,13 +32,13 @@ npm install --save @relaycc/receiver
 - Add `ReceiverLaunch` component
 
 ```TypeScript
-import { Receiver, ReceiverLaunch } from '@relaycc/receiver';
+import { Receiver, FixedLaunch } from '@relaycc/receiver';
 
 function App() {
   return (
     <Receiver>
       <div className="App">
-        <ReceiverLaunch />
+        <FixedLaunch />
       </div>
     </Receiver>
   );
@@ -46,6 +46,8 @@ function App() {
 
 export default App;
 ```
+
+Alternately, import `InlineLaunch` to attach the launch function to a component already on the site. 
 
 ## Documentation
 
