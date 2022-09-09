@@ -38,11 +38,14 @@ function App() {
   return (
     <Receiver>
       <div className="App">
-        <FixedLaunch />
+        <FixedLaunch peerAddress={'insert default wallet address here'} />
       </div>
     </Receiver>
   );
 }
+
+Props
+peerAddress (type: string) - This is the first wallet the user will have the option to interact with when they open receiver. The wallet address of the site admin, ceo etc... are commonly used. 
 
 export default App;
 ```
