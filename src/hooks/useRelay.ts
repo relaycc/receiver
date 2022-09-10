@@ -97,21 +97,29 @@ const handleLoadPeerAddress = async (
     if (state.statuses[peerAddress] !== undefined) {
       return;
     } else {
-      const messages = await fetchMessages(state.client, peerAddress, limit);
-      state.setStatuses({
-        ...state.statuses,
-        [peerAddress]: 'loadingFull',
-      });
-      state.setChannels({
-        ...state.channels,
-        [peerAddress]: messages.reduce((result, message) => {
-          return { ...result, [message.id]: message };
-        }, {}),
-      });
-      state.setStatuses({
-        ...state.statuses,
-        [peerAddress]: 'loadedFull',
-      });
+      const userOnNetwork = await state.client.canMessage(peerAddress);
+      if (!userOnNetwork) {
+        state.setStatuses({
+          ...state.statuses,
+          [peerAddress]: 'no peer',
+        });
+      } else {
+        const messages = await fetchMessages(state.client, peerAddress, limit);
+        state.setStatuses({
+          ...state.statuses,
+          [peerAddress]: 'loadingFull',
+        });
+        state.setChannels({
+          ...state.channels,
+          [peerAddress]: messages.reduce((result, message) => {
+            return { ...result, [message.id]: message };
+          }, {}),
+        });
+        state.setStatuses({
+          ...state.statuses,
+          [peerAddress]: 'loadedFull',
+        });
+      }
     }
   }
 };

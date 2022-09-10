@@ -29,6 +29,8 @@ export const Messages: FunctionComponent<MessagesProps> = ({ peerAddress }) => {
       {(() => {
         if (wallet === null) {
           return <InfoCard variant="no wallet" />;
+        } else if (channelStatus === 'no peer') {
+          return <InfoCard variant="no peer" />;
         } else if (signatureStatus === 'waiting') {
           return <InfoCard variant="waiting for signature" />;
         } else if (signatureStatus === 'denied') {

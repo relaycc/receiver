@@ -50,6 +50,7 @@ export type Channel = Record<string, Message>;
 export type ChannelStore = Record<string, Channel | undefined>;
 export type ChannelStatus =
   | undefined
+  | 'no peer'
   | 'loadingFull'
   | 'loadedFull'
   | 'streaming';
