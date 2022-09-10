@@ -3,6 +3,7 @@ import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { useReceiver, useRelay } from '../../hooks';
 import { Avatar } from '../Elements';
+import { Signer } from '@ethersproject/abstract-signer';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import {
@@ -27,15 +28,28 @@ const wagmiClient = createClient({
 
 export interface LauncherProps {
   peerAddress?: string;
+  wallet?: Signer | null;
 }
 
-export const Launcher: FunctionComponent<LauncherProps> = ({ peerAddress }) => {
+export const Launcher: FunctionComponent<LauncherProps> = ({
+  peerAddress,
+  wallet,
+}) => {
   const client = useRelay((state) => state.client);
   const dispatchRelay = useRelay((state) => state.dispatch);
   const pinnedConversations = useReceiver((state) => state.pinnedConversations);
   const setIsOpen = useReceiver((state) => state.setIsOpen);
   const isOpen = useReceiver((state) => state.isOpen);
   const dispatchReceiver = useReceiver((state) => state.dispatch);
+  const setWallet = useReceiver((state) => state.setWallet);
+
+  // TODO(achilles@relay.cc) The Launcher components should just use the
+  // useLaunch hook.
+  useEffect(() => {
+    if (wallet !== undefined) {
+      setWallet(wallet || null);
+    }
+  }, [wallet, setWallet]);
 
   const onClickLaunch = () => {
     if (isOpen) {

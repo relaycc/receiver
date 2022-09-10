@@ -123,7 +123,8 @@ const handleLoadConversationList = async (
     forceReload?: boolean;
   }
 ) => {
-  if (state.client === null) {
+  const client = state.client;
+  if (client === null) {
     return;
   } else {
     if (
@@ -138,13 +139,16 @@ const handleLoadConversationList = async (
         conversationsList: 'loadingFull',
       });
       const messages = await fetchConversationList(
-        state.client,
+        client,
         options?.limitPeerAddresses
       );
       state.setChannels({
         ...state.channels,
         conversationList: messages.reduce((result, message) => {
-          return { ...result, [message.id]: message };
+          return {
+            ...result,
+            [pickPeerAddress(client.address, message)]: message,
+          };
         }, {}),
       });
       state.setStatuses({

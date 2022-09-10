@@ -1,5 +1,5 @@
 import create from 'zustand';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Signer } from '@ethersproject/abstract-signer';
 import { ReceiverAction, ReceiverStore, ReceiverScreen } from './types';
 
@@ -32,9 +32,16 @@ export const useReceiver = create<ReceiverStore>((set, get) => ({
   },
 }));
 
-export const useLaunch = () => {
+export const useLaunch = (wallet?: Signer | null) => {
   const dispatch = useReceiver((state) => state.dispatch);
   const setIsOpen = useReceiver((state) => state.setIsOpen);
+  const setWallet = useReceiver((state) => state.setWallet);
+
+  useEffect(() => {
+    if (wallet !== undefined) {
+      setWallet(wallet || null);
+    }
+  }, [wallet, setWallet]);
 
   return useCallback((peerAddress?: string) => {
     const action: ReceiverAction = peerAddress
