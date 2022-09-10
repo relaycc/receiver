@@ -5,13 +5,13 @@
 Relay Receiver is a [React](https://reactjs.org/) library that makes it easy to
 add a web3 site inbox to your website.
 
-- 🔥 Out-of-the-box wallet-to-wallet messaging, to a site admin or between users. 
+- 🔥 Out-of-the-box wallet-to-wallet messaging, to a site admin or between users.
 - ✅ Easily customizable.
 - 🦄 Built on top of [XMTP](https://xmtp.com)
 
 ## Quick start
 
-Check out the example using [create-react-app](https://create-react-app.dev/). Installs the same version that is on try.relay.cc 
+Check out the example using [create-react-app](https://create-react-app.dev/). Installs the same version that is on try.relay.cc
 
 ```bash
 git clone https://github.com/relaycc/receiver-example-cra.git
@@ -47,7 +47,7 @@ function App() {
 export default App;
 ```
 
-Alternately, import `InlineLaunch` to attach the launch function to a component already on the site. 
+Alternately, import `InlineLaunch` to attach the launch function to a component already on the site.
 
 ## Documentation
 
