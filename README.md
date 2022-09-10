@@ -7,7 +7,7 @@ add a web3 site inbox to your website.
 
 - 🔥 Out-of-the-box wallet-to-wallet messaging, to a site admin or between users. 
 - ✅ Easily customizable.
-- 🦄 Built on top of [XMTP](https://xmtp.com) and [wagmi](https://github.com/tmm/wagmi)
+- 🦄 Built on top of [XMTP](https://xmtp.com)
 
 ## Quick start
 
