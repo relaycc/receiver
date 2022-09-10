@@ -3,29 +3,34 @@ import React, { FunctionComponent } from 'react';
 import { Avatar } from './Avatar';
 // import { useMessages, getLastMessage } from '../../../xmtp-react/conversations';
 import { useResponsiveName, useEnsName } from '../../hooks';
+import { useReceiver } from '../../hooks';
 
 export interface ConversationListItemProps {
-  onClick: () => unknown;
   peerAddress: string;
+  subtitle: string;
 }
 
 export const ConversationListItem: FunctionComponent<
   ConversationListItemProps
-> = ({ peerAddress, onClick }) => {
-  // const messages = useMessages(peerAddress);
-  // const lastMessage = Object.values(messages.messages[0]);
-  // const lastMessage = getLastMessage(messages);
+> = ({ peerAddress, subtitle }) => {
+  const dispatch = useReceiver((state) => state.dispatch);
   const { data: ensName } = useEnsName({
     address: peerAddress,
   });
   const responsiveName = useResponsiveName(ensName, peerAddress, '');
 
   return (
-    <ListItem onClick={onClick}>
-      <Avatar peerAddress={peerAddress} />
+    <ListItem
+      onClick={() =>
+        dispatch({
+          id: 'go to screen',
+          screen: { id: 'messages', peerAddress },
+        })
+      }>
+      <Avatar peerAddress={peerAddress} onClick={() => null} />
       <TextContainer>
         <Title>{responsiveName}</Title>
-        <Subtitle>Please Implement Me</Subtitle>
+        <Subtitle>{subtitle}</Subtitle>
       </TextContainer>
     </ListItem>
   );
@@ -52,6 +57,7 @@ const ListItem = styled.li`
 
 const TextContainer = styled.div`
   &&& {
+    color: black;
     font-size: 1rem;
     display: flex;
     flex-direction: column;
@@ -61,6 +67,7 @@ const TextContainer = styled.div`
 
 const Title = styled.span`
   &&& {
+    color: black;
     font-weight: bold;
     text-align: start;
   }
@@ -68,6 +75,7 @@ const Title = styled.span`
 
 const Subtitle = styled.span`
   &&& {
+    color: black;
     max-width: 250px;
     white-space: nowrap;
     overflow: hidden;

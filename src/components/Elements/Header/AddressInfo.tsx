@@ -1,63 +1,109 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
+import { truncateAddress } from '../../../utils/address';
 import styled from 'styled-components';
+import { Avatar } from '..';
+import { useEnsName } from '../../../hooks';
 
-export interface AddressInfoDropdownProps {
-  textToCopy: string;
-  relayLink: string;
-  etherscanLink: string;
-  isOpen: boolean;
-  onClickMenu: () => unknown;
+export interface AddressInfoProps {
+  peerAddress: string;
 }
 
-export const AddressInfoDropdown: FunctionComponent<
-  AddressInfoDropdownProps
-> = ({ textToCopy, relayLink, etherscanLink, isOpen, onClickMenu }) => {
+export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
+  peerAddress,
+}) => {
+  const { data: ensName } = useEnsName({ address: peerAddress });
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <RelativeContainer>
-      <VerticalDotIcon onClick={onClickMenu} />
-      {isOpen && (
+    <Container
+      onClick={() => {
+        setIsOpen(!isOpen);
+      }}>
+      <Avatar peerAddress={peerAddress} onClick={() => null} />
+      <TextContainer>
+        <MainText>{ensName || truncateAddress(peerAddress)}</MainText>
+        <SubText>{truncateAddress(peerAddress)}</SubText>
         <DropdownMenu>
           <DropDownItem
-            onClick={() => navigator.clipboard.writeText(String(textToCopy))}>
+            onClick={() => navigator.clipboard.writeText(String(peerAddress))}>
             <CopyClipboardIcon />
             Copy Address
           </DropDownItem>
           <DropDownItem>
-            <LiLink href={relayLink} target="_blank">
+            <LiLink href={'https://relay.cc/' + peerAddress} target="_blank">
               <GoToRelayIcon />
               Relay
             </LiLink>
           </DropDownItem>
           <DropDownItem>
-            <LiLink href={etherscanLink} target="_blank">
+            <LiLink
+              href={'https://etherscan.io/address/' + peerAddress}
+              target="_blank">
               <EtherscanIcon />
               Etherscan
             </LiLink>
           </DropDownItem>
         </DropdownMenu>
-      )}
-    </RelativeContainer>
+      </TextContainer>
+    </Container>
   );
 };
 
-const RelativeContainer = styled.div`
-  &&& {
-    position: relative;
-  }
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
 const DropdownMenu = styled.ul`
   &&& {
-    display: flex;
+    display: none;
     flex-direction: column;
     background: white;
     box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.25);
     position: absolute;
-    top: 20px;
+    top: 1rem;
     border-radius: 4px;
+    opacity: 1;
     transition: opacity 150ms, visibility 150ms;
     padding: 0;
     min-width: max-content;
+    z-index: 10000000;
+  }
+`;
+
+const TextContainer = styled.div`
+  &&& {
+    margin-left: 1rem;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+
+    :hover ${DropdownMenu} {
+      display: flex;
+    }
+  }
+`;
+
+const MainText = styled.div`
+  &&& {
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1;
+    padding-bottom: 4px;
+    color: black;
+  }
+`;
+
+const SubText = styled.div`
+  &&& {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 1;
   }
 `;
 
@@ -146,26 +192,6 @@ const EtherscanIcon = () => {
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-      />
-    </svg>
-  );
-};
-
-const VerticalDotIcon = ({ onClick }: { onClick: () => unknown }) => {
-  return (
-    <svg
-      onClick={onClick}
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={2.5}
-      stroke="currentColor"
-      height={'24px'}
-      width={'24px'}>
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
       />
     </svg>
   );

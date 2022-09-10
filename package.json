@@ -28,6 +28,7 @@
     "@types/styled-components": "^5.1.25",
     "@typescript-eslint/eslint-plugin": "5.17.0",
     "@typescript-eslint/parser": "5.17.0",
+    "@xmtp/proto": "^3.0.0",
     "eslint": "^8.23.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-next": "12.1.0",
@@ -51,12 +52,11 @@
   "dependencies": {
     "@ethersproject/abstract-signer": "^5.7.0",
     "@ethersproject/address": "^5.7.0",
-    "@xmtp/xmtp-js": "^6.0.2",
-    "framer-motion": "^4.1.17",
+    "@relaycc/xmtp-js": "0.1.2",
     "react-blockies": "^1.4.1",
-    "react-transition-group": "^4.4.5",
     "styled-components": "^5.3.5",
     "use-immer": "^0.7.0",
+    "wagmi": "^0.6.4",
     "zustand": "^4.1.1"
   },
   "main": "dist/cjs/index.js",

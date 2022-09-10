@@ -1,42 +1,112 @@
 import create from 'zustand';
+import { useCallback } from 'react';
 import { Signer } from '@ethersproject/abstract-signer';
+import { ReceiverAction, ReceiverStore, ReceiverScreen } from './types';
 
-export type Screen = 'messages' | 'conversations' | 'new' | 'xmtp';
-
-export interface ReceiverStore {
-  wallet: Signer | null;
-  setWallet: (wallet: Signer | null) => unknown;
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => unknown;
-  pinnedConversations: string[];
-  setPinnedConversations: (pinnedConversation: string[]) => unknown;
-  visibleScreen: Screen | null;
-  setVisibleScreen: (screen: Screen | null) => unknown;
-}
-
-export const useReceiver = create<ReceiverStore>((set) => ({
+export const useReceiver = create<ReceiverStore>((set, get) => ({
   wallet: null,
-  setWallet: (wallet: Signer | null) => set({ wallet }),
-  isOpen: false,
-  setIsOpen: (isOpen: boolean) => set({ isOpen }),
+  setWallet: (wallet) => set({ wallet }),
   pinnedConversations: [],
   setPinnedConversations: (pinnedConversations) => set({ pinnedConversations }),
-  visibleScreen: null,
-  setVisibleScreen: (screen: Screen | null) => set({ visibleScreen: screen }),
+  isOpen: false,
+  setIsOpen: (isOpen) => set({ isOpen }),
+  screenHistory: [{ id: 'conversations' }],
+  setScreenHistory: (screenHistory) => set({ screenHistory }),
+  dispatch: (action: ReceiverAction) => {
+    switch (action.id) {
+      case 'add pinned conversation':
+        handleAddPinnedConversation(get(), action.peerAddress);
+        break;
+      case 'remove pinned conversation':
+        handleRemovePinnedConversation(get(), action.peerAddress);
+        break;
+      case 'go to screen':
+        handleGoToScreen(get(), action.screen);
+        break;
+      case 'go back screen':
+        handleGoBackScreen(get());
+        break;
+      default:
+        throw new Error('Never should have got here!');
+    }
+  },
 }));
 
-export const removePinnedConversation = (
-  toRemove: string,
-  pinnedConversations: string[]
+export const useLaunch = () => {
+  const dispatch = useReceiver((state) => state.dispatch);
+  const setIsOpen = useReceiver((state) => state.setIsOpen);
+
+  return useCallback((peerAddress?: string) => {
+    const action: ReceiverAction = peerAddress
+      ? { id: 'go to screen', screen: { id: 'messages', peerAddress } }
+      : { id: 'go to screen', screen: { id: 'conversations' } };
+    dispatch(action);
+    setIsOpen(true);
+  }, []);
+};
+
+export const useSetWallet = () => {
+  const setWallet = useReceiver((state) => state.setWallet);
+
+  return useCallback((wallet: Signer | null) => {
+    setWallet(wallet);
+  }, []);
+};
+
+export const useIsOpen = () => {
+  return useReceiver((state) => state.isOpen);
+};
+
+const handleGoBackScreen = (state: ReceiverStore) => {
+  if (state.screenHistory.length === 1) {
+    return;
+  } else {
+    state.setScreenHistory(
+      state.screenHistory.slice(0, state.screenHistory.length - 1)
+    );
+  }
+};
+
+const handleGoToScreen = (state: ReceiverStore, screen: ReceiverScreen) => {
+  if (sameScreen(currentScreen(state), screen)) {
+    return;
+  } else {
+    state.setScreenHistory([...state.screenHistory, screen]);
+  }
+};
+
+const handleRemovePinnedConversation = (
+  state: ReceiverStore,
+  peerAddress: string
 ) => {
-  return pinnedConversations.filter(
-    (pinnedConversation) => pinnedConversation !== toRemove
+  state.setPinnedConversations(
+    state.pinnedConversations.filter((p) => p !== peerAddress)
   );
 };
 
-export const addPinnedConversation = (
-  toAdd: string,
-  pinnedConversations: string[]
+const handleAddPinnedConversation = (
+  state: ReceiverStore,
+  peerAddress: string
 ) => {
-  return [...pinnedConversations, toAdd];
+  for (const pinnedConversation of state.pinnedConversations) {
+    if (pinnedConversation === peerAddress) return;
+  }
+  state.setPinnedConversations([...state.pinnedConversations, peerAddress]);
+};
+
+export const sameScreen = (
+  screenA: ReceiverScreen,
+  screenB: ReceiverScreen
+) => {
+  if (screenA.id === 'messages' && screenB.id === 'messages') {
+    return screenA.peerAddress === screenB.peerAddress;
+  } else {
+    return screenA.id === screenB.id;
+  }
+};
+
+export const currentScreen = ({
+  screenHistory,
+}: Pick<ReceiverStore, 'screenHistory'>) => {
+  return screenHistory[screenHistory.length - 1];
 };

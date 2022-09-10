@@ -1,36 +1,101 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { Avatar } from '../Receiver/Avatar';
+import { useReceiver, useRelay } from '../../hooks';
+import { Avatar } from '../Elements';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { publicProvider } from 'wagmi/providers/public';
+import {
+  WagmiConfig,
+  configureChains,
+  createClient,
+  defaultChains,
+} from 'wagmi';
+
+const alchemyKey = 'kmMb00nhQ0SWModX6lJLjXy_pVtiQnjx';
+
+const { provider } = configureChains(defaultChains, [
+  alchemyProvider({ apiKey: alchemyKey }),
+  publicProvider(),
+]);
+
+const wagmiClient = createClient({
+  autoConnect: false,
+  connectors: [],
+  provider,
+});
 
 export interface LauncherProps {
-  onClickConversation: (peerAddress: string) => unknown;
-  onClickCloseConversation: (peerAddress: string) => unknown;
-  onClickLaunch: () => unknown;
-  pinnedConversations: string[];
+  peerAddress?: string;
 }
 
-export const Launcher: FunctionComponent<LauncherProps> = ({
-  onClickCloseConversation,
-  onClickConversation,
-  onClickLaunch,
-  pinnedConversations,
-}) => {
+export const Launcher: FunctionComponent<LauncherProps> = ({ peerAddress }) => {
+  const client = useRelay((state) => state.client);
+  const dispatchRelay = useRelay((state) => state.dispatch);
+  const pinnedConversations = useReceiver((state) => state.pinnedConversations);
+  const setIsOpen = useReceiver((state) => state.setIsOpen);
+  const isOpen = useReceiver((state) => state.isOpen);
+  const dispatchReceiver = useReceiver((state) => state.dispatch);
+
+  const onClickLaunch = () => {
+    if (isOpen) {
+      setIsOpen(false);
+    } else {
+      if (peerAddress) {
+        dispatchReceiver({
+          id: 'go to screen',
+          screen: { id: 'messages', peerAddress },
+        });
+      } else {
+        dispatchReceiver({
+          id: 'go to screen',
+          screen: { id: 'conversations' },
+        });
+      }
+      setIsOpen(true);
+    }
+  };
+
+  useEffect(() => {
+    if (client !== null) {
+      dispatchRelay({ id: 'stream messages' });
+    }
+  }, [client]);
+
   return (
-    <Container>
-      <LaunchButton onClick={onClickLaunch}>
-        <ChatIcon />
-      </LaunchButton>
-      {pinnedConversations.map((peerAddress) => (
-        <AvatarContainer key={peerAddress}>
-          <Avatar
-            address={peerAddress}
-            onClick={() => onClickConversation(peerAddress)}
-          />
-          <CloseIcon onClick={() => onClickCloseConversation(peerAddress)} />
-        </AvatarContainer>
-      ))}
-    </Container>
+    <WagmiConfig client={wagmiClient}>
+      <Fixed>
+        <Container>
+          <LaunchButton onClick={onClickLaunch}>
+            <ChatIcon />
+          </LaunchButton>
+          {pinnedConversations.map((peerAddress) => (
+            <AvatarContainer key={peerAddress}>
+              <Avatar
+                large={true}
+                peerAddress={peerAddress}
+                onClick={() => {
+                  dispatchReceiver({
+                    id: 'go to screen',
+                    screen: { id: 'messages', peerAddress },
+                  });
+                  setIsOpen(true);
+                }}
+              />
+              <AvatarHoverDetails
+                onClick={() => {
+                  dispatchReceiver({
+                    id: 'remove pinned conversation',
+                    peerAddress,
+                  });
+                }}>
+                <CloseIcon />
+              </AvatarHoverDetails>
+            </AvatarContainer>
+          ))}
+        </Container>
+      </Fixed>
+    </WagmiConfig>
   );
 };
 
@@ -44,16 +109,19 @@ const Container = styled.ul`
   }
 `;
 
-const AvatarHoverDetails = styled.svg`
+const AvatarHoverDetails = styled.div`
   &&& {
     position: absolute;
-    right: -5px;
-    top: -5px;
-    height: 1rem;
-    width: 1rem;
+    right: -0.5rem;
+    top: -0.5rem;
+    height: 1.5rem;
+    width: 1.5rem;
     border-radius: 50%;
     display: none;
+    justify-content: center;
+    align-items: center;
     z-index: 100000;
+    background-color: #f5f5f5;
     cursor: pointer;
   }
 `;
@@ -62,7 +130,7 @@ const AvatarContainer = styled.div`
   &&& {
     position: relative;
     cursor: pointer;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 
     :hover ${AvatarHoverDetails} {
       display: block;
@@ -75,8 +143,8 @@ const LaunchButton = styled.button`
     background: white;
     border: none;
     border-radius: 50%;
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 3rem;
+    width: 3rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -105,22 +173,30 @@ const ChatIcon = () => {
   );
 };
 
-const CloseIcon = ({ onClick }: { onClick: () => unknown }) => {
+const Fixed = styled.div`
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  margin: 1.5rem;
+`;
+
+const CloseIcon = () => {
   return (
-    <AvatarHoverDetails
-      onClick={onClick}
-      xmlns="http://www.w3.org/2000/svg"
+    <svg
       fill="black"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="white"
-      height={'16px'}
-      width={'16px'}>
+      viewBox="0 0 28 28"
+      strokeWidth={2.5}
+      stroke="black"
+      height="28"
+      width="28">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        d="M6 18L18 6M6 6l12 12"
       />
-    </AvatarHoverDetails>
+    </svg>
   );
 };

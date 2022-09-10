@@ -1,4 +1,3 @@
-export * from './Messages';
+export * from './PeerAddress';
 export * from './Conversations';
-export * from './Status';
 export * from './NewConversation';

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-export default function LoadingMessages() {
+export const LoadingList = () => {
   const divScrollToRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function LoadingMessages() {
       </RightContainer>
     </MainContainer>
   );
-}
+};
 
 const MainContainer = styled.div`
   &&& {

@@ -1,37 +1,36 @@
 import styled from 'styled-components';
-import { Message } from '@xmtp/xmtp-js';
 import MessageBubble from './MessageBubble';
-// import Avatar from './Avatar';
+import { Avatar } from './Avatar';
 import React from 'react';
-import { useResponsiveName, useEnsName } from '../../hooks';
-import { time } from '../../utls/date';
-import { shortDate } from '../../utls/date';
+import { Message, useResponsiveName, useEnsName } from '../../hooks';
+import { time } from '../../utils/date';
+import { shortDate } from '../../utils/date';
 
 interface MessagesBucketProps {
-  peerAddress: string;
   startDate: Date | undefined;
   messages: Message[];
   peerName?: string | undefined;
-  sentByAddress: string | undefined;
+  sentByAddress: string;
+  userPeerAddress: string;
 }
 
 export default function MessagesBucket({
-  peerAddress,
   startDate,
   messages,
   sentByAddress,
+  userPeerAddress,
 }: MessagesBucketProps) {
-  const sentByMe = sentByAddress !== peerAddress;
+  const sentByMe = sentByAddress !== userPeerAddress;
 
   const { data: senderName } = useEnsName({
     address: sentByAddress,
   });
   const { data: peerEns } = useEnsName({
-    address: peerAddress,
+    address: sentByAddress,
   });
   const responsiveName = useResponsiveName(
     sentByMe ? senderName : peerEns,
-    sentByMe ? sentByAddress : peerAddress,
+    sentByMe ? userPeerAddress : sentByAddress,
     ''
   );
 
@@ -42,7 +41,7 @@ export default function MessagesBucket({
       <SentByInfo sentByMe={sentByMe}>
         <MessageHeader>
           <div style={{ marginRight: '10px' }}>
-            {/* <Avatar address={sentByMe ? sentByAddress : peerAddress} /> */}
+            <Avatar peerAddress={sentByAddress} onClick={() => null} />
           </div>
           <SenderName sentByMe={sentByMe}>{responsiveName}</SenderName>
           <MessageTime>
@@ -71,6 +70,7 @@ const Container = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
+    padding-bottom: 1rem;
   }
 `;
 

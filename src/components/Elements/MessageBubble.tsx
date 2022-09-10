@@ -20,7 +20,7 @@ const TextWrapper = styled.div`
     align-items: flex-start;
     width: 100%;
     hyphens: auto;
-    padding-left: 50px;
+    padding: 3px 0 3px 50px;
   }
 `;
 
@@ -31,7 +31,7 @@ const MessageText = styled.div`
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    line-height: 18px;
+    line-height: 1.25;
     word-break: break-word;
     text-align: start;
     padding-left: 4px;
