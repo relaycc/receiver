@@ -13,7 +13,7 @@
     "prettier:fix": "prettier . --write",
     "typecheck": "tsc --emitDeclarationOnly false --noEmit",
     "patch": "npm version patch -m 'patch: Bump version to %s'",
-    "pub": "npm run lint && npm run prettier && npm run typecheck && npm run build && npm publish"
+    "pub": "npm run lint && npm run prettier && npm run typecheck && npm run build && npm run patch && npm publish"
   },
   "author": "Relay",
   "license": "MIT",
