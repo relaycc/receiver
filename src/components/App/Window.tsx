@@ -71,7 +71,6 @@ const Container = styled.div<{ isOpen: boolean }>`
 `;
 
 const Fixed = styled.div`
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
   position: fixed;
   bottom: 0.75rem;
   right: 88px;
