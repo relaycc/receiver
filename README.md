@@ -27,7 +27,7 @@ Check out the [example](https://github.com/relaycc/receiver-example-cra) using [
 
 ```bash
 git clone https://github.com/relaycc/receiver-example-cra.git
-cd receiver-example-cra.git
+cd receiver-example-cra
 npm install
 npm start
 # Then navigate to http://localhost:3000 in your browser
