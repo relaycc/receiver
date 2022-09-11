@@ -1,6 +1,5 @@
 <img width="1257" alt="image" src="https://user-images.githubusercontent.com/100799178/189496413-85d3486d-2545-4b4c-9212-b943d503ed62.png">
 
-
 # Overview
 
 **The best way to add Web3 messaging to your site!**
@@ -8,7 +7,7 @@
 Relay Receiver is a [React](https://reactjs.org/) library that makes it easy to
 add Web3 messaging to your website.
 
-- 🔥 Out-of-the-box wallet-to-wallet messaging, to a site admin or between users. 
+- 🔥 Out-of-the-box wallet-to-wallet messaging, to a site admin or between users.
 - ✅ Easily customizable with nice defaults.
 - 🦄 Built on top of [XMTP](https://xmtp.com)
 
@@ -36,7 +35,7 @@ npm start
 ## Usage
 
 The simplest case is to just add `<Window />` and `<Launcher />` to your app, making sure to pass
-in the user's connected wallet. 
+in the user's connected wallet.
 
 ```TypeScript
 import { Window, Launcher } from '@relaycc/receiver';
@@ -53,6 +52,7 @@ function App() {
 
 export default App;
 ```
+
 The `<Launcher />` component, when clicked, will by default open a Receiver `<Window />` with the inbox view
 active. To instead jump directly into a 1:1 conversation with a specific wallet (the site's support team, for example),
 you can pass in the `peerAddress` prop:
