@@ -11,22 +11,24 @@ in this template will probably be closed out-of-hand.**
   describe the bug. If it's a refactor, describe what the refactor accomplishes.
 - Please do not include implementation details in this section.
 
+# Implementation Plan
+
+*If the pull request is going to be a "Draft" PR for more than a day, authors
+must include an implementation plan in the form of a checkpoint list.*
+
 # Implementation Details (the "how")
 
-A detailed description of each change in the changeset. The description should
-include
+*A detailed description of each change in the changeset. The description should
+include*
 
 - high-level overview of the changes
 - where should the reveiwer start their review, which files?
 - notes on any hacky solutions that were included
 - any pieces left unfinished and why
 
-**If the pull request is going to be a "Draft" PR for more than a day, authors
-must include an implementation plan in the form of checklist.**
-
 # How the changeset was tested
 
-_A detailed list of cases which the author verified before requesting review._
+*A detailed list of cases which the author verified before requesting review.*
 
 - The ideal option here is a list of existing, updated, or newly-created UI
   tests that cover the included functionality.
