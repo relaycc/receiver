@@ -21,6 +21,9 @@ include
 - notes on any hacky solutions that were included
 - any pieces left unfinished and why
 
+**If the pull request is going to be a "Draft" PR for more than a day, authors
+must include an implementation plan in the form of checklist.**
+
 # How the changeset was tested
 
 _A detailed list of cases which the author verified before requesting review._
