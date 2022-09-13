@@ -1,33 +1,16 @@
 import React, { useEffect } from 'react';
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { useReceiver, useRelay } from '../../hooks';
+import { useLaunch, useReceiver, useRelay } from '../../hooks';
 import { Avatar } from '../Elements';
 import { Signer } from '@ethersproject/abstract-signer';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
-import { publicProvider } from 'wagmi/providers/public';
-import {
-  WagmiConfig,
-  configureChains,
-  createClient,
-  defaultChains,
-} from 'wagmi';
-
-const alchemyKey = 'kmMb00nhQ0SWModX6lJLjXy_pVtiQnjx';
-
-const { provider } = configureChains(defaultChains, [
-  alchemyProvider({ apiKey: alchemyKey }),
-  publicProvider(),
-]);
-
-const wagmiClient = createClient({
-  autoConnect: false,
-  connectors: [],
-  provider,
-});
 
 export interface LauncherProps {
-  peerAddress?: string;
+  // TODO(achilles@relay.cc) We allow the user to pass in much more than a peer
+  // address (ENS, Lens, etc), so we should name this variable accordingly. I
+  // don't want to change the name until we at the very least have a good
+  // migration guide process in place.
+  peerAddress?: string | null;
   wallet?: Signer | null;
 }
 
@@ -35,38 +18,22 @@ export const Launcher: FunctionComponent<LauncherProps> = ({
   peerAddress,
   wallet,
 }) => {
+  // Rename here because we want to think of the input as a handle internally,
+  // even though the public prop is still called `peerAddress`.
+  const inputHandle = peerAddress;
   const client = useRelay((state) => state.client);
   const dispatchRelay = useRelay((state) => state.dispatch);
   const pinnedConversations = useReceiver((state) => state.pinnedConversations);
   const setIsOpen = useReceiver((state) => state.setIsOpen);
   const isOpen = useReceiver((state) => state.isOpen);
   const dispatchReceiver = useReceiver((state) => state.dispatch);
-  const setWallet = useReceiver((state) => state.setWallet);
-
-  // TODO(achilles@relay.cc) The Launcher components should just use the
-  // useLaunch hook.
-  useEffect(() => {
-    if (wallet !== undefined) {
-      setWallet(wallet || null);
-    }
-  }, [wallet, setWallet]);
+  const launch = useLaunch(wallet);
 
   const onClickLaunch = () => {
     if (isOpen) {
       setIsOpen(false);
     } else {
-      if (peerAddress) {
-        dispatchReceiver({
-          id: 'go to screen',
-          screen: { id: 'messages', peerAddress },
-        });
-      } else {
-        dispatchReceiver({
-          id: 'go to screen',
-          screen: { id: 'conversations' },
-        });
-      }
-      setIsOpen(true);
+      launch(inputHandle);
     }
   };
 
@@ -77,39 +44,37 @@ export const Launcher: FunctionComponent<LauncherProps> = ({
   }, [client]);
 
   return (
-    <WagmiConfig client={wagmiClient}>
-      <Fixed>
-        <Container>
-          <LaunchButton onClick={onClickLaunch}>
-            <ChatIcon />
-          </LaunchButton>
-          {pinnedConversations.map((peerAddress) => (
-            <AvatarContainer key={peerAddress}>
-              <Avatar
-                large={true}
-                peerAddress={peerAddress}
-                onClick={() => {
-                  dispatchReceiver({
-                    id: 'go to screen',
-                    screen: { id: 'messages', peerAddress },
-                  });
-                  setIsOpen(true);
-                }}
-              />
-              <AvatarHoverDetails
-                onClick={() => {
-                  dispatchReceiver({
-                    id: 'remove pinned conversation',
-                    peerAddress,
-                  });
-                }}>
-                <CloseIcon />
-              </AvatarHoverDetails>
-            </AvatarContainer>
-          ))}
-        </Container>
-      </Fixed>
-    </WagmiConfig>
+    <Fixed>
+      <Container>
+        <LaunchButton onClick={onClickLaunch}>
+          <ChatIcon />
+        </LaunchButton>
+        {pinnedConversations.map((peerAddress) => (
+          <AvatarContainer key={peerAddress}>
+            <Avatar
+              large={true}
+              peerAddress={peerAddress}
+              onClick={() => {
+                dispatchReceiver({
+                  id: 'go to screen',
+                  screen: { id: 'messages', peerAddress },
+                });
+                setIsOpen(true);
+              }}
+            />
+            <AvatarHoverDetails
+              onClick={() => {
+                dispatchReceiver({
+                  id: 'remove pinned conversation',
+                  peerAddress,
+                });
+              }}>
+              <CloseIcon />
+            </AvatarHoverDetails>
+          </AvatarContainer>
+        ))}
+      </Container>
+    </Fixed>
   );
 };
 

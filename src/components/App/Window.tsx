@@ -1,28 +1,12 @@
 import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-import { Messages, Conversations, NewConversation } from '../Screens';
-import { currentScreen, useReceiver, useRelay } from '../../hooks';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
-import { publicProvider } from 'wagmi/providers/public';
 import {
-  WagmiConfig,
-  configureChains,
-  createClient,
-  defaultChains,
-} from 'wagmi';
-
-const alchemyKey = 'kmMb00nhQ0SWModX6lJLjXy_pVtiQnjx';
-
-const { provider } = configureChains(defaultChains, [
-  alchemyProvider({ apiKey: alchemyKey }),
-  publicProvider(),
-]);
-
-const wagmiClient = createClient({
-  autoConnect: false,
-  connectors: [],
-  provider,
-});
+  AddressResolution,
+  PeerAddress,
+  Conversations,
+  NewConversation,
+} from '../Screens';
+import { currentScreen, useReceiver, useRelay } from '../../hooks';
 
 export const Window: FunctionComponent = () => {
   const screenHistory = useReceiver((state) => state.screenHistory);
@@ -38,10 +22,12 @@ export const Window: FunctionComponent = () => {
   }, [client]);
 
   const screen = useMemo(() => {
-    if (visibleScreen.id === 'conversations') {
+    if (visibleScreen.id === 'address resolution') {
+      return <AddressResolution handle={visibleScreen.handle} />;
+    } else if (visibleScreen.id === 'conversations') {
       return <Conversations />;
     } else if (visibleScreen.id === 'messages') {
-      return <Messages peerAddress={visibleScreen.peerAddress} />;
+      return <PeerAddress handle={visibleScreen.peerAddress} />;
     } else if (visibleScreen.id === 'new conversation') {
       return <NewConversation />;
     } else {
@@ -50,11 +36,9 @@ export const Window: FunctionComponent = () => {
   }, [visibleScreen]);
 
   return (
-    <WagmiConfig client={wagmiClient}>
-      <Fixed>
-        <Container isOpen={isOpen}>{screen}</Container>
-      </Fixed>
-    </WagmiConfig>
+    <Fixed>
+      <Container isOpen={isOpen}>{screen}</Container>
+    </Fixed>
   );
 };
 

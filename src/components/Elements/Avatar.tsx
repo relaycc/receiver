@@ -3,31 +3,34 @@ import styled from 'styled-components';
 import { useEnsAvatar } from '../../hooks';
 import Blockies from 'react-blockies';
 import LoadingSpinner from './LoadingSpinner';
+import { useEnsName, useEnsAddress, useLensAddress } from '../../hooks';
 
-interface AvatarProps {
-  peerAddress: string;
+export interface AvatarProps {
+  handle?: string | null;
   onClick: () => unknown;
   large?: boolean;
 }
 
 export const Avatar: FunctionComponent<AvatarProps> = ({
-  peerAddress,
+  handle,
   onClick,
   large,
 }) => {
-  const {
-    data: ensAvatar,
-    isFetching,
-    isLoading,
-  } = useEnsAvatar({ addressOrName: peerAddress });
+  const lensAddress = useLensAddress({ handle });
+  const ensAddress = useEnsAddress({ handle });
+  const ens = useEnsName({ handle });
+  const avatar = useEnsAvatar({
+    handle:
+      lensAddress.address || ensAddress.address || ens.name || handle || 'TODO',
+  });
 
-  if (isFetching || isLoading) {
+  if (avatar.status === 'fetching') {
     return <LoadingSpinner width={large ? 50 : 40} height={large ? 50 : 40} />;
-  } else if (!ensAvatar) {
+  } else if (!avatar.avatar) {
     return (
       <BlockiesContainer onClick={onClick} large={large}>
         <Blockies
-          seed={peerAddress}
+          seed={handle || 'no address'}
           size={10}
           scale={large ? 5 : 4}
           className={'circle'}
@@ -36,7 +39,12 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
     );
   } else {
     return (
-      <AvatarImage onClick={onClick} src={ensAvatar} alt="user" large={large} />
+      <AvatarImage
+        onClick={onClick}
+        src={avatar.avatar}
+        alt="user"
+        large={large}
+      />
     );
   }
 };

@@ -22,11 +22,11 @@ export default function MessagesBucket({
 }: MessagesBucketProps) {
   const sentByMe = sentByAddress !== userPeerAddress;
 
-  const { data: senderName } = useEnsName({
-    address: sentByAddress,
+  const { name: senderName } = useEnsName({
+    handle: sentByAddress,
   });
-  const { data: peerEns } = useEnsName({
-    address: sentByAddress,
+  const { name: peerEns } = useEnsName({
+    handle: sentByAddress,
   });
   const responsiveName = useResponsiveName(
     sentByMe ? senderName : peerEns,
@@ -41,7 +41,7 @@ export default function MessagesBucket({
       <SentByInfo sentByMe={sentByMe}>
         <MessageHeader>
           <div style={{ marginRight: '10px' }}>
-            <Avatar peerAddress={sentByAddress} onClick={() => null} />
+            <Avatar handle={sentByAddress} onClick={() => null} />
           </div>
           <SenderName sentByMe={sentByMe}>{responsiveName}</SenderName>
           <MessageTime>
