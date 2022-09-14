@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { Conversations as ConversationsHeader } from '../Elements/Header';
-import { ConversationList, InfoCard, LoadingList } from '../Elements';
+import { ConversationList, InfoCard, LoadingList, Header } from '../Elements';
 import { useReceiver, useRelay } from '../../hooks';
 
 export const Conversations = () => {
@@ -19,7 +18,7 @@ export const Conversations = () => {
 
   return (
     <>
-      <ConversationsHeader />
+      <Header />
       {(() => {
         if (wallet === null) {
           return <InfoCard variant="no wallet" />;

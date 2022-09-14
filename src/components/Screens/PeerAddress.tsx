@@ -1,6 +1,11 @@
 import React, { FunctionComponent, useEffect } from 'react';
-import { Messages as MessagesHeader } from '../Elements/Header';
-import { MessageList, MessageInput, InfoCard, LoadingList } from '../Elements';
+import {
+  MessageList,
+  MessageInput,
+  InfoCard,
+  LoadingList,
+  Header,
+} from '../Elements';
 import {
   useEnsAddress,
   useLensAddress,
@@ -44,7 +49,7 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
 
   return (
     <>
-      <MessagesHeader />
+      <Header />
       {(() => {
         if (wallet === null) {
           return <InfoCard variant="no wallet" />;

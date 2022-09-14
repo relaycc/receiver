@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useState } from 'react';
-import { truncateAddress } from '../../../utils/address';
+import { truncateAddress } from '../../utils/address';
 import styled from 'styled-components';
-import { Avatar } from '../Avatar';
-import { LoadingText } from '../LoadingText';
+import { Avatar } from './Avatar';
+import { LoadingText } from './LoadingText';
 import {
   useEnsName,
   useEnsAddress,
@@ -10,7 +10,7 @@ import {
   isEnsName,
   isEthAddress,
   isLensName,
-} from '../../../hooks';
+} from '../../hooks';
 
 export interface AddressInfoProps {
   handle?: string | null;
