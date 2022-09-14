@@ -1,10 +1,8 @@
-import { AlchemyProvider, CloudflareProvider } from '@ethersproject/providers';
-const cfProvider = new CloudflareProvider();
-const alchemyProvider = new AlchemyProvider(
+import { AlchemyProvider } from '@ethersproject/providers';
+const provider = new AlchemyProvider(
   'homestead',
   'kmMb00nhQ0SWModX6lJLjXy_pVtiQnjx'
 );
-
 export const useProvider = () => {
-  return Math.random() < 0.5 ? cfProvider : alchemyProvider;
+  return provider;
 };
