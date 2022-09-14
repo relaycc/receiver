@@ -6,3 +6,4 @@ export * from './LoadingList';
 export * from './MessageList';
 export * from './MessageInput';
 export * from './InfoCard';
+export * from './LoadingText';

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import React, { FunctionComponent } from 'react';
 import { Avatar } from './Avatar';
-// import { useMessages, getLastMessage } from '../../../xmtp-react/conversations';
 import { useResponsiveName, useEnsName } from '../../hooks';
 import { useReceiver } from '../../hooks';
 
@@ -14,10 +13,10 @@ export const ConversationListItem: FunctionComponent<
   ConversationListItemProps
 > = ({ peerAddress, subtitle }) => {
   const dispatch = useReceiver((state) => state.dispatch);
-  const { data: ensName } = useEnsName({
-    address: peerAddress,
+  const { name } = useEnsName({
+    handle: peerAddress,
   });
-  const responsiveName = useResponsiveName(ensName, peerAddress, '');
+  const responsiveName = useResponsiveName(name, peerAddress, '');
 
   return (
     <ListItem
@@ -27,7 +26,7 @@ export const ConversationListItem: FunctionComponent<
           screen: { id: 'messages', peerAddress },
         })
       }>
-      <Avatar peerAddress={peerAddress} onClick={() => null} />
+      <Avatar handle={peerAddress} onClick={() => null} />
       <TextContainer>
         <Title>{responsiveName}</Title>
         <Subtitle>{subtitle}</Subtitle>

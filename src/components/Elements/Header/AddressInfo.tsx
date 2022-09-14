@@ -1,43 +1,121 @@
 import React, { FunctionComponent, useState } from 'react';
 import { truncateAddress } from '../../../utils/address';
 import styled from 'styled-components';
-import { Avatar } from '..';
-import { useEnsName } from '../../../hooks';
+import { Avatar } from '../Avatar';
+import { LoadingText } from '../LoadingText';
+import {
+  useEnsName,
+  useEnsAddress,
+  useLensAddress,
+  isEnsName,
+  isEthAddress,
+  isLensName,
+} from '../../../hooks';
 
 export interface AddressInfoProps {
-  peerAddress: string;
+  handle?: string | null;
 }
 
 export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
-  peerAddress,
+  handle,
 }) => {
-  const { data: ensName } = useEnsName({ address: peerAddress });
+  const lensAddress = useLensAddress({
+    handle: isLensName(handle) ? handle : null,
+  });
+  const ensAddress = useEnsAddress({
+    handle: isEnsName(handle) ? handle : null,
+  });
+  const ensName = useEnsName({
+    handle: isEthAddress(handle) ? handle : null,
+  });
   const [isOpen, setIsOpen] = useState(false);
+
+  const primaryId = (() => {
+    if (isEnsName(handle)) {
+      return handle;
+    }
+    if (isLensName(handle)) {
+      return handle;
+    }
+    if (isEthAddress(lensAddress.address)) {
+      return handle;
+    }
+    if (isEthAddress(ensAddress.address)) {
+      return handle;
+    }
+    if (isEnsName(ensName.name)) {
+      return ensName.name;
+    }
+
+    if (
+      lensAddress.status === 'fetching' ||
+      ensAddress.status === 'fetching' ||
+      ensName.status === 'fetching'
+    ) {
+      return 'loading';
+    }
+
+    if (isEthAddress(handle)) {
+      return handle;
+    } else {
+      return 'invalid';
+    }
+  })();
+
+  const secondaryId = (() => {
+    if (isEthAddress(handle)) {
+      return handle;
+    }
+    if (isEthAddress(lensAddress.address)) {
+      return lensAddress.address;
+    }
+    if (isEthAddress(ensAddress.address)) {
+      return ensAddress.address;
+    }
+
+    if (
+      lensAddress.status === 'fetching' ||
+      ensAddress.status === 'fetching' ||
+      ensName.status === 'fetching'
+    ) {
+      return 'loading';
+    } else {
+      return 'invalid';
+    }
+  })();
 
   return (
     <Container
       onClick={() => {
         setIsOpen(!isOpen);
       }}>
-      <Avatar peerAddress={peerAddress} onClick={() => null} />
+      <Avatar handle={handle} onClick={() => null} />
       <TextContainer>
-        <MainText>{ensName || truncateAddress(peerAddress)}</MainText>
-        <SubText>{truncateAddress(peerAddress)}</SubText>
+        {primaryId === 'loading' && <LoadingText />}
+        {primaryId === 'loading' || (
+          <MainText>
+            {isEthAddress(primaryId) ? truncateAddress(primaryId) : primaryId}
+          </MainText>
+        )}
+        {secondaryId === 'loading' && <LoadingText />}
+        {secondaryId === 'loading' || (
+          <SubText>{truncateAddress(secondaryId)}</SubText>
+        )}
         <DropdownMenu>
           <DropDownItem
-            onClick={() => navigator.clipboard.writeText(String(peerAddress))}>
+            onClick={() => navigator.clipboard.writeText(String(secondaryId))}>
             <CopyClipboardIcon />
             Copy Address
           </DropDownItem>
           <DropDownItem>
-            <LiLink href={'https://relay.cc/' + peerAddress} target="_blank">
+            <LiLink href={'https://relay.cc/' + secondaryId} target="_blank">
               <GoToRelayIcon />
               Relay
             </LiLink>
           </DropDownItem>
           <DropDownItem>
             <LiLink
-              href={'https://etherscan.io/address/' + peerAddress}
+              href={'https://etherscan.io/address/' + secondaryId}
               target="_blank">
               <EtherscanIcon />
               Etherscan

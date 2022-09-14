@@ -14,7 +14,7 @@ export const Messages: FunctionComponent = () => {
   return (
     <Header>
       <GoBackIcon onClick={() => dispatch({ id: 'go back screen' })} />
-      <AddressInfo peerAddress={peerAddress} />
+      <AddressInfo handle={peerAddress} />
       <MinimizeIcon
         onClick={() => {
           setIsOpen(false);
