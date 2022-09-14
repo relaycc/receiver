@@ -13,13 +13,13 @@ in this template will probably be closed out-of-hand.**
 
 # Implementation Plan
 
-*If the pull request is going to be a "Draft" PR for more than a day, authors
-must include an implementation plan in the form of a checkpoint list.*
+_If the pull request is going to be a "Draft" PR for more than a day, authors
+must include an implementation plan in the form of a checkpoint list._
 
 # Implementation Details (the "how")
 
-*A detailed description of each change in the changeset. The description should
-include*
+_A detailed description of each change in the changeset. The description should
+include_
 
 - high-level overview of the changes
 - where should the reveiwer start their review, which files?
@@ -28,7 +28,7 @@ include*
 
 # How the changeset was tested
 
-*A detailed list of cases which the author verified before requesting review.*
+_A detailed list of cases which the author verified before requesting review._
 
 - The ideal option here is a list of existing, updated, or newly-created UI
   tests that cover the included functionality.
