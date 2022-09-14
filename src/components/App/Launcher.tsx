@@ -53,7 +53,7 @@ export const Launcher: FunctionComponent<LauncherProps> = ({
           <AvatarContainer key={peerAddress}>
             <Avatar
               large={true}
-              peerAddress={peerAddress}
+              handle={peerAddress}
               onClick={() => {
                 dispatchReceiver({
                   id: 'go to screen',

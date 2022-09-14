@@ -1,11 +1,6 @@
 import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-import {
-  AddressResolution,
-  PeerAddress,
-  Conversations,
-  NewConversation,
-} from '../Screens';
+import { PeerAddress, Conversations, NewConversation } from '../Screens';
 import { currentScreen, useReceiver, useRelay } from '../../hooks';
 
 export const Window: FunctionComponent = () => {
@@ -22,9 +17,7 @@ export const Window: FunctionComponent = () => {
   }, [client]);
 
   const screen = useMemo(() => {
-    if (visibleScreen.id === 'address resolution') {
-      return <AddressResolution handle={visibleScreen.handle} />;
-    } else if (visibleScreen.id === 'conversations') {
+    if (visibleScreen.id === 'conversations') {
       return <Conversations />;
     } else if (visibleScreen.id === 'messages') {
       return <PeerAddress handle={visibleScreen.peerAddress} />;

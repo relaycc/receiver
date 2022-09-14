@@ -4,7 +4,6 @@ import { Client, Stream } from '@relaycc/xmtp-js';
 
 export type ReceiverScreen =
   | { id: 'messages'; peerAddress: string }
-  | { id: 'address resolution'; handle?: string | null }
   | { id: 'conversations' }
   | { id: 'new conversation' };
 

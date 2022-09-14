@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import React, { FunctionComponent } from 'react';
 import { Avatar } from './Avatar';
-// import { useMessages, getLastMessage } from '../../../xmtp-react/conversations';
 import { useResponsiveName, useEnsName } from '../../hooks';
 import { useReceiver } from '../../hooks';
 

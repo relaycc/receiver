@@ -1,8 +1,16 @@
 import React, { FunctionComponent, useEffect } from 'react';
-import { useRelay, isEmpty, useReceiver, isEthAddress } from '../../hooks';
 import { Messages as MessagesHeader } from '../Elements/Header';
 import { MessageList, MessageInput, InfoCard, LoadingList } from '../Elements';
-import { useEnsAddress, useLensAddress } from '../../hooks';
+import {
+  useEnsAddress,
+  useLensAddress,
+  isLensName,
+  useRelay,
+  useReceiver,
+  isEmpty,
+  isEthAddress,
+  isEnsName,
+} from '../../hooks';
 
 export interface PeerAddressProps {
   handle?: string | null;
@@ -11,8 +19,12 @@ export interface PeerAddressProps {
 export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
   handle,
 }) => {
-  const lensAddress = useLensAddress({ handle });
-  const ensAddress = useEnsAddress({ handle });
+  const lensAddress = useLensAddress({
+    handle: isLensName(handle) ? handle : null,
+  });
+  const ensAddress = useEnsAddress({
+    handle: isEnsName(handle) ? handle : null,
+  });
   const peerAddress =
     lensAddress.address || ensAddress.address || handle || 'TODO';
   const client = useRelay((state) => state.client);

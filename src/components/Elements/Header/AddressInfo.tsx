@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { truncateAddress } from '../../../utils/address';
 import styled from 'styled-components';
 import { Avatar } from '../Avatar';
@@ -9,6 +9,7 @@ import {
   useLensAddress,
   isEnsName,
   isEthAddress,
+  isLensName,
 } from '../../../hooks';
 
 export interface AddressInfoProps {
@@ -18,26 +19,38 @@ export interface AddressInfoProps {
 export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
   handle,
 }) => {
-  const lensAddress = useLensAddress({ handle });
-  const ensAddress = useEnsAddress({ handle });
-  const ens = useEnsName({ handle });
+  const lensAddress = useLensAddress({
+    handle: isLensName(handle) ? handle : null,
+  });
+  const ensAddress = useEnsAddress({
+    handle: isEnsName(handle) ? handle : null,
+  });
+  const ensName = useEnsName({
+    handle: isEthAddress(handle) ? handle : null,
+  });
   const [isOpen, setIsOpen] = useState(false);
 
-  const primaryId = useMemo(() => {
+  const primaryId = (() => {
+    if (isEnsName(handle)) {
+      return handle;
+    }
+    if (isLensName(handle)) {
+      return handle;
+    }
     if (isEthAddress(lensAddress.address)) {
       return handle;
     }
     if (isEthAddress(ensAddress.address)) {
       return handle;
     }
-    if (isEnsName(ens.name)) {
-      return ens.name;
+    if (isEnsName(ensName.name)) {
+      return ensName.name;
     }
 
     if (
       lensAddress.status === 'fetching' ||
       ensAddress.status === 'fetching' ||
-      ens.status === 'fetching'
+      ensName.status === 'fetching'
     ) {
       return 'loading';
     }
@@ -47,9 +60,9 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
     } else {
       return 'invalid';
     }
-  }, [handle, lensAddress, ensAddress, ens]);
+  })();
 
-  const secondaryId = useMemo(() => {
+  const secondaryId = (() => {
     if (isEthAddress(handle)) {
       return handle;
     }
@@ -63,13 +76,13 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
     if (
       lensAddress.status === 'fetching' ||
       ensAddress.status === 'fetching' ||
-      ens.status === 'fetching'
+      ensName.status === 'fetching'
     ) {
       return 'loading';
     } else {
       return 'invalid';
     }
-  }, [handle, lensAddress, ensAddress, ens]);
+  })();
 
   return (
     <Container

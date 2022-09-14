@@ -1,9 +1,16 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { useEnsAvatar } from '../../hooks';
 import Blockies from 'react-blockies';
 import LoadingSpinner from './LoadingSpinner';
-import { useEnsName, useEnsAddress, useLensAddress } from '../../hooks';
+import {
+  useEnsName,
+  useEnsAddress,
+  useLensAddress,
+  isEthAddress,
+  isLensName,
+  isEnsName,
+  useEnsAvatar,
+} from '../../hooks';
 
 export interface AvatarProps {
   handle?: string | null;
@@ -16,9 +23,13 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
   onClick,
   large,
 }) => {
-  const lensAddress = useLensAddress({ handle });
-  const ensAddress = useEnsAddress({ handle });
-  const ens = useEnsName({ handle });
+  const lensAddress = useLensAddress({
+    handle: isLensName(handle) ? handle : null,
+  });
+  const ensAddress = useEnsAddress({
+    handle: isEnsName(handle) ? handle : null,
+  });
+  const ens = useEnsName({ handle: isEthAddress(handle) ? handle : null });
   const avatar = useEnsAvatar({
     handle:
       lensAddress.address || ensAddress.address || ens.name || handle || 'TODO',
