@@ -1,6 +1,5 @@
 import React from 'react';
-import { Conversations as Header } from '../Elements/Header';
-import { NewConversation as Main } from '../Elements';
+import { NewConversation as Main, Header } from '../Elements';
 import { useReceiver } from '../../hooks';
 
 export const NewConversation = () => {
