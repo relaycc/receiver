@@ -19,14 +19,12 @@ export const Header: FunctionComponent = () => {
     return (
       <HeaderWrapper>
         <GoToConversationsIcon
-          marginRight="8px"
           onClick={() =>
             dispatch({ id: 'go to screen', screen: { id: 'conversations' } })
           }
         />
         <Title>New Conversation</Title>
         <ExitIcon
-          marginLeft="auto"
           onClick={() => {
             setIsOpen(false);
           }}
@@ -40,11 +38,9 @@ export const Header: FunctionComponent = () => {
           onClick={() =>
             dispatch({ id: 'go to screen', screen: { id: 'new conversation' } })
           }
-          marginRight="8px"
         />
         <Title>Conversations</Title>
         <ExitIcon
-          marginLeft="auto"
           onClick={() => {
             setIsOpen(false);
           }}
@@ -55,7 +51,7 @@ export const Header: FunctionComponent = () => {
     return (
       <HeaderWrapper>
         <GoToConversationsIcon
-          marginRight="8px"
+          marginRight="10px"
           onClick={() =>
             dispatch({ id: 'go to screen', screen: { id: 'conversations' } })
           }
@@ -63,7 +59,6 @@ export const Header: FunctionComponent = () => {
         <AddressInfo handle={screen.peerAddress} />
         <MinimizeIcon
           marginLeft="auto"
-          marginRight="8px"
           onClick={() => {
             dispatch({
               id: 'add pinned conversation',
@@ -92,7 +87,7 @@ const HeaderWrapper = styled.div`
     color: black;
     display: flex;
     justify-content: space-between;
-    min-height: 62px;
+    min-height: 40px;
     display: flex;
     align-items: center;
     padding: 0.5rem;
@@ -105,6 +100,8 @@ const Title = styled.h1`
   font-size: 1.25rem;
   font-family: 'Poppins', sans-serif;
   color: black;
-  font-weight: 700;
+  font-weight: 600;
+  opacity: 0.75;
   text-align: bottom;
+  margin: 0;
 `;

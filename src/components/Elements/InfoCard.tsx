@@ -11,7 +11,8 @@ export interface InfoCardProps {
     | 'waiting for signature'
     | 'signature denied'
     | 'no messages'
-    | 'no wallet';
+    | 'no wallet'
+    | 'new conversation';
   peerName?: string;
 }
 
@@ -108,6 +109,18 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
         </CardContainer>
       </FullMiddleSection>
     );
+  } else if (variant === 'new conversation') {
+    return (
+      <FullMiddleSection>
+        <CardContainer>
+          <Text>
+            Only those who have previously signed into the XMTP network are
+            reachable.
+          </Text>
+        </CardContainer>
+        <BrandedFooter />
+      </FullMiddleSection>
+    );
   } else {
     throw new Error('We never should have got here!');
   }
@@ -198,8 +211,11 @@ export const Button = styled.div`
     font-size: 14px;
     color: white;
 
+    transition: all 0.1s ease-in-out;
+
     &:hover {
       cursor: pointer;
+      filter: brightness(1.1);
     }
   }
 `;

@@ -29,6 +29,7 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
     handle: isEthAddress(handle) ? handle : null,
   });
   const [isOpen, setIsOpen] = useState(false);
+  const [didCopyToClipboard, setDidCopyToClipboard] = useState(false);
 
   const primaryId = (() => {
     if (isEnsName(handle)) {
@@ -103,22 +104,27 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
         )}
         <DropdownMenu>
           <DropDownItem
-            onClick={() => navigator.clipboard.writeText(String(secondaryId))}>
+            onClick={() => {
+              setDidCopyToClipboard(true);
+              setTimeout(() => setDidCopyToClipboard(false), 3000);
+              navigator.clipboard.writeText(String(secondaryId));
+            }}>
+            {didCopyToClipboard || 'Copy Address'}
+            {didCopyToClipboard && 'Copied'}
             <CopyClipboardIcon />
-            Copy Address
           </DropDownItem>
           <DropDownItem>
             <LiLink href={'https://relay.cc/' + secondaryId} target="_blank">
-              <GoToRelayIcon />
               Relay
+              <GoToRelayIcon />
             </LiLink>
           </DropDownItem>
           <DropDownItem>
             <LiLink
               href={'https://etherscan.io/address/' + secondaryId}
               target="_blank">
-              <EtherscanIcon />
               Etherscan
+              <EtherscanIcon />
             </LiLink>
           </DropDownItem>
         </DropdownMenu>
@@ -145,7 +151,7 @@ const DropdownMenu = styled.ul`
     opacity: 1;
     transition: opacity 150ms, visibility 150ms;
     padding: 0;
-    min-width: max-content;
+    min-width: 10rem;
     z-index: 10000000;
   }
 `;
@@ -195,6 +201,7 @@ const DropDownItem = styled.li`
     font-weight: 600;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 8px;
     padding: 15px;
 
@@ -213,6 +220,7 @@ const LiLink = styled.a`
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     font-weight: 600;
     gap: 8px;
   }
@@ -221,6 +229,7 @@ const LiLink = styled.a`
 const CopyClipboardIcon = () => {
   return (
     <svg
+      style={{ paddingRight: '2px' }}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
