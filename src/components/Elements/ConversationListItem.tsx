@@ -3,6 +3,7 @@ import React, { FunctionComponent } from 'react';
 import { Avatar } from './Avatar';
 import { useResponsiveName, useEnsName } from '../../hooks';
 import { useReceiver } from '../../hooks';
+import '../../styles/app.css'
 
 export interface ConversationListItemProps {
   peerAddress: string;
@@ -19,7 +20,7 @@ export const ConversationListItem: FunctionComponent<
   const responsiveName = useResponsiveName(name, peerAddress, '');
 
   return (
-    <ListItem
+    <li className='ConversationListItem ListItem'
       onClick={() =>
         dispatch({
           id: 'go to screen',
@@ -31,28 +32,28 @@ export const ConversationListItem: FunctionComponent<
         <Title>{responsiveName}</Title>
         <Subtitle>{subtitle}</Subtitle>
       </TextContainer>
-    </ListItem>
+    </li>
   );
 };
 
-const ListItem = styled.li`
-  &&& {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
-    padding: 15px 10px;
-    cursor: pointer;
-    width: 100%;
-    background-color: transparent;
-    transition: background-color 300ms ease-in-out;
+// const ListItem = styled.li`
+//   &&& {
+//     display: flex;
+//     align-items: center;
+//     gap: 10px;
+//     box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
+//     padding: 15px 10px;
+//     cursor: pointer;
+//     width: 100%;
+//     background-color: transparent;
+//     transition: background-color 300ms ease-in-out;
 
-    :hover {
-      background-color: #eeeeee;
-      transition: background-color 300ms ease-in-out;
-    }
-  }
-`;
+//     :hover {
+//       background-color: #eeeeee;
+//       transition: background-color 300ms ease-in-out;
+//     }
+//   }
+// `;
 
 const TextContainer = styled.div`
   &&& {
