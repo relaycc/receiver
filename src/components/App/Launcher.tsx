@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useLaunch, useReceiver, useRelay } from '../../hooks';
 import { Avatar } from '../Elements';
 import { Signer } from '@ethersproject/abstract-signer';
+import '../../styles/app.css';
 
 export interface LauncherProps {
   // TODO(achilles@relay.cc) We allow the user to pass in much more than a peer
@@ -44,11 +45,11 @@ export const Launcher: FunctionComponent<LauncherProps> = ({
   }, [client]);
 
   return (
-    <Fixed>
-      <Container>
-        <LaunchButton onClick={onClickLaunch}>
+    <div className="Launcher Fixed">
+      <ul className="Launcher Container">
+        <button className="Launcher LaunchButton" onClick={onClickLaunch}>
           <ChatIcon />
-        </LaunchButton>
+        </button>
         {pinnedConversations.map((peerAddress) => (
           <AvatarContainer key={peerAddress}>
             <Avatar
@@ -73,20 +74,10 @@ export const Launcher: FunctionComponent<LauncherProps> = ({
             </AvatarHoverDetails>
           </AvatarContainer>
         ))}
-      </Container>
-    </Fixed>
+      </ul>
+    </div>
   );
 };
-
-const Container = styled.ul`
-  &&& {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-  }
-`;
 
 const AvatarHoverDetails = styled.div`
   &&& {
@@ -117,23 +108,6 @@ const AvatarContainer = styled.div`
   }
 `;
 
-const LaunchButton = styled.button`
-  &&& {
-    background: white;
-    border: none;
-    border-radius: 50%;
-    height: 3rem;
-    width: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.45);
-    &:hover {
-      cursor: pointer;
-    }
-  }
-`;
-
 const ChatIcon = () => {
   return (
     <svg
@@ -151,15 +125,6 @@ const ChatIcon = () => {
     </svg>
   );
 };
-
-const Fixed = styled.div`
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  flex-direction: row;
-  margin: 1.5rem;
-`;
 
 const CloseIcon = () => {
   return (

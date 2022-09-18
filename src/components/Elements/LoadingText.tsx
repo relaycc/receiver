@@ -3,20 +3,13 @@ import styled from 'styled-components';
 
 export const LoadingText = () => {
   return (
-    <LoadingCircleContainer>
+    <div className="LoadingText LoadingCircleContainer">
       <LoadingCircle></LoadingCircle>
       <LoadingCircle2></LoadingCircle2>
       <LoadingCircle3></LoadingCircle3>
-    </LoadingCircleContainer>
+    </div>
   );
 };
-
-const LoadingCircleContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px;
-`;
 
 const LoadingCircle = styled.div`
   color: white;

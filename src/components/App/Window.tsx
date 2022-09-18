@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { PeerAddress, Conversations, NewConversation } from '../Screens';
 import { currentScreen, useReceiver, useRelay } from '../../hooks';
-import '../../styles/app.css'
+import '../../styles/app.css';
 
 export const Window: FunctionComponent = () => {
   const screenHistory = useReceiver((state) => state.screenHistory);
@@ -30,9 +30,9 @@ export const Window: FunctionComponent = () => {
   }, [visibleScreen]);
 
   return (
-    <Fixed>
+    <div className="Window Fixed">
       <Container isOpen={isOpen}>{screen}</Container>
-    </Fixed>
+    </div>
   );
 };
 
@@ -46,10 +46,4 @@ const Container = styled.div<{ isOpen: boolean }>`
   flex-direction: column;
   border-radius: 4px;
   box-shadow: rgb(0 0 0 / 25%) 0px 0px 4px;
-`;
-
-const Fixed = styled.div`
-  position: fixed;
-  bottom: 0.75rem;
-  right: 88px;
 `;

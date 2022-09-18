@@ -10,27 +10,27 @@ export const LoadingList = () => {
   }, []);
   return (
     <MainContainer>
-      <LeftContainer>
+      <div className="LoadingList LeftContainer">
         <LeftUserInfo>
-          <LogoOutline />
-          <NameOutline />
-          <DateOutline />
+          <div className="LoadingList LogoOutline" />
+          <div className="LoadingList NameOutline" />
+          <div className="LoadingList DateOutline" />
         </LeftUserInfo>
         <LeftMessageContainer>
-          <FirstMessage />
-          <SecondMessage />
+          <div className="LoadingList FirstMessage" />
+          <div className="LoadingList SecondMessage" />
         </LeftMessageContainer>
-      </LeftContainer>
-      <RightContainer>
+      </div>
+      <div className="LoadingList RightContainer">
         <RightUserInfo>
-          <LogoOutline />
-          <NameOutline />
-          <DateOutline />
+          <div className="LoadingList LogoOutline" />
+          <div className="LoadingList NameOutline" />
+          <div className="LoadingList DateOutline" />
         </RightUserInfo>
         <RightMessageContainer>
-          <FirstMessage />
+          <div className="LoadingList FirstMessage" />
         </RightMessageContainer>
-      </RightContainer>
+      </div>
     </MainContainer>
   );
 };
@@ -66,20 +66,7 @@ const MainContainer = styled.div`
     }
   }
 `;
-const LeftContainer = styled.div`
-  &&& {
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
-  }
-`;
-const RightContainer = styled.div`
-  &&& {
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
-  }
-`;
+
 const LeftUserInfo = styled.div`
   &&& {
     display: flex;
@@ -92,6 +79,7 @@ const LeftUserInfo = styled.div`
     }
   }
 `;
+
 const RightUserInfo = styled.div`
   &&& {
     display: flex;
@@ -105,27 +93,7 @@ const RightUserInfo = styled.div`
     }
   }
 `;
-const LogoOutline = styled.div`
-  &&& {
-    border-radius: 50%;
-    height: 40px;
-    width: 40px;
-  }
-`;
-const NameOutline = styled.div`
-  &&& {
-    height: 22px;
-    width: 78px;
-    border-radius: 8px;
-  }
-`;
-const DateOutline = styled.div`
-  &&& {
-    width: 96px;
-    height: 17px;
-    border-radius: 8px;
-  }
-`;
+
 const LeftMessageContainer = styled.div`
   &&& {
     display: flex;
@@ -148,19 +116,5 @@ const RightMessageContainer = styled.div`
       opacity: 0.2;
       animation: slide 1500ms ease-in-out infinite;
     }
-  }
-`;
-const FirstMessage = styled.div`
-  &&& {
-    width: 355px;
-    height: 60px;
-    border-radius: 8px;
-  }
-`;
-const SecondMessage = styled.div`
-  &&& {
-    width: 155px;
-    height: 60px;
-    border-radius: 8px;
   }
 `;

@@ -28,7 +28,9 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
       <FullMiddleSection>
         <CardContainer>
           <Title>Could not resolve ENS name</Title>
-          <Text>{'Make sure to include the ".eth" suffix.'}</Text>
+          <div className="InfoCard Text">
+            {'Make sure to include the ".eth" suffix.'}
+          </div>
         </CardContainer>
         <BrandedFooter />
       </FullMiddleSection>
@@ -38,9 +40,9 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
       <FullMiddleSection>
         <CardContainer>
           <Title>Please connect a wallet</Title>
-          <Text>
+          <div className="InfoCard Text">
             To sign in to XMTP, you will need a connected wallet first.
-          </Text>
+          </div>
         </CardContainer>
         <BrandedFooter />
       </FullMiddleSection>
@@ -50,7 +52,9 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
       <FullMiddleSection>
         <CardContainer>
           <Title>User not on network</Title>
-          <Text>This user is not on the XMTP messaging network yet.</Text>
+          <div className="InfoCard Text">
+            This user is not on the XMTP messaging network yet.
+          </div>
         </CardContainer>
         <BrandedFooter />
       </FullMiddleSection>
@@ -60,9 +64,9 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
       <FullMiddleSection>
         <CardContainer>
           <Title>Initialize XMTP Client</Title>
-          <Text>
+          <div className="InfoCard Text">
             To begin messaging, you must first initialize the XMTP client.
-          </Text>
+          </div>
           <Button onClick={() => wallet && dispatch({ id: 'sign in', wallet })}>
             Initialize
           </Button>
@@ -75,10 +79,12 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
       <FullMiddleSection>
         <CardContainer>
           <Title>Initialize XMTP Client</Title>
-          <Text>
+          <div className="InfoCard Text">
             <b>Initializing.</b>
-          </Text>
-          <Text>To continue, please sign the wallet prompt.</Text>
+          </div>
+          <div className="InfoCard Text">
+            To continue, please sign the wallet prompt.
+          </div>
           <DisabledButton>Waiting...</DisabledButton>
         </CardContainer>
         <BrandedFooter />
@@ -89,10 +95,12 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
       <FullMiddleSection>
         <CardContainer>
           <Title>Initialize XMTP Client</Title>
-          <Text>
+          <div className="InfoCard Text">
             <b>Initializing.</b>
-          </Text>
-          <Text>Signature request cancelled. Try again...</Text>
+          </div>
+          <div className="InfoCard Text">
+            Signature request cancelled. Try again...
+          </div>
           <Button onClick={() => wallet && dispatch({ id: 'sign in', wallet })}>
             Initialize
           </Button>
@@ -105,7 +113,7 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
       <FullMiddleSection>
         <CardContainer>
           <Title>{'All Set  🎉'}</Title>
-          <Text>{`This is the beginning of your encrypted conversation with ${peerName}`}</Text>
+          <div className="InfoCard Text">{`This is the beginning of your encrypted conversation with ${peerName}`}</div>
         </CardContainer>
       </FullMiddleSection>
     );
@@ -113,10 +121,10 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
     return (
       <FullMiddleSection>
         <CardContainer>
-          <Text>
+          <div className="InfoCard Text">
             Only those who have previously signed into the XMTP network are
             reachable.
-          </Text>
+          </div>
         </CardContainer>
         <BrandedFooter />
       </FullMiddleSection>
@@ -128,8 +136,12 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
 
 export const BrandedFooter = () => {
   return (
-    <Footer>
-      <FooterLink href="https://try.relay.cc" target="_blank" rel="noreferrer">
+    <footer className="InfoCard Footer">
+      <a
+        className="InfoCard FooterLink"
+        href="https://try.relay.cc"
+        target="_blank"
+        rel="noreferrer">
         <img
           style={{
             height: '30px',
@@ -138,14 +150,15 @@ export const BrandedFooter = () => {
           src="https://relay-receiver-prod.s3.amazonaws.com/smallLogo.png"
           alt="Relay Logo"
         />
-      </FooterLink>
-      <FooterLink
+      </a>
+      <a
+        className="InfoCard FooterLink"
         href="https://docs.relay.cc/relay/relay-receiver/overview"
         target="_blank"
         rel="noreferrer">
-        <WordMark>Relay Receiver</WordMark>
-      </FooterLink>
-    </Footer>
+        <h3 className="InfoCard WordMark">Relay Receiver</h3>
+      </a>
+    </footer>
   );
 };
 
@@ -210,7 +223,6 @@ export const Button = styled.div`
     background: #5203fc;
     font-size: 14px;
     color: white;
-
     transition: all 0.1s ease-in-out;
 
     &:hover {
@@ -221,36 +233,4 @@ export const Button = styled.div`
 `;
 export const DisabledButton = styled(Button)`
   filter: brightness(150%);
-`;
-
-const Text = styled.div`
-  &&& {
-    font-family: 'Poppins', sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 18px;
-    color: #2d2d2d;
-  }
-`;
-
-const Footer = styled.footer`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-top: auto;
-`;
-
-const WordMark = styled.h3`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  font-size: 1.5rem;
-  margin-left: 1rem;
-`;
-
-const FooterLink = styled.a`
-  text-decoration: none;
-  cursor: pointer;
-  color: inherit;
 `;

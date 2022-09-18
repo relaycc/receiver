@@ -37,65 +37,33 @@ export default function MessagesBucket({
   if (messages.length === 0) return null;
 
   return (
-    <Container>
+    <div className="MessagesBucket Container">
       <SentByInfo sentByMe={sentByMe}>
-        <MessageHeader>
+        <div className="MessagesBucket MessageHeader">
           <div style={{ marginRight: '10px' }}>
             <Avatar handle={sentByAddress} onClick={() => null} />
           </div>
           <SenderName sentByMe={sentByMe}>{responsiveName}</SenderName>
-          <MessageTime>
+          <div className="MessagesBucket MessageTime">
             {shortDate(startDate) + ', ' + time(startDate)}
-          </MessageTime>
-        </MessageHeader>
+          </div>
+        </div>
       </SentByInfo>
-      <FlexColReverseContainer>
+      <div className="MessagesBucket FlexColReverseContainer">
         {messages.map((e: Message) => {
           return (
-            <MessagePosition key={e.id}>
+            <div className="MessagesBucket MessagePosition" key={e.id}>
               <MessageBubble message={e.content} />
-            </MessagePosition>
+            </div>
           );
         })}
-      </FlexColReverseContainer>
-    </Container>
+      </div>
+    </div>
   );
 }
 interface StyleProps {
   sentByMe: boolean;
 }
-
-const Container = styled.div`
-  &&& {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 1rem;
-  }
-`;
-
-const MessagePosition = styled.div`
-  &&& {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 10px;
-    align-self: flex-start;
-
-    //bottom message because of column reverse format
-    :first-of-type {
-      padding-bottom: 4px;
-    }
-  }
-`;
-
-const MessageHeader = styled.div`
-  &&& {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: -18px;
-  }
-`;
 
 const SenderName = styled.div<StyleProps>`
   &&& {
@@ -112,24 +80,5 @@ const SenderName = styled.div<StyleProps>`
 const SentByInfo = styled.div<StyleProps>`
   &&& {
     display: flex;
-  }
-`;
-
-const MessageTime = styled.div`
-  &&& {
-    font-family: 'Poppins', sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    margin-left: 8px;
-    color: rgb(6, 0, 40, 0.4);
-    transform: translateY(2px);
-  }
-`;
-
-const FlexColReverseContainer = styled.div`
-  &&& {
-    display: flex;
-    flex-direction: column-reverse;
   }
 `;

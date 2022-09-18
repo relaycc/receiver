@@ -86,7 +86,8 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
   })();
 
   return (
-    <Container
+    <div
+      className="AddressInfo Container"
       onClick={() => {
         setIsOpen(!isOpen);
       }}>
@@ -94,16 +95,19 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
       <TextContainer>
         {primaryId === 'loading' && <LoadingText />}
         {primaryId === 'loading' || (
-          <MainText>
+          <div className="AddressInfo MainText">
             {isEthAddress(primaryId) ? truncateAddress(primaryId) : primaryId}
-          </MainText>
+          </div>
         )}
         {secondaryId === 'loading' && <LoadingText />}
         {secondaryId === 'loading' || (
-          <SubText>{truncateAddress(secondaryId)}</SubText>
+          <div className="AddressInfo SubText">
+            {truncateAddress(secondaryId)}
+          </div>
         )}
         <DropdownMenu>
-          <DropDownItem
+          <li
+            className="AddressInfo DropDownItem"
             onClick={() => {
               setDidCopyToClipboard(true);
               setTimeout(() => setDidCopyToClipboard(false), 3000);
@@ -112,32 +116,32 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
             {didCopyToClipboard || 'Copy Address'}
             {didCopyToClipboard && 'Copied'}
             <CopyClipboardIcon />
-          </DropDownItem>
-          <DropDownItem>
-            <LiLink href={'https://relay.cc/' + secondaryId} target="_blank">
+          </li>
+          <li className="AddressInfo DropDownItem">
+            <a
+              className="AddressInfo LiLink"
+              href={'https://relay.cc/' + secondaryId}
+              target="_blank"
+              rel="noreferrer">
               Relay
               <GoToRelayIcon />
-            </LiLink>
-          </DropDownItem>
-          <DropDownItem>
-            <LiLink
+            </a>
+          </li>
+          <li className="AddressInfo DropDownItem">
+            <a
+              className="AddressInfo LiLink"
               href={'https://etherscan.io/address/' + secondaryId}
-              target="_blank">
+              target="_blank"
+              rel="noreferrer">
               Etherscan
               <EtherscanIcon />
-            </LiLink>
-          </DropDownItem>
+            </a>
+          </li>
         </DropdownMenu>
       </TextContainer>
-    </Container>
+    </div>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
 
 const DropdownMenu = styled.ul`
   &&& {
@@ -170,59 +174,6 @@ const TextContainer = styled.div`
     :hover ${DropdownMenu} {
       display: flex;
     }
-  }
-`;
-
-const MainText = styled.div`
-  &&& {
-    font-weight: 600;
-    font-size: 1rem;
-    line-height: 1;
-    padding-bottom: 4px;
-    color: black;
-  }
-`;
-
-const SubText = styled.div`
-  &&& {
-    font-weight: 400;
-    font-size: 10px;
-    line-height: 1;
-  }
-`;
-
-const DropDownItem = styled.li`
-  &&& {
-    color: black;
-    cursor: pointer;
-    font-size: 14px;
-    text-decoration: none;
-    border-bottom: 1px solid #eeeeee;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 15px;
-
-    :hover {
-      background-color: #eeeeee;
-      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-    }
-  }
-`;
-
-const LiLink = styled.a`
-  &&& {
-    color: black;
-    text-decoration: none;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-weight: 600;
-    gap: 8px;
   }
 `;
 
