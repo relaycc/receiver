@@ -91,7 +91,7 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
         setIsOpen(!isOpen);
       }}>
       <Avatar handle={handle} onClick={() => null} />
-      <div className='AddressInfo TextContainer'>
+      <div className="AddressInfo TextContainer">
         {primaryId === 'loading' && <LoadingText />}
         {primaryId === 'loading' || (
           <div className="AddressInfo MainText">
@@ -141,7 +141,6 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
     </div>
   );
 };
-
 
 const CopyClipboardIcon = () => {
   return (

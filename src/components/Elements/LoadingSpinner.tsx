@@ -1,4 +1,3 @@
-import styled, { keyframes } from 'styled-components';
 import React from 'react';
 
 interface LoaderProps {
@@ -9,7 +8,7 @@ export default function LoadingSpinner(props: LoaderProps) {
   const { height, width } = props;
 
   return (
-    <Container width={width} height={height}>
+    <div className="LoadingSpinner">
       <img
         src={
           'https://relay-receiver-prod.s3.amazonaws.com/MobileLoadingSpinner.png'
@@ -18,28 +17,6 @@ export default function LoadingSpinner(props: LoaderProps) {
         width={width}
         height={height}
       />
-    </Container>
+    </div>
   );
 }
-
-const relayReceiverSpin = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-`;
-
-const Container = styled.div<LoaderProps>`
-  &&& {
-    animation: ${relayReceiverSpin} 1500ms linear infinite;
-    width: max-content;
-    height: max-content;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border-radius: 50%;
-  }
-`;

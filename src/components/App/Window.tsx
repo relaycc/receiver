@@ -30,8 +30,7 @@ export const Window: FunctionComponent = () => {
 
   return (
     <div className="Window Fixed">
-      <div className={`Window Containter isOpen-${isOpen}`}>{screen}</div>
+      <div className={`Window Container isOpen-${isOpen}`}>{screen}</div>
     </div>
   );
 };
-

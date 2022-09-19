@@ -1,6 +1,5 @@
 import React from 'react';
 import { FunctionComponent } from 'react';
-import styled from 'styled-components';
 import { useReceiver, useRelay } from '../../hooks';
 
 export interface InfoCardProps {
@@ -67,9 +66,11 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
           <div className="InfoCard Text">
             To begin messaging, you must first initialize the XMTP client.
           </div>
-          <Button onClick={() => wallet && dispatch({ id: 'sign in', wallet })}>
+          <div
+            className="InfoCard Button"
+            onClick={() => wallet && dispatch({ id: 'sign in', wallet })}>
             Initialize
-          </Button>
+          </div>
         </div>
         <BrandedFooter />
       </div>
@@ -85,7 +86,7 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
           <div className="InfoCard Text">
             To continue, please sign the wallet prompt.
           </div>
-          <DisabledButton>Waiting...</DisabledButton>
+          <button className="InfoCard Button Disabled">Waiting...</button>
         </div>
         <BrandedFooter />
       </div>
@@ -101,9 +102,11 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
           <div className="InfoCard Text">
             Signature request cancelled. Try again...
           </div>
-          <Button onClick={() => wallet && dispatch({ id: 'sign in', wallet })}>
+          <div
+            className="InfoCard Button"
+            onClick={() => wallet && dispatch({ id: 'sign in', wallet })}>
             Initialize
-          </Button>
+          </div>
         </div>
         <BrandedFooter />
       </div>
@@ -161,34 +164,3 @@ export const BrandedFooter = () => {
     </footer>
   );
 };
-
-export const Button = styled.div`
-  &&& {
-    padding: 8px 12px;
-    border: 1px solid rgba(55, 41, 125, 0.5);
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 4px;
-    text-align: center;
-    display: flex;
-    flex-direction: row;
-    align-self: stretch;
-    justify-content: center;
-    font-size: 12px;
-    font-family: 'Poppins', sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 15px;
-    background: #5203fc;
-    font-size: 14px;
-    color: white;
-    transition: all 0.1s ease-in-out;
-
-    &:hover {
-      cursor: pointer;
-      filter: brightness(1.1);
-    }
-  }
-`;
-export const DisabledButton = styled(Button)`
-  filter: brightness(150%);
-`;

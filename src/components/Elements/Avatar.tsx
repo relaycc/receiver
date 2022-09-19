@@ -38,7 +38,9 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
     return <LoadingSpinner width={large ? 50 : 40} height={large ? 50 : 40} />;
   } else if (!avatar.avatar) {
     return (
-      <div className={`Avatar BlockiesContainer large-${large}`} onClick={onClick}>
+      <div
+        className={`Avatar BlockiesContainer large-${large}`}
+        onClick={onClick}>
         <Blockies
           seed={handle || 'no address'}
           size={10}
@@ -49,7 +51,8 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
     );
   } else {
     return (
-      <img className={`Avatar AvatarImage large-${large}`}
+      <img
+        className={`Avatar AvatarImage large-${large}`}
         onClick={onClick}
         src={avatar.avatar}
         alt="user"
