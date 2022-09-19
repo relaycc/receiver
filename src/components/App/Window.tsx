@@ -49,6 +49,6 @@ const Container = styled.div<{ isOpen: boolean }>`
 
 const Fixed = styled.div`
   position: fixed;
-  bottom: 0.75rem;
+  bottom: 0;
   right: 88px;
 `;
