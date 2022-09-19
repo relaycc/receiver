@@ -28,7 +28,15 @@ export const ConversationListItem: FunctionComponent<
       }>
       <Avatar handle={peerAddress} onClick={() => null} />
       <TextContainer>
-        <Title>{responsiveName}</Title>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <Title>{responsiveName}</Title>
+          <div>today at 12:00</div>
+        </div>
         <Subtitle>{subtitle}</Subtitle>
       </TextContainer>
     </ListItem>
@@ -61,6 +69,7 @@ const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 4px;
+    width: 100%;
   }
 `;
 
