@@ -9,4 +9,5 @@ export * from './useLensProfiles';
 export * from './useEnsAvatar';
 export * from './useEthBalance';
 export * from './useTransactionCount';
+export * from './useOwnedNfts';
 export * from './types';

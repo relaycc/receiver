@@ -299,3 +299,51 @@ export type TransactionCount =
   | FetchingTransactionCount
   | ErrorTransactionCount
   | SettledTransactionCount;
+
+export interface OwnedNFTsResponse {
+  ownedNfts: {
+    contract: {
+      address: string;
+    };
+    id: {
+      tokenId: string;
+      tokenMetadata: {
+        tokenType: string;
+      };
+    };
+    media: {
+      gateway: string;
+    }[];
+    metadata: {
+      name: string;
+    };
+    title: string;
+    timeLastUpdated: string;
+  }[];
+}
+
+export interface NoOpOwnedNfts {
+  ownedNfts: undefined;
+  status: 'noop';
+}
+
+export interface FetchingOwnedNfts {
+  ownedNfts: undefined;
+  status: 'fetching';
+}
+
+export interface ErrorOwnedNfts {
+  ownedNfts: undefined;
+  status: 'error';
+}
+
+export interface SettledOwnedNfts {
+  ownedNfts: OwnedNFTsResponse | undefined;
+  status: 'settled';
+}
+
+export type OwnedNfts =
+  | NoOpOwnedNfts
+  | FetchingOwnedNfts
+  | ErrorOwnedNfts
+  | SettledOwnedNfts;
