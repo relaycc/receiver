@@ -25,60 +25,60 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
 
   if (variant === 'invalid ENS') {
     return (
-      <FullMiddleSection>
-        <CardContainer>
-          <Title>Could not resolve ENS name</Title>
+      <div className="InfoCard FullMiddleSection">
+        <div className="InfoCard CardContainer">
+          <div className="InfoCard Title">Could not resolve ENS name</div>
           <div className="InfoCard Text">
             {'Make sure to include the ".eth" suffix.'}
           </div>
-        </CardContainer>
+        </div>
         <BrandedFooter />
-      </FullMiddleSection>
+      </div>
     );
   } else if (variant === 'no wallet') {
     return (
-      <FullMiddleSection>
-        <CardContainer>
-          <Title>Please connect a wallet</Title>
+      <div className="InfoCard FullMiddleSection">
+        <div className="InfoCard CardContainer">
+          <div className="InfoCard Title">Please connect a wallet</div>
           <div className="InfoCard Text">
             To sign in to XMTP, you will need a connected wallet first.
           </div>
-        </CardContainer>
+        </div>
         <BrandedFooter />
-      </FullMiddleSection>
+      </div>
     );
   } else if (variant === 'no peer') {
     return (
-      <FullMiddleSection>
-        <CardContainer>
-          <Title>User not on network</Title>
+      <div className="InfoCard FullMiddleSection">
+        <div className="InfoCard CardContainer">
+          <div className="InfoCard Title">User not on network</div>
           <div className="InfoCard Text">
             This user is not on the XMTP messaging network yet.
           </div>
-        </CardContainer>
+        </div>
         <BrandedFooter />
-      </FullMiddleSection>
+      </div>
     );
   } else if (variant === 'no xmtp client') {
     return (
-      <FullMiddleSection>
-        <CardContainer>
-          <Title>Initialize XMTP Client</Title>
+      <div className="InfoCard FullMiddleSection">
+        <div className="InfoCard CardContainer">
+          <div className="InfoCard Title">Initialize XMTP Client</div>
           <div className="InfoCard Text">
             To begin messaging, you must first initialize the XMTP client.
           </div>
           <Button onClick={() => wallet && dispatch({ id: 'sign in', wallet })}>
             Initialize
           </Button>
-        </CardContainer>
+        </div>
         <BrandedFooter />
-      </FullMiddleSection>
+      </div>
     );
   } else if (variant === 'waiting for signature') {
     return (
-      <FullMiddleSection>
-        <CardContainer>
-          <Title>Initialize XMTP Client</Title>
+      <div className="InfoCard FullMiddleSection">
+        <div className="InfoCard CardContainer">
+          <div className="InfoCard Title">Initialize XMTP Client</div>
           <div className="InfoCard Text">
             <b>Initializing.</b>
           </div>
@@ -86,15 +86,15 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
             To continue, please sign the wallet prompt.
           </div>
           <DisabledButton>Waiting...</DisabledButton>
-        </CardContainer>
+        </div>
         <BrandedFooter />
-      </FullMiddleSection>
+      </div>
     );
   } else if (variant === 'signature denied') {
     return (
-      <FullMiddleSection>
-        <CardContainer>
-          <Title>Initialize XMTP Client</Title>
+      <div className="InfoCard FullMiddleSection">
+        <div className="InfoCard CardContainer">
+          <div className="InfoCard Title">Initialize XMTP Client</div>
           <div className="InfoCard Text">
             <b>Initializing.</b>
           </div>
@@ -104,30 +104,30 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
           <Button onClick={() => wallet && dispatch({ id: 'sign in', wallet })}>
             Initialize
           </Button>
-        </CardContainer>
+        </div>
         <BrandedFooter />
-      </FullMiddleSection>
+      </div>
     );
   } else if (variant === 'no messages') {
     return (
-      <FullMiddleSection>
-        <CardContainer>
-          <Title>{'All Set  🎉'}</Title>
+      <div className="InfoCard FullMiddleSection">
+        <div className="InfoCard CardContainer">
+          <div className="InfoCard Title">{'All Set  🎉'}</div>
           <div className="InfoCard Text">{`This is the beginning of your encrypted conversation with ${peerName}`}</div>
-        </CardContainer>
-      </FullMiddleSection>
+        </div>
+      </div>
     );
   } else if (variant === 'new conversation') {
     return (
-      <FullMiddleSection>
-        <CardContainer>
+      <div className="InfoCard FullMiddleSection">
+        <div className="InfoCard CardContainer">
           <div className="InfoCard Text">
             Only those who have previously signed into the XMTP network are
             reachable.
           </div>
-        </CardContainer>
+        </div>
         <BrandedFooter />
-      </FullMiddleSection>
+      </div>
     );
   } else {
     throw new Error('We never should have got here!');
@@ -161,48 +161,6 @@ export const BrandedFooter = () => {
     </footer>
   );
 };
-
-export const FullMiddleSection = styled.div`
-  &&& {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    flex-grow: 1;
-  }
-`;
-
-export const CardContainer = styled.div`
-  &&& {
-    background: #fbfaff;
-    border: 1px dashed #a6a6a6;
-    border-radius: 4px;
-    width: 227px;
-    padding: 10px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    overflow-wrap: break-word;
-    margin-top: auto;
-    margin-bottom: auto;
-  }
-`;
-
-export const Title = styled.div`
-  &&& {
-    color: #686868;
-    font-family: 'Poppins', sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 18px;
-    text-align: center;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e4e4e4;
-  }
-`;
 
 export const Button = styled.div`
   &&& {

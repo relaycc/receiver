@@ -31,10 +31,75 @@
   cursor: pointer;
 }
 
+.Launcher.AvatarHoverDetails {
+  position: absolute;
+  right: -0.5rem;
+  top: -0.5rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 50%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100000;
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+.Launcher.AvatarContainer {
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 0.75rem;
+}
+
+.Launcher.AvatarContainer:hover > .Launcher.AvatarHoverDetails {
+  display: block;
+}
+
+.Avatar.AvatarImage {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+.Avatar.AvatarImage.large-true {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
+
+.Avatar.BlockiesContainer {
+  border-radius: 50%;
+  overflow: hidden;
+  height: 40px;
+  width: 40px;
+}
+
+.Avatar.BlockiesContainer.large-true {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
 .Window.Fixed {
   position: fixed;
   bottom: 0rem;
   right: 88px;
+}
+
+.Window.Container {
+  width: 400px;
+  height: 500px;
+  transition: max-height 0.25s ease-in;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 / 25%) 0px 0px 4px;
+  max-height: 0px;
+}
+
+.Window.Container.isOpen-true {
+  max-height: 500px;
 }
 
 .AddressInfo.Container {
@@ -57,7 +122,7 @@
   line-height: 1;
 }
 
-.AddressInfo.DropDownItem {
+.AddressInfo.DropdownItem {
   color: black;
   cursor: pointer;
   font-size: 14px;
@@ -71,7 +136,7 @@
   padding: 15px;
 }
 
-.AddressInfo.DropDownItem:hover {
+.AddressInfo.DropdownItem:hover {
   background-color: #eeeeee;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
 }
@@ -86,6 +151,25 @@
   justify-content: space-between;
   font-weight: 600;
   gap: 8px;
+}
+
+.AddressInfo.DropdownMenu {
+  display: none;
+  flex-direction: column;
+  background: white;
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.25);
+  position: absolute;
+  top: 1rem;
+  border-radius: 4px;
+  opacity: 1;
+  transition: opacity 150ms, visibility 150ms;
+  padding: 0;
+  min-width: 10rem;
+  z-index: 10000000;
+}
+
+.AddressInfo.TextContainer:hover > .AddressInfo.DropdownMenu {
+  display: flex;
 }
 
 .ConversationList.List {
@@ -200,6 +284,42 @@
   flex-direction: row;
   align-items: center;
   margin-top: auto;
+}
+
+.InfoCard.FullMiddleSection {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.InfoCard.CardContainer {
+  background: #fbfaff;
+  border: 1px dashed #a6a6a6;
+  border-radius: 4px;
+  width: 227px;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-wrap: break-word;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.InfoCard.Title {
+  color: #686868;
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e4e4e4;
 }
 
 .LoadingList.LeftContainer {

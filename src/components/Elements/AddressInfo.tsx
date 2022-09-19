@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
 import { truncateAddress } from '../../utils/address';
-import styled from 'styled-components';
 import { Avatar } from './Avatar';
 import { LoadingText } from './LoadingText';
 import {
@@ -92,7 +91,7 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
         setIsOpen(!isOpen);
       }}>
       <Avatar handle={handle} onClick={() => null} />
-      <TextContainer>
+      <div className='AddressInfo TextContainer'>
         {primaryId === 'loading' && <LoadingText />}
         {primaryId === 'loading' || (
           <div className="AddressInfo MainText">
@@ -105,9 +104,9 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
             {truncateAddress(secondaryId)}
           </div>
         )}
-        <DropdownMenu>
+        <div className="AddressInfo DropdownMenu">
           <li
-            className="AddressInfo DropDownItem"
+            className="AddressInfo DropdownItem"
             onClick={() => {
               setDidCopyToClipboard(true);
               setTimeout(() => setDidCopyToClipboard(false), 3000);
@@ -117,7 +116,7 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
             {didCopyToClipboard && 'Copied'}
             <CopyClipboardIcon />
           </li>
-          <li className="AddressInfo DropDownItem">
+          <li className="AddressInfo DropdownItem">
             <a
               className="AddressInfo LiLink"
               href={'https://relay.cc/' + secondaryId}
@@ -127,7 +126,7 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
               <GoToRelayIcon />
             </a>
           </li>
-          <li className="AddressInfo DropDownItem">
+          <li className="AddressInfo DropdownItem">
             <a
               className="AddressInfo LiLink"
               href={'https://etherscan.io/address/' + secondaryId}
@@ -137,45 +136,12 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
               <EtherscanIcon />
             </a>
           </li>
-        </DropdownMenu>
-      </TextContainer>
+        </div>
+      </div>
     </div>
   );
 };
 
-const DropdownMenu = styled.ul`
-  &&& {
-    display: none;
-    flex-direction: column;
-    background: white;
-    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.25);
-    position: absolute;
-    top: 1rem;
-    border-radius: 4px;
-    opacity: 1;
-    transition: opacity 150ms, visibility 150ms;
-    padding: 0;
-    min-width: 10rem;
-    z-index: 10000000;
-  }
-`;
-
-const TextContainer = styled.div`
-  &&& {
-    margin-left: 1rem;
-    font-size: 16px;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    cursor: pointer;
-
-    :hover ${DropdownMenu} {
-      display: flex;
-    }
-  }
-`;
 
 const CopyClipboardIcon = () => {
   return (

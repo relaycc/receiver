@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useEffect, useMemo } from 'react';
-import styled from 'styled-components';
 import { PeerAddress, Conversations, NewConversation } from '../Screens';
 import { currentScreen, useReceiver, useRelay } from '../../hooks';
 import '../../styles/app.css';
@@ -31,19 +30,8 @@ export const Window: FunctionComponent = () => {
 
   return (
     <div className="Window Fixed">
-      <Container isOpen={isOpen}>{screen}</Container>
+      <div className={`Window Containter isOpen-${isOpen}`}>{screen}</div>
     </div>
   );
 };
 
-const Container = styled.div<{ isOpen: boolean }>`
-  width: 400px;
-  height: 500px;
-  max-height: ${(p) => (p.isOpen ? '500px' : '0')};
-  transition: max-height 0.25s ease-in;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  border-radius: 4px;
-  box-shadow: rgb(0 0 0 / 25%) 0px 0px 4px;
-`;
