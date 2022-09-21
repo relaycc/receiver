@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { PeerAddress, Conversations, NewConversation } from '../Screens';
 import { currentScreen, useReceiver, useRelay } from '../../hooks';
-import "../styles/app.css"
+import '../styles/app.css';
 
 export const Window: FunctionComponent = () => {
   const screenHistory = useReceiver((state) => state.screenHistory);
