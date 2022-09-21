@@ -13,12 +13,59 @@ export const time = (d: Date | undefined): string => {
   return `${hour}:${minute}`;
 };
 
+const formatAMPM = (date: Date) => {
+  let hours = date.getHours();
+  let minutes = date.getMinutes().toString();
+  const ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  minutes = minutes.toString().padStart(2, '0');
+  const strTime = hours + ':' + minutes + ' ' + ampm;
+  return strTime;
+};
+
 export const isBeforeDate = (
   dateToCheck: Date,
   dateToCheckAgainst: Date
 ): boolean => {
   dateToCheckAgainst.setHours(0, 0, 0, 0);
   return dateToCheck < dateToCheckAgainst;
+};
+
+export const conversationsListDate = (dateToTransform: Date): string => {
+  const checkToday = dateToTransform.getDay() === new Date().getDay();
+  const checkYesterday =
+    checkDateIsTodayOrYesterday(dateToTransform) === 'Yesterday';
+  const withinAWeek = checkIfWithinAWeek(dateToTransform) === true;
+  const day = dateToTransform.getDate().toString();
+  const month = dateToTransform.getMonth().toString();
+  const year = dateToTransform.getFullYear().toString();
+
+  if (checkToday && withinAWeek) return formatAMPM(dateToTransform);
+  if (checkYesterday) return 'Yesterday';
+
+  if (!checkToday && !checkYesterday && withinAWeek) {
+    const dayNumber = dateToTransform.getDay();
+    if (dayNumber === 0) return 'Sunday';
+    if (dayNumber === 1) return 'Monday';
+    if (dayNumber === 2) return 'Tuesday';
+    if (dayNumber === 3) return 'Wednesday';
+    if (dayNumber === 4) return 'Thursday';
+    if (dayNumber === 5) return 'Friday';
+    if (dayNumber === 6) return 'Saturnday';
+  }
+  return `${month}/${day}/${year}`;
+};
+
+export const checkIfWithinAWeek = (someDate: Date) => {
+  const today = new Date();
+  const ifBetweenDates = Math.abs(someDate.getTime() - today.getTime());
+  const daysBetween = ifBetweenDates / (24 * 60 * 60 * 1000);
+  if (daysBetween < 7) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 const checkDateIsTodayOrYesterday = (someDate: Date) => {

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useLaunch, useReceiver, useRelay } from '../../hooks';
 import { Avatar } from '../Elements';
 import { Signer } from '@ethersproject/abstract-signer';
+import "../styles/app.css"
 
 export interface LauncherProps {
   // TODO(achilles@relay.cc) We allow the user to pass in much more than a peer

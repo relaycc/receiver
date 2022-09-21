@@ -1,0 +1,23 @@
+.ConversationListItem.Time {
+  color: #939292;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.ConversationListItem.TopLineContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ConversationListItem.Title {
+  color: black;
+  font-weight: bold;
+  text-align: start;
+  width: 100%;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}

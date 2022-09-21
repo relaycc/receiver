@@ -1,22 +1,24 @@
 import styled from 'styled-components';
 import React, { FunctionComponent } from 'react';
 import { Avatar } from './Avatar';
-import { useResponsiveName, useEnsName } from '../../hooks';
+import { useResponsiveName, useEnsName, useResponsiveTime } from '../../hooks';
 import { useReceiver } from '../../hooks';
 
 export interface ConversationListItemProps {
   peerAddress: string;
   subtitle: string;
+  topMessageTime: Date;
 }
 
 export const ConversationListItem: FunctionComponent<
   ConversationListItemProps
-> = ({ peerAddress, subtitle }) => {
+> = ({ peerAddress, subtitle, topMessageTime }) => {
   const dispatch = useReceiver((state) => state.dispatch);
   const { name } = useEnsName({
     handle: peerAddress,
   });
   const responsiveName = useResponsiveName(name, peerAddress, '');
+  const responsiveTime = useResponsiveTime(topMessageTime);
 
   return (
     <ListItem
@@ -28,14 +30,9 @@ export const ConversationListItem: FunctionComponent<
       }>
       <Avatar handle={peerAddress} onClick={() => null} />
       <TextContainer>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}>
-          <Title>{responsiveName}</Title>
-          <div>today at 12:00</div>
+        <div className="ConversationListItem TopLineContainer">
+          <span className="ConversationListItem Title">{responsiveName}</span>
+          <span className="ConversationListItem Time">{responsiveTime}</span>
         </div>
         <Subtitle>{subtitle}</Subtitle>
       </TextContainer>
@@ -70,14 +67,6 @@ const TextContainer = styled.div`
     flex-direction: column;
     gap: 4px;
     width: 100%;
-  }
-`;
-
-const Title = styled.span`
-  &&& {
-    color: black;
-    font-weight: bold;
-    text-align: start;
   }
 `;
 
