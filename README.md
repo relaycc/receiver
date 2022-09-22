@@ -118,7 +118,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <div className="full-width-centered-container">
+      <div className="overlay">
         <Window />
         <Launcher />
       </div>
@@ -145,7 +145,7 @@ export default App;
 
 ## Custom CSS
 
-The `<Window />` components accepts a `className` prop you can use to apply
+The `<Window />` component accepts a `className` prop you can use to apply
 custom CSS to the window. In the future, we will provide fine-grained access to
 various components. For now, the `className` prop will work best for applying
 basic styling like a border, box-shadow, or custom positioning.
