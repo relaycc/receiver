@@ -3,10 +3,13 @@ import styled from 'styled-components';
 import { PeerAddress, Conversations, NewConversation } from '../Screens';
 import { currentScreen, useReceiver, useRelay } from '../../hooks';
 
-export const Window: FunctionComponent = () => {
+export interface WindowProps {
+  className?: string;
+}
+
+export const Window: FunctionComponent<WindowProps> = ({ className }) => {
   const screenHistory = useReceiver((state) => state.screenHistory);
   const visibleScreen = currentScreen({ screenHistory });
-  const isOpen = useReceiver((state) => state.isOpen);
   const client = useRelay((state) => state.client);
   const dispatch = useRelay((state) => state.dispatch);
 
@@ -28,27 +31,15 @@ export const Window: FunctionComponent = () => {
     }
   }, [visibleScreen]);
 
-  return (
-    <Fixed>
-      <Container isOpen={isOpen}>{screen}</Container>
-    </Fixed>
-  );
+  return <Box className={className}>{screen}</Box>;
 };
 
-const Container = styled.div<{ isOpen: boolean }>`
+const Box = styled.div`
   width: 400px;
   height: 500px;
-  max-height: ${(p) => (p.isOpen ? '500px' : '0')};
-  transition: max-height 0.25s ease-in;
   background-color: white;
   display: flex;
   flex-direction: column;
   border-radius: 4px;
   box-shadow: rgb(0 0 0 / 25%) 0px 0px 4px;
-`;
-
-const Fixed = styled.div`
-  position: fixed;
-  bottom: 0;
-  right: 88px;
 `;
