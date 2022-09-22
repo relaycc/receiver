@@ -92,7 +92,7 @@ const HeaderWrapper = styled.div`
     align-items: center;
     padding: 0.5rem;
     z-index: 1011;
-    background-color: white;
+    background: none;
   }
 `;
 
