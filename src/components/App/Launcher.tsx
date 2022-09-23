@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { FunctionComponent } from 'react';
-import styled from 'styled-components';
 import { useLaunch, useReceiver, useRelay } from '../../hooks';
 import { Avatar } from '../Elements';
 import { Signer } from '@ethersproject/abstract-signer';
-import '../styles/app.css';
+import '../../styles/app.css';
 
 export interface LauncherProps {
   // TODO(achilles@relay.cc) We allow the user to pass in much more than a peer
@@ -45,13 +44,13 @@ export const Launcher: FunctionComponent<LauncherProps> = ({
   }, [client]);
 
   return (
-    <Fixed>
-      <Container>
-        <LaunchButton onClick={onClickLaunch}>
+    <div className="Launcher Fixed">
+      <ul className="Launcher Container">
+        <button className="Launcher LaunchButton" onClick={onClickLaunch}>
           <ChatIcon />
-        </LaunchButton>
+        </button>
         {pinnedConversations.map((peerAddress) => (
-          <AvatarContainer key={peerAddress}>
+          <div className="Launcher AvatarContainer" key={peerAddress}>
             <Avatar
               large={true}
               handle={peerAddress}
@@ -63,7 +62,8 @@ export const Launcher: FunctionComponent<LauncherProps> = ({
                 setIsOpen(true);
               }}
             />
-            <AvatarHoverDetails
+            <div
+              className="Launcher AvatarHoverDetails"
               onClick={() => {
                 dispatchReceiver({
                   id: 'remove pinned conversation',
@@ -71,69 +71,13 @@ export const Launcher: FunctionComponent<LauncherProps> = ({
                 });
               }}>
               <CloseIcon />
-            </AvatarHoverDetails>
-          </AvatarContainer>
+            </div>
+          </div>
         ))}
-      </Container>
-    </Fixed>
+      </ul>
+    </div>
   );
 };
-
-const Container = styled.ul`
-  &&& {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-  }
-`;
-
-const AvatarHoverDetails = styled.div`
-  &&& {
-    position: absolute;
-    right: -0.5rem;
-    top: -0.5rem;
-    height: 1.5rem;
-    width: 1.5rem;
-    border-radius: 50%;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 100000;
-    background-color: #f5f5f5;
-    cursor: pointer;
-  }
-`;
-
-const AvatarContainer = styled.div`
-  &&& {
-    position: relative;
-    cursor: pointer;
-    margin-bottom: 0.75rem;
-
-    :hover ${AvatarHoverDetails} {
-      display: block;
-    }
-  }
-`;
-
-const LaunchButton = styled.button`
-  &&& {
-    background: white;
-    border: none;
-    border-radius: 50%;
-    height: 3rem;
-    width: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.45);
-    &:hover {
-      cursor: pointer;
-    }
-  }
-`;
 
 const ChatIcon = () => {
   return (
@@ -152,15 +96,6 @@ const ChatIcon = () => {
     </svg>
   );
 };
-
-const Fixed = styled.div`
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  flex-direction: row;
-  margin: 1.5rem;
-`;
 
 const CloseIcon = () => {
   return (
