@@ -32,7 +32,11 @@ export const isBeforeDate = (
   return dateToCheck < dateToCheckAgainst;
 };
 
-export const conversationsListDate = (dateToTransform: Date): string => {
+function getDayName(date = new Date(), locale = 'en-US') {
+  return date.toLocaleDateString(locale, { weekday: 'long' });
+}
+
+export const setConversationTime = (dateToTransform: Date): string => {
   const checkToday = dateToTransform.getDay() === new Date().getDay();
   const checkYesterday =
     checkDateIsTodayOrYesterday(dateToTransform) === 'Yesterday';
@@ -43,19 +47,12 @@ export const conversationsListDate = (dateToTransform: Date): string => {
 
   if (checkToday && withinAWeek) return formatAMPM(dateToTransform);
   if (checkYesterday) return 'Yesterday';
-
   if (!checkToday && !checkYesterday && withinAWeek) {
-    const dayNumber = dateToTransform.getDay();
-    if (dayNumber === 0) return 'Sunday';
-    if (dayNumber === 1) return 'Monday';
-    if (dayNumber === 2) return 'Tuesday';
-    if (dayNumber === 3) return 'Wednesday';
-    if (dayNumber === 4) return 'Thursday';
-    if (dayNumber === 5) return 'Friday';
-    if (dayNumber === 6) return 'Saturnday';
+    return getDayName(dateToTransform);
   }
   return `${month}/${day}/${year}`;
 };
+``;
 
 export const checkIfWithinAWeek = (someDate: Date) => {
   const today = new Date();

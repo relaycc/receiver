@@ -7,4 +7,3 @@ export * from './useEnsName';
 export * from './useLensAddress';
 export * from './useEnsAvatar';
 export * from './types';
-export * from './useResponsiveTime';

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import React, { FunctionComponent } from 'react';
 import { Avatar } from './Avatar';
-import { useResponsiveName, useEnsName, useResponsiveTime } from '../../hooks';
+import { useResponsiveName, useEnsName } from '../../hooks';
 import { useReceiver } from '../../hooks';
+import { setConversationTime } from '../../utils/date';
 
 export interface ConversationListItemProps {
   peerAddress: string;
@@ -18,7 +19,6 @@ export const ConversationListItem: FunctionComponent<
     handle: peerAddress,
   });
   const responsiveName = useResponsiveName(name, peerAddress, '');
-  const responsiveTime = useResponsiveTime(topMessageTime);
 
   return (
     <ListItem
@@ -32,7 +32,9 @@ export const ConversationListItem: FunctionComponent<
       <TextContainer>
         <div className="ConversationListItem TopLineContainer">
           <span className="ConversationListItem Title">{responsiveName}</span>
-          <span className="ConversationListItem Time">{responsiveTime}</span>
+          <span className="ConversationListItem Time">
+            {setConversationTime(topMessageTime)}
+          </span>
         </div>
         <Subtitle>{subtitle}</Subtitle>
       </TextContainer>
