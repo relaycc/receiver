@@ -52,7 +52,6 @@ export const setConversationTime = (dateToTransform: Date): string => {
   }
   return `${month}/${day}/${year}`;
 };
-``;
 
 export const checkIfWithinAWeek = (someDate: Date) => {
   const today = new Date();
