@@ -29,7 +29,6 @@ export const ConversationListItem: FunctionComponent<
         })
       }>
       <Avatar handle={peerAddress} onClick={() => null} />
-<<<<<<< HEAD
       <div className="ConversationListItem TopLineContainer">
         <span className="ConversationListItem Title">{responsiveName}</span>
         <span className="ConversationListItem Time">
@@ -37,13 +36,6 @@ export const ConversationListItem: FunctionComponent<
         </span>
       </div>
       <span className="ConversationListItem Subtitle">{subtitle}</span>
-=======
-      <div className="ConversationListItem TextContainer">
-        <span className="ConversationListItem Title">{responsiveName}</span>
-        <div className="ConversationListItem Subtitle">{subtitle}</div>
-      </div>
-      <div className="ConversationListItem Time">{responsiveTime}</div>
->>>>>>> 50829dc0f667d63dc00cb57cd06bef45b1264926
     </li>
   );
 };
