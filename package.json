@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "version": "0.1.51",
+  "version": "0.1.53",
   "description": "The best way to add wallet messaging to your site.",
   "scripts": {
     "build": "rollup -c",
@@ -56,6 +56,7 @@
     "@ethersproject/address": "^5.7.0",
     "@ethersproject/providers": "^5.7.0",
     "@relaycc/xmtp-js": "0.1.2",
+    "framer-motion": "^4.1.17",
     "gql": "^1.1.2",
     "graphql-request": "^5.0.0",
     "react-blockies": "^1.4.1",

@@ -3,10 +3,13 @@ import { PeerAddress, Conversations, NewConversation } from '../Screens';
 import { currentScreen, useReceiver, useRelay } from '../../hooks';
 import '../../styles/app.css';
 
-export const Window: FunctionComponent = () => {
+export interface WindowProps {
+  className?: string;
+}
+
+export const Window: FunctionComponent<WindowProps> = ({ className }) => {
   const screenHistory = useReceiver((state) => state.screenHistory);
   const visibleScreen = currentScreen({ screenHistory });
-  const isOpen = useReceiver((state) => state.isOpen);
   const client = useRelay((state) => state.client);
   const dispatch = useRelay((state) => state.dispatch);
 
@@ -28,9 +31,5 @@ export const Window: FunctionComponent = () => {
     }
   }, [visibleScreen]);
 
-  return (
-    <div className="Window Fixed">
-      <div className={`Window Container isOpen-${isOpen}`}>{screen}</div>
-    </div>
-  );
+  return <div className={className}>{screen}</div>;
 };

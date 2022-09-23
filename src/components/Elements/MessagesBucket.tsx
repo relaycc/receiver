@@ -19,7 +19,7 @@ export default function MessagesBucket({
   sentByAddress,
   userPeerAddress,
 }: MessagesBucketProps) {
-  const sentByMe = sentByAddress !== userPeerAddress;
+  const sentByMe = sentByAddress === userPeerAddress;
 
   const { name: senderName } = useEnsName({
     handle: sentByAddress,
