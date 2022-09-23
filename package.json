@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "version": "0.1.52",
+  "version": "0.1.53",
   "description": "The best way to add wallet messaging to your site.",
   "scripts": {
     "build": "rollup -c",
@@ -20,8 +20,6 @@
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",
-    "@rollup/plugin-image": "^2.1.1",
-    "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-typescript": "^8.3.0",
     "@rollup/plugin-url": "^7.0.0",
     "@types/react": "^18.0.1",
@@ -56,11 +54,10 @@
     "@ethersproject/address": "^5.7.0",
     "@ethersproject/providers": "^5.7.0",
     "@relaycc/xmtp-js": "0.1.2",
+    "framer-motion": "^4.1.17",
     "gql": "^1.1.2",
     "graphql-request": "^5.0.0",
     "react-blockies": "^1.4.1",
-    "styled-components": "^5.3.5",
-    "use-immer": "^0.7.0",
     "zustand": "^4.1.1"
   },
   "main": "dist/cjs/index.js",

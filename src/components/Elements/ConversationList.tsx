@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import React, { FunctionComponent } from 'react';
 import { useRelay, byMostRecentMessage, pickPeerAddress } from '../../hooks';
 import { ConversationListItem } from './ConversationListItem';
@@ -11,7 +10,7 @@ export const ConversationList: FunctionComponent = () => {
     throw new Error('Never should have been here!');
   } else {
     return (
-      <List>
+      <ul className="ConversationList List">
         {byMostRecentMessage(conversationList)
           .map((i) => i)
           .reverse()
@@ -23,17 +22,7 @@ export const ConversationList: FunctionComponent = () => {
               topMessageTime={message.sent}
             />
           ))}
-      </List>
+      </ul>
     );
   }
 };
-
-const List = styled.ul`
-  &&& {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    padding: 0;
-    margin: 0;
-  }
-`;
