@@ -3,7 +3,6 @@ import {
   motion,
   AnimatePresence as BrokenTypesAnimatePresence,
 } from 'framer-motion';
-import styled from 'styled-components';
 import { useIsOpen } from '../../hooks';
 
 const AnimatePresence = BrokenTypesAnimatePresence as React.FunctionComponent<{
@@ -25,23 +24,16 @@ export const Intercom: FunctionComponent<{
   return (
     <AnimatePresence>
       {isActuallyOpen && (
-        <Fixed
-          position={position === undefined ? 'right' : 'left'}
+        <motion.div
+          className={`Intercom Fixed ${'position-' + (position || 'right')}`}
           key="receiver-modal"
           initial="hide"
           animate="show"
           exit="hide"
           variants={VARIANTS}>
           {children}
-        </Fixed>
+        </motion.div>
       )}
     </AnimatePresence>
   );
 };
-
-const Fixed = styled(motion.div)<{ position: 'left' | 'right' }>`
-  position: fixed;
-  bottom: 0;
-  right: ${(p) => (p.position === 'right' ? '88px' : undefined)};
-  left: ${(p) => (p.position === 'left' ? '88px' : undefined)};
-`;

@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import styled from 'styled-components';
 import { useRelay, Message, byMostRecentMessage } from '../../hooks';
 import MessagesBucket from '../Elements/MessagesBucket';
 
@@ -21,7 +20,7 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
         .reverse()
     );
     return (
-      <List>
+      <div className="MessageList List">
         {buckets.map((bucket, index) => {
           if (bucket.length > 0) {
             return (
@@ -37,25 +36,12 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
           }
           return null;
         })}
-      </List>
+      </div>
     );
   } else {
     return null;
   }
 };
-
-const List = styled.div`
-  &&& {
-    display: flex;
-    flex-direction: column-reverse;
-    overflow-y: scroll;
-    width: 100%;
-    height: 100%;
-    padding: 1rem;
-    padding-bottom: 0;
-    box-sizing: border-box;
-  }
-`;
 
 // This assumets messages are sorted by date already.
 function getMessageBuckets(messages: Message[]): Array<Message[]> {

@@ -3,7 +3,6 @@ import {
   motion,
   AnimatePresence as BrokenTypesAnimatePresence,
 } from 'framer-motion';
-import styled from 'styled-components';
 import { useIsOpen } from '../../hooks';
 
 const AnimatePresence = BrokenTypesAnimatePresence as React.FunctionComponent<{
@@ -26,27 +25,16 @@ export const Modal: FunctionComponent<{
   return (
     <AnimatePresence>
       {isActuallyOpen && (
-        <Overlay
+        <motion.div
+          className="Modal Overlay"
           key="receiver-modal"
           initial={['hide', 'invisible']}
           animate={['show', 'visible']}
           exit={['hide', 'invisible']}
           variants={VARIANTS}>
           {children}
-        </Overlay>
+        </motion.div>
       )}
     </AnimatePresence>
   );
 };
-
-const Overlay = styled(motion.div)`
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(2px);
-`;

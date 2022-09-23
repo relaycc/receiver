@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useMemo } from 'react';
-import styled from 'styled-components';
 import { PeerAddress, Conversations, NewConversation } from '../Screens';
 import { currentScreen, useReceiver, useRelay } from '../../hooks';
+import '../../styles/app.css';
 
 export interface WindowProps {
   className?: string;
@@ -31,15 +31,5 @@ export const Window: FunctionComponent<WindowProps> = ({ className }) => {
     }
   }, [visibleScreen]);
 
-  return <Box className={className}>{screen}</Box>;
+  return <div className={`${className} Window Container`}>{screen}</div>;
 };
-
-const Box = styled.div`
-  width: 400px;
-  height: 500px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  border-radius: 4px;
-  box-shadow: rgb(0 0 0 / 25%) 0px 0px 4px;
-`;
