@@ -31,5 +31,5 @@ export const Window: FunctionComponent<WindowProps> = ({ className }) => {
     }
   }, [visibleScreen]);
 
-  return <div className={className}>{screen}</div>;
+  return <div className={`${className} Window Container`}>{screen}</div>;
 };

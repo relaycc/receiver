@@ -89,17 +89,11 @@
 .Window.Container {
   width: 400px;
   height: 500px;
-  transition: max-height 0.25s ease-in;
   background-color: white;
   display: flex;
   flex-direction: column;
   border-radius: 4px;
   box-shadow: rgb(0 0 0 / 25%) 0px 0px 4px;
-  max-height: 0px;
-}
-
-.Window.Container.isOpen-true {
-  max-height: 500px;
 }
 
 .AddressInfo.Container {
@@ -707,6 +701,31 @@
   color: red;
   font-size: 0.75rem;
   opacity: 0.8;
+}
+
+.Intercom.Fixed {
+  position: fixed;
+  bottom: 0;
+}
+
+.Intercom.Fixed.position-right {
+  right: 88px;
+}
+
+.Intercom.Fixed.position-left {
+  left: 88px;
+}
+
+.Modal.Overlay {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(2px);
 }
 
 @keyframes RelayLoadingListSlide {

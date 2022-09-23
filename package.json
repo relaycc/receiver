@@ -20,8 +20,6 @@
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",
-    "@rollup/plugin-image": "^2.1.1",
-    "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-typescript": "^8.3.0",
     "@rollup/plugin-url": "^7.0.0",
     "@types/react": "^18.0.1",
@@ -60,8 +58,6 @@
     "gql": "^1.1.2",
     "graphql-request": "^5.0.0",
     "react-blockies": "^1.4.1",
-    "styled-components": "^5.3.5",
-    "use-immer": "^0.7.0",
     "zustand": "^4.1.1"
   },
   "main": "dist/cjs/index.js",
