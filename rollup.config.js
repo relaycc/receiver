@@ -1,8 +1,6 @@
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import postcss from 'rollup-plugin-postcss';
-import image from '@rollup/plugin-image';
-import json from '@rollup/plugin-json';
 
 export default [
   {
@@ -24,8 +22,6 @@ export default [
       },
     ],
     plugins: [
-      image(),
-      json(),
       commonjs(),
       typescript({ tsconfig: './tsconfig.json' }),
       postcss(),

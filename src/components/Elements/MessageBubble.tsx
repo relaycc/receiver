@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import React from 'react';
 
 interface TextBubbleProps {
@@ -7,35 +6,10 @@ interface TextBubbleProps {
 
 const MessageBubble = ({ message }: TextBubbleProps) => {
   return (
-    <TextWrapper>
-      <MessageText>{message}</MessageText>
-    </TextWrapper>
+    <div className="MessageBubble TextWrapper">
+      <div className="MessageBubble MessageText">{message}</div>
+    </div>
   );
 };
-
-const TextWrapper = styled.div`
-  &&& {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-    hyphens: auto;
-    padding: 3px 0 3px 50px;
-  }
-`;
-
-const MessageText = styled.div`
-  &&& {
-    color: #060028;
-    font-family: 'Poppins', sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 1.25;
-    word-break: break-word;
-    text-align: start;
-    padding-left: 4px;
-  }
-`;
 
 export default MessageBubble;

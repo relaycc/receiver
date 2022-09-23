@@ -11,15 +11,6 @@ add Web3 messaging to your website.
 - ✅ Easily customizable, with nice defaults.
 - 🦄 Built on top of [XMTP](https://xmtp.com)
 
-## Installation
-
-```
-# with npm
-npm install @relaycc/receiver
-# with yarn
-yarn add @relaycc/receiver
-```
-
 ## Quick start
 
 Check out the [example](https://github.com/relaycc/receiver-example-cra) using [create-react-app](https://create-react-app.dev/) and [wagmi](https://wagmis.sh). You can see it live at https://react.relay.cc, or run it yourself:
@@ -32,20 +23,30 @@ npm start
 # Then navigate to http://localhost:3000 in your browser
 ```
 
-## Usage
+## Installation
 
-The simplest case is to just add `<Window />` and `<Launcher />` to your app, making sure to pass
-in the user's connected wallet.
+```
+# with npm
+npm install @relaycc/receiver
+# with yarn
+yarn add @relaycc/receiver
+```
+
+## Basic Usage
+
+The default configuration adds Receiver as an intercom-style messaging widget. To implement
+this configuration, add `<Intercom />`, `<Window />` and `<Launcher />` to your app, making sure to pass in the user's connected wallet.
 
 ```TypeScript
-import { Window, Launcher } from '@relaycc/receiver';
+import { Intercom, Window, Launcher } from '@relaycc/receiver';
 
 function App() {
   return (
     <div className="App">
-      // The `wallet` props here come from whatever wallet connect system you are already using.
-      <Window />
       <Launcher wallet={wallet} />
+      <Intercom>
+        <Window />
+      </Intercom>
     </div>
   );
 }
@@ -53,17 +54,21 @@ function App() {
 export default App;
 ```
 
+## Launch Directly to a Conversation
+
 The `<Launcher />` component, when clicked, will by default open a Receiver `<Window />` with the inbox view
 active. To instead jump directly into a 1:1 conversation with a specific wallet (the site's support team, for example),
 you can pass in the `peerAddress` prop:
 
 ```TypeScript
-import { Window, Launcher } from '@relaycc/receiver';
+import { Intercom, Window, Launcher } from '@relaycc/receiver';
 
 function App() {
   return (
     <div className="App">
-      <Window />
+      <Intercom>
+        <Window />
+      </Intercom>
       <Launcher wallet={wallet} peerAddress={'0x1800TECHSUPPORT'} />
     </div>
   );
@@ -72,20 +77,24 @@ function App() {
 export default App;
 ```
 
+## Custom Launch Button
+
 You can also use the `useLaunch` hook to turn any component into a Receiver launcher:
 
 ```TypeScript
-import { Window, useLaunch } from '@relaycc/receiver';
+import { Intercom, Window, useLaunch } from '@relaycc/receiver';
 
 function App() {
   const launch = useLaunch(wallet);
   return (
     <div className="App">
-      <Window />
-      <button onClick={() => launch('0x0cb27e883E207905AD2A94F9B6eF0C7A99223C37'}>
-        Talk to the Relay Founder
+      <Intercom>
+        <Window />
+      </Intercom>
+      <button onClick={() => launch()}>
+        Open Conversations List
       </button>
-      <button onClick={() => launch('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'}>
+      <button onClick={() => launch('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')}>
         Talk to Vitalik
       </button>
     </div>
@@ -93,6 +102,63 @@ function App() {
 }
 
 export default App;
+```
+
+## Custom Positioning
+
+The `<Intercom />` component is just a utility component that positions the Receiver
+window and applies nice default transitions to opening and closing the window.
+This means that the `<Window />` component can be positioned anywhere you like.
+For example, you could center it:
+
+```TypeScript
+import { Window, Launcher } from '@relaycc/receiver';
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <div className="overlay">
+        <Window />
+        <Launcher />
+      </div>
+    </div>
+  );
+}
+
+export default App;
+```
+
+```css
+/* App.css */
+.overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+```
+
+## Custom CSS
+
+The `<Window />` component accepts a `className` prop you can use to apply
+custom CSS to the window. In the future, we will provide fine-grained access to
+various components. For now, the `className` prop will work best for applying
+basic styling like a border, box-shadow, or custom positioning.
+
+```css
+/* App.css */
+.bordered {
+  border: 3px solid black;
+}
+```
+
+```TypeScript
+<Window className="bordered">
 ```
 
 ## Documentation
