@@ -3,7 +3,11 @@ import { FunctionComponent } from 'react';
 import { useLaunch, useReceiver, useRelay } from '../../hooks';
 import { Avatar } from '../Elements';
 import { Signer } from '@ethersproject/abstract-signer';
+<<<<<<< HEAD
 import '../../styles/app.css'
+=======
+import '../../styles/app.css';
+>>>>>>> 50829dc0f667d63dc00cb57cd06bef45b1264926
 
 export interface LauncherProps {
   // TODO(achilles@relay.cc) We allow the user to pass in much more than a peer

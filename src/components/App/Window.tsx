@@ -1,7 +1,11 @@
 import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import { PeerAddress, Conversations, NewConversation } from '../Screens';
 import { currentScreen, useReceiver, useRelay } from '../../hooks';
+<<<<<<< HEAD
 import '../../styles/app.css'
+=======
+import '../../styles/app.css';
+>>>>>>> 50829dc0f667d63dc00cb57cd06bef45b1264926
 
 export interface WindowProps {
   className?: string;
