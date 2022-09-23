@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
 import { truncateAddress } from '../../utils/address';
-import styled from 'styled-components';
 import { Avatar } from './Avatar';
 import { LoadingText } from './LoadingText';
 import {
@@ -86,24 +85,28 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
   })();
 
   return (
-    <Container
+    <div
+      className="AddressInfo Container"
       onClick={() => {
         setIsOpen(!isOpen);
       }}>
       <Avatar handle={handle} onClick={() => null} />
-      <TextContainer>
+      <div className="AddressInfo TextContainer">
         {primaryId === 'loading' && <LoadingText />}
         {primaryId === 'loading' || (
-          <MainText>
+          <div className="AddressInfo MainText">
             {isEthAddress(primaryId) ? truncateAddress(primaryId) : primaryId}
-          </MainText>
+          </div>
         )}
         {secondaryId === 'loading' && <LoadingText />}
         {secondaryId === 'loading' || (
-          <SubText>{truncateAddress(secondaryId)}</SubText>
+          <div className="AddressInfo SubText">
+            {truncateAddress(secondaryId)}
+          </div>
         )}
-        <DropdownMenu>
-          <DropDownItem
+        <div className="AddressInfo DropdownMenu">
+          <li
+            className="AddressInfo DropdownItem"
             onClick={() => {
               setDidCopyToClipboard(true);
               setTimeout(() => setDidCopyToClipboard(false), 3000);
@@ -112,119 +115,32 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
             {didCopyToClipboard || 'Copy Address'}
             {didCopyToClipboard && 'Copied'}
             <CopyClipboardIcon />
-          </DropDownItem>
-          <DropDownItem>
-            <LiLink href={'https://relay.cc/' + secondaryId} target="_blank">
+          </li>
+          <li className="AddressInfo DropdownItem">
+            <a
+              className="AddressInfo LiLink"
+              href={'https://relay.cc/' + secondaryId}
+              target="_blank"
+              rel="noreferrer">
               Relay
               <GoToRelayIcon />
-            </LiLink>
-          </DropDownItem>
-          <DropDownItem>
-            <LiLink
+            </a>
+          </li>
+          <li className="AddressInfo DropdownItem">
+            <a
+              className="AddressInfo LiLink"
               href={'https://etherscan.io/address/' + secondaryId}
-              target="_blank">
+              target="_blank"
+              rel="noreferrer">
               Etherscan
               <EtherscanIcon />
-            </LiLink>
-          </DropDownItem>
-        </DropdownMenu>
-      </TextContainer>
-    </Container>
+            </a>
+          </li>
+        </div>
+      </div>
+    </div>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const DropdownMenu = styled.ul`
-  &&& {
-    display: none;
-    flex-direction: column;
-    background: white;
-    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.25);
-    position: absolute;
-    top: 1rem;
-    border-radius: 4px;
-    opacity: 1;
-    transition: opacity 150ms, visibility 150ms;
-    padding: 0;
-    min-width: 10rem;
-    z-index: 10000000;
-  }
-`;
-
-const TextContainer = styled.div`
-  &&& {
-    margin-left: 1rem;
-    font-size: 16px;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    cursor: pointer;
-
-    :hover ${DropdownMenu} {
-      display: flex;
-    }
-  }
-`;
-
-const MainText = styled.div`
-  &&& {
-    font-weight: 600;
-    font-size: 1rem;
-    line-height: 1;
-    padding-bottom: 4px;
-    color: black;
-  }
-`;
-
-const SubText = styled.div`
-  &&& {
-    font-weight: 400;
-    font-size: 10px;
-    line-height: 1;
-  }
-`;
-
-const DropDownItem = styled.li`
-  &&& {
-    color: black;
-    cursor: pointer;
-    font-size: 14px;
-    text-decoration: none;
-    border-bottom: 1px solid #eeeeee;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 15px;
-
-    :hover {
-      background-color: #eeeeee;
-      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-    }
-  }
-`;
-
-const LiLink = styled.a`
-  &&& {
-    color: black;
-    text-decoration: none;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-weight: 600;
-    gap: 8px;
-  }
-`;
 
 const CopyClipboardIcon = () => {
   return (
