@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import { PeerAddress, Conversations, NewConversation } from '../Screens';
 import { currentScreen, useReceiver, useRelay } from '../../hooks';
+import '../../styles/preflight.css';
 import '../../styles/app.css';
 
 export interface WindowProps {
@@ -31,5 +32,9 @@ export const Window: FunctionComponent<WindowProps> = ({ className }) => {
     }
   }, [visibleScreen]);
 
-  return <div className={`${className} Window Container`}>{screen}</div>;
+  return (
+    <div className={`${className} RelayReceiver Window Container`}>
+      {screen}
+    </div>
+  );
 };

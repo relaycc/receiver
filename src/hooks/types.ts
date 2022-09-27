@@ -185,7 +185,12 @@ export const isEnsName = (handle?: string | null): handle is string => {
 };
 
 export const isLensName = (handle?: string | null): handle is string => {
-  return typeof handle === 'string' && handle.endsWith('.lens');
+  return (
+    typeof handle === 'string' &&
+    handle.endsWith('.lens') &&
+    handle.length > 9 &&
+    handle.length < 37
+  );
 };
 
 export interface LensProfilesQueryResponse {
