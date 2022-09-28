@@ -28,14 +28,18 @@ export const ConversationListItem: FunctionComponent<
           screen: { id: 'messages', peerAddress },
         })
       }>
-      <Avatar handle={peerAddress} onClick={() => null} />
-      <div className="ConversationListItem TopLineContainer">
-        <span className="ConversationListItem Title">{responsiveName}</span>
-        <span className="ConversationListItem Time">
-          {setConversationTime(topMessageTime)}
-        </span>
+      <div style={{ marginRight: '10px' }}>
+        <Avatar handle={peerAddress} onClick={() => null} />
       </div>
-      <span className="ConversationListItem Subtitle">{subtitle}</span>
+      <div className="ConversationListItem ContentContainer">
+        <div className="ConversationListItem TopLineContainer">
+          <span className="ConversationListItem Title">{responsiveName}</span>
+          <span className="ConversationListItem Time">
+            {setConversationTime(topMessageTime)}
+          </span>
+        </div>
+        <div className="ConversationListItem Subtitle">{subtitle}</div>
+      </div>
     </li>
   );
 };

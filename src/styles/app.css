@@ -188,7 +188,6 @@
 .ConversationListItem.ListItem {
   display: flex;
   align-items: center;
-  gap: 10px;
   box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
   padding: 15px 10px;
   cursor: pointer;
@@ -212,10 +211,6 @@
 
 .ConversationListItem.Time {
   color: #939292;
-  display: flex;
-  flex-direction: column;
-  align-self: stretch;
-  justify-content: start;
   white-space: nowrap;
   font-size: 0.8rem;
 }
@@ -236,7 +231,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-align: start;
   padding: 2px 0px;
 }
 
@@ -248,6 +242,19 @@
   text-overflow: ellipsis;
   text-align: start;
   padding: 2px 0px;
+}
+
+.ConversationListItem.TopLineContainer {
+  display: flex;
+  /* width: 100%; */
+  justify-content: space-between;
+  /* align-items: flex-end; */
+}
+
+.ConversationListItem.ContentContainer {
+  display: 'flex';
+  flex-direction: 'column';
+  width: 100%;
 }
 
 .Header.HeaderWrapper {
@@ -712,7 +719,6 @@
   position: absolute;
   top: 0;
   left: 0;
-  color: red;
   font-size: 0.75rem;
   opacity: 0.8;
 }
