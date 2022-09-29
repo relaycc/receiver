@@ -44,7 +44,7 @@ export const Launcher: FunctionComponent<LauncherProps> = ({
   }, [client]);
 
   return (
-    <div className="Launcher Fixed">
+    <div className="RelayReceiver Launcher Fixed">
       <ul className="Launcher Container">
         <button className="Launcher LaunchButton" onClick={onClickLaunch}>
           <ChatIcon />
