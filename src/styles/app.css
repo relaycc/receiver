@@ -211,6 +211,17 @@
   height: 40px;
 }
 
+.ConversationListItem.TopLineContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ConversationListItem.ContentContainer {
+  display: 'flex';
+  flex-direction: 'column';
+  width: 100%;
+}
+
 .ConversationListItem.Time {
   color: #939292;
   display: flex;

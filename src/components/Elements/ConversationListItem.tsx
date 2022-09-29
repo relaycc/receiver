@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Avatar } from './Avatar';
 import { useResponsiveName, useEnsName } from '../../hooks';
 import { useReceiver } from '../../hooks';
-import { setConversationTime } from '../../utils/date';
+import { getDisplayDate } from '../../utils/date';
 
 export interface ConversationListItemProps {
   peerAddress: string;
@@ -35,7 +35,7 @@ export const ConversationListItem: FunctionComponent<
         <div className="ConversationListItem TopLineContainer">
           <span className="ConversationListItem Title">{responsiveName}</span>
           <span className="ConversationListItem Time">
-            {setConversationTime(topMessageTime)}
+            {getDisplayDate(topMessageTime)}
           </span>
         </div>
         <div className="ConversationListItem Subtitle">{subtitle}</div>
