@@ -5,7 +5,7 @@ import { Message, useResponsiveName, useEnsName } from '../../hooks';
 import { getDisplayDate } from '../../utils/date';
 
 interface MessagesBucketProps {
-  startDate: Date | undefined;
+  startDate: Date;
   messages: Message[];
   peerName?: string | undefined;
   sentByAddress: string;
