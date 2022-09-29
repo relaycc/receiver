@@ -33,8 +33,8 @@ export const Window: FunctionComponent<WindowProps> = ({ className }) => {
   }, [visibleScreen]);
 
   return (
-    <div className={`${className} RelayReceiver Window Container`}>
-      {screen}
+    <div className="RelayReceiver">
+      <div className={`${className} Window Container`}>{screen}</div>
     </div>
   );
 };
