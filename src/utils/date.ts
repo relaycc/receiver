@@ -1,47 +1,13 @@
-// All date related functions can be exported from here
-
-export const shortDate = (d: Date | undefined): string => {
-  if (!d) return 'N/A';
-  const shortDateText = checkDateIsTodayOrYesterday(d);
-  return shortDateText;
-};
-
-export const time = (d: Date | undefined): string => {
-  if (!d) return 'N/A';
-  const hour = d.getHours() % 12 || 12;
-  const minute = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
-  return `${hour}:${minute}`;
-};
-
-export const isBeforeDate = (
-  dateToCheck: Date,
-  dateToCheckAgainst: Date
-): boolean => {
-  dateToCheckAgainst.setHours(0, 0, 0, 0);
-  return dateToCheck < dateToCheckAgainst;
-};
-
-const checkDateIsTodayOrYesterday = (someDate: Date) => {
-  const dateWithoutTime = (d: Date) => new Date(d.toDateString());
-
-  const today = dateWithoutTime(new Date());
-  const yesterday = dateWithoutTime(new Date());
-
-  yesterday.setDate(today.getDate() - 1);
-
-  const comparisonDateTime = dateWithoutTime(someDate).getTime();
-
-  if (
-    comparisonDateTime > today.getTime() ||
-    comparisonDateTime < yesterday.getTime()
-  ) {
-    return someDate.toLocaleDateString('en-us', {
-      month: 'short',
-      day: 'numeric',
-    });
-  } else if (comparisonDateTime === today.getTime()) {
-    return `Today`;
+export const getDisplayDate = (date: Date): string => {
+  const time = date.getTime();
+  const midnight = new Date().setHours(0, 0, 0);
+  if (time > midnight) {
+    return date.toLocaleString('en-US', { timeStyle: 'short' });
+  } else if (time > midnight - 24 * 60 * 60 * 1000) {
+    return 'Yesterday';
+  } else if (time > midnight - 24 * 60 * 60 * 1000 * 7) {
+    return date.toLocaleString('en-US', { weekday: 'long' });
   } else {
-    return `Yesterday`;
+    return date.toLocaleString('en-US', { dateStyle: 'short' });
   }
 };

@@ -19,6 +19,7 @@ export const ConversationList: FunctionComponent = () => {
               key={pickPeerAddress(client.address, message)}
               peerAddress={pickPeerAddress(client.address, message)}
               subtitle={message.content}
+              topMessageTime={message.sent}
             />
           ))}
       </ul>

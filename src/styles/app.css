@@ -193,7 +193,6 @@
   padding: 15px 10px;
   height: 74px;
   cursor: pointer;
-  width: 100%;
   background-color: transparent;
   transition: background-color 300ms ease-in-out;
 }
@@ -212,11 +211,36 @@
   height: 40px;
 }
 
-.RelayReceiver .ConversationListItem.Title {
+.ConversationListItem.TopLineContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ConversationListItem.ContentContainer {
+  display: 'flex';
+  flex-direction: 'column';
+  width: 100%;
+}
+
+.ConversationListItem.Time {
+  color: #939292;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  justify-content: start;
+  white-space: nowrap;
+  font-size: 0.8rem;
+}
+
+.ConversationListItem.Title {
   color: black;
   font-weight: bold;
   text-align: start;
+  width: 100%;
   line-height: 1;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .RelayReceiver .ConversationListItem.Subtitle {

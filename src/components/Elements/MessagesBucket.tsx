@@ -2,8 +2,7 @@ import MessageBubble from './MessageBubble';
 import { Avatar } from './Avatar';
 import React from 'react';
 import { Message, useResponsiveName, useEnsName } from '../../hooks';
-import { time } from '../../utils/date';
-import { shortDate } from '../../utils/date';
+import { getDisplayDate } from '../../utils/date';
 
 interface MessagesBucketProps {
   startDate: Date | undefined;
@@ -47,7 +46,7 @@ export default function MessagesBucket({
             {responsiveName}
           </div>
           <div className="MessagesBucket MessageTime">
-            {shortDate(startDate) + ', ' + time(startDate)}
+            {getDisplayDate(startDate)}
           </div>
         </div>
       </div>
