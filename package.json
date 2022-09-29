@@ -54,7 +54,6 @@
     "@ethersproject/address": "^5.7.0",
     "@ethersproject/providers": "^5.7.0",
     "@relaycc/xmtp-js": "0.1.2",
-    "encoding": "^0.1.13",
     "framer-motion": "^4.1.17",
     "gql": "^1.1.2",
     "graphql-request": "^5.0.0",
