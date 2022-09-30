@@ -60,6 +60,7 @@
   border-radius: 50%;
   height: 40px;
   width: 40px;
+  overflow: hidden;
 }
 .RelayReceiver .Avatar.AvatarImage.large-true {
   border-radius: 50%;
@@ -217,9 +218,8 @@
 }
 
 .ConversationListItem.ContentContainer {
-  display: 'flex';
-  flex-direction: 'column';
-  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .ConversationListItem.Time {
