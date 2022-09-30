@@ -140,7 +140,6 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
 export const BrandedFooter = () => {
   return (
     <footer className="InfoCard Footer">
-      <h3 className="InfoCard WordMark">Check out</h3>
       <a
         className="InfoCard FooterLink"
         href="https://try.relay.cc"
@@ -155,16 +154,18 @@ export const BrandedFooter = () => {
           alt="Relay Logo"
         />
       </a>
-      <h3 style={{ margin: '0px 2px 0px 0px' }} className="InfoCard WordMark">
-        on
-      </h3>
+      <h3 className="InfoCard WordMark">Relay is open-source on</h3>
       <a
         className="InfoCard FooterLink"
         href="https://github.com/relaycc/receiver"
         target="_blank"
         rel="noreferrer"
         style={{ transform: 'translateY(-2px)' }}>
-        <svg viewBox="0 0 24 24" height={30} width={30}>
+        <svg
+          viewBox="0 0 24 24"
+          height={30}
+          width={30}
+          style={{ marginLeft: '3px' }}>
           <path
             fillRule="evenodd"
             clipRule="evenodd"
