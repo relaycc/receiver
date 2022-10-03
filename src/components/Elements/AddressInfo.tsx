@@ -119,7 +119,7 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
           <li className="AddressInfo DropdownItem">
             <a
               className="AddressInfo LiLink"
-              href={'https://relay.cc/' + secondaryId}
+              href={'https://relay.cc/u/' + secondaryId}
               target="_blank"
               rel="noreferrer">
               Relay
