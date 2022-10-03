@@ -11,13 +11,15 @@ export interface InfoCardProps {
     | 'signature denied'
     | 'no messages'
     | 'no wallet'
-    | 'new conversation';
-  peerName?: string;
+    | 'new conversation'
+    | 'invalid handle'
+    | 'empty conversation';
+  handle?: string | null;
 }
 
 export const InfoCard: FunctionComponent<InfoCardProps> = ({
   variant,
-  peerName,
+  handle,
 }) => {
   const dispatch = useRelay((state) => state.dispatch);
   const wallet = useReceiver((state) => state.wallet);
@@ -53,6 +55,19 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
           <div className="InfoCard Title">User not on network</div>
           <div className="InfoCard Text">
             This user is not on the XMTP messaging network yet.
+          </div>
+        </div>
+        <BrandedFooter />
+      </div>
+    );
+  } else if (variant === 'invalid handle') {
+    return (
+      <div className="InfoCard FullMiddleSection">
+        <div className="InfoCard CardContainer">
+          <div className="InfoCard Title">Address Lookup Failed</div>
+          <div className="InfoCard Text">
+            Could not find an ETH address for <em>{handle}</em>. Currently
+            supported ID types are ENS name, Lens handle, or Ethereum address.
           </div>
         </div>
         <BrandedFooter />
@@ -116,7 +131,17 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
       <div className="InfoCard FullMiddleSection">
         <div className="InfoCard CardContainer">
           <div className="InfoCard Title">{'All Set  🎉'}</div>
-          <div className="InfoCard Text">{`This is the beginning of your encrypted conversation with ${peerName}`}</div>
+          <div className="InfoCard Text">{`This is the beginning of your encrypted conversation`}</div>
+        </div>
+      </div>
+    );
+  } else if (variant === 'empty conversation') {
+    return (
+      <div className="InfoCard CardContainer">
+        <div className="InfoCard Text">
+          It looks like this is your first time on the XMTP network. Try sending
+          a message to Relay, or click the icon in the corner to start a new
+          conversation.
         </div>
       </div>
     );
