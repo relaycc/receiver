@@ -2,15 +2,17 @@ import React, { FunctionComponent } from 'react';
 import { Avatar } from './Avatar';
 import { useResponsiveName, useEnsName } from '../../hooks';
 import { useReceiver } from '../../hooks';
+import { getDisplayDate } from '../../utils/date';
 
 export interface ConversationListItemProps {
   peerAddress: string;
   subtitle: string;
+  topMessageTime: Date;
 }
 
 export const ConversationListItem: FunctionComponent<
   ConversationListItemProps
-> = ({ peerAddress, subtitle }) => {
+> = ({ peerAddress, subtitle, topMessageTime }) => {
   const dispatch = useReceiver((state) => state.dispatch);
   const { name } = useEnsName({
     handle: peerAddress,
@@ -26,10 +28,17 @@ export const ConversationListItem: FunctionComponent<
           screen: { id: 'messages', peerAddress },
         })
       }>
-      <Avatar handle={peerAddress} onClick={() => null} />
-      <div className="ConversationListItem TextContainer">
-        <span className="ConversationListItem Title">{responsiveName}</span>
-        <span className="ConversationListItem Subtitle">{subtitle}</span>
+      <div style={{ marginRight: '10px' }}>
+        <Avatar handle={peerAddress} onClick={() => null} />
+      </div>
+      <div className="ConversationListItem ContentContainer">
+        <div className="ConversationListItem TopLineContainer">
+          <span className="ConversationListItem Title">{responsiveName}</span>
+          <span className="ConversationListItem Time">
+            {getDisplayDate(topMessageTime)}
+          </span>
+        </div>
+        <div className="ConversationListItem Subtitle">{subtitle}</div>
       </div>
     </li>
   );

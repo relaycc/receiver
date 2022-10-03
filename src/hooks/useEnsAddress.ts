@@ -17,6 +17,12 @@ export const useEnsAddress = ({
   );
 
   useEffect(() => {
+    if (handle === null) {
+      setState({ address: undefined, status: 'noop' });
+    }
+  }, [handle]);
+
+  useEffect(() => {
     if (typeof handle === 'string') {
       const listener = () => {
         if (typeof handle === 'string') {

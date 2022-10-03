@@ -56,25 +56,26 @@
   display: block;
 }
 
-.Avatar.AvatarImage {
+.RelayReceiver .Avatar.AvatarImage {
   border-radius: 50%;
   height: 40px;
   width: 40px;
+  overflow: hidden;
 }
-.Avatar.AvatarImage.large-true {
+.RelayReceiver .Avatar.AvatarImage.large-true {
   border-radius: 50%;
   height: 50px;
   width: 50px;
 }
 
-.Avatar.BlockiesContainer {
+.RelayReceiver .Avatar.BlockiesContainer {
   border-radius: 50%;
   overflow: hidden;
   height: 40px;
   width: 40px;
 }
 
-.Avatar.BlockiesContainer.large-true {
+.RelayReceiver .Avatar.BlockiesContainer.large-true {
   height: 50px;
   width: 50px;
   border-radius: 50%;
@@ -96,13 +97,13 @@
   box-shadow: rgb(0 0 0 / 25%) 0px 0px 4px;
 }
 
-.AddressInfo.Container {
+.RelayReceiver .AddressInfo.Container {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.AddressInfo.MainText {
+.RelayReceiver .AddressInfo.MainText {
   font-weight: 600;
   font-size: 1rem;
   line-height: 1;
@@ -110,13 +111,13 @@
   color: black;
 }
 
-.AddressInfo.SubText {
+.RelayReceiver .AddressInfo.SubText {
   font-weight: 400;
   font-size: 10px;
   line-height: 1;
 }
 
-.AddressInfo.DropdownItem {
+.RelayReceiver .AddressInfo.DropdownItem {
   color: black;
   cursor: pointer;
   font-size: 14px;
@@ -130,12 +131,12 @@
   padding: 15px;
 }
 
-.AddressInfo.DropdownItem:hover {
+.RelayReceiver .AddressInfo.DropdownItem:hover {
   background-color: #eeeeee;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
 }
 
-.AddressInfo.LiLink {
+.RelayReceiver .AddressInfo.LiLink {
   color: black;
   text-decoration: none;
   height: 100%;
@@ -147,7 +148,7 @@
   gap: 8px;
 }
 
-.AddressInfo.DropdownMenu {
+.RelayReceiver .AddressInfo.DropdownMenu {
   display: none;
   flex-direction: column;
   background: white;
@@ -162,22 +163,21 @@
   z-index: 10000000;
 }
 
-.AddressInfo.TextContainer:hover > .AddressInfo.DropdownMenu {
+.RelayReceiver .AddressInfo.TextContainer:hover > .AddressInfo.DropdownMenu {
   display: flex;
 }
 
-.AddressInfo.TextContainer {
+.RelayReceiver .AddressInfo.TextContainer {
   margin-left: 1rem;
   font-size: 16px;
   font-weight: 600;
-  font-family: 'Poppins', sans-serif;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   cursor: pointer;
 }
 
-.ConversationList.List {
+.RelayReceiver .ConversationList.List {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -185,38 +185,76 @@
   margin: 0;
 }
 
-.ConversationListItem.ListItem {
+.RelayReceiver .ConversationListItem.ListItem {
   display: flex;
   align-items: center;
   gap: 10px;
   box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
   padding: 15px 10px;
+  height: 74px;
   cursor: pointer;
-  width: 100%;
   background-color: transparent;
   transition: background-color 300ms ease-in-out;
 }
 
-.ConversationListItem.ListItem:hover {
+.RelayReceiver .ConversationListItem.ListItem:hover {
   background-color: #eeeeee;
   transition: background-color 300ms ease-in-out;
 }
 
-.ConversationListItem.TextContainer {
+.RelayReceiver .ConversationListItem.TextContainer {
   color: black;
   font-size: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  justify-content: space-between;
+  height: 40px;
+}
+
+.ConversationListItem.TopLineContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ConversationListItem.ContentContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.ConversationListItem.Time {
+  color: #939292;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  justify-content: start;
+  white-space: nowrap;
+  font-size: 0.8rem;
 }
 
 .ConversationListItem.Title {
   color: black;
   font-weight: bold;
   text-align: start;
+  width: 100%;
+  line-height: 1;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
-.ConversationListItem.Subtitle {
+.RelayReceiver .ConversationListItem.Subtitle {
+  color: black;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: start;
+  padding: 2px 0px;
+  line-height: 1;
+}
+
+.RelayReceiver .ConversationList.Subtitle {
   color: black;
   max-width: 250px;
   white-space: nowrap;
@@ -226,24 +264,14 @@
   padding: 2px 0px;
 }
 
-.ConversationList.Subtitle {
-  color: black;
-  max-width: 250px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: start;
-  padding: 2px 0px;
-}
-
-.Header.HeaderWrapper {
+.RelayReceiver .Header.HeaderWrapper {
   text-align: left;
   border-radius: 4px 4px 0 0;
   box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.25);
   color: black;
   display: flex;
   justify-content: space-between;
-  min-height: 40px;
+  min-height: 56px;
   display: flex;
   align-items: center;
   padding: 0.5rem;
@@ -251,9 +279,8 @@
   background-color: white;
 }
 
-.Header.Title {
+.RelayReceiver .Header.Title {
   font-size: 1.25rem;
-  font-family: 'Poppins', sans-serif;
   color: black;
   font-weight: 600;
   opacity: 0.75;
@@ -261,8 +288,7 @@
   margin: 0;
 }
 
-.InfoCard.Text {
-  font-family: 'Poppins', sans-serif;
+.RelayReceiver .InfoCard.Text {
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -270,7 +296,7 @@
   color: #2d2d2d;
 }
 
-.InfoCard.FooterLink {
+.RelayReceiver .InfoCard.FooterLink {
   text-decoration: none;
   cursor: pointer;
   color: inherit;
@@ -278,7 +304,7 @@
   align-items: center;
 }
 
-.InfoCard.WordMark {
+.RelayReceiver .InfoCard.WordMark {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -287,13 +313,13 @@
   transform: translateY(-2px);
 }
 
-.InfoCard.Footer {
+.RelayReceiver .InfoCard.Footer {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.InfoCard.FullMiddleSection {
+.RelayReceiver .InfoCard.FullMiddleSection {
   width: 100%;
   display: flex;
   align-items: center;
@@ -302,7 +328,7 @@
   flex-grow: 1;
 }
 
-.InfoCard.CardContainer {
+.RelayReceiver .InfoCard.CardContainer {
   background: #fbfaff;
   border: 1px dashed #a6a6a6;
   border-radius: 4px;
@@ -317,9 +343,8 @@
   margin-bottom: auto;
 }
 
-.InfoCard.Title {
+.RelayReceiver .InfoCard.Title {
   color: #686868;
-  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 12px;
@@ -329,7 +354,7 @@
   border-bottom: 1px solid #e4e4e4;
 }
 
-.InfoCard.Button {
+.RelayReceiver .InfoCard.Button {
   padding: 8px 12px;
   border: 1px solid rgba(55, 41, 125, 0.5);
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
@@ -340,7 +365,6 @@
   align-self: stretch;
   justify-content: center;
   font-size: 12px;
-  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 500;
   line-height: 15px;
@@ -349,7 +373,7 @@
   color: white;
   transition: all 0.1s ease-in-out;
 }
-.InfoCard.Button.Disabled {
+.RelayReceiver .InfoCard.Button.Disabled {
   padding: 8px 12px;
   border: 1px solid rgba(55, 41, 125, 0.5);
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
@@ -360,7 +384,6 @@
   align-self: stretch;
   justify-content: center;
   font-size: 12px;
-  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 500;
   line-height: 15px;
@@ -370,24 +393,24 @@
   filter: brightness(150%);
 }
 
-.InfoCard.Button:hover {
+.RelayReceiver .InfoCard.Button:hover {
   cursor: pointer;
   filter: brightness(1.1);
 }
 
-.LoadingList.LeftContainer {
+.RelayReceiver .LoadingList.LeftContainer {
   display: flex;
   flex-direction: column;
   gap: 9px;
 }
 
-.LoadingList.RightContainer {
+.RelayReceiver .LoadingList.RightContainer {
   display: flex;
   flex-direction: column;
   gap: 9px;
 }
 
-.LoadingList.LogoOutline {
+.RelayReceiver .LoadingList.LogoOutline {
   border-radius: 50%;
   height: 40px;
   width: 40px;
@@ -396,7 +419,7 @@
   animation: RelayLoadingListSlide 1500ms ease-in-out infinite;
 }
 
-.LoadingList.NameOutline {
+.RelayReceiver .LoadingList.NameOutline {
   height: 22px;
   width: 78px;
   border-radius: 8px;
@@ -405,7 +428,7 @@
   animation: RelayLoadingListSlide 1500ms ease-in-out infinite;
 }
 
-.LoadingList.DateOutline {
+.RelayReceiver .LoadingList.DateOutline {
   width: 96px;
   height: 17px;
   border-radius: 8px;
@@ -414,7 +437,7 @@
   animation: RelayLoadingListSlide 1500ms ease-in-out infinite;
 }
 
-.LoadingList.FirstMessage {
+.RelayReceiver .LoadingList.FirstMessage {
   width: 355px;
   height: 60px;
   border-radius: 8px;
@@ -423,7 +446,7 @@
   animation: RelayLoadingListSlide 1500ms ease-in-out infinite;
 }
 
-.LoadingList.SecondMessage {
+.RelayReceiver .LoadingList.SecondMessage {
   width: 155px;
   height: 60px;
   border-radius: 8px;
@@ -432,7 +455,7 @@
   animation: RelayLoadingListSlide 1500ms ease-in-out infinite;
 }
 
-.LoadingList.MainContainer {
+.RelayReceiver .LoadingList.MainContainer {
   display: flex;
   flex-direction: column-reverse;
   overflow: hidden;
@@ -443,33 +466,33 @@
   padding: 12px;
 }
 
-.LoadingList.LeftUserInfo {
+.RelayReceiver .LoadingList.LeftUserInfo {
   display: flex;
   align-items: center;
   gap: 13px;
 }
 
-.LoadingList.RightUserInfo {
+.RelayReceiver .LoadingList.RightUserInfo {
   display: flex;
   align-items: center;
   flex-direction: row;
   gap: 13px;
 }
 
-.LoadingList.LeftMessageContainer {
+.RelayReceiver .LoadingList.LeftMessageContainer {
   display: flex;
   flex-direction: column;
   gap: 9px;
 }
 
-.LoadingText.LoadingCircleContainer {
+.RelayReceiver .LoadingText.LoadingCircleContainer {
   display: flex;
   align-items: center;
   gap: 5px;
   padding: 5px;
 }
 
-.LoadingText.LoadingCircle {
+.RelayReceiver .LoadingText.LoadingCircle {
   color: white;
   height: 5px;
   width: 5px;
@@ -477,7 +500,7 @@
   border-radius: 50%;
   animation: pulse 1500ms ease-in-out infinite;
 }
-.LoadingText.LoadingCircl2 {
+.RelayReceiver .LoadingText.LoadingCircl2 {
   color: white;
   height: 5px;
   width: 5px;
@@ -485,7 +508,7 @@
   border-radius: 50%;
   animation: RelayLoadingCirclePulse2 1500ms ease-in-out infinite;
 }
-.LoadingText.LoadingCircl3 {
+.RelayReceiver .LoadingText.LoadingCircl3 {
   color: white;
   height: 5px;
   width: 5px;
@@ -494,13 +517,13 @@
   animation: RelayLoadingCirclePulse3 1500ms ease-in-out infinite;
 }
 
-.LoadingList.RightMessageContainer {
+.RelayReceiver .LoadingList.RightMessageContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.LoadingSpinnerContainer {
+.RelayReceiver .LoadingSpinnerContainer {
   animation: relayReceiverSpin 1500ms linear infinite;
   width: max-content;
   height: max-content;
@@ -511,7 +534,7 @@
   border-radius: 50%;
 }
 
-.MessageBubble.TextWrapper {
+.RelayReceiver .MessageBubble.TextWrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -520,9 +543,8 @@
   padding: 3px 0 3px 50px;
 }
 
-.MessageBubble.MessageText {
+.RelayReceiver .MessageBubble.MessageText {
   color: #060028;
-  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -532,11 +554,11 @@
   padding-left: 4px;
 }
 
-.MessageBucket.SentByInfo {
+.RelayReceiver .MessageBucket.SentByInfo {
   display: flex;
 }
 
-.MessagesBucket.SenderName.black-false.white-false {
+.RelayReceiver .MessagesBucket.SenderName.black-false.white-false {
   font-weight: bold;
   font-size: 14px;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
@@ -546,7 +568,7 @@
   border-radius: 99rem;
 }
 
-.MessagesBucket.SenderName.black-true.white-true {
+.RelayReceiver .MessagesBucket.SenderName.black-true.white-true {
   font-weight: bold;
   font-size: 14px;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
@@ -556,7 +578,7 @@
   border-radius: 99rem;
 }
 
-.MessageInput.StyledInput {
+.RelayReceiver .MessageInput.StyledInput {
   height: 2rem !important;
   padding: 3px 0px 3px 10px;
   display: flex;
@@ -566,18 +588,17 @@
   border: none;
   outline: none;
   color: #333333;
-  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   box-shadow: rgb(0 0 0 / 25%) 0px 0px 4px;
 }
 
-.MessageInput.StyledInput::placeholder {
+.RelayReceiver .MessageInput.StyledInput::placeholder {
   color: #333c4f;
 }
 
-.MessageList.List {
+.RelayReceiver .MessageList.List {
   display: flex;
   flex-direction: column-reverse;
   overflow-y: scroll;
@@ -588,14 +609,14 @@
   box-sizing: border-box;
 }
 
-.MessagesBucket.Container {
+.RelayReceiver .MessagesBucket.Container {
   width: 100%;
   display: flex;
   flex-direction: column;
   padding-bottom: 1rem;
 }
 
-.MessagesBucket.MessagePosition {
+.RelayReceiver .MessagesBucket.MessagePosition {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -603,22 +624,21 @@
   align-self: flex-start;
 }
 
-.MessagesBucket.MessagePosition:first-of-type {
+.RelayReceiver .MessagesBucket.MessagePosition:first-of-type {
   padding-bottom: 4px;
 }
 
-.MessagesBucket.MessageHeader {
+.RelayReceiver .MessagesBucket.MessageHeader {
   display: flex;
   align-items: flex-start;
-  margin-bottom: -18px;
+  margin-bottom: -10px;
 }
 
-.MessagesBucket.SentByInfo {
+.RelayReceiver .MessagesBucket.SentByInfo {
   display: flex;
 }
 
-.MessagesBucket.MessageTime {
-  font-family: 'Poppins', sans-serif;
+.RelayReceiver .MessagesBucket.MessageTime {
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -627,12 +647,12 @@
   transform: translateY(2px);
 }
 
-.MessagesBucket.FlexColReverseContainer {
+.RelayReceiver .MessagesBucket.FlexColReverseContainer {
   display: flex;
   flex-direction: column-reverse;
 }
 
-.NewConversation.NewMessage {
+.RelayReceiver .NewConversation.NewMessage {
   box-sizing: border-box;
   height: 100%;
   width: 100%;
@@ -645,7 +665,7 @@
   padding: 0 10px 0 10px;
 }
 
-.NewConversation.Input {
+.RelayReceiver .NewConversation.Input {
   display: flex;
   flex-grow: 1;
   background-color: white;
@@ -657,10 +677,10 @@
   padding: 5px 10px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   margin-bottom: 1rem;
-  height: 1.5rem;
+  height: 3rem;
 }
 
-.NewConversation.Button {
+.RelayReceiver .NewConversation.Button {
   padding: 8px 12px;
   border: 1px solid rgba(55, 41, 125, 0.5);
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
@@ -671,7 +691,6 @@
   align-self: stretch;
   justify-content: center;
   font-size: 12px;
-  font-family: 'Poppins', sans-serif;
   font-style: normal;
   font-weight: 500;
   line-height: 15px;
@@ -682,12 +701,12 @@
   transition: all 0.1s ease-in-out;
 }
 
-.NewConversation.Button:hover {
+.RelayReceiver .NewConversation.Button:hover {
   cursor: pointer;
   filter: brightness(1.1);
 }
 
-.NewConversation.Form {
+.RelayReceiver .NewConversation.Form {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -696,7 +715,7 @@
   padding-top: 1.5rem;
 }
 
-.NewConversation.ErrorMessage {
+.RelayReceiver .NewConversation.ErrorMessage {
   position: absolute;
   top: 0;
   left: 0;
@@ -718,7 +737,7 @@
   left: 88px;
 }
 
-.Modal.Overlay {
+.RelayReceiver .Modal.Overlay {
   position: fixed;
   left: 0;
   bottom: 0;
