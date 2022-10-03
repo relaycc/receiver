@@ -300,21 +300,23 @@
   text-decoration: none;
   cursor: pointer;
   color: inherit;
+  display: flex;
+  align-items: center;
 }
 
 .RelayReceiver .InfoCard.WordMark {
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-size: 1.5rem;
-  margin-left: 1rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+  transform: translateY(-2px);
 }
 
 .RelayReceiver .InfoCard.Footer {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: auto;
 }
 
 .RelayReceiver .InfoCard.FullMiddleSection {
