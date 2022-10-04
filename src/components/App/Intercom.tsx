@@ -11,7 +11,7 @@ const AnimatePresence = BrokenTypesAnimatePresence as React.FunctionComponent<{
 
 const VARIANTS = {
   hide: { maxHeight: 0, transition: { duration: 0.5 } },
-  show: { maxHeight: '500px', transition: { duration: 0.5 } },
+  show: { maxHeight: '100vh', transition: { duration: 0.5 } },
 } as const;
 
 export const Intercom: FunctionComponent<{
