@@ -81,7 +81,8 @@ const handleSignIn = async (state: Relay, wallet: Signer) => {
     const client = await Client.create(wallet, { env: 'production' });
     state.setClient(client);
     state.setSignatureStatus('idle');
-  } catch {
+  } catch (err) {
+    console.error('Error during XMTP signing', err);
     state.setSignatureStatus('denied');
   }
 };

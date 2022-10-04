@@ -38,6 +38,10 @@ export const NewConversation: FunctionComponent<NewConversationProps> = ({
           autoFocus={true}
           placeholder="Enter an ENS name, Lens handle, or ETH address..."
           type="text"
+          spellCheck="false"
+          autoComplete="off"
+          autoCorrect="false"
+          autoCapitalize="false"
           value={peerAddress}
           onChange={(e) => {
             setisError(false);

@@ -1,3 +1,7 @@
+.RelayReceiver {
+  color: black;
+}
+
 .Launcher.Fixed {
   position: fixed;
   bottom: 0;
@@ -94,7 +98,7 @@
 @media (max-width: 400px) {
   .Window.Container {
     width: 100vw;
-    height: 100vh;
+    height: 80vh;
   }
 }
 
@@ -237,7 +241,6 @@
   color: black;
   font-weight: bold;
   text-align: start;
-  width: 100%;
   line-height: 1;
   white-space: nowrap;
   overflow-x: hidden;
@@ -580,7 +583,7 @@
 }
 
 .RelayReceiver .MessageInput.StyledInput {
-  height: 2rem !important;
+  height: 3rem !important;
   padding: 3px 0px 3px 10px;
   display: flex;
   margin: 1rem 0.5rem 1rem 0.5rem;
@@ -591,8 +594,9 @@
   color: #333333;
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 16px;
   box-shadow: rgb(0 0 0 / 25%) 0px 0px 4px;
+  background-color: white;
 }
 
 .RelayReceiver .MessageInput.StyledInput::placeholder {
@@ -679,6 +683,7 @@
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   margin-bottom: 1rem;
   height: 3rem;
+  font-size: 16px;
 }
 
 .RelayReceiver .NewConversation.Button {
@@ -741,8 +746,10 @@
 @media (max-width: 400px) {
   .Intercom.Fixed.Intercom.Fixed.position-left {
     left: 0;
+    right: 0;
   }
   .Intercom.Fixed.Intercom.Fixed.position-right {
+    left: 0;
     right: 0;
   }
 }
