@@ -3,7 +3,8 @@ import {
   motion,
   AnimatePresence as BrokenTypesAnimatePresence,
 } from 'framer-motion';
-import { useIsOpen } from '../../hooks';
+import { useIsOpen, useReceiver, useWindowSize } from '../../hooks';
+import { Dialog } from '@headlessui/react';
 
 const AnimatePresence = BrokenTypesAnimatePresence as React.FunctionComponent<{
   children: React.ReactNode;
@@ -15,15 +16,30 @@ const VARIANTS = {
 } as const;
 
 export const Intercom: FunctionComponent<{
-  isOpen?: boolean;
   position?: 'left' | 'right';
   children: ReactNode;
-}> = ({ isOpen, children, position }) => {
-  const isOpenState = useIsOpen();
-  const isActuallyOpen = isOpen === undefined ? isOpenState : isOpen;
+}> = ({ children, position }) => {
+  const windowSize = useWindowSize();
+  const isOpen = useIsOpen();
+  const setIsOpen = useReceiver((state) => state.setIsOpen);
   return (
     <AnimatePresence>
-      {isActuallyOpen && (
+      {isOpen && windowSize !== undefined && windowSize.width < 400 && (
+        <Dialog
+          onClose={() => setIsOpen(false)}
+          static
+          as={motion.div}
+          open={isOpen}
+          className={`Intercom Fixed Modal`}
+          key="receiver-intercom"
+          initial="hide"
+          animate="show"
+          exit="hide"
+          variants={VARIANTS}>
+          <Dialog.Panel>{children}</Dialog.Panel>
+        </Dialog>
+      )}
+      {isOpen && windowSize !== undefined && windowSize.width >= 400 && (
         <motion.div
           className={`Intercom Fixed ${'position-' + (position || 'right')}`}
           key="receiver-modal"
