@@ -1,10 +1,9 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode, useEffect } from 'react';
 import {
   motion,
   AnimatePresence as BrokenTypesAnimatePresence,
 } from 'framer-motion';
-import { useIsOpen, useReceiver, useWindowSize } from '../../hooks';
-import { Dialog } from '@headlessui/react';
+import { useIsOpen, useWindowSize } from '../../hooks';
 
 const AnimatePresence = BrokenTypesAnimatePresence as React.FunctionComponent<{
   children: React.ReactNode;
@@ -21,25 +20,20 @@ export const Intercom: FunctionComponent<{
 }> = ({ children, position }) => {
   const windowSize = useWindowSize();
   const isOpen = useIsOpen();
-  const setIsOpen = useReceiver((state) => state.setIsOpen);
+
+  useEffect(() => {
+    if (windowSize && windowSize.width <= 400) {
+      if (isOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = 'auto';
+      }
+    }
+  }, [isOpen]);
+
   return (
     <AnimatePresence>
-      {isOpen && windowSize !== undefined && windowSize.width < 400 && (
-        <Dialog
-          onClose={() => setIsOpen(false)}
-          static
-          as={motion.div}
-          open={isOpen}
-          className={`Intercom Fixed Modal`}
-          key="receiver-intercom"
-          initial="hide"
-          animate="show"
-          exit="hide"
-          variants={VARIANTS}>
-          <Dialog.Panel>{children}</Dialog.Panel>
-        </Dialog>
-      )}
-      {isOpen && windowSize !== undefined && windowSize.width >= 400 && (
+      {isOpen && (
         <motion.div
           className={`Intercom Fixed ${'position-' + (position || 'right')}`}
           key="receiver-modal"
