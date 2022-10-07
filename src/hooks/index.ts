@@ -11,3 +11,4 @@ export * from './useEthBalance';
 export * from './useTransactionCount';
 export * from './useOwnedNfts';
 export * from './types';
+export * from './useWindowSize';

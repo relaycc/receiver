@@ -735,6 +735,11 @@
   bottom: 0;
 }
 
+.Intercom.Fixed.Modal {
+  left: 0;
+  right: 0;
+}
+
 .Intercom.Fixed.position-right {
   right: 88px;
 }
@@ -743,7 +748,10 @@
   left: 88px;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 488px) {
+  .Intercom .Window {
+    margin: auto;
+  }
   .Intercom.Fixed.Intercom.Fixed.position-left {
     left: 0;
     right: 0;
@@ -754,7 +762,7 @@
   }
 }
 
-.RelayReceiver .Modal.Overlay {
+.Modal.Overlay {
   position: fixed;
   left: 0;
   bottom: 0;
