@@ -1,8 +1,8 @@
 import React from 'react';
-import { ConversationList, InfoCard, Header } from '../Elements';
+import { PinnedConversationList, InfoCard, Header } from '../Elements';
 import { useReceiver, useRelay } from '../../hooks';
 
-export const Conversations = () => {
+export const Pinned = () => {
   const client = useRelay((state) => state.client);
   const wallet = useReceiver((state) => state.wallet);
   const signatureStatus = useRelay((state) => state.signatureStatus);
@@ -20,7 +20,7 @@ export const Conversations = () => {
         } else if (client === null) {
           return <InfoCard variant="no xmtp client" />;
         } else {
-          return <ConversationList />;
+          return <PinnedConversationList />;
         }
       })()}
     </>

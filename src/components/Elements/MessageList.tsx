@@ -1,5 +1,10 @@
 import React, { FunctionComponent } from 'react';
-import { useRelay, Message, byMostRecentMessage } from '../../hooks';
+import {
+  useRelay,
+  Message,
+  byMostRecentMessage,
+  useMessages,
+} from '../../hooks';
 import MessagesBucket from '../Elements/MessagesBucket';
 
 export interface MessageListProps {
@@ -10,8 +15,7 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
   peerAddress,
 }) => {
   const client = useRelay((state) => state.client);
-  const channels = useRelay((state) => state.channels);
-  const channel = channels[peerAddress];
+  const { data: channel } = useMessages(peerAddress);
 
   if (channel !== undefined && client !== null) {
     const buckets = getMessageBuckets(

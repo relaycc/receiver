@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent } from 'react';
 import {
   MessageList,
   MessageInput,
@@ -15,6 +15,7 @@ import {
   isEmpty,
   isEthAddress,
   isEnsName,
+  useMessages,
 } from '../../hooks';
 
 export interface PeerAddressProps {
@@ -31,23 +32,10 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
     handle: isEnsName(handle) ? handle : null,
   });
   const peerAddress = lensAddress.address || ensAddress.address || handle;
-
   const client = useRelay((state) => state.client);
-  const dispatch = useRelay((state) => state.dispatch);
-  const channels = useRelay((state) => state.channels);
-  const channel = isEthAddress(peerAddress) ? channels[peerAddress] : undefined;
-  const statuses = useRelay((state) => state.statuses);
   const wallet = useReceiver((state) => state.wallet);
-  const channelStatus = isEthAddress(peerAddress)
-    ? statuses[peerAddress]
-    : undefined;
   const signatureStatus = useRelay((state) => state.signatureStatus);
-
-  useEffect(() => {
-    if (client !== null && isEthAddress(peerAddress)) {
-      dispatch({ id: 'load peer address', peerAddress });
-    }
-  }, [client, peerAddress]);
+  const messages = useMessages(peerAddress);
 
   return (
     <>
@@ -55,7 +43,11 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
       {(() => {
         if (wallet === null) {
           return <InfoCard variant="no wallet" />;
-        } else if (channelStatus === 'no peer') {
+        } else if (
+          messages.isError &&
+          messages.error instanceof Error &&
+          messages.error.message === 'Peer not on XMTP network'
+        ) {
           return <InfoCard variant="no peer" />;
         } else if (signatureStatus === 'waiting') {
           return <InfoCard variant="waiting for signature" />;
@@ -79,7 +71,7 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
               return <InfoCard variant="invalid handle" handle={handle} />;
             }
           } else {
-            if (channelStatus === 'loadingFull') {
+            if (messages.isLoading) {
               return (
                 <>
                   <LoadingList />
@@ -90,11 +82,7 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
                   />
                 </>
               );
-            } else if (
-              channelStatus === 'loadedFull' &&
-              channel &&
-              isEmpty(channel)
-            ) {
+            } else if (messages.isSuccess && isEmpty(messages.data)) {
               return (
                 <>
                   <InfoCard variant="no messages" />

@@ -46,6 +46,22 @@ export const Header: FunctionComponent = () => {
         />
       </div>
     );
+  } else if (screen.id === 'pinned') {
+    return (
+      <div className="Header HeaderWrapper">
+        <NewConversationIcon
+          onClick={() =>
+            dispatch({ id: 'go to screen', screen: { id: 'new conversation' } })
+          }
+        />
+        <h1 className="Header Title">Pinned</h1>
+        <ExitIcon
+          onClick={() => {
+            setIsOpen(false);
+          }}
+        />
+      </div>
+    );
   } else if (screen.id === 'messages') {
     return (
       <div className="Header HeaderWrapper">

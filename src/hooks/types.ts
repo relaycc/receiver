@@ -5,6 +5,7 @@ import { Client, Stream } from '@relaycc/xmtp-js';
 export type ReceiverScreen =
   | { id: 'messages'; peerAddress: string }
   | { id: 'conversations' }
+  | { id: 'pinned' }
   | { id: 'new conversation' };
 
 export type ReceiverAction =
@@ -84,17 +85,17 @@ export type RelayAction =
       message: Message;
     };
 
+export type Listener = (message: Message) => unknown;
+
 export interface Relay {
   client: Client | null;
   setClient: (client: Client | null) => unknown;
   signatureStatus: SignatureStatus;
   setSignatureStatus: Setter<SignatureStatus>;
-  channels: ChannelStore;
-  setChannels: Setter<ChannelStore>;
-  statuses: ChannelStatusStore;
-  setStatuses: Setter<ChannelStatusStore>;
   stream: Stream<Message> | null;
   setStream: Setter<Stream<Message> | null>;
+  listeners: Listener[];
+  setListeners: Setter<Listener[]>;
   dispatch: (action: RelayAction) => unknown;
 }
 
