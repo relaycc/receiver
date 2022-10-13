@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FunctionComponent } from 'react';
-import { useLaunch, useReceiver, useRelay } from '../../hooks';
+import { useLaunch, useReceiver } from '../../hooks';
 import { Avatar } from '../Elements';
 import { Signer } from '@ethersproject/abstract-signer';
 import '../../styles/app.css';
@@ -21,8 +21,6 @@ export const Launcher: FunctionComponent<LauncherProps> = ({
   // Rename here because we want to think of the input as a handle internally,
   // even though the public prop is still called `peerAddress`.
   const inputHandle = peerAddress;
-  const client = useRelay((state) => state.client);
-  const dispatchRelay = useRelay((state) => state.dispatch);
   const pinnedConversations = useReceiver((state) => state.pinnedConversations);
   const setIsOpen = useReceiver((state) => state.setIsOpen);
   const isOpen = useReceiver((state) => state.isOpen);
@@ -36,12 +34,6 @@ export const Launcher: FunctionComponent<LauncherProps> = ({
       launch(inputHandle);
     }
   };
-
-  useEffect(() => {
-    if (client !== null) {
-      dispatchRelay({ id: 'stream messages' });
-    }
-  }, [client]);
 
   return (
     <div className="RelayReceiver Launcher Fixed">

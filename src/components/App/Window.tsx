@@ -1,16 +1,15 @@
-import React, { FunctionComponent, useEffect, useMemo } from 'react';
+import React, { FunctionComponent, useMemo, useEffect } from 'react';
+import { PeerAddress, Conversations, NewConversation } from '../Screens';
 import {
-  PeerAddress,
-  Conversations,
-  NewConversation,
-  Pinned,
-} from '../Screens';
-import { currentScreen, useReceiver } from '../../hooks';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+  currentScreen,
+  receiverContext,
+  useAllMessagesStream,
+  useReceiver,
+  useXmtp,
+} from '../../hooks';
 import '../../styles/preflight.css';
 import '../../styles/app.css';
-
-const queryClient = new QueryClient();
+import { useQueryClient } from '@tanstack/react-query';
 
 export interface WindowProps {
   className?: string;
@@ -19,14 +18,37 @@ export interface WindowProps {
 export const Window: FunctionComponent<WindowProps> = ({ className }) => {
   const screenHistory = useReceiver((state) => state.screenHistory);
   const visibleScreen = currentScreen({ screenHistory });
+  const address = useXmtp((state) => state.address);
+  const messagesStream = useAllMessagesStream();
+  const queryClient = useQueryClient({ context: receiverContext });
+
+  useEffect(() => {
+    (async () => {
+      if (messagesStream.data === undefined || address === null) {
+        return;
+      } else {
+        for await (const message of messagesStream.data) {
+          queryClient.invalidateQueries(['conversations list', address]);
+          queryClient.invalidateQueries([
+            'messages',
+            address,
+            message.senderAddress,
+          ]);
+          queryClient.invalidateQueries([
+            'messages',
+            address,
+            message.recipientAddress,
+          ]);
+        }
+      }
+    })();
+  }, [messagesStream.data, address]);
 
   const screen = useMemo(() => {
     if (visibleScreen.id === 'conversations') {
       return <Conversations />;
     } else if (visibleScreen.id === 'messages') {
       return <PeerAddress handle={visibleScreen.peerAddress} />;
-    } else if (visibleScreen.id === 'pinned') {
-      return <Pinned />;
     } else if (visibleScreen.id === 'new conversation') {
       return <NewConversation />;
     } else {
@@ -35,10 +57,8 @@ export const Window: FunctionComponent<WindowProps> = ({ className }) => {
   }, [visibleScreen]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="RelayReceiver">
-        <div className={`${className} Window Container`}>{screen}</div>
-      </div>
-    </QueryClientProvider>
+    <div className="RelayReceiver">
+      <div className={`${className} Window Container`}>{screen}</div>
+    </div>
   );
 };

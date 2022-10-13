@@ -1,21 +1,16 @@
 import React, { FunctionComponent } from 'react';
-import {
-  MessageList,
-  MessageInput,
-  InfoCard,
-  LoadingList,
-  Header,
-} from '../Elements';
+import { Screen } from './Screen';
+import { MessageList, MessageInput, InfoCard, LoadingList } from '../Elements';
 import {
   useEnsAddress,
   useLensAddress,
   isLensName,
-  useRelay,
-  useReceiver,
-  isEmpty,
+  sendMessage,
   isEthAddress,
   isEnsName,
   useMessages,
+  usePeerOnNetwork,
+  useClient,
 } from '../../hooks';
 
 export interface PeerAddressProps {
@@ -32,82 +27,69 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
     handle: isEnsName(handle) ? handle : null,
   });
   const peerAddress = lensAddress.address || ensAddress.address || handle;
-  const client = useRelay((state) => state.client);
-  const wallet = useReceiver((state) => state.wallet);
-  const signatureStatus = useRelay((state) => state.signatureStatus);
-  const messages = useMessages(peerAddress);
+  const peerOnNetwork = usePeerOnNetwork({ peerAddress });
+  const messages = useMessages({ peerAddress });
+  const [, client] = useClient();
 
   return (
-    <>
-      <Header />
-      {(() => {
-        if (wallet === null) {
-          return <InfoCard variant="no wallet" />;
-        } else if (
-          messages.isError &&
-          messages.error instanceof Error &&
-          messages.error.message === 'Peer not on XMTP network'
-        ) {
-          return <InfoCard variant="no peer" />;
-        } else if (signatureStatus === 'waiting') {
-          return <InfoCard variant="waiting for signature" />;
-        } else if (signatureStatus === 'denied') {
-          return <InfoCard variant="signature denied" />;
-        } else if (client === null) {
-          return <InfoCard variant="no xmtp client" />;
-        } else {
-          if (!isEthAddress(peerAddress)) {
-            if (
-              lensAddress.status === 'fetching' ||
-              ensAddress.status === 'fetching'
-            ) {
-              return (
-                <>
-                  <LoadingList />
-                  <MessageInput onSendMessage={() => null} />
-                </>
-              );
-            } else {
-              return <InfoCard variant="invalid handle" handle={handle} />;
-            }
+    <Screen
+      content={(() => {
+        if (!isEthAddress(peerAddress)) {
+          if (
+            lensAddress.status === 'fetching' ||
+            ensAddress.status === 'fetching'
+          ) {
+            return (
+              <>
+                <LoadingList />
+                <MessageInput onSendMessage={() => null} />
+              </>
+            );
           } else {
-            if (messages.isLoading) {
-              return (
-                <>
-                  <LoadingList />
-                  <MessageInput
-                    onSendMessage={(message: string) =>
-                      client && client.sendMessage(peerAddress, message)
-                    }
-                  />
-                </>
-              );
-            } else if (messages.isSuccess && isEmpty(messages.data)) {
-              return (
-                <>
-                  <InfoCard variant="no messages" />
-                  <MessageInput
-                    onSendMessage={(message: string) =>
-                      client && client.sendMessage(peerAddress, message)
-                    }
-                  />
-                </>
-              );
-            } else {
-              return (
-                <>
-                  <MessageList peerAddress={peerAddress} />
-                  <MessageInput
-                    onSendMessage={(message: string) =>
-                      client && client.sendMessage(peerAddress, message)
-                    }
-                  />
-                </>
-              );
-            }
+            return <InfoCard variant="invalid handle" handle={handle} />;
+          }
+        } else {
+          if (peerOnNetwork.isLoading || peerOnNetwork.data === false) {
+            return <InfoCard variant="no peer" />;
+          } else if (messages.isLoading) {
+            return (
+              <>
+                <LoadingList />
+                <MessageInput
+                  onSendMessage={(message: string) =>
+                    client.data &&
+                    sendMessage(client.data, peerAddress, message)
+                  }
+                />
+              </>
+            );
+          } else if (messages.isSuccess && messages.data.length === 0) {
+            return (
+              <>
+                <InfoCard variant="no messages" />
+                <MessageInput
+                  onSendMessage={(message: string) =>
+                    client.data &&
+                    sendMessage(client.data, peerAddress, message)
+                  }
+                />
+              </>
+            );
+          } else {
+            return (
+              <>
+                <MessageList peerAddress={peerAddress} />
+                <MessageInput
+                  onSendMessage={(message: string) =>
+                    client.data &&
+                    sendMessage(client.data, peerAddress, message)
+                  }
+                />
+              </>
+            );
           }
         }
       })()}
-    </>
+    />
   );
 };

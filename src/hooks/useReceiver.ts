@@ -1,6 +1,4 @@
 import create from 'zustand';
-import { useCallback } from 'react';
-import { Signer } from '@ethersproject/abstract-signer';
 import { ReceiverAction, ReceiverStore, ReceiverScreen } from './types';
 
 export const useReceiver = create<ReceiverStore>((set, get) => ({
@@ -31,14 +29,6 @@ export const useReceiver = create<ReceiverStore>((set, get) => ({
     }
   },
 }));
-
-export const useSetWallet = () => {
-  const setWallet = useReceiver((state) => state.setWallet);
-
-  return useCallback((wallet: Signer | null) => {
-    setWallet(wallet);
-  }, []);
-};
 
 export const useIsOpen = () => {
   return useReceiver((state) => state.isOpen);

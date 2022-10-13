@@ -1,6 +1,5 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import Blockies from 'react-blockies';
-import LoadingSpinner from './LoadingSpinner';
 import {
   useEnsName,
   useEnsAddress,
@@ -10,6 +9,7 @@ import {
   isEnsName,
   useEnsAvatar,
 } from '../../hooks';
+import { motion } from 'framer-motion';
 
 export interface AvatarProps {
   handle?: string | null;
@@ -22,6 +22,7 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
   onClick,
   large,
 }) => {
+  const [showImage, setShowImage] = useState(false);
   const lensAddress = useLensAddress({
     handle: isLensName(handle) ? handle : null,
   });
@@ -34,11 +35,10 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
       lensAddress.address || ensAddress.address || ens.name || handle || 'TODO',
   });
 
-  if (avatar.status === 'fetching') {
-    return <LoadingSpinner width={large ? 50 : 40} height={large ? 50 : 40} />;
-  } else if (!avatar.avatar) {
+  if (!avatar.avatar) {
     return (
       <div
+        style={{ opacity: avatar.status === 'fetching' ? 0.2 : 1 }}
         className={`Avatar BlockiesContainer large-${large}`}
         onClick={onClick}>
         <Blockies
@@ -51,9 +51,13 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
     );
   } else {
     return (
-      <img
+      <motion.img
+        initial={{ opacity: 0.2 }}
+        animate={{ opacity: showImage ? 1 : 0.2 }}
+        transition={{ duration: 0.5, delay: 0 }}
         className={`Avatar AvatarImage large-${large}`}
         onClick={onClick}
+        onLoad={() => setShowImage(true)}
         src={avatar.avatar}
         alt="user"
       />

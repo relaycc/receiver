@@ -3,13 +3,14 @@ import { Avatar } from './Avatar';
 import React from 'react';
 import { Message, useResponsiveName, useEnsName } from '../../hooks';
 import { getDisplayDate } from '../../utils/date';
+import { motion } from 'framer-motion';
 
 interface MessagesBucketProps {
   startDate: Date;
   messages: Message[];
   peerName?: string | undefined;
   sentByAddress: string;
-  userPeerAddress: string;
+  userPeerAddress: string | null;
 }
 
 export default function MessagesBucket({
@@ -35,7 +36,11 @@ export default function MessagesBucket({
   if (messages.length === 0) return null;
 
   return (
-    <div className="MessagesBucket Container">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="MessagesBucket Container">
       <div className="MessagesBucket SentByInfo">
         <div className="MessagesBucket MessageHeader">
           <div style={{ marginRight: '10px' }}>
@@ -59,6 +64,6 @@ export default function MessagesBucket({
           );
         })}
       </div>
-    </div>
+    </motion.div>
   );
 }

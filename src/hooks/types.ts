@@ -1,6 +1,6 @@
 export type Setter<T> = (state: T) => unknown;
 import { Signer } from '@ethersproject/abstract-signer';
-import { Client, Stream } from '@relaycc/xmtp-js';
+import { Client } from '@relaycc/xmtp-js';
 
 export type ReceiverScreen =
   | { id: 'messages'; peerAddress: string }
@@ -56,8 +56,7 @@ export type ChannelStatus =
   | undefined
   | 'no peer'
   | 'loadingFull'
-  | 'loadedFull'
-  | 'streaming';
+  | 'loadedFull';
 
 export type ChannelStatusStore = Record<string, ChannelStatus | undefined>;
 
@@ -78,11 +77,11 @@ export type RelayAction =
       wallet: Signer;
     }
   | {
-      id: 'stream messages';
-    }
-  | {
       id: 'new message';
       message: Message;
+    }
+  | {
+      id: 'noop';
     };
 
 export type Listener = (message: Message) => unknown;
@@ -92,10 +91,6 @@ export interface Relay {
   setClient: (client: Client | null) => unknown;
   signatureStatus: SignatureStatus;
   setSignatureStatus: Setter<SignatureStatus>;
-  stream: Stream<Message> | null;
-  setStream: Setter<Stream<Message> | null>;
-  listeners: Listener[];
-  setListeners: Setter<Listener[]>;
   dispatch: (action: RelayAction) => unknown;
 }
 

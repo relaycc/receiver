@@ -8,5 +8,3 @@ export * from './MessageInput';
 export * from './InfoCard';
 export * from './LoadingText';
 export * from './Header';
-export * from './PinnedConversationList';
-export * from './PinnedConversationListItem';

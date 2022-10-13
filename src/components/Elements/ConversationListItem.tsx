@@ -3,16 +3,18 @@ import { Avatar } from './Avatar';
 import { useResponsiveName, useEnsName } from '../../hooks';
 import { useReceiver } from '../../hooks';
 import { getDisplayDate } from '../../utils/date';
+import { motion } from 'framer-motion';
 
 export interface ConversationListItemProps {
   peerAddress: string;
   subtitle: string;
   topMessageTime: Date;
+  order: number;
 }
 
 export const ConversationListItem: FunctionComponent<
   ConversationListItemProps
-> = ({ peerAddress, subtitle, topMessageTime }) => {
+> = ({ peerAddress, subtitle, topMessageTime, order }) => {
   const dispatch = useReceiver((state) => state.dispatch);
   const { name } = useEnsName({
     handle: peerAddress,
@@ -20,7 +22,10 @@ export const ConversationListItem: FunctionComponent<
   const responsiveName = useResponsiveName(name, peerAddress, '');
 
   return (
-    <li
+    <motion.li
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1, delay: order * 0.2 }}
       className="ConversationListItem ListItem"
       onClick={() =>
         dispatch({
@@ -40,6 +45,6 @@ export const ConversationListItem: FunctionComponent<
         </div>
         <div className="ConversationListItem Subtitle">{subtitle}</div>
       </div>
-    </li>
+    </motion.li>
   );
 };

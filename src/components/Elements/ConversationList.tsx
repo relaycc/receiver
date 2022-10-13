@@ -1,61 +1,93 @@
 import React, { FunctionComponent } from 'react';
-import {
-  byMostRecentMessage,
-  pickPeerAddress,
-  useConversationList,
-  useRelay,
-} from '../../hooks';
+import { useClient, useConversations } from '../../hooks';
+import { Message } from '@relaycc/xmtp-js';
 import { ConversationListItem } from './ConversationListItem';
 import { InfoCard } from './InfoCard';
 import { LoadingList } from './LoadingList';
 
 export const ConversationList: FunctionComponent = () => {
-  const client = useRelay((state) => state.client);
-  const { data, status, fetchStatus } = useConversationList();
+  const [, clientQuery] = useClient();
+  const [listQuery, messagesQuery] = useConversations();
 
-  if (client === undefined || client === null) {
-    throw new Error('never should have been here');
+  const isLoading =
+    listQuery.isLoading || Boolean(messagesQuery.find((mq) => mq.isLoading));
+
+  if (isLoading || clientQuery.data === undefined) {
+    return <LoadingList />;
   } else {
-    if (
-      fetchStatus === 'fetching' ||
-      status === 'loading' ||
-      data === undefined
-    ) {
-      return <LoadingList />;
-    } else {
-      if (Object.keys(data).length === 0) {
-        return (
-          <>
-            <ul className="ConversationList List">
-              <ConversationListItem
-                key={'0x45C9a201e2937608905fEF17De9A67f25F9f98E0'}
-                peerAddress={'0x45C9a201e2937608905fEF17De9A67f25F9f98E0'}
-                subtitle={'Welcome! Send your first message...'}
-                topMessageTime={new Date()}
-              />
-            </ul>
-            <div style={{ margin: 'auto' }}>
-              <InfoCard variant="empty conversation" />
-            </div>
-          </>
-        );
-      } else {
-        return (
+    if (messagesQuery.length === 0) {
+      return (
+        <>
           <ul className="ConversationList List">
-            {byMostRecentMessage(data)
-              .map((i) => i)
-              .reverse()
-              .map((message) => (
-                <ConversationListItem
-                  key={pickPeerAddress(client.address, message)}
-                  peerAddress={pickPeerAddress(client.address, message)}
-                  subtitle={message.content}
-                  topMessageTime={message.sent}
-                />
-              ))}
+            <ConversationListItem
+              order={0}
+              key={'0x45C9a201e2937608905fEF17De9A67f25F9f98E0'}
+              peerAddress={'0x45C9a201e2937608905fEF17De9A67f25F9f98E0'}
+              subtitle={'Welcome! Send your first message...'}
+              topMessageTime={new Date()}
+            />
           </ul>
-        );
-      }
+          <div style={{ margin: 'auto' }}>
+            <InfoCard variant="empty conversation" />
+          </div>
+        </>
+      );
+    } else {
+      const messages = messagesQuery
+        .map((mq) => mq.data && mq.data[0])
+        .filter((mq) => mq !== undefined)
+        .sort(sortByDate)
+        .reverse();
+
+      return (
+        <ul className="ConversationList List">
+          {messages.map((message, i) => {
+            if (message === undefined) {
+              return (
+                <ConversationListItem
+                  order={0}
+                  key={
+                    '0x45C9a201e2937608905fEF17De9A67f25F9f98E0-' + String(i)
+                  }
+                  peerAddress={'0x45C9a201e2937608905fEF17De9A67f25F9f98E0'}
+                  subtitle={'Welcome! Send your first message...'}
+                  topMessageTime={new Date()}
+                />
+              );
+            } else {
+              try {
+                return (
+                  <ConversationListItem
+                    order={i}
+                    key={pickPeerAddress(clientQuery.data.address, message)}
+                    peerAddress={pickPeerAddress(
+                      clientQuery.data.address,
+                      message
+                    )}
+                    subtitle={message.content}
+                    topMessageTime={message.sent as Date}
+                  />
+                );
+              } catch (err) {
+                console.error(err);
+                return null;
+              }
+            }
+          })}
+        </ul>
+      );
     }
   }
+};
+
+function sortByDate(a: Message | undefined, b: Message | undefined) {
+  if (a === undefined || a.sent === undefined) return -1;
+  if (b === undefined || b.sent === undefined) return 1;
+  return a.sent.getTime() <= b.sent.getTime() ? -1 : 1;
+}
+
+const pickPeerAddress = (clientAddress: string, message: Message): string => {
+  return clientAddress === message.senderAddress
+    ? (message.recipientAddress as string)
+    : (message.senderAddress as string);
 };
