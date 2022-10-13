@@ -25,7 +25,10 @@ export const ConversationListItem: FunctionComponent<
     <motion.li
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 1, delay: order * 0.2 }}
+      transition={{
+        duration: 1,
+        delay: order < 10 ? 0.2 * order : 0.02 * order + 1.8,
+      }}
       className="ConversationListItem ListItem"
       onClick={() =>
         dispatch({

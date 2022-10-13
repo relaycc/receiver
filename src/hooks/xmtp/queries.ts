@@ -9,6 +9,7 @@ import {
   fetchConversationMessagesStream,
 } from './primitives';
 import {
+  fetchPinnedAddresses,
   MOST_RECENT_MESSAGE_OPTIONS,
   MOST_RECENT_PAGE_OPTIONS,
 } from './helpers';
@@ -49,12 +50,68 @@ export const useClient = (): [
   return [trigger, query];
 };
 
+export const usePinnedAddresses = (): [
+  UseQueryResult<string[], unknown>,
+  UseQueryResult<(Message | undefined)[], unknown>[]
+] => {
+  const { address } = useXmtp();
+  const [, clientQuery] = useClient();
+
+  const pinnedAddressesQuery = useQuery(
+    ['pinned addresses', address],
+    async () => {
+      if (clientQuery.data === null || clientQuery.data === undefined) {
+        throw new Error('Running pinned addresses list too early');
+      } else {
+        return fetchPinnedAddresses(clientQuery.data);
+      }
+    },
+    {
+      staleTime: Infinity,
+      context: receiverContext,
+    }
+  );
+
+  const addresses = pinnedAddressesQuery.data || [];
+
+  const messagesQueries = useQueries({
+    queries: addresses.map((peerAddress) => {
+      return {
+        queryKey: [
+          'messages',
+          address,
+          peerAddress,
+          MOST_RECENT_MESSAGE_OPTIONS.limit,
+        ],
+        queryFn: async () => {
+          if (clientQuery.data === null || clientQuery.data === undefined) {
+            throw new Error('Running messages fetch too early');
+          } else {
+            const result = await fetchMessages(
+              clientQuery.data,
+              peerAddress,
+              MOST_RECENT_MESSAGE_OPTIONS
+            );
+            return result;
+          }
+        },
+        enabled: pinnedAddressesQuery.data !== undefined,
+        staleTime: 1000 * 60 * 5,
+      };
+    }),
+    context: receiverContext,
+  });
+
+  return [pinnedAddressesQuery, messagesQueries];
+};
+
 export const useConversations = (): [
   UseQueryResult<Conversation[], unknown>,
   UseQueryResult<(Message | undefined)[], unknown>[]
 ] => {
   const { address } = useXmtp();
   const [, clientQuery] = useClient();
+
   const conversationsQuery = useQuery(
     ['conversations list', address],
     async () => {
