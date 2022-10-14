@@ -176,10 +176,6 @@ export const isEthAddress = (handle?: string | null): handle is string => {
   );
 };
 
-export const isEnsName = (handle?: string | null): handle is string => {
-  return typeof handle === 'string' && handle.endsWith('.eth');
-};
-
 export const isLensName = (handle?: string | null): handle is string => {
   return (
     typeof handle === 'string' &&

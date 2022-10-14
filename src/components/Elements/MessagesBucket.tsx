@@ -21,10 +21,10 @@ export default function MessagesBucket({
 }: MessagesBucketProps) {
   const sentByMe = sentByAddress === userPeerAddress;
 
-  const { name: senderName } = useEnsName({
+  const { data: senderName } = useEnsName({
     handle: sentByAddress,
   });
-  const { name: peerEns } = useEnsName({
+  const { data: peerEns } = useEnsName({
     handle: sentByAddress,
   });
   const responsiveName = useResponsiveName(

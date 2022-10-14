@@ -1,15 +1,9 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import Blockies from 'react-blockies';
-import {
-  useEnsName,
-  useEnsAddress,
-  useLensAddress,
-  isEthAddress,
-  isLensName,
-  isEnsName,
-  useEnsAvatar,
-} from '../../hooks';
+import { useEnsAddress, useEnsAvatar } from '../../hooks/ens';
+import { useLensAddress, isLensName, isEthAddress } from '../../hooks';
 import { motion } from 'framer-motion';
+// import { useEns } from '../../hooks/ens/queries';
 
 export interface AvatarProps {
   handle?: string | null;
@@ -22,23 +16,26 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
   onClick,
   large,
 }) => {
-  const [showImage, setShowImage] = useState(false);
   const lensAddress = useLensAddress({
     handle: isLensName(handle) ? handle : null,
   });
   const ensAddress = useEnsAddress({
-    handle: isEnsName(handle) ? handle : null,
+    handle,
   });
-  const ens = useEnsName({ handle: isEthAddress(handle) ? handle : null });
-  const avatar = useEnsAvatar({
-    handle:
-      lensAddress.address || ensAddress.address || ens.name || handle || 'TODO',
+  const ensAvatar = useEnsAvatar({
+    handle: isEthAddress(handle)
+      ? handle
+      : isEthAddress(lensAddress.address)
+      ? lensAddress.address
+      : isEthAddress(ensAddress.data)
+      ? ensAddress.data
+      : undefined,
   });
 
-  if (!avatar.avatar) {
+  if (!ensAvatar.data) {
     return (
       <div
-        style={{ opacity: avatar.status === 'fetching' ? 0.2 : 1 }}
+        style={{ opacity: ensAvatar.isLoading ? 0.2 : 1 }}
         className={`Avatar BlockiesContainer large-${large}`}
         onClick={onClick}>
         <Blockies
@@ -53,12 +50,11 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
     return (
       <motion.img
         initial={{ opacity: 0.2 }}
-        animate={{ opacity: showImage ? 1 : 0.2 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0 }}
         className={`Avatar AvatarImage large-${large}`}
         onClick={onClick}
-        onLoad={() => setShowImage(true)}
-        src={avatar.avatar}
+        src={ensAvatar.data}
         alt="user"
       />
     );

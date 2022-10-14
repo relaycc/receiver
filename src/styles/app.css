@@ -502,40 +502,12 @@
   width: 5px;
   background: #c3c2c2;
   border-radius: 50%;
-  animation: pulse 1500ms ease-in-out infinite;
-}
-.RelayReceiver .LoadingText.LoadingCircl2 {
-  color: white;
-  height: 5px;
-  width: 5px;
-  background: #c3c2c2;
-  border-radius: 50%;
-  animation: RelayLoadingCirclePulse2 1500ms ease-in-out infinite;
-}
-.RelayReceiver .LoadingText.LoadingCircl3 {
-  color: white;
-  height: 5px;
-  width: 5px;
-  background: #c3c2c2;
-  border-radius: 50%;
-  animation: RelayLoadingCirclePulse3 1500ms ease-in-out infinite;
 }
 
 .RelayReceiver .LoadingList.RightMessageContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-}
-
-.RelayReceiver .LoadingSpinnerContainer {
-  animation: relayReceiverSpin 1500ms linear infinite;
-  width: max-content;
-  height: max-content;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border-radius: 50%;
 }
 
 .RelayReceiver .MessageBubble.TextWrapper {
@@ -790,59 +762,5 @@
   100% {
     /* background-position: right 100% bottom 50%; */
     background-color: #777;
-  }
-}
-
-@keyframes relayReceiverSpin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes RelayLoadingCirclePulse1 {
-  0% {
-    transform: scale(0);
-  }
-  25% {
-    transform: scale(1.1);
-  }
-  50% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes RelayLoadingCirclePulse2 {
-  0% {
-    transform: scale(0);
-  }
-  25% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes RelayLoadingCirclePulse3 {
-  0% {
-    transform: scale(0);
-  }
-  25% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1.1);
   }
 }

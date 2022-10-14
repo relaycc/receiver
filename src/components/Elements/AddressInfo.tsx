@@ -21,12 +21,8 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
   const lensAddress = useLensAddress({
     handle: isLensName(handle) ? handle : null,
   });
-  const ensAddress = useEnsAddress({
-    handle: isEnsName(handle) ? handle : null,
-  });
-  const ensName = useEnsName({
-    handle: isEthAddress(handle) ? handle : null,
-  });
+  const ensAddress = useEnsAddress({ handle });
+  const ensName = useEnsName({ handle });
   const [isOpen, setIsOpen] = useState(false);
   const [didCopyToClipboard, setDidCopyToClipboard] = useState(false);
 
@@ -40,17 +36,17 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
     if (isEthAddress(lensAddress.address)) {
       return handle;
     }
-    if (isEthAddress(ensAddress.address)) {
+    if (isEthAddress(ensAddress.data)) {
       return handle;
     }
-    if (isEnsName(ensName.name)) {
-      return ensName.name;
+    if (isEnsName(ensName.data)) {
+      return ensName.data;
     }
 
     if (
       lensAddress.status === 'fetching' ||
-      ensAddress.status === 'fetching' ||
-      ensName.status === 'fetching'
+      ensAddress.isLoading ||
+      ensName.isLoading
     ) {
       return 'loading';
     }
@@ -69,14 +65,14 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
     if (isEthAddress(lensAddress.address)) {
       return lensAddress.address;
     }
-    if (isEthAddress(ensAddress.address)) {
-      return ensAddress.address;
+    if (isEthAddress(ensAddress.data)) {
+      return ensAddress.data;
     }
 
     if (
       lensAddress.status === 'fetching' ||
-      ensAddress.status === 'fetching' ||
-      ensName.status === 'fetching'
+      ensAddress.isLoading ||
+      ensName.isLoading
     ) {
       return 'loading';
     } else {

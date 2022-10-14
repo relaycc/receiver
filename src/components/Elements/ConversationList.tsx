@@ -32,48 +32,41 @@ export const ConversationList: FunctionComponent = () => {
         .reverse();
 
       return (
-        <>
-          <ul className="ConversationList List">
-            {messages.map((message, i) => {
-              if (message === undefined) {
+        <ul className="ConversationList List">
+          {messages.map((message, i) => {
+            if (message === undefined) {
+              return (
+                <ConversationListItem
+                  order={0}
+                  key={
+                    '0x45C9a201e2937608905fEF17De9A67f25F9f98E0-' + String(i)
+                  }
+                  peerAddress={'0x45C9a201e2937608905fEF17De9A67f25F9f98E0'}
+                  subtitle={'Welcome! Send your first message...'}
+                  topMessageTime={new Date()}
+                />
+              );
+            } else {
+              try {
                 return (
                   <ConversationListItem
-                    order={0}
-                    key={
-                      '0x45C9a201e2937608905fEF17De9A67f25F9f98E0-' + String(i)
-                    }
-                    peerAddress={'0x45C9a201e2937608905fEF17De9A67f25F9f98E0'}
-                    subtitle={'Welcome! Send your first message...'}
-                    topMessageTime={new Date()}
+                    order={i}
+                    key={pickPeerAddress(clientQuery.data.address, message)}
+                    peerAddress={pickPeerAddress(
+                      clientQuery.data.address,
+                      message
+                    )}
+                    subtitle={message.content}
+                    topMessageTime={message.sent as Date}
                   />
                 );
-              } else {
-                try {
-                  return (
-                    <ConversationListItem
-                      order={i}
-                      key={pickPeerAddress(clientQuery.data.address, message)}
-                      peerAddress={pickPeerAddress(
-                        clientQuery.data.address,
-                        message
-                      )}
-                      subtitle={message.content}
-                      topMessageTime={message.sent as Date}
-                    />
-                  );
-                } catch (err) {
-                  console.error(err);
-                  return null;
-                }
+              } catch (err) {
+                console.error(err);
+                return null;
               }
-            })}
-          </ul>
-          {isLoading && (
-            <h6 style={{ marginLeft: 'auto', marginRight: 'auto' }}>
-              Loading remaining conversations...
-            </h6>
-          )}
-        </>
+            }
+          })}
+        </ul>
       );
     }
   } else {

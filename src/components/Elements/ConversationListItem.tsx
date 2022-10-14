@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useCallback } from 'react';
 import { Avatar } from './Avatar';
 import { useResponsiveName, useEnsName } from '../../hooks';
 import { useReceiver } from '../../hooks';
@@ -16,10 +16,17 @@ export const ConversationListItem: FunctionComponent<
   ConversationListItemProps
 > = ({ peerAddress, subtitle, topMessageTime, order }) => {
   const dispatch = useReceiver((state) => state.dispatch);
-  const { name } = useEnsName({
+  const { data: name } = useEnsName({
     handle: peerAddress,
   });
   const responsiveName = useResponsiveName(name, peerAddress, '');
+
+  const goToPeerAddress = useCallback(() => {
+    dispatch({
+      id: 'go to screen',
+      screen: { id: 'messages', peerAddress },
+    });
+  }, [peerAddress]);
 
   return (
     <motion.li
@@ -27,15 +34,11 @@ export const ConversationListItem: FunctionComponent<
       animate={{ opacity: 1 }}
       transition={{
         duration: 1,
-        delay: order < 10 ? 0.2 * order : 0.02 * order + 1.8,
+        delay: order < 10 ? 0.2 * order : 2 + order * 0.05,
       }}
+      key={peerAddress}
       className="ConversationListItem ListItem"
-      onClick={() =>
-        dispatch({
-          id: 'go to screen',
-          screen: { id: 'messages', peerAddress },
-        })
-      }>
+      onClick={goToPeerAddress}>
       <div style={{ marginRight: '10px' }}>
         <Avatar handle={peerAddress} onClick={() => null} />
       </div>

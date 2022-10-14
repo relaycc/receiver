@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useCallback } from 'react';
 import { currentScreen, useReceiver } from '../../hooks';
 import { AddressInfo } from './AddressInfo';
 import {
@@ -14,63 +14,46 @@ export const Header: FunctionComponent = () => {
   const screenHistory = useReceiver((state) => state.screenHistory);
   const screen = currentScreen({ screenHistory });
 
+  const doClose = useCallback(() => {
+    setIsOpen(false);
+  }, [setIsOpen]);
+
+  const goToConversations = useCallback(() => {
+    dispatch({ id: 'go to screen', screen: { id: 'conversations' } });
+  }, [dispatch]);
+
+  const goToNewConversations = useCallback(() => {
+    dispatch({ id: 'go to screen', screen: { id: 'new conversation' } });
+  }, [dispatch]);
+
   if (screen.id === 'new conversation') {
     return (
       <div className="Header HeaderWrapper">
-        <GoToConversationsIcon
-          onClick={() =>
-            dispatch({ id: 'go to screen', screen: { id: 'conversations' } })
-          }
-        />
+        <GoToConversationsIcon onClick={goToConversations} />
         <h1 className="Header Title">New Conversation</h1>
-        <ExitIcon
-          onClick={() => {
-            setIsOpen(false);
-          }}
-        />
+        <ExitIcon onClick={doClose} />
       </div>
     );
   } else if (screen.id === 'conversations') {
     return (
       <div className="Header HeaderWrapper">
-        <NewConversationIcon
-          onClick={() =>
-            dispatch({ id: 'go to screen', screen: { id: 'new conversation' } })
-          }
-        />
+        <NewConversationIcon onClick={goToNewConversations} />
         <h1 className="Header Title">Conversations</h1>
-        <ExitIcon
-          onClick={() => {
-            setIsOpen(false);
-          }}
-        />
+        <ExitIcon onClick={doClose} />
       </div>
     );
   } else if (screen.id === 'pinned') {
     return (
       <div className="Header HeaderWrapper">
-        <NewConversationIcon
-          onClick={() =>
-            dispatch({ id: 'go to screen', screen: { id: 'new conversation' } })
-          }
-        />
+        <NewConversationIcon onClick={goToNewConversations} />
         <h1 className="Header Title">Pinned</h1>
-        <ExitIcon
-          onClick={() => {
-            setIsOpen(false);
-          }}
-        />
+        <ExitIcon onClick={doClose} />
       </div>
     );
   } else if (screen.id === 'messages') {
     return (
       <div className="Header HeaderWrapper">
-        <GoToConversationsIcon
-          marginRight="10px"
-          onClick={() =>
-            dispatch({ id: 'go to screen', screen: { id: 'conversations' } })
-          }
-        />
+        <GoToConversationsIcon marginRight="10px" onClick={goToConversations} />
         <AddressInfo handle={screen.peerAddress} />
         <MinimizeIcon
           marginLeft="auto"
@@ -79,14 +62,10 @@ export const Header: FunctionComponent = () => {
               id: 'add pinned conversation',
               peerAddress: screen.peerAddress,
             });
-            setIsOpen(false);
+            doClose();
           }}
         />
-        <ExitIcon
-          onClick={() => {
-            setIsOpen(false);
-          }}
-        />
+        <ExitIcon onClick={doClose} />
       </div>
     );
   } else {

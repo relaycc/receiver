@@ -43,11 +43,11 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
     })();
   }, [streamQuery.data, address]);
 
-  const buckets = getMessageBuckets(
-    byMostRecentMessage(messagesQuery.data as unknown as Message[])
-      .map((i) => i)
-      .reverse()
+  const sortedByMostRecent = byMostRecentMessage(
+    (messagesQuery.data as unknown as Message[]) || []
   );
+
+  const buckets = getMessageBuckets(sortedByMostRecent.map((i) => i).reverse());
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -58,7 +58,7 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
         if (bucket.length > 0) {
           return (
             <MessagesBucket
-              key={index}
+              key={String(index)}
               messages={bucket}
               userPeerAddress={address}
               startDate={bucket[bucket.length - 1].sent}
