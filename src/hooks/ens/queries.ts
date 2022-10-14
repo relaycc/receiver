@@ -8,7 +8,13 @@ import {
 } from './primitives';
 import { isEthAddress } from '../../utils';
 
-export const useEnsName = ({ handle }: { handle?: string | null }) => {
+export const useEnsName = ({
+  handle,
+  wait,
+}: {
+  handle?: string | null;
+  wait?: boolean;
+}) => {
   return useQuery(
     ['ens name', handle],
     async () => {
@@ -20,13 +26,19 @@ export const useEnsName = ({ handle }: { handle?: string | null }) => {
     },
     {
       staleTime: 1000 * 60 * 5,
-      enabled: isEthAddress(handle),
+      enabled: wait !== true && isEthAddress(handle),
       context: receiverContext,
     }
   );
 };
 
-export const useEnsAddress = ({ handle }: { handle?: string | null }) => {
+export const useEnsAddress = ({
+  handle,
+  wait,
+}: {
+  handle?: string | null;
+  wait?: boolean;
+}) => {
   return useQuery(
     ['ens address', handle],
     async () => {
@@ -37,13 +49,20 @@ export const useEnsAddress = ({ handle }: { handle?: string | null }) => {
       }
     },
     {
+      enabled: wait !== true,
       staleTime: 1000 * 60 * 5,
       context: receiverContext,
     }
   );
 };
 
-export const useEnsAvatar = ({ handle }: { handle?: string | null }) => {
+export const useEnsAvatar = ({
+  handle,
+  wait,
+}: {
+  handle?: string | null;
+  wait?: boolean;
+}) => {
   return useQuery(
     ['ens avatar', handle],
     async () => {
@@ -55,7 +74,7 @@ export const useEnsAvatar = ({ handle }: { handle?: string | null }) => {
     },
     {
       staleTime: 1000 * 60 * 5,
-      enabled: isEthAddress(handle) || isEnsName(handle),
+      enabled: wait !== true && (isEthAddress(handle) || isEnsName(handle)),
       context: receiverContext,
     }
   );

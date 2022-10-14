@@ -1,7 +1,11 @@
-import React, { FunctionComponent, useCallback } from 'react';
+import React, { FunctionComponent, useCallback, useRef } from 'react';
 import { Avatar } from './Avatar';
-import { useResponsiveName, useEnsName } from '../../hooks';
-import { useReceiver } from '../../hooks';
+import {
+  useResponsiveName,
+  useEnsName,
+  useReceiver,
+  useInView,
+} from '../../hooks';
 import { getDisplayDate } from '../../utils/date';
 import { motion } from 'framer-motion';
 
@@ -16,8 +20,11 @@ export const ConversationListItem: FunctionComponent<
   ConversationListItemProps
 > = ({ peerAddress, subtitle, topMessageTime, order }) => {
   const dispatch = useReceiver((state) => state.dispatch);
+  const ref = useRef(null);
+  const isInView = useInView(ref);
   const { data: name } = useEnsName({
     handle: peerAddress,
+    wait: isInView === false,
   });
   const responsiveName = useResponsiveName(name, peerAddress, '');
 
@@ -30,11 +37,12 @@ export const ConversationListItem: FunctionComponent<
 
   return (
     <motion.li
+      ref={ref}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{
         duration: 1,
-        delay: order < 10 ? 0.2 * order : 2 + order * 0.05,
+        delay: order < 10 ? 0.15 * order : 1.5 + order * 0.02,
       }}
       key={peerAddress}
       className="ConversationListItem ListItem"

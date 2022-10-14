@@ -10,3 +10,4 @@ export * from './types';
 export * from './useWindowSize';
 export * from './xmtp';
 export * from './ens';
+export * from './useInView';

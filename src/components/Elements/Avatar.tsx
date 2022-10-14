@@ -1,9 +1,14 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useRef } from 'react';
 import Blockies from 'react-blockies';
-import { useEnsAddress, useEnsAvatar } from '../../hooks/ens';
-import { useLensAddress, isLensName, isEthAddress } from '../../hooks';
+import {
+  useLensAddress,
+  isLensName,
+  isEthAddress,
+  useInView,
+  useEnsAddress,
+  useEnsAvatar,
+} from '../../hooks';
 import { motion } from 'framer-motion';
-// import { useEns } from '../../hooks/ens/queries';
 
 export interface AvatarProps {
   handle?: string | null;
@@ -16,11 +21,14 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
   onClick,
   large,
 }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref);
   const lensAddress = useLensAddress({
     handle: isLensName(handle) ? handle : null,
   });
   const ensAddress = useEnsAddress({
     handle,
+    wait: isInView === false,
   });
   const ensAvatar = useEnsAvatar({
     handle: isEthAddress(handle)
@@ -30,11 +38,13 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
       : isEthAddress(ensAddress.data)
       ? ensAddress.data
       : undefined,
+    wait: isInView === false,
   });
 
   if (!ensAvatar.data) {
     return (
       <div
+        ref={ref}
         style={{ opacity: ensAvatar.isLoading ? 0.2 : 1 }}
         className={`Avatar BlockiesContainer large-${large}`}
         onClick={onClick}>
