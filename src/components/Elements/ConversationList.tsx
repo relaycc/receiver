@@ -1,5 +1,11 @@
 import React, { FunctionComponent } from 'react';
-import { useClient, useConversations, usePinnedAddresses } from '../../hooks';
+import {
+  useClient,
+  useConversations,
+  useConversationsPreviews,
+  usePinnedAddresses,
+  usePinnedAddressesPreviews,
+} from '../../hooks';
 import { Message } from '@relaycc/xmtp-js';
 import { ConversationListItem } from './ConversationListItem';
 import { InfoCard } from './InfoCard';
@@ -7,29 +13,30 @@ import { LoadingList } from './LoadingList';
 
 export const ConversationList: FunctionComponent = () => {
   const [, clientQuery] = useClient();
-  const [pinnedAddressesQuery, pinnedMessagesQuery] = usePinnedAddresses();
-  const [listQuery, messagesQuery] = useConversations();
+  const pinnedAddresses = usePinnedAddresses();
+  const pinnedAddressesPreviews = usePinnedAddressesPreviews();
+  const conversations = useConversations();
+  const conversationsPreviews = useConversationsPreviews();
 
   const pinnedIsLoading =
-    pinnedAddressesQuery.isLoading ||
-    Boolean(pinnedMessagesQuery.find((mq) => mq.isLoading));
+    pinnedAddresses.isLoading ||
+    Boolean(pinnedAddressesPreviews.find((mq) => mq.isLoading));
 
   const isLoading =
-    listQuery.isLoading || Boolean(messagesQuery.find((mq) => mq.isLoading));
+    conversations.isLoading ||
+    Boolean(conversationsPreviews.find((mq) => mq.isLoading));
 
   if (isLoading || clientQuery.data === undefined) {
     if (
       pinnedIsLoading ||
-      pinnedMessagesQuery.length === 0 ||
+      pinnedAddressesPreviews.length === 0 ||
       clientQuery.data === undefined
     ) {
       return <LoadingList />;
     } else {
-      const messages = pinnedMessagesQuery
+      const messages = pinnedAddressesPreviews
         .map((mq) => mq.data && mq.data[0])
-        .filter((mq) => mq !== undefined)
-        .sort(sortByDate)
-        .reverse();
+        .sort(sortBySent);
 
       return (
         <ul className="ConversationList List">
@@ -70,7 +77,7 @@ export const ConversationList: FunctionComponent = () => {
       );
     }
   } else {
-    if (messagesQuery.length === 0) {
+    if (conversationsPreviews.length === 0) {
       return (
         <>
           <ul className="ConversationList List">
@@ -88,11 +95,11 @@ export const ConversationList: FunctionComponent = () => {
         </>
       );
     } else {
-      const messages = messagesQuery
+      console.time('Messages Processing');
+      const messages = conversationsPreviews
         .map((mq) => mq.data && mq.data[0])
-        .filter((mq) => mq !== undefined)
-        .sort(sortByDate)
-        .reverse();
+        .sort(sortBySent);
+      console.timeEnd('Messages Processing');
 
       return (
         <ul className="ConversationList List">
@@ -135,10 +142,10 @@ export const ConversationList: FunctionComponent = () => {
   }
 };
 
-function sortByDate(a: Message | undefined, b: Message | undefined) {
-  if (a === undefined || a.sent === undefined) return -1;
+function sortBySent(a?: { sent?: Date }, b?: { sent?: Date }) {
+  if (a === undefined || a.sent === undefined) return 1;
   if (b === undefined || b.sent === undefined) return 1;
-  return a.sent.getTime() <= b.sent.getTime() ? -1 : 1;
+  return a.sent.getTime() <= b.sent.getTime() ? 1 : -1;
 }
 
 const pickPeerAddress = (clientAddress: string, message: Message): string => {

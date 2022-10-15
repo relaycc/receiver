@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useRef } from 'react';
 import Blockies from 'react-blockies';
 import {
-  useLensAddress,
-  isLensName,
+  useLensProfile,
   isEthAddress,
   useInView,
   useEnsAddress,
   useEnsAvatar,
+  addressFromProfile,
 } from '../../hooks';
 import { motion } from 'framer-motion';
 
@@ -23,9 +23,15 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref);
-  const lensAddress = useLensAddress({
-    handle: isLensName(handle) ? handle : null,
+  const lensProfile = useLensProfile({
+    handle,
   });
+  const lensAddress =
+    lensProfile.data !== null &&
+    lensProfile.data !== undefined &&
+    isEthAddress(addressFromProfile(lensProfile.data))
+      ? addressFromProfile(lensProfile.data)
+      : undefined;
   const ensAddress = useEnsAddress({
     handle,
     wait: isInView === false,
@@ -33,8 +39,8 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
   const ensAvatar = useEnsAvatar({
     handle: isEthAddress(handle)
       ? handle
-      : isEthAddress(lensAddress.address)
-      ? lensAddress.address
+      : isEthAddress(lensAddress)
+      ? lensAddress
       : isEthAddress(ensAddress.data)
       ? ensAddress.data
       : undefined,

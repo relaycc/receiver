@@ -1,8 +1,6 @@
 export * from './useResponsiveName';
 export * from './useReceiver';
 export * from './useLaunch';
-export * from './useLensAddress';
-export * from './useLensProfiles';
 export * from './useEthBalance';
 export * from './useTransactionCount';
 export * from './useOwnedNfts';
@@ -11,3 +9,4 @@ export * from './useWindowSize';
 export * from './xmtp';
 export * from './ens';
 export * from './useInView';
+export * from './lens';

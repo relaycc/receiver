@@ -19,7 +19,10 @@ export const Header: FunctionComponent = () => {
   }, [setIsOpen]);
 
   const goToConversations = useCallback(() => {
+    console.time('Clicked dispatch');
+    console.time('Dispatch to first render');
     dispatch({ id: 'go to screen', screen: { id: 'conversations' } });
+    console.timeEnd('Clicked dispatch');
   }, [dispatch]);
 
   const goToNewConversations = useCallback(() => {

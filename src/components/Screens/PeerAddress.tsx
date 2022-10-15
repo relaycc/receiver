@@ -3,13 +3,13 @@ import { Screen } from './Screen';
 import { MessageList, MessageInput, InfoCard, LoadingList } from '../Elements';
 import {
   useEnsAddress,
-  useLensAddress,
-  isLensName,
   sendMessage,
   isEthAddress,
   useMessages,
   usePeerOnNetwork,
   useClient,
+  useLensProfile,
+  addressFromProfile,
 } from '../../hooks';
 
 export interface PeerAddressProps {
@@ -19,13 +19,19 @@ export interface PeerAddressProps {
 export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
   handle,
 }) => {
-  const lensAddress = useLensAddress({
-    handle: isLensName(handle) ? handle : null,
+  const lensProfile = useLensProfile({
+    handle,
   });
+  const lensAddress =
+    lensProfile.data !== null &&
+    lensProfile.data !== undefined &&
+    isEthAddress(addressFromProfile(lensProfile.data))
+      ? addressFromProfile(lensProfile.data)
+      : undefined;
   const ensAddress = useEnsAddress({
     handle,
   });
-  const peerAddress = lensAddress.address || ensAddress.data || handle;
+  const peerAddress = lensAddress || ensAddress.data || handle;
   const peerOnNetwork = usePeerOnNetwork({ peerAddress });
   const messages = useMessages({ peerAddress });
   const [, client] = useClient();
@@ -34,7 +40,7 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
     <Screen
       content={(() => {
         if (!isEthAddress(peerAddress)) {
-          if (lensAddress.status === 'fetching' || ensAddress.isLoading) {
+          if (lensProfile.isLoading || ensAddress.isLoading) {
             return (
               <>
                 <LoadingList />

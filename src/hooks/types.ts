@@ -120,54 +120,6 @@ export type Address =
   | ErrorAddress
   | SettledAddress;
 
-export interface NoOpName {
-  name: undefined;
-  status: 'noop';
-}
-
-export interface FetchingName {
-  name: undefined;
-  status: 'fetching';
-}
-
-export interface ErrorName {
-  name: undefined;
-  status: 'error';
-}
-
-export interface SettledName {
-  name: string | undefined;
-  status: 'settled';
-}
-
-export type EnsName = NoOpName | FetchingName | ErrorName | SettledName;
-
-export interface NoOpAvatar {
-  avatar: undefined;
-  status: 'noop';
-}
-
-export interface FetchingAvatar {
-  avatar: undefined;
-  status: 'fetching';
-}
-
-export interface ErrorAvatar {
-  avatar: undefined;
-  status: 'error';
-}
-
-export interface SettledAvatar {
-  avatar: string | undefined;
-  status: 'settled';
-}
-
-export type EnsAvatar =
-  | NoOpAvatar
-  | FetchingAvatar
-  | ErrorAvatar
-  | SettledAvatar;
-
 export const isEthAddress = (handle?: string | null): handle is string => {
   return (
     typeof handle === 'string' &&
@@ -175,75 +127,6 @@ export const isEthAddress = (handle?: string | null): handle is string => {
     handle.length === 42
   );
 };
-
-export const isLensName = (handle?: string | null): handle is string => {
-  return (
-    typeof handle === 'string' &&
-    handle.endsWith('.lens') &&
-    handle.length > 9 &&
-    handle.length < 37
-  );
-};
-
-export interface LensProfilesQueryResponse {
-  profiles: {
-    items: LensProfile[];
-  };
-}
-
-export interface NoOpLensProfiles {
-  profiles: undefined;
-  status: 'noop';
-}
-
-export interface FetchingLensProfiles {
-  profiles: undefined;
-  status: 'fetching';
-}
-
-export interface ErrorLensProfiles {
-  profiles: undefined;
-  status: 'error';
-}
-
-// TODO(achilles@relay.cc) We really should use a typed graphql client.
-export interface SettledLensProfiles {
-  profiles: LensProfilesQueryResponse | undefined;
-  status: 'settled';
-}
-
-export interface LensProfile {
-  name: string;
-  bio: string;
-  stats: {
-    totalFollowers: number;
-    totalFollowing: number;
-    totalPosts: number;
-    totalComments: number;
-    totalMirrors: number;
-    totalPublications: number;
-    totalCollects: number;
-  };
-  handle: string;
-  ownedBy: string;
-  isDefault: boolean;
-  picture: {
-    // NftImage: {
-    uri: string;
-    // };
-    // MediaSet: {
-    original: {
-      url: string;
-    };
-    // };
-  };
-}
-
-export type LensProfiles =
-  | NoOpLensProfiles
-  | FetchingLensProfiles
-  | ErrorLensProfiles
-  | SettledLensProfiles;
 
 export interface NoOpEthBalance {
   balance: undefined;

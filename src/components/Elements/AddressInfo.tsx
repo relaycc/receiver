@@ -5,7 +5,8 @@ import { LoadingText } from './LoadingText';
 import {
   useEnsName,
   useEnsAddress,
-  useLensAddress,
+  useLensProfile,
+  addressFromProfile,
   isEnsName,
   isEthAddress,
   isLensName,
@@ -18,8 +19,8 @@ export interface AddressInfoProps {
 export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
   handle,
 }) => {
-  const lensAddress = useLensAddress({
-    handle: isLensName(handle) ? handle : null,
+  const lensProfile = useLensProfile({
+    handle,
   });
   const ensAddress = useEnsAddress({ handle });
   const ensName = useEnsName({ handle });
@@ -33,7 +34,11 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
     if (isLensName(handle)) {
       return handle;
     }
-    if (isEthAddress(lensAddress.address)) {
+    if (
+      lensProfile.data !== undefined &&
+      lensProfile.data !== null &&
+      isEthAddress(addressFromProfile(lensProfile.data))
+    ) {
       return handle;
     }
     if (isEthAddress(ensAddress.data)) {
@@ -43,11 +48,7 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
       return ensName.data;
     }
 
-    if (
-      lensAddress.status === 'fetching' ||
-      ensAddress.isLoading ||
-      ensName.isLoading
-    ) {
+    if (lensProfile.isLoading || ensAddress.isLoading || ensName.isLoading) {
       return 'loading';
     }
 
@@ -62,18 +63,18 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
     if (isEthAddress(handle)) {
       return handle;
     }
-    if (isEthAddress(lensAddress.address)) {
-      return lensAddress.address;
+    if (
+      lensProfile.data !== null &&
+      lensProfile.data !== undefined &&
+      isEthAddress(addressFromProfile(lensProfile.data))
+    ) {
+      return addressFromProfile(lensProfile.data);
     }
     if (isEthAddress(ensAddress.data)) {
       return ensAddress.data;
     }
 
-    if (
-      lensAddress.status === 'fetching' ||
-      ensAddress.isLoading ||
-      ensName.isLoading
-    ) {
+    if (lensProfile.isLoading || ensAddress.isLoading || ensName.isLoading) {
       return 'loading';
     } else {
       return 'invalid';

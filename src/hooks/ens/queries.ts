@@ -49,7 +49,7 @@ export const useEnsAddress = ({
       }
     },
     {
-      enabled: wait !== true,
+      enabled: wait !== true && isEnsName(handle),
       staleTime: 1000 * 60 * 5,
       context: receiverContext,
     }

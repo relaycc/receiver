@@ -43,11 +43,11 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
     })();
   }, [streamQuery.data, address]);
 
-  const sortedByMostRecent = byMostRecentMessage(
-    (messagesQuery.data as unknown as Message[]) || []
-  );
+  const withoutUndefined = (
+    messagesQuery.data ? messagesQuery.data.filter((m) => m !== undefined) : []
+  ) as Message[];
 
-  const buckets = getMessageBuckets(sortedByMostRecent.map((i) => i).reverse());
+  const buckets = getMessageBuckets(withoutUndefined);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -71,12 +71,6 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
       })}
     </motion.div>
   );
-};
-
-const byMostRecentMessage = (messages: Message[]): Message[] => {
-  return messages.sort((a, b) => {
-    return a.sent.getTime() <= b.sent.getTime() ? -1 : 1;
-  });
 };
 
 // This assumets messages are sorted by date already.
