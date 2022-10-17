@@ -4,6 +4,7 @@ import { useLaunch, useReceiver } from '../../hooks';
 import { Avatar } from '../Elements';
 import { Signer } from '@ethersproject/abstract-signer';
 import '../../styles/app.css';
+import { motion } from 'framer-motion';
 
 export interface LauncherProps {
   // TODO(achilles@relay.cc) We allow the user to pass in much more than a peer
@@ -42,7 +43,12 @@ export const Launcher: FunctionComponent<LauncherProps> = ({
           <ChatIcon />
         </button>
         {pinnedConversations.map((peerAddress) => (
-          <div className="Launcher AvatarContainer" key={peerAddress}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="Launcher AvatarContainer"
+            key={peerAddress}>
             <Avatar
               large={true}
               handle={peerAddress}
@@ -64,7 +70,7 @@ export const Launcher: FunctionComponent<LauncherProps> = ({
               }}>
               <CloseIcon />
             </div>
-          </div>
+          </motion.div>
         ))}
       </ul>
     </div>
