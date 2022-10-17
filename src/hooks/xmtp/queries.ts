@@ -66,6 +66,7 @@ export const usePinnedAddresses = () => {
     {
       staleTime: Infinity,
       context: receiverContext,
+      enabled: clientQuery.data !== null && clientQuery.data !== undefined,
     }
   );
 };
