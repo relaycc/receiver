@@ -19,14 +19,14 @@ export const useEnsName = ({
     ['ens name', handle],
     async () => {
       if (!isEthAddress(handle)) {
-        throw new Error('Trying to fetch an ENS name for invalid address!');
+        return null;
       } else {
         return fetchEnsName(handle);
       }
     },
     {
       staleTime: 1000 * 60 * 5,
-      enabled: wait !== true && isEthAddress(handle),
+      enabled: wait !== true,
       context: receiverContext,
     }
   );
@@ -43,13 +43,13 @@ export const useEnsAddress = ({
     ['ens address', handle],
     async () => {
       if (!isEnsName(handle)) {
-        throw new Error('Trying to fetch an ENS address for invalid name!');
+        return null;
       } else {
         return fetchEnsAddress(handle);
       }
     },
     {
-      enabled: wait !== true && isEnsName(handle),
+      enabled: wait !== true,
       staleTime: 1000 * 60 * 5,
       context: receiverContext,
     }
@@ -67,14 +67,14 @@ export const useEnsAvatar = ({
     ['ens avatar', handle],
     async () => {
       if (!isEthAddress(handle) && !isEnsName(handle)) {
-        throw new Error('Trying to fetch an ENS avatar for invalid address!');
+        return null;
       } else {
         return fetchEnsAvatar(handle);
       }
     },
     {
       staleTime: 1000 * 60 * 5,
-      enabled: wait !== true && (isEthAddress(handle) || isEnsName(handle)),
+      enabled: wait !== true,
       context: receiverContext,
     }
   );

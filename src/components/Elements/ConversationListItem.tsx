@@ -13,12 +13,11 @@ export interface ConversationListItemProps {
   peerAddress: string;
   subtitle: string;
   topMessageTime: Date;
-  order: number;
 }
 
 export const ConversationListItem: FunctionComponent<
   ConversationListItemProps
-> = ({ peerAddress, subtitle, topMessageTime, order }) => {
+> = ({ peerAddress, subtitle, topMessageTime }) => {
   const dispatch = useReceiver((state) => state.dispatch);
   const ref = useRef(null);
   const isInView = useInView(ref);
@@ -41,8 +40,7 @@ export const ConversationListItem: FunctionComponent<
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{
-        duration: 1,
-        delay: order < 10 ? 0.15 * order : 1.5 + order * 0.02,
+        duration: 0.5,
       }}
       key={peerAddress}
       className="ConversationListItem ListItem"

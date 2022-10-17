@@ -70,35 +70,6 @@ export const usePinnedAddresses = () => {
   );
 };
 
-export const usePinnedAddressesPreviews = () => {
-  const { address } = useXmtp();
-  const [, clientQuery] = useClient();
-  const pinnedAddressesQuery = usePinnedAddresses();
-  const addresses = pinnedAddressesQuery.data || [];
-
-  return useQueries({
-    queries: addresses.map((peerAddress) => {
-      return {
-        queryKey: ['messages', address, peerAddress],
-        queryFn: async () => {
-          if (clientQuery.data === null || clientQuery.data === undefined) {
-            throw new Error('Running messages fetch too early');
-          } else {
-            return fetchMessages(
-              clientQuery.data,
-              peerAddress,
-              MOST_RECENT_MESSAGE_OPTIONS
-            );
-          }
-        },
-        enabled: pinnedAddressesQuery.data !== undefined,
-        staleTime: 1000 * 60 * 5,
-      };
-    }),
-    context: receiverContext,
-  });
-};
-
 export const useConversations = () => {
   const { address } = useXmtp();
   const [, clientQuery] = useClient();
@@ -109,10 +80,7 @@ export const useConversations = () => {
       if (clientQuery.data === null || clientQuery.data === undefined) {
         throw new Error('Running conversations list too early');
       } else {
-        console.time('Conversations List Timer');
-        const data = await fetchConversations(clientQuery.data);
-        console.timeEnd('Conversations List Timer');
-        return data;
+        return fetchConversations(clientQuery.data);
       }
     },
     {
@@ -123,31 +91,30 @@ export const useConversations = () => {
   );
 };
 
-export const useConversationsPreviews = () => {
+export const useConversationsPreviews = (addresses: string[]) => {
   const { address } = useXmtp();
   const [, clientQuery] = useClient();
-  const conversationsQuery = useConversations();
-  const conversations = conversationsQuery.data || [];
 
   return useQueries({
-    queries: conversations.map(({ peerAddress }) => {
+    queries: addresses.map((peerAddress) => {
       return {
         queryKey: ['messages', address, peerAddress],
         queryFn: async () => {
           if (clientQuery.data === null || clientQuery.data === undefined) {
             throw new Error('Running messages fetch too early');
           } else {
-            return fetchMessages(
+            const messages = await fetchMessages(
               clientQuery.data,
               peerAddress,
               MOST_RECENT_MESSAGE_OPTIONS
             );
+            return {
+              peerAddress,
+              messages,
+            };
           }
         },
-        enabled:
-          clientQuery.data !== null &&
-          clientQuery.data !== undefined &&
-          conversationsQuery.data !== undefined,
+        enabled: clientQuery.data !== null && clientQuery.data !== undefined,
         staleTime: 1000 * 60 * 5,
       };
     }),
@@ -173,7 +140,15 @@ export const useMessages = ({
       ) {
         throw new Error('Running messages fetch too early');
       } else {
-        return fetchMessages(client, peerAddress, MOST_RECENT_PAGE_OPTIONS);
+        const messages = await fetchMessages(
+          client,
+          peerAddress,
+          MOST_RECENT_PAGE_OPTIONS
+        );
+        return {
+          peerAddress,
+          messages,
+        };
       }
     },
     {

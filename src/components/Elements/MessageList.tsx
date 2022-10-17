@@ -44,7 +44,9 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
   }, [streamQuery.data, address]);
 
   const withoutUndefined = (
-    messagesQuery.data ? messagesQuery.data.filter((m) => m !== undefined) : []
+    messagesQuery.data
+      ? messagesQuery.data.messages.filter((m) => m !== undefined)
+      : []
   ) as Message[];
 
   const buckets = getMessageBuckets(withoutUndefined);

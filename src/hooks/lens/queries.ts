@@ -9,7 +9,7 @@ export const useLensProfile = ({ handle }: { handle?: string | null }) => {
     ['lens profile', handle],
     async () => {
       if (!isLensName(handle)) {
-        throw new Error('Trying to fetch profile with invalid Lens handle');
+        return null;
       } else {
         return fetchProfileByHandle(handle);
       }

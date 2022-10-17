@@ -66,7 +66,7 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
           } else if (messages.isSuccess) {
             if (peerOnNetwork.data === false) {
               return <InfoCard variant="no peer" />;
-            } else if (messages.data.length === 0) {
+            } else if (messages.data.messages.length === 0) {
               return (
                 <>
                   <InfoCard variant="no messages" />
