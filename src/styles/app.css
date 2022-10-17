@@ -571,8 +571,13 @@
   background-color: white;
 }
 
+.RelayReceiver .MessageInput.StyledInput:focus {
+  box-shadow: rgb(0 0 0 / 50%) 0px 0px 4px;
+}
+
 .RelayReceiver .MessageInput.StyledInput::placeholder {
   color: #333c4f;
+  opacity: 0.7;
 }
 
 .RelayReceiver .MessageList.List {

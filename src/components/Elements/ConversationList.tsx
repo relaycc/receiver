@@ -18,6 +18,10 @@ interface Conversation {
 export const ConversationList: FunctionComponent = () => {
   const pinnedAddresses = usePinnedAddresses();
   const conversations = useConversations();
+  if (conversations.data !== undefined) {
+    logPinnableConversations(conversations.data.map((c) => c.peerAddress));
+  }
+
   const pinnedPreviews = useConversationsPreviews(pinnedAddresses.data || []);
   const listedPreviews = useConversationsPreviews(
     conversations.data ? conversations.data.map((c) => c.peerAddress) : []
@@ -56,7 +60,7 @@ export const ConversationList: FunctionComponent = () => {
           ? 1
           : -1;
       }) as Conversation[];
-  }, [pinnedIsLoading, isLoading]);
+  }, [pinnedPreviews, listedPreviews]);
 
   return (
     <ConversationListView
@@ -92,7 +96,6 @@ export const ConversationListView: FunctionComponent<{
         </>
       );
     } else {
-      logPinnableConversations(conversations);
       return (
         <>
           <ul className="ConversationList List">
@@ -125,7 +128,7 @@ export const ConversationListView: FunctionComponent<{
 };
 
 let loggedCount = 0;
-const logPinnableConversations = (conversations: Conversation[]) => {
+const logPinnableConversations = (conversations: string[]) => {
   if (loggedCount > 0) {
     return;
   } else {
@@ -142,7 +145,7 @@ const logPinnableConversations = (conversations: Conversation[]) => {
       '- Paste the JSON array into the message input and send the message'
     );
     console.log('- Reload your convesations list');
-    console.log(JSON.stringify(conversations.map((c) => c.peerAddress)));
+    console.log(JSON.stringify(conversations));
     console.groupEnd();
   } catch {
     return;

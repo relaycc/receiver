@@ -4,6 +4,7 @@ import {
   currentScreen,
   receiverContext,
   useAllMessagesStream,
+  useConversations,
   useReceiver,
   useXmtp,
 } from '../../hooks';
@@ -21,6 +22,7 @@ export const Window: FunctionComponent<WindowProps> = ({ className }) => {
   const address = useXmtp((state) => state.address);
   const messagesStream = useAllMessagesStream();
   const queryClient = useQueryClient({ context: receiverContext });
+  useConversations();
 
   useEffect(() => {
     (async () => {
