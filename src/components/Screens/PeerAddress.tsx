@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
   MessageList,
   MessageInput,
@@ -42,6 +42,15 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
     ? statuses[peerAddress]
     : undefined;
   const signatureStatus = useRelay((state) => state.signatureStatus);
+  const [isEnterPressed, setIsEnterPressed] = useState(false);
+
+  //////// MY COMMENTS
+  // const bottomDiv:any = useRef()
+  // const handleScrollToBottom = () => {
+  //   bottomDiv.current.scrollIntoView()
+  // };
+
+  ///// My Comments
 
   useEffect(() => {
     if (client !== null && isEthAddress(peerAddress)) {
@@ -72,7 +81,11 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
               return (
                 <>
                   <LoadingList />
-                  <MessageInput onSendMessage={() => null} />
+                  <MessageInput
+                    isEnterPressed={isEnterPressed}
+                    setIsEnterPressed={setIsEnterPressed}
+                    onSendMessage={() => null}
+                  />
                 </>
               );
             } else {
@@ -84,6 +97,8 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
                 <>
                   <LoadingList />
                   <MessageInput
+                    isEnterPressed={isEnterPressed}
+                    setIsEnterPressed={setIsEnterPressed}
                     onSendMessage={(message: string) =>
                       client && client.sendMessage(peerAddress, message)
                     }
@@ -99,6 +114,8 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
                 <>
                   <InfoCard variant="no messages" />
                   <MessageInput
+                    isEnterPressed={isEnterPressed}
+                    setIsEnterPressed={setIsEnterPressed}
                     onSendMessage={(message: string) =>
                       client && client.sendMessage(peerAddress, message)
                     }
@@ -108,8 +125,13 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
             } else {
               return (
                 <>
-                  <MessageList peerAddress={peerAddress} />
+                  <MessageList
+                    isEnterPressed={isEnterPressed}
+                    peerAddress={peerAddress}
+                  />
                   <MessageInput
+                    isEnterPressed={isEnterPressed}
+                    setIsEnterPressed={setIsEnterPressed}
                     onSendMessage={(message: string) =>
                       client && client.sendMessage(peerAddress, message)
                     }

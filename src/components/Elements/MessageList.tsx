@@ -1,17 +1,35 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useRef, useEffect } from 'react';
 import { useRelay, Message, byMostRecentMessage } from '../../hooks';
 import MessagesBucket from '../Elements/MessagesBucket';
 
 export interface MessageListProps {
   peerAddress: string;
+  isEnterPressed: boolean;
 }
 
 export const MessageList: FunctionComponent<MessageListProps> = ({
   peerAddress,
+  isEnterPressed,
 }) => {
   const client = useRelay((state) => state.client);
   const channels = useRelay((state) => state.channels);
   const channel = channels[peerAddress];
+
+  const bottomDiv: any = useRef();
+
+  function scrollToBottom ()  {
+    bottomDiv.current.scrollIntoView();
+  }
+
+  useEffect(() => {
+    if (bottomDiv.current == undefined) {
+      console.log('undefined')
+      return
+    } else {
+      scrollToBottom()
+      console.log('scrolled');
+    }
+  }, [isEnterPressed]);
 
   if (channel !== undefined && client !== null) {
     const buckets = getMessageBuckets(
@@ -19,8 +37,10 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
         .map((i) => i)
         .reverse()
     );
+
     return (
       <div className="MessageList List">
+        <div ref={bottomDiv}></div>
         {buckets.map((bucket, index) => {
           if (bucket.length > 0) {
             return (

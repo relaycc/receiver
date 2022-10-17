@@ -1,11 +1,16 @@
-import { useState } from 'react';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 interface MessageInputProps {
   onSendMessage: (val: string) => unknown;
+  setIsEnterPressed: (e: boolean) => unknown;
+  isEnterPressed: boolean;
 }
 
-export const MessageInput = ({ onSendMessage }: MessageInputProps) => {
+export const MessageInput = ({
+  onSendMessage,
+  setIsEnterPressed,
+  isEnterPressed,
+}: MessageInputProps) => {
   const [inputVal, setInputVal] = useState<string>('');
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,6 +21,7 @@ export const MessageInput = ({ onSendMessage }: MessageInputProps) => {
     if (inputVal.length < 1) return;
     onSendMessage(inputVal);
     setInputVal('');
+    setIsEnterPressed(!isEnterPressed);
   }, [inputVal, onSendMessage]);
 
   const handleKeyDown = useCallback(
