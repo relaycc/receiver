@@ -34,8 +34,56 @@ yarn add @relaycc/receiver
 
 ## Basic Usage
 
-The default configuration adds Receiver as an intercom-style messaging widget. To implement
-this configuration, add `<Intercom />`, `<Window />` and `<Launcher />` to your app, making sure to pass in the user's connected wallet.
+First, wrap your application in the `<Receiver />` context provider. For example:
+
+```TypeScript
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { Receiver } from '@relaycc/receiver';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <Receiver>
+      <App />
+    </Receiver>
+  </React.StrictMode>
+);
+```
+
+Next, provide the user's connected wallet to Receiver. The wallet is
+used to sign-in to the XMTP messaging network. How to access the connected
+wallet depends on how your application implements wallet connection. Here's
+an example using the popular [wagmi](https://wagmi.sh/) library.
+
+_This code only accesses and uses the connected wallet, it assumes the steps to **connect a wallet** are already implemented. If you'd like to learn more, [here's a great place to start](https://wagmi.sh/docs/getting-started)._
+
+```TypeScript
+import { useSigner } from 'wagmi';
+import { useWallet } from '@relaycc/receiver';
+
+function MyWalletComponent() {
+  // Acccess the user's connected wallet.
+  const signer = useSigner();
+  const [wallet, setWallet] = useWallet();
+
+  useEffect(() => {
+    // When the user's connected wallet updates, use setWallet to provide
+    // the updated wallet to Receiver
+    setWallet(signer.data || null)
+  }, [signer.data])
+
+  ...
+}
+
+export default App;
+```
+
+Now you're ready to add the Receiver components. The default configuration adds Receiver as an intercom-style messaging widget. To implement
+this configuration, add `<Intercom />`, `<Window />` and `<Launcher />` to your app.
 
 ```TypeScript
 import { Intercom, Window, Launcher } from '@relaycc/receiver';
@@ -43,7 +91,8 @@ import { Intercom, Window, Launcher } from '@relaycc/receiver';
 function App() {
   return (
     <div className="App">
-      <Launcher wallet={wallet} />
+      ...
+      <Launcher />
       <Intercom>
         <Window />
       </Intercom>
@@ -69,7 +118,7 @@ function App() {
       <Intercom>
         <Window />
       </Intercom>
-      <Launcher wallet={wallet} peerAddress={'0x1800TECHSUPPORT'} />
+      <Launcher peerAddress={'0x1800TECHSUPPORT'} />
     </div>
   );
 }
@@ -85,7 +134,7 @@ You can also use the `useLaunch` hook to turn any component into a Receiver laun
 import { Intercom, Window, useLaunch } from '@relaycc/receiver';
 
 function App() {
-  const launch = useLaunch(wallet);
+  const launch = useLaunch();
   return (
     <div className="App">
       <Intercom>

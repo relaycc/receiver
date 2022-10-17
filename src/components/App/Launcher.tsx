@@ -2,7 +2,6 @@ import React from 'react';
 import { FunctionComponent } from 'react';
 import { useLaunch, useReceiver } from '../../hooks';
 import { Avatar } from '../Elements';
-import { Signer } from '@ethersproject/abstract-signer';
 import '../../styles/app.css';
 import { motion } from 'framer-motion';
 
@@ -12,13 +11,9 @@ export interface LauncherProps {
   // don't want to change the name until we at the very least have a good
   // migration guide process in place.
   peerAddress?: string | null;
-  wallet?: Signer | null;
 }
 
-export const Launcher: FunctionComponent<LauncherProps> = ({
-  peerAddress,
-  wallet,
-}) => {
+export const Launcher: FunctionComponent<LauncherProps> = ({ peerAddress }) => {
   // Rename here because we want to think of the input as a handle internally,
   // even though the public prop is still called `peerAddress`.
   const inputHandle = peerAddress;
@@ -26,7 +21,7 @@ export const Launcher: FunctionComponent<LauncherProps> = ({
   const setIsOpen = useReceiver((state) => state.setIsOpen);
   const isOpen = useReceiver((state) => state.isOpen);
   const dispatchReceiver = useReceiver((state) => state.dispatch);
-  const launch = useLaunch(wallet);
+  const launch = useLaunch();
 
   const onClickLaunch = () => {
     if (isOpen) {
