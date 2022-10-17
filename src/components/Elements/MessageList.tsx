@@ -1,5 +1,13 @@
-import React, { FunctionComponent } from 'react';
-import { useRelay, Message, byMostRecentMessage } from '../../hooks';
+import { useQueryClient } from '@tanstack/react-query';
+import React, { FunctionComponent, useEffect } from 'react';
+import {
+  Message,
+  useMessages,
+  useConversationMessagesStream,
+  useXmtp,
+  receiverContext,
+} from '../../hooks';
+import { motion } from 'framer-motion';
 import MessagesBucket from '../Elements/MessagesBucket';
 
 export interface MessageListProps {
@@ -9,38 +17,62 @@ export interface MessageListProps {
 export const MessageList: FunctionComponent<MessageListProps> = ({
   peerAddress,
 }) => {
-  const client = useRelay((state) => state.client);
-  const channels = useRelay((state) => state.channels);
-  const channel = channels[peerAddress];
+  const queryClient = useQueryClient({ context: receiverContext });
+  const messagesQuery = useMessages({ peerAddress });
+  const streamQuery = useConversationMessagesStream({ peerAddress });
+  const address = useXmtp((state) => state.address);
 
-  if (channel !== undefined && client !== null) {
-    const buckets = getMessageBuckets(
-      byMostRecentMessage(channel)
-        .map((i) => i)
-        .reverse()
-    );
-    return (
-      <div className="MessageList List">
-        {buckets.map((bucket, index) => {
-          if (bucket.length > 0) {
-            return (
-              <MessagesBucket
-                key={index}
-                messages={bucket}
-                userPeerAddress={client.address}
-                startDate={bucket[bucket.length - 1].sent}
-                peerName={peerAddress}
-                sentByAddress={bucket[0].senderAddress}
-              />
-            );
-          }
-          return null;
-        })}
-      </div>
-    );
-  } else {
-    return null;
-  }
+  useEffect(() => {
+    (async () => {
+      if (streamQuery.data === undefined || address === null) {
+        return;
+      } else {
+        for await (const message of streamQuery.data) {
+          queryClient.invalidateQueries([
+            'messages',
+            address,
+            message.senderAddress,
+          ]);
+          queryClient.invalidateQueries([
+            'messages',
+            address,
+            message.recipientAddress,
+          ]);
+        }
+      }
+    })();
+  }, [streamQuery.data, address]);
+
+  const withoutUndefined = (
+    messagesQuery.data
+      ? messagesQuery.data.messages.filter((m) => m !== undefined)
+      : []
+  ) as Message[];
+
+  const buckets = getMessageBuckets(withoutUndefined);
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="MessageList List">
+      {buckets.map((bucket, index) => {
+        if (bucket.length > 0) {
+          return (
+            <MessagesBucket
+              key={String(index)}
+              messages={bucket}
+              userPeerAddress={address}
+              startDate={bucket[bucket.length - 1].sent}
+              peerName={peerAddress}
+              sentByAddress={bucket[0].senderAddress}
+            />
+          );
+        }
+        return null;
+      })}
+    </motion.div>
+  );
 };
 
 // This assumets messages are sorted by date already.

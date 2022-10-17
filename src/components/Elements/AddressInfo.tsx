@@ -5,7 +5,8 @@ import { LoadingText } from './LoadingText';
 import {
   useEnsName,
   useEnsAddress,
-  useLensAddress,
+  useLensProfile,
+  addressFromProfile,
   isEnsName,
   isEthAddress,
   isLensName,
@@ -18,15 +19,11 @@ export interface AddressInfoProps {
 export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
   handle,
 }) => {
-  const lensAddress = useLensAddress({
-    handle: isLensName(handle) ? handle : null,
+  const lensProfile = useLensProfile({
+    handle,
   });
-  const ensAddress = useEnsAddress({
-    handle: isEnsName(handle) ? handle : null,
-  });
-  const ensName = useEnsName({
-    handle: isEthAddress(handle) ? handle : null,
-  });
+  const ensAddress = useEnsAddress({ handle });
+  const ensName = useEnsName({ handle });
   const [isOpen, setIsOpen] = useState(false);
   const [didCopyToClipboard, setDidCopyToClipboard] = useState(false);
 
@@ -37,21 +34,21 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
     if (isLensName(handle)) {
       return handle;
     }
-    if (isEthAddress(lensAddress.address)) {
+    if (
+      lensProfile.data !== undefined &&
+      lensProfile.data !== null &&
+      isEthAddress(addressFromProfile(lensProfile.data))
+    ) {
       return handle;
     }
-    if (isEthAddress(ensAddress.address)) {
+    if (isEthAddress(ensAddress.data)) {
       return handle;
     }
-    if (isEnsName(ensName.name)) {
-      return ensName.name;
+    if (isEnsName(ensName.data)) {
+      return ensName.data;
     }
 
-    if (
-      lensAddress.status === 'fetching' ||
-      ensAddress.status === 'fetching' ||
-      ensName.status === 'fetching'
-    ) {
+    if (lensProfile.isLoading || ensAddress.isLoading || ensName.isLoading) {
       return 'loading';
     }
 
@@ -66,18 +63,18 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
     if (isEthAddress(handle)) {
       return handle;
     }
-    if (isEthAddress(lensAddress.address)) {
-      return lensAddress.address;
+    if (
+      lensProfile.data !== null &&
+      lensProfile.data !== undefined &&
+      isEthAddress(addressFromProfile(lensProfile.data))
+    ) {
+      return addressFromProfile(lensProfile.data);
     }
-    if (isEthAddress(ensAddress.address)) {
-      return ensAddress.address;
+    if (isEthAddress(ensAddress.data)) {
+      return ensAddress.data;
     }
 
-    if (
-      lensAddress.status === 'fetching' ||
-      ensAddress.status === 'fetching' ||
-      ensName.status === 'fetching'
-    ) {
+    if (lensProfile.isLoading || ensAddress.isLoading || ensName.isLoading) {
       return 'loading';
     } else {
       return 'invalid';

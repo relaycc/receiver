@@ -1,8 +1,13 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useCallback, useRef } from 'react';
 import { Avatar } from './Avatar';
-import { useResponsiveName, useEnsName } from '../../hooks';
-import { useReceiver } from '../../hooks';
+import {
+  useResponsiveName,
+  useEnsName,
+  useReceiver,
+  useInView,
+} from '../../hooks';
 import { getDisplayDate } from '../../utils/date';
+import { motion } from 'framer-motion';
 
 export interface ConversationListItemProps {
   peerAddress: string;
@@ -14,20 +19,32 @@ export const ConversationListItem: FunctionComponent<
   ConversationListItemProps
 > = ({ peerAddress, subtitle, topMessageTime }) => {
   const dispatch = useReceiver((state) => state.dispatch);
-  const { name } = useEnsName({
+  const ref = useRef(null);
+  const isInView = useInView(ref);
+  const { data: name } = useEnsName({
     handle: peerAddress,
+    wait: isInView === false,
   });
   const responsiveName = useResponsiveName(name, peerAddress, '');
 
+  const goToPeerAddress = useCallback(() => {
+    dispatch({
+      id: 'go to screen',
+      screen: { id: 'messages', peerAddress },
+    });
+  }, [peerAddress]);
+
   return (
-    <li
+    <motion.li
+      ref={ref}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{
+        duration: 0.5,
+      }}
+      key={peerAddress}
       className="ConversationListItem ListItem"
-      onClick={() =>
-        dispatch({
-          id: 'go to screen',
-          screen: { id: 'messages', peerAddress },
-        })
-      }>
+      onClick={goToPeerAddress}>
       <div style={{ marginRight: '10px' }}>
         <Avatar handle={peerAddress} onClick={() => null} />
       </div>
@@ -40,6 +57,6 @@ export const ConversationListItem: FunctionComponent<
         </div>
         <div className="ConversationListItem Subtitle">{subtitle}</div>
       </div>
-    </li>
+    </motion.li>
   );
 };
