@@ -75,7 +75,7 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="MessageList List">
-      <div ref={bottomDiv}>bottom div</div>
+      <div ref={bottomDiv}></div>
 
       {buckets.map((bucket, index) => {
         if (bucket.length > 0) {
