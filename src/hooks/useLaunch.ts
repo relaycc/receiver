@@ -1,17 +1,9 @@
-import { useEffect, useCallback } from 'react';
-import { Signer } from '@ethersproject/abstract-signer';
+import { useCallback } from 'react';
 import { useReceiver } from './useReceiver';
 
-export const useLaunch = (wallet?: Signer | null) => {
+export const useLaunch = () => {
   const dispatch = useReceiver((state) => state.dispatch);
   const setIsOpen = useReceiver((state) => state.setIsOpen);
-  const setWallet = useReceiver((state) => state.setWallet);
-
-  useEffect(() => {
-    if (wallet !== undefined) {
-      setWallet(wallet || null);
-    }
-  }, [wallet, setWallet]);
 
   return useCallback((handle?: string | null) => {
     if (typeof handle !== 'string') {

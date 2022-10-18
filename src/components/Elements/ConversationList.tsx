@@ -1,16 +1,85 @@
-import React, { FunctionComponent } from 'react';
-import { useRelay, byMostRecentMessage, pickPeerAddress } from '../../hooks';
+import React, { FunctionComponent, useMemo } from 'react';
+import {
+  useConversations,
+  useConversationsPreviews,
+  usePinnedAddresses,
+} from '../../hooks';
+import { Message } from '@relaycc/xmtp-js';
 import { ConversationListItem } from './ConversationListItem';
 import { InfoCard } from './InfoCard';
+import { LoadingList } from './LoadingList';
+import { LoadingText } from './LoadingText';
+
+interface Conversation {
+  peerAddress: string;
+  messages: Message[];
+}
 
 export const ConversationList: FunctionComponent = () => {
-  const conversationList = useRelay((state) => state.channels.conversationList);
-  const client = useRelay((state) => state.client);
+  const pinnedAddresses = usePinnedAddresses();
+  const conversations = useConversations();
+  if (conversations.data !== undefined) {
+    logPinnableConversations(conversations.data.map((c) => c.peerAddress));
+  }
 
-  if (client === null || conversationList === undefined) {
-    throw new Error('Never should have been here!');
+  const pinnedPreviews = useConversationsPreviews(pinnedAddresses.data || []);
+  const listedPreviews = useConversationsPreviews(
+    conversations.data ? conversations.data.map((c) => c.peerAddress) : []
+  );
+
+  const pinnedIsLoading =
+    pinnedAddresses.isLoading ||
+    Boolean(pinnedPreviews.find((pq) => pq.isLoading));
+
+  const isLoading =
+    conversations.isLoading ||
+    Boolean(listedPreviews.find((lq) => lq.isLoading));
+
+  const conversationsProps: Conversation[] = useMemo(() => {
+    const dataToProcess = (() => {
+      if (isLoading === false) {
+        return listedPreviews;
+      } else if (pinnedIsLoading === false) {
+        return pinnedPreviews;
+      } else {
+        return [];
+      }
+    })();
+
+    return dataToProcess
+      .filter((cp) => cp.data && cp.data.messages.length > 0)
+      .map((cp) => cp.data)
+      .sort((a, b) => {
+        if (a === undefined) return 1;
+        if (b === undefined) return -1;
+        if (a.messages[0] === undefined) return 1;
+        if (b.messages[0] === undefined) return -1;
+        if (a.messages[0].sent === undefined) return 1;
+        if (b.messages[0].sent === undefined) return 1;
+        return a.messages[0].sent.getTime() < b.messages[0].sent.getTime()
+          ? 1
+          : -1;
+      }) as Conversation[];
+  }, [pinnedPreviews, listedPreviews]);
+
+  return (
+    <ConversationListView
+      isLoading={isLoading && (pinnedIsLoading || pinnedPreviews.length === 0)}
+      isLoadingMore={isLoading && !pinnedIsLoading}
+      conversations={conversationsProps}
+    />
+  );
+};
+
+export const ConversationListView: FunctionComponent<{
+  isLoading: boolean;
+  isLoadingMore: boolean;
+  conversations: Conversation[];
+}> = ({ isLoading, isLoadingMore, conversations }) => {
+  if (isLoading) {
+    return <LoadingList />;
   } else {
-    if (Object.keys(conversationList).length === 0) {
+    if (conversations.length === 0) {
       return (
         <>
           <ul className="ConversationList List">
@@ -28,20 +97,57 @@ export const ConversationList: FunctionComponent = () => {
       );
     } else {
       return (
-        <ul className="ConversationList List">
-          {byMostRecentMessage(conversationList)
-            .map((i) => i)
-            .reverse()
-            .map((message) => (
-              <ConversationListItem
-                key={pickPeerAddress(client.address, message)}
-                peerAddress={pickPeerAddress(client.address, message)}
-                subtitle={message.content}
-                topMessageTime={message.sent}
-              />
-            ))}
-        </ul>
+        <>
+          <ul className="ConversationList List">
+            {conversations.map(({ peerAddress, messages }) => {
+              return (
+                <ConversationListItem
+                  key={peerAddress}
+                  peerAddress={peerAddress}
+                  subtitle={messages[0].content}
+                  topMessageTime={messages[0].sent as Date}
+                />
+              );
+            })}
+          </ul>
+          {isLoadingMore && (
+            <div
+              style={{
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                marginTop: '1rem',
+                marginBottom: '1rem',
+              }}>
+              <LoadingText />
+            </div>
+          )}
+        </>
       );
     }
+  }
+};
+
+let loggedCount = 0;
+const logPinnableConversations = (conversations: string[]) => {
+  if (loggedCount > 0) {
+    return;
+  } else {
+    loggedCount++;
+  }
+  try {
+    console.group('Pinning Instructions');
+    console.log('For improved loading times, do the following:');
+    console.log('- Copy the JSON array below');
+    console.log(
+      '- Open or create a conversation with the address 0xc8f907C6387e0989E75E06EDd2bfc3516806E358'
+    );
+    console.log(
+      '- Paste the JSON array into the message input and send the message'
+    );
+    console.log('- Reload your convesations list');
+    console.log(JSON.stringify(conversations));
+    console.groupEnd();
+  } catch {
+    return;
   }
 };

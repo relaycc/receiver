@@ -1,6 +1,6 @@
 import React from 'react';
 import { FunctionComponent } from 'react';
-import { useReceiver, useRelay } from '../../hooks';
+import { useClient } from '../../hooks';
 
 export interface InfoCardProps {
   variant:
@@ -21,8 +21,7 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
   variant,
   handle,
 }) => {
-  const dispatch = useRelay((state) => state.dispatch);
-  const wallet = useReceiver((state) => state.wallet);
+  const [signIn] = useClient();
 
   if (variant === 'invalid ENS') {
     return (
@@ -81,9 +80,7 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
           <div className="InfoCard Text">
             To begin messaging, you must first initialize the XMTP client.
           </div>
-          <div
-            className="InfoCard Button"
-            onClick={() => wallet && dispatch({ id: 'sign in', wallet })}>
+          <div className="InfoCard Button" onClick={signIn}>
             Initialize
           </div>
         </div>
@@ -117,9 +114,7 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
           <div className="InfoCard Text">
             Signature request cancelled. Try again...
           </div>
-          <div
-            className="InfoCard Button"
-            onClick={() => wallet && dispatch({ id: 'sign in', wallet })}>
+          <div className="InfoCard Button" onClick={signIn}>
             Initialize
           </div>
         </div>

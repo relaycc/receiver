@@ -1,20 +1,15 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import {
-  MessageList,
-  MessageInput,
-  InfoCard,
-  LoadingList,
-  Header,
-} from '../Elements';
+import React, { FunctionComponent, useState } from 'react';
+import { Screen } from './Screen';
+import { MessageList, MessageInput, InfoCard, LoadingList } from '../Elements';
 import {
   useEnsAddress,
-  useLensAddress,
-  isLensName,
-  useRelay,
-  useReceiver,
-  isEmpty,
+  sendMessage,
   isEthAddress,
-  isEnsName,
+  useMessages,
+  usePeerOnNetwork,
+  useClient,
+  useLensProfile,
+  addressFromProfile,
 } from '../../hooks';
 
 export interface PeerAddressProps {
@@ -24,92 +19,61 @@ export interface PeerAddressProps {
 export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
   handle,
 }) => {
-  const lensAddress = useLensAddress({
-    handle: isLensName(handle) ? handle : null,
+  const lensProfile = useLensProfile({
+    handle,
   });
+  const lensAddress =
+    lensProfile.data !== null &&
+    lensProfile.data !== undefined &&
+    isEthAddress(addressFromProfile(lensProfile.data))
+      ? addressFromProfile(lensProfile.data)
+      : undefined;
   const ensAddress = useEnsAddress({
-    handle: isEnsName(handle) ? handle : null,
+    handle,
   });
-  const peerAddress = lensAddress.address || ensAddress.address || handle;
-
-  const client = useRelay((state) => state.client);
-  const dispatch = useRelay((state) => state.dispatch);
-  const channels = useRelay((state) => state.channels);
-  const channel = isEthAddress(peerAddress) ? channels[peerAddress] : undefined;
-  const statuses = useRelay((state) => state.statuses);
-  const wallet = useReceiver((state) => state.wallet);
-  const channelStatus = isEthAddress(peerAddress)
-    ? statuses[peerAddress]
-    : undefined;
-  const signatureStatus = useRelay((state) => state.signatureStatus);
+  const peerAddress = lensAddress || ensAddress.data || handle;
+  const peerOnNetwork = usePeerOnNetwork({ peerAddress });
+  const messages = useMessages({ peerAddress });
+  const [, client] = useClient();
   const [isEnterPressed, setIsEnterPressed] = useState(false);
 
-  //////// MY COMMENTS
-  // const bottomDiv:any = useRef()
-  // const handleScrollToBottom = () => {
-  //   bottomDiv.current.scrollIntoView()
-  // };
-
-  ///// My Comments
-
-  useEffect(() => {
-    if (client !== null && isEthAddress(peerAddress)) {
-      dispatch({ id: 'load peer address', peerAddress });
-    }
-  }, [client, peerAddress]);
-
   return (
-    <>
-      <Header />
-      {(() => {
-        if (wallet === null) {
-          return <InfoCard variant="no wallet" />;
-        } else if (channelStatus === 'no peer') {
-          return <InfoCard variant="no peer" />;
-        } else if (signatureStatus === 'waiting') {
-          return <InfoCard variant="waiting for signature" />;
-        } else if (signatureStatus === 'denied') {
-          return <InfoCard variant="signature denied" />;
-        } else if (client === null) {
-          return <InfoCard variant="no xmtp client" />;
-        } else {
-          if (!isEthAddress(peerAddress)) {
-            if (
-              lensAddress.status === 'fetching' ||
-              ensAddress.status === 'fetching'
-            ) {
-              return (
-                <>
-                  <LoadingList />
-                  <MessageInput
-                    isEnterPressed={isEnterPressed}
-                    setIsEnterPressed={setIsEnterPressed}
-                    onSendMessage={() => null}
-                  />
-                </>
-              );
-            } else {
-              return <InfoCard variant="invalid handle" handle={handle} />;
-            }
+    <Screen
+      content={(() => {
+        if (!isEthAddress(peerAddress)) {
+          if (lensProfile.isLoading || ensAddress.isLoading) {
+            return (
+              <>
+                <LoadingList />
+                <MessageInput
+                  isEnterPressed={isEnterPressed}
+                  setIsEnterPressed={setIsEnterPressed}
+                  onSendMessage={() => null}
+                />
+              </>
+            );
           } else {
-            if (channelStatus === 'loadingFull') {
-              return (
-                <>
-                  <LoadingList />
-                  <MessageInput
-                    isEnterPressed={isEnterPressed}
-                    setIsEnterPressed={setIsEnterPressed}
-                    onSendMessage={(message: string) =>
-                      client && client.sendMessage(peerAddress, message)
-                    }
-                  />
-                </>
-              );
-            } else if (
-              channelStatus === 'loadedFull' &&
-              channel &&
-              isEmpty(channel)
-            ) {
+            return <InfoCard variant="invalid handle" handle={handle} />;
+          }
+        } else {
+          if (messages.isLoading || peerOnNetwork.isLoading) {
+            return (
+              <>
+                <LoadingList />
+                <MessageInput
+                  isEnterPressed={isEnterPressed}
+                  setIsEnterPressed={setIsEnterPressed}
+                  onSendMessage={(message: string) =>
+                    client.data &&
+                    sendMessage(client.data, peerAddress, message)
+                  }
+                />
+              </>
+            );
+          } else if (messages.isSuccess) {
+            if (peerOnNetwork.data === false) {
+              return <InfoCard variant="no peer" />;
+            } else if (messages.data.messages.length === 0) {
               return (
                 <>
                   <InfoCard variant="no messages" />
@@ -117,7 +81,8 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
                     isEnterPressed={isEnterPressed}
                     setIsEnterPressed={setIsEnterPressed}
                     onSendMessage={(message: string) =>
-                      client && client.sendMessage(peerAddress, message)
+                      client.data &&
+                      sendMessage(client.data, peerAddress, message)
                     }
                   />
                 </>
@@ -126,22 +91,25 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
               return (
                 <>
                   <MessageList
-                    isEnterPressed={isEnterPressed}
                     peerAddress={peerAddress}
+                    isEnterPressed={isEnterPressed}
                   />
                   <MessageInput
                     isEnterPressed={isEnterPressed}
                     setIsEnterPressed={setIsEnterPressed}
                     onSendMessage={(message: string) =>
-                      client && client.sendMessage(peerAddress, message)
+                      client.data &&
+                      sendMessage(client.data, peerAddress, message)
                     }
                   />
                 </>
               );
             }
+          } else {
+            throw new Error('We shouldnt be able to get to this state!');
           }
         }
       })()}
-    </>
+    />
   );
 };

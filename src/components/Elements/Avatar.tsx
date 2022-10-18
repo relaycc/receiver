@@ -1,15 +1,14 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useRef } from 'react';
 import Blockies from 'react-blockies';
-import LoadingSpinner from './LoadingSpinner';
 import {
-  useEnsName,
-  useEnsAddress,
-  useLensAddress,
+  useLensProfile,
   isEthAddress,
-  isLensName,
-  isEnsName,
+  useInView,
+  useEnsAddress,
   useEnsAvatar,
+  addressFromProfile,
 } from '../../hooks';
+import { motion } from 'framer-motion';
 
 export interface AvatarProps {
   handle?: string | null;
@@ -22,23 +21,37 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
   onClick,
   large,
 }) => {
-  const lensAddress = useLensAddress({
-    handle: isLensName(handle) ? handle : null,
+  const ref = useRef(null);
+  const isInView = useInView(ref);
+  const lensProfile = useLensProfile({
+    handle,
   });
+  const lensAddress =
+    lensProfile.data !== null &&
+    lensProfile.data !== undefined &&
+    isEthAddress(addressFromProfile(lensProfile.data))
+      ? addressFromProfile(lensProfile.data)
+      : undefined;
   const ensAddress = useEnsAddress({
-    handle: isEnsName(handle) ? handle : null,
+    handle,
+    wait: isInView === false,
   });
-  const ens = useEnsName({ handle: isEthAddress(handle) ? handle : null });
-  const avatar = useEnsAvatar({
-    handle:
-      lensAddress.address || ensAddress.address || ens.name || handle || 'TODO',
+  const ensAvatar = useEnsAvatar({
+    handle: isEthAddress(handle)
+      ? handle
+      : isEthAddress(lensAddress)
+      ? lensAddress
+      : isEthAddress(ensAddress.data)
+      ? ensAddress.data
+      : undefined,
+    wait: isInView === false,
   });
 
-  if (avatar.status === 'fetching') {
-    return <LoadingSpinner width={large ? 50 : 40} height={large ? 50 : 40} />;
-  } else if (!avatar.avatar) {
+  if (!ensAvatar.data) {
     return (
       <div
+        ref={ref}
+        style={{ opacity: ensAvatar.isLoading ? 0.2 : 1 }}
         className={`Avatar BlockiesContainer large-${large}`}
         onClick={onClick}>
         <Blockies
@@ -51,10 +64,13 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
     );
   } else {
     return (
-      <img
+      <motion.img
+        initial={{ opacity: 0.2 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0 }}
         className={`Avatar AvatarImage large-${large}`}
         onClick={onClick}
-        src={avatar.avatar}
+        src={ensAvatar.data}
         alt="user"
       />
     );
