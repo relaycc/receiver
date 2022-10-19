@@ -29,7 +29,7 @@ export const useClient = (): [
       if (wallet === null || wallet === undefined) {
         throw new Error('Init running too early');
       } else {
-        return fetchClient(wallet, { env: 'dev' });
+        return fetchClient(wallet, { env: 'production' });
       }
     },
     {
