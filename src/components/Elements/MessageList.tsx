@@ -23,21 +23,19 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
   const messagesQuery = useMessages({ peerAddress });
   const streamQuery = useConversationMessagesStream({ peerAddress });
   const address = useXmtp((state) => state.address);
+  const bottomDiv = useRef<HTMLDivElement | null>(null);
 
-
-  const bottomDiv: any= useRef();
-
-  function scrollToBottom ()  {
-    bottomDiv.current.scrollIntoView();
+  function scrollToBottom() {
+    if (bottomDiv.current !== null) {
+      bottomDiv.current.scrollIntoView();
+    }
   }
 
   useEffect(() => {
     if (bottomDiv.current == undefined) {
-      console.log('undefined')
-      return
+      return;
     } else {
-      scrollToBottom()
-      console.log('scrolled');
+      scrollToBottom();
     }
   }, [isEnterPressed]);
 
@@ -76,7 +74,6 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
       transition={{ duration: 0.5 }}
       className="MessageList List">
       <div ref={bottomDiv}></div>
-
       {buckets.map((bucket, index) => {
         if (bucket.length > 0) {
           return (
