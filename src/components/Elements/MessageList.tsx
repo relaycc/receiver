@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent, useEffect, useRef } from 'react';
 import {
   Message,
   useMessages,
@@ -12,15 +12,26 @@ import MessagesBucket from '../Elements/MessagesBucket';
 
 export interface MessageListProps {
   peerAddress: string;
+  setDoScroll: (doScroll: () => unknown) => unknown;
 }
 
 export const MessageList: FunctionComponent<MessageListProps> = ({
   peerAddress,
+  setDoScroll,
 }) => {
   const queryClient = useQueryClient({ context: receiverContext });
   const messagesQuery = useMessages({ peerAddress });
   const streamQuery = useConversationMessagesStream({ peerAddress });
   const address = useXmtp((state) => state.address);
+  const bottomDiv = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (bottomDiv.current) {
+      setDoScroll(() => {
+        bottomDiv.current?.scrollIntoView();
+      });
+    }
+  }, [bottomDiv.current]);
 
   useEffect(() => {
     (async () => {
@@ -56,6 +67,7 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="MessageList List">
+      <div ref={bottomDiv} />
       {buckets.map((bucket, index) => {
         if (bucket.length > 0) {
           return (

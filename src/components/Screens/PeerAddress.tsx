@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Screen } from './Screen';
 import { MessageList, MessageInput, InfoCard, LoadingList } from '../Elements';
 import {
@@ -35,6 +35,9 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
   const peerOnNetwork = usePeerOnNetwork({ peerAddress });
   const messages = useMessages({ peerAddress });
   const [, client] = useClient();
+  const [scrollMessageList, setScrollMessageList] = useState<() => unknown>(
+    () => null
+  );
 
   return (
     <Screen
@@ -44,7 +47,10 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
             return (
               <>
                 <LoadingList />
-                <MessageInput onSendMessage={() => null} />
+                <MessageInput
+                  onEnterPressed={scrollMessageList}
+                  onSendMessage={() => null}
+                />
               </>
             );
           } else {
@@ -56,6 +62,7 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
               <>
                 <LoadingList />
                 <MessageInput
+                  onEnterPressed={scrollMessageList}
                   onSendMessage={(message: string) =>
                     client.data &&
                     sendMessage(client.data, peerAddress, message)
@@ -71,6 +78,7 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
                 <>
                   <InfoCard variant="no messages" />
                   <MessageInput
+                    onEnterPressed={scrollMessageList}
                     onSendMessage={(message: string) =>
                       client.data &&
                       sendMessage(client.data, peerAddress, message)
@@ -81,8 +89,12 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
             } else {
               return (
                 <>
-                  <MessageList peerAddress={peerAddress} />
+                  <MessageList
+                    peerAddress={peerAddress}
+                    setDoScroll={setScrollMessageList}
+                  />
                   <MessageInput
+                    onEnterPressed={scrollMessageList}
                     onSendMessage={(message: string) =>
                       client.data &&
                       sendMessage(client.data, peerAddress, message)
