@@ -35,7 +35,9 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
   const peerOnNetwork = usePeerOnNetwork({ peerAddress });
   const messages = useMessages({ peerAddress });
   const [, client] = useClient();
-  const [isEnterPressed, setIsEnterPressed] = useState(false);
+  const [scrollMessageList, setScrollMessageList] = useState<() => unknown>(
+    () => null
+  );
 
   return (
     <Screen
@@ -46,8 +48,7 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
               <>
                 <LoadingList />
                 <MessageInput
-                  isEnterPressed={isEnterPressed}
-                  setIsEnterPressed={setIsEnterPressed}
+                  onEnterPressed={scrollMessageList}
                   onSendMessage={() => null}
                 />
               </>
@@ -61,8 +62,7 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
               <>
                 <LoadingList />
                 <MessageInput
-                  isEnterPressed={isEnterPressed}
-                  setIsEnterPressed={setIsEnterPressed}
+                  onEnterPressed={scrollMessageList}
                   onSendMessage={(message: string) =>
                     client.data &&
                     sendMessage(client.data, peerAddress, message)
@@ -78,8 +78,7 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
                 <>
                   <InfoCard variant="no messages" />
                   <MessageInput
-                    isEnterPressed={isEnterPressed}
-                    setIsEnterPressed={setIsEnterPressed}
+                    onEnterPressed={scrollMessageList}
                     onSendMessage={(message: string) =>
                       client.data &&
                       sendMessage(client.data, peerAddress, message)
@@ -92,11 +91,10 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
                 <>
                   <MessageList
                     peerAddress={peerAddress}
-                    isEnterPressed={isEnterPressed}
+                    setDoScroll={setScrollMessageList}
                   />
                   <MessageInput
-                    isEnterPressed={isEnterPressed}
-                    setIsEnterPressed={setIsEnterPressed}
+                    onEnterPressed={scrollMessageList}
                     onSendMessage={(message: string) =>
                       client.data &&
                       sendMessage(client.data, peerAddress, message)

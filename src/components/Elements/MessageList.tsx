@@ -12,32 +12,26 @@ import MessagesBucket from '../Elements/MessagesBucket';
 
 export interface MessageListProps {
   peerAddress: string;
-  isEnterPressed: boolean;
+  setDoScroll: (doScroll: () => unknown) => unknown;
 }
 
 export const MessageList: FunctionComponent<MessageListProps> = ({
   peerAddress,
-  isEnterPressed,
+  setDoScroll,
 }) => {
   const queryClient = useQueryClient({ context: receiverContext });
   const messagesQuery = useMessages({ peerAddress });
   const streamQuery = useConversationMessagesStream({ peerAddress });
   const address = useXmtp((state) => state.address);
-  const bottomDiv = useRef<HTMLDivElement | null>(null);
-
-  function scrollToBottom() {
-    if (bottomDiv.current !== null) {
-      bottomDiv.current.scrollIntoView();
-    }
-  }
+  const bottomDiv = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (bottomDiv.current == undefined) {
-      return;
-    } else {
-      scrollToBottom();
+    if (bottomDiv.current) {
+      setDoScroll(() => {
+        bottomDiv.current?.scrollIntoView();
+      });
     }
-  }, [isEnterPressed]);
+  }, [bottomDiv.current]);
 
   useEffect(() => {
     (async () => {
@@ -73,7 +67,7 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="MessageList List">
-      <div ref={bottomDiv}></div>
+      <div ref={bottomDiv} />
       {buckets.map((bucket, index) => {
         if (bucket.length > 0) {
           return (

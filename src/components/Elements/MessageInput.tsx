@@ -2,14 +2,12 @@ import React, { useCallback, useState } from 'react';
 
 interface MessageInputProps {
   onSendMessage: (val: string) => unknown;
-  setIsEnterPressed: (e: boolean) => unknown;
-  isEnterPressed: boolean;
+  onEnterPressed?: () => unknown;
 }
 
 export const MessageInput = ({
   onSendMessage,
-  setIsEnterPressed,
-  isEnterPressed,
+  onEnterPressed,
 }: MessageInputProps) => {
   const [inputVal, setInputVal] = useState<string>('');
 
@@ -21,12 +19,14 @@ export const MessageInput = ({
     if (inputVal.length < 1) return;
     onSendMessage(inputVal);
     setInputVal('');
-    setIsEnterPressed(!isEnterPressed);
   }, [inputVal, onSendMessage]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter') handleSend();
+      if (e.key === 'Enter') {
+        onEnterPressed && onEnterPressed();
+        handleSend();
+      }
     },
     [handleSend]
   );
