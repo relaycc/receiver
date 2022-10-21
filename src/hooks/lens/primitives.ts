@@ -1,10 +1,13 @@
 import { request, gql } from 'graphql-request';
 import { LensProfile, LensProfilesQueryResponse } from './helpers';
 
-export const fetchProfileByHandle = (handle: string) => {
-  return request('https://api.lens.dev', profileByHandleQuery, {
+export const fetchProfileByHandle = async (handle: string) => {
+  const response = await request('https://api.lens.dev', profileByHandleQuery, {
     request: { handle },
-  }) as Promise<LensProfile | null | undefined>;
+  });
+  return (response ? response.profile || undefined : undefined) as
+    | LensProfile
+    | undefined;
 };
 
 export const fetchProfilesByAddress = (address: string) => {
