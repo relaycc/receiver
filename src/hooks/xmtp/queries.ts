@@ -16,12 +16,14 @@ import {
 import { useXmtp } from './store';
 import { receiverContext } from './context';
 import { Client } from '@relaycc/xmtp-js';
+import { useConfig } from '../receiver';
 
 export const useClient = (): [
   () => unknown,
   UseQueryResult<Client, unknown>
 ] => {
   const { wallet, address } = useXmtp();
+  const config = useConfig();
 
   const query = useQuery(
     ['xmtp client', address],
@@ -29,7 +31,16 @@ export const useClient = (): [
       if (wallet === null || wallet === undefined) {
         throw new Error('Init running too early');
       } else {
-        return fetchClient(wallet, { env: 'production' });
+        return fetchClient(
+          wallet,
+          (() => {
+            if (config?.xmtp?.network === undefined) {
+              return {};
+            } else {
+              return { env: config.xmtp.network };
+            }
+          })()
+        );
       }
     },
     {

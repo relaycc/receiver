@@ -1,13 +1,21 @@
 import React, { ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { receiverContext } from '../../hooks';
+import { receiverContext, ReceiverConfig, ReceiverContext } from '../../hooks';
 
 const queryClient = new QueryClient();
 
-export const Receiver = ({ children }: { children: ReactNode }) => {
+export const Receiver = ({
+  children,
+  config,
+}: {
+  children: ReactNode;
+  config?: ReceiverConfig;
+}) => {
   return (
-    <QueryClientProvider client={queryClient} context={receiverContext}>
-      {children}
-    </QueryClientProvider>
+    <ReceiverContext.Provider value={{ config }}>
+      <QueryClientProvider client={queryClient} context={receiverContext}>
+        {children}
+      </QueryClientProvider>
+    </ReceiverContext.Provider>
   );
 };
