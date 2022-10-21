@@ -1,11 +1,14 @@
-import { useState } from 'react';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 
 interface MessageInputProps {
   onSendMessage: (val: string) => unknown;
+  onEnterPressed?: () => unknown;
 }
 
-export const MessageInput = ({ onSendMessage }: MessageInputProps) => {
+export const MessageInput = ({
+  onSendMessage,
+  onEnterPressed,
+}: MessageInputProps) => {
   const [inputVal, setInputVal] = useState<string>('');
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +23,10 @@ export const MessageInput = ({ onSendMessage }: MessageInputProps) => {
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter') handleSend();
+      if (e.key === 'Enter') {
+        onEnterPressed && onEnterPressed();
+        handleSend();
+      }
     },
     [handleSend]
   );
