@@ -3,9 +3,9 @@ import React, { FunctionComponent, useEffect, useRef } from 'react';
 import {
   Message,
   useMessages,
-  useConversationMessagesStream,
   useXmtp,
   receiverContext,
+  useConfig,
 } from '../../hooks';
 import { motion } from 'framer-motion';
 import MessagesBucket from '../Elements/MessagesBucket';
@@ -21,9 +21,28 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
 }) => {
   const queryClient = useQueryClient({ context: receiverContext });
   const messagesQuery = useMessages({ peerAddress });
-  const streamQuery = useConversationMessagesStream({ peerAddress });
   const address = useXmtp((state) => state.address);
   const bottomDiv = useRef<HTMLDivElement>(null);
+  const config = useConfig();
+
+  useEffect(() => {
+    const listener = config.xmtp.client.listenToConversationStream(
+      peerAddress,
+      async (message: Message) => {
+        queryClient.invalidateQueries([
+          'messages',
+          address,
+          message.senderAddress,
+        ]);
+        queryClient.invalidateQueries([
+          'messages',
+          address,
+          message.recipientAddress,
+        ]);
+      }
+    );
+    return () => listener.unlisten();
+  }, []);
 
   useEffect(() => {
     if (bottomDiv.current) {
@@ -32,27 +51,6 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
       });
     }
   }, [bottomDiv.current]);
-
-  useEffect(() => {
-    (async () => {
-      if (streamQuery.data === undefined || address === null) {
-        return;
-      } else {
-        for await (const message of streamQuery.data) {
-          queryClient.invalidateQueries([
-            'messages',
-            address,
-            message.senderAddress,
-          ]);
-          queryClient.invalidateQueries([
-            'messages',
-            address,
-            message.recipientAddress,
-          ]);
-        }
-      }
-    })();
-  }, [streamQuery.data, address]);
 
   const withoutUndefined = (
     messagesQuery.data

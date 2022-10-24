@@ -1,14 +1,13 @@
 import { createContext } from 'react';
+import { XmtpApi, XmtpNetwork } from '../types';
 
 export interface ReceiverConfig {
-  xmtp?: {
-    network?: 'dev' | 'production';
+  xmtp: {
+    network: XmtpNetwork;
+    client: XmtpApi;
   };
 }
 
 export const ReceiverContext = createContext<
-  | {
-      config?: ReceiverConfig;
-    }
-  | undefined
+  { config: ReceiverConfig } | undefined
 >(undefined);

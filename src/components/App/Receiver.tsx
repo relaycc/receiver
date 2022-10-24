@@ -9,7 +9,7 @@ export const Receiver = ({
   config,
 }: {
   children: ReactNode;
-  config?: ReceiverConfig;
+  config: ReceiverConfig;
 }) => {
   return (
     <ReceiverContext.Provider value={{ config }}>

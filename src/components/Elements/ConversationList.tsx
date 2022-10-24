@@ -3,8 +3,8 @@ import {
   useConversations,
   useConversationsPreviews,
   usePinnedAddresses,
+  Message,
 } from '../../hooks';
-import { Message } from '@relaycc/xmtp-js';
 import { ConversationListItem } from './ConversationListItem';
 import { InfoCard } from './InfoCard';
 import { LoadingList } from './LoadingList';

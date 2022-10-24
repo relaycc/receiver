@@ -3,10 +3,12 @@ import { PeerAddress, Conversations, NewConversation } from '../Screens';
 import {
   currentScreen,
   receiverContext,
-  useAllMessagesStream,
   useConversations,
   useReceiver,
   useXmtp,
+  Message,
+  useConfig,
+  useClient,
 } from '../../hooks';
 import '../../styles/preflight.css';
 import '../../styles/app.css';
@@ -20,16 +22,15 @@ export const Window: FunctionComponent<WindowProps> = ({ className }) => {
   const screenHistory = useReceiver((state) => state.screenHistory);
   const visibleScreen = currentScreen({ screenHistory });
   const address = useXmtp((state) => state.address);
-  const messagesStream = useAllMessagesStream();
   const queryClient = useQueryClient({ context: receiverContext });
+  const config = useConfig();
+  const [, clientQuery] = useClient();
   useConversations();
 
   useEffect(() => {
-    (async () => {
-      if (messagesStream.data === undefined || address === null) {
-        return;
-      } else {
-        for await (const message of messagesStream.data) {
+    if (clientQuery.data?.initialized === true) {
+      const listener = config.xmtp.client.listenToAllMessagesStream(
+        async (message: Message) => {
           queryClient.invalidateQueries(['conversations list', address]);
           queryClient.invalidateQueries([
             'messages',
@@ -42,9 +43,15 @@ export const Window: FunctionComponent<WindowProps> = ({ className }) => {
             message.recipientAddress,
           ]);
         }
-      }
-    })();
-  }, [messagesStream.data, address]);
+      );
+      // I'm not sure if we want to unlisten on unmount. I think there's a certain
+      // tradeoff:
+      //   * when streams are streaming messages, queries are never stale
+      //   * when streams are not streaming messages, queries are insta-stale
+      // Not sure what the right way to handle this is.
+      return () => listener.unlisten();
+    }
+  }, [clientQuery.data]);
 
   const screen = useMemo(() => {
     if (visibleScreen.id === 'conversations') {

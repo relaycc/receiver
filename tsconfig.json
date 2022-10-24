@@ -2,6 +2,7 @@
   "compilerOptions": {
     // Default
     "target": "es5",
+    "lib": ["ES2020", "DOM"],
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,

@@ -1,6 +1,39 @@
 export type Setter<T> = (state: T) => unknown;
-import { Signer } from '@ethersproject/abstract-signer';
-import { Client } from '@relaycc/xmtp-js';
+
+export type XmtpNetwork = 'dev' | 'production';
+
+export interface WorkerWallet {
+  getAddress: () => Promise<string>;
+  signMessage: (message: string) => Promise<string>;
+}
+
+export interface ListMessagesOptions {
+  limit?: number;
+  direction?: 'ascending' | 'descending';
+}
+
+export interface Client {
+  address: string;
+  initialized: true;
+}
+
+export interface XmtpApi {
+  startClient: (wallet: WorkerWallet) => Promise<boolean>;
+  fetchMessages: (
+    peerAddress: string,
+    opts: Partial<ListMessagesOptions>
+  ) => Promise<Message[]>;
+  fetchConversations: () => Promise<Conversation[]>;
+  fetchPeerOnNetwork: (peerAddress: string) => Promise<boolean>;
+  sendMessage: (peerAddress: string, message: string) => Promise<boolean>;
+  listenToAllMessagesStream: (handler: (message: Message) => unknown) => {
+    unlisten: () => void;
+  };
+  listenToConversationStream: (
+    peerAddress: string,
+    handler: (message: Message) => unknown
+  ) => { unlisten: () => void };
+}
 
 export type ReceiverScreen =
   | { id: 'messages'; peerAddress: string }
@@ -26,8 +59,8 @@ export type ReceiverAction =
     };
 
 export interface ReceiverStore {
-  wallet: Signer | null;
-  setWallet: Setter<Signer | null>;
+  wallet: WorkerWallet | null;
+  setWallet: Setter<WorkerWallet | null>;
   pinnedConversations: string[];
   setPinnedConversations: Setter<string[]>;
   isOpen: boolean;
@@ -46,53 +79,13 @@ export interface Message {
   content: any;
 }
 
+export interface Conversation {
+  peerAddress: string;
+}
+
 export type SignatureStatus = 'idle' | 'waiting' | 'denied';
 
-export type Channel = Record<string, Message>;
-
-export type ChannelStore = Record<string, Channel | undefined>;
-
-export type ChannelStatus =
-  | undefined
-  | 'no peer'
-  | 'loadingFull'
-  | 'loadedFull';
-
-export type ChannelStatusStore = Record<string, ChannelStatus | undefined>;
-
-export type RelayAction =
-  | {
-      id: 'load peer address';
-      peerAddress: string;
-    }
-  | {
-      id: 'load conversation list';
-      options?: {
-        limitPeerAddresses?: string[];
-        forceReload?: boolean;
-      };
-    }
-  | {
-      id: 'sign in';
-      wallet: Signer;
-    }
-  | {
-      id: 'new message';
-      message: Message;
-    }
-  | {
-      id: 'noop';
-    };
-
 export type Listener = (message: Message) => unknown;
-
-export interface Relay {
-  client: Client | null;
-  setClient: (client: Client | null) => unknown;
-  signatureStatus: SignatureStatus;
-  setSignatureStatus: Setter<SignatureStatus>;
-  dispatch: (action: RelayAction) => unknown;
-}
 
 export interface NoOpAddress {
   address: undefined;

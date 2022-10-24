@@ -3,13 +3,12 @@ import { Screen } from './Screen';
 import { MessageList, MessageInput, InfoCard, LoadingList } from '../Elements';
 import {
   useEnsAddress,
-  sendMessage,
   isEthAddress,
   useMessages,
   usePeerOnNetwork,
-  useClient,
   useLensProfile,
   addressFromProfile,
+  useConfig,
 } from '../../hooks';
 
 export interface PeerAddressProps {
@@ -34,10 +33,10 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
   const peerAddress = lensAddress || ensAddress.data || handle;
   const peerOnNetwork = usePeerOnNetwork({ peerAddress });
   const messages = useMessages({ peerAddress });
-  const [, client] = useClient();
   const [scrollMessageList, setScrollMessageList] = useState<() => unknown>(
     () => null
   );
+  const config = useConfig();
 
   return (
     <Screen
@@ -64,8 +63,7 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
                 <MessageInput
                   onEnterPressed={scrollMessageList}
                   onSendMessage={(message: string) =>
-                    client.data &&
-                    sendMessage(client.data, peerAddress, message)
+                    config.xmtp.client.sendMessage(peerAddress, message)
                   }
                 />
               </>
@@ -80,8 +78,7 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
                   <MessageInput
                     onEnterPressed={scrollMessageList}
                     onSendMessage={(message: string) =>
-                      client.data &&
-                      sendMessage(client.data, peerAddress, message)
+                      config.xmtp.client.sendMessage(peerAddress, message)
                     }
                   />
                 </>
@@ -96,8 +93,7 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
                   <MessageInput
                     onEnterPressed={scrollMessageList}
                     onSendMessage={(message: string) =>
-                      client.data &&
-                      sendMessage(client.data, peerAddress, message)
+                      config.xmtp.client.sendMessage(peerAddress, message)
                     }
                   />
                 </>
