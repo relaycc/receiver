@@ -19,7 +19,12 @@ export const useClient = (): [
   const query = useQuery(
     ['xmtp client', address],
     async (): Promise<Client> => {
-      if (wallet === null || wallet === undefined || address === null) {
+      if (
+        wallet === null ||
+        wallet === undefined ||
+        address === null ||
+        config === null
+      ) {
         throw new Error('Init running too early');
       } else {
         const created = await config.xmtp.client.startClient(wallet);
@@ -80,7 +85,11 @@ export const useConversations = () => {
       if (clientQuery.data === null || clientQuery.data === undefined) {
         throw new Error('Running conversations list too early');
       } else {
-        return config.xmtp.client.fetchConversations();
+        if (config === null) {
+          throw new Error('useConversation :: useConfig returned null');
+        } else {
+          return config.xmtp.client.fetchConversations();
+        }
       }
     },
     {
@@ -104,14 +113,18 @@ export const useConversationsPreviews = (addresses: string[]) => {
           if (clientQuery.data === null || clientQuery.data === undefined) {
             throw new Error('Running messages fetch too early');
           } else {
-            const messages = await config.xmtp.client.fetchMessages(
-              peerAddress,
-              MOST_RECENT_MESSAGE_OPTIONS
-            );
-            return {
-              peerAddress,
-              messages,
-            };
+            if (config === null) {
+              throw new Error('useConversation :: useConfig returned null');
+            } else {
+              const messages = await config.xmtp.client.fetchMessages(
+                peerAddress,
+                MOST_RECENT_MESSAGE_OPTIONS
+              );
+              return {
+                peerAddress,
+                messages,
+              };
+            }
           }
         },
         enabled: clientQuery.data !== null && clientQuery.data !== undefined,
@@ -141,14 +154,18 @@ export const useMessages = ({
       ) {
         throw new Error('Running messages fetch too early');
       } else {
-        const messages = await config.xmtp.client.fetchMessages(
-          peerAddress,
-          MOST_RECENT_PAGE_OPTIONS
-        );
-        return {
-          peerAddress,
-          messages,
-        };
+        if (config === null) {
+          throw new Error('useConversation :: useConfig returned null');
+        } else {
+          const messages = await config.xmtp.client.fetchMessages(
+            peerAddress,
+            MOST_RECENT_PAGE_OPTIONS
+          );
+          return {
+            peerAddress,
+            messages,
+          };
+        }
       }
     },
     {
@@ -181,7 +198,11 @@ export const usePeerOnNetwork = ({
       ) {
         throw new Error('Running fetch peer on network too early');
       } else {
-        return config.xmtp.client.fetchPeerOnNetwork(peerAddress);
+        if (config === null) {
+          throw new Error('useConversation :: useConfig returned null');
+        } else {
+          return config.xmtp.client.fetchPeerOnNetwork(peerAddress);
+        }
       }
     },
     {

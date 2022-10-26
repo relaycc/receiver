@@ -7,6 +7,6 @@ export const useConfig = () => {
   if (context === undefined) {
     throw new Error('useConfig must be used within a ReceiverProvider');
   } else {
-    return context.config;
+    return context.config || null;
   }
 };

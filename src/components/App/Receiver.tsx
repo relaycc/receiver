@@ -1,6 +1,10 @@
 import React, { ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { receiverContext, ReceiverConfig, ReceiverContext } from '../../hooks';
+import {
+  receiverContext,
+  ReceiverContext,
+  ReceiverContextType,
+} from '../../hooks';
 
 const queryClient = new QueryClient();
 
@@ -9,7 +13,7 @@ export const Receiver = ({
   config,
 }: {
   children: ReactNode;
-  config: ReceiverConfig;
+  config: ReceiverContextType['config'];
 }) => {
   return (
     <ReceiverContext.Provider value={{ config }}>

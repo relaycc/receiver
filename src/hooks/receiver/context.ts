@@ -8,6 +8,10 @@ export interface ReceiverConfig {
   };
 }
 
-export const ReceiverContext = createContext<
-  { config: ReceiverConfig } | undefined
->(undefined);
+export type ReceiverContextType = {
+  config: ReceiverConfig | null;
+};
+
+export const ReceiverContext = createContext<ReceiverContextType | undefined>(
+  undefined
+);

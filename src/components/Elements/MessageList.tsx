@@ -26,23 +26,27 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
   const config = useConfig();
 
   useEffect(() => {
-    const listener = config.xmtp.client.listenToConversationStream(
-      peerAddress,
-      async (message: Message) => {
-        queryClient.invalidateQueries([
-          'messages',
-          address,
-          message.senderAddress,
-        ]);
-        queryClient.invalidateQueries([
-          'messages',
-          address,
-          message.recipientAddress,
-        ]);
-      }
-    );
-    return () => listener.unlisten();
-  }, []);
+    if (config === null) {
+      return;
+    } else {
+      const listener = config.xmtp.client.listenToConversationStream(
+        peerAddress,
+        async (message: Message) => {
+          queryClient.invalidateQueries([
+            'messages',
+            address,
+            message.senderAddress,
+          ]);
+          queryClient.invalidateQueries([
+            'messages',
+            address,
+            message.recipientAddress,
+          ]);
+        }
+      );
+      return () => listener.unlisten();
+    }
+  }, [config]);
 
   useEffect(() => {
     if (bottomDiv.current) {

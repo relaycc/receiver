@@ -62,9 +62,13 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
                 <LoadingList />
                 <MessageInput
                   onEnterPressed={scrollMessageList}
-                  onSendMessage={(message: string) =>
-                    config.xmtp.client.sendMessage(peerAddress, message)
-                  }
+                  onSendMessage={(message: string) => {
+                    if (config === null) {
+                      return;
+                    } else {
+                      config.xmtp.client.sendMessage(peerAddress, message);
+                    }
+                  }}
                 />
               </>
             );
@@ -77,9 +81,13 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
                   <InfoCard variant="no messages" />
                   <MessageInput
                     onEnterPressed={scrollMessageList}
-                    onSendMessage={(message: string) =>
-                      config.xmtp.client.sendMessage(peerAddress, message)
-                    }
+                    onSendMessage={(message: string) => {
+                      if (config === null) {
+                        return;
+                      } else {
+                        config.xmtp.client.sendMessage(peerAddress, message);
+                      }
+                    }}
                   />
                 </>
               );
@@ -92,9 +100,13 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
                   />
                   <MessageInput
                     onEnterPressed={scrollMessageList}
-                    onSendMessage={(message: string) =>
-                      config.xmtp.client.sendMessage(peerAddress, message)
-                    }
+                    onSendMessage={(message: string) => {
+                      if (config === null) {
+                        return;
+                      } else {
+                        config.xmtp.client.sendMessage(peerAddress, message);
+                      }
+                    }}
                   />
                 </>
               );

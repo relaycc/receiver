@@ -28,28 +28,32 @@ export const Window: FunctionComponent<WindowProps> = ({ className }) => {
   useConversations();
 
   useEffect(() => {
-    if (clientQuery.data?.initialized === true) {
-      const listener = config.xmtp.client.listenToAllMessagesStream(
-        async (message: Message) => {
-          queryClient.invalidateQueries(['conversations list', address]);
-          queryClient.invalidateQueries([
-            'messages',
-            address,
-            message.senderAddress,
-          ]);
-          queryClient.invalidateQueries([
-            'messages',
-            address,
-            message.recipientAddress,
-          ]);
-        }
-      );
-      // I'm not sure if we want to unlisten on unmount. I think there's a certain
-      // tradeoff:
-      //   * when streams are streaming messages, queries are never stale
-      //   * when streams are not streaming messages, queries are insta-stale
-      // Not sure what the right way to handle this is.
-      return () => listener.unlisten();
+    if (config === null) {
+      return;
+    } else {
+      if (clientQuery.data?.initialized === true) {
+        const listener = config.xmtp.client.listenToAllMessagesStream(
+          async (message: Message) => {
+            queryClient.invalidateQueries(['conversations list', address]);
+            queryClient.invalidateQueries([
+              'messages',
+              address,
+              message.senderAddress,
+            ]);
+            queryClient.invalidateQueries([
+              'messages',
+              address,
+              message.recipientAddress,
+            ]);
+          }
+        );
+        // I'm not sure if we want to unlisten on unmount. I think there's a certain
+        // tradeoff:
+        //   * when streams are streaming messages, queries are never stale
+        //   * when streams are not streaming messages, queries are insta-stale
+        // Not sure what the right way to handle this is.
+        return () => listener.unlisten();
+      }
     }
   }, [clientQuery.data]);
 
