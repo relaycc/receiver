@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useMemo, useEffect } from 'react';
-import { PeerAddress, Conversations, NewConversation } from '../Screens';
+import { PeerAddress, Pinned, Ignored, All, Menu } from '../Screens';
 import {
   currentScreen,
   receiverContext,
@@ -21,6 +21,7 @@ export interface WindowProps {
 export const Window: FunctionComponent<WindowProps> = ({ className }) => {
   const screenHistory = useReceiver((state) => state.screenHistory);
   const visibleScreen = currentScreen({ screenHistory });
+  console.log(visibleScreen);
   const address = useXmtp((state) => state.address);
   const queryClient = useQueryClient({ context: receiverContext });
   const config = useConfig();
@@ -58,14 +59,20 @@ export const Window: FunctionComponent<WindowProps> = ({ className }) => {
   }, [clientQuery.data]);
 
   const screen = useMemo(() => {
-    if (visibleScreen.id === 'conversations') {
-      return <Conversations />;
+    if (visibleScreen.id === 'pinned conversations') {
+      return <Pinned />;
+    } else if (visibleScreen.id === 'all conversations') {
+      return <All />;
+    } else if (visibleScreen.id === 'ignored conversations') {
+      return <Ignored />;
     } else if (visibleScreen.id === 'messages') {
-      return <PeerAddress handle={visibleScreen.peerAddress} />;
-    } else if (visibleScreen.id === 'new conversation') {
-      return <NewConversation />;
+      return <PeerAddress handle={visibleScreen.handle} />;
+    } else if (visibleScreen.id === 'menu') {
+      return <Menu />;
     } else {
-      throw new Error('Unspported screen: ' + String(screen));
+      throw new Error(
+        'Unspported screen: ' + String(JSON.stringify(visibleScreen))
+      );
     }
   }, [visibleScreen]);
 

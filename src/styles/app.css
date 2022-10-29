@@ -66,7 +66,8 @@
   width: 40px;
   overflow: hidden;
 }
-.RelayReceiver .Avatar.AvatarImage.large-true {
+
+.RelayReceiver .Avatar.AvatarImage.size-l {
   border-radius: 50%;
   height: 50px;
   width: 50px;
@@ -79,15 +80,27 @@
   width: 40px;
 }
 
-.RelayReceiver .Avatar.BlockiesContainer.large-true {
+.RelayReceiver .Avatar.BlockiesContainer.size-l {
   height: 50px;
   width: 50px;
   border-radius: 50%;
 }
 
+.RelayReceiver .Avatar.AvatarImage.size-xl {
+  border-radius: 1rem;
+  height: 75px;
+  width: 75px;
+}
+
+.RelayReceiver .Avatar.BlockiesContainer.size-xl {
+  height: 75px;
+  width: 75px;
+  border-radius: 1rem;
+}
+
 .Window.Container {
   width: 400px;
-  height: 500px;
+  height: 640px;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -283,6 +296,10 @@
   background-color: white;
 }
 
+.RelayReceiver .HeaderWrapper .MenuIcon:hover {
+  stroke-width: 2;
+}
+
 .RelayReceiver .Header.Title {
   font-size: 1.25rem;
   color: black;
@@ -321,6 +338,8 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding-bottom: 10px;
+  justify-content: center;
 }
 
 .RelayReceiver .InfoCard.FullMiddleSection {
@@ -399,7 +418,7 @@
 
 .RelayReceiver .InfoCard.Button:hover {
   cursor: pointer;
-  filter: brightness(1.1);
+  filter: brightness(1.3);
 }
 
 .RelayReceiver .LoadingList.LeftContainer {
@@ -527,57 +546,71 @@
   line-height: 1.25;
   word-break: break-word;
   text-align: start;
-  padding-left: 4px;
-}
-
-.RelayReceiver .MessageBucket.SentByInfo {
-  display: flex;
 }
 
 .RelayReceiver .MessagesBucket.SenderName.black-false.white-false {
   font-weight: bold;
   font-size: 14px;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
-  padding: 3px 6px;
-  background-color: #f1f2fd;
   color: #6e6b99;
-  border-radius: 99rem;
 }
 
 .RelayReceiver .MessagesBucket.SenderName.black-true.white-true {
   font-weight: bold;
   font-size: 14px;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
-  padding: 3px 6px;
-  background-color: white;
   color: black;
-  border-radius: 99rem;
 }
 
-.RelayReceiver .MessageInput.StyledInput {
-  height: 3rem !important;
-  padding: 3px 0px 3px 10px;
+.RelayReceiver .MessageInput.InputForm {
+  position: relative;
   display: flex;
-  margin: 1rem 0.5rem 1rem 0.5rem;
-  margin-top: auto;
-  border-radius: 6px;
-  border: none;
+  flex-direction: row;
+  margin: auto 10px 1rem 10px;
+  padding: 0;
+}
+
+.RelayReceiver .MessageInput .InputField {
+  height: 3rem;
+  border: 2px solid #eeeeee;
+  display: flex;
+  border-radius: 4px;
+  display: flex;
+  flex-grow: 1;
+  padding: 0.5rem;
   outline: none;
-  color: #333333;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  box-shadow: rgb(0 0 0 / 25%) 0px 0px 4px;
-  background-color: white;
 }
 
-.RelayReceiver .MessageInput.StyledInput:focus {
-  box-shadow: rgb(0 0 0 / 50%) 0px 0px 4px;
+.RelayReceiver .MessageInput .Send {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  padding: 0;
+  opacity: 0.5;
+  background: none;
+  transition: all 0.3s ease-in-out;
+  border: none;
 }
 
-.RelayReceiver .MessageInput.StyledInput::placeholder {
-  color: #333c4f;
+.RelayReceiver .MessageInput .Send:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.RelayReceiver .MessageInput .InputField:hover {
+  filter: brightness(0.98);
+  border: 2px solid gray;
+}
+
+.RelayReceiver .MessageInput .InputField:focus {
+  filter: brightness(0.98);
+  border: 2px solid black;
+}
+
+.RelayReceiver .MessageInput .InputField::placeholder {
   opacity: 0.7;
+}
+
+.RelayReceiver .MessageInput .InputField:focus::placeholder {
+  opacity: 1;
 }
 
 .RelayReceiver .MessageList.List {
@@ -613,7 +646,7 @@
 .RelayReceiver .MessagesBucket.MessageHeader {
   display: flex;
   align-items: flex-start;
-  margin-bottom: -10px;
+  margin-bottom: -1.5rem;
 }
 
 .RelayReceiver .MessagesBucket.SentByInfo {
@@ -626,7 +659,6 @@
   font-size: 14px;
   margin-left: 8px;
   color: rgb(6, 0, 40, 0.4);
-  transform: translateY(2px);
 }
 
 .RelayReceiver .MessagesBucket.FlexColReverseContainer {
@@ -634,77 +666,81 @@
   flex-direction: column-reverse;
 }
 
-.RelayReceiver .NewConversation.NewMessage {
-  box-sizing: border-box;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  background-color: white;
-  box-shadow: 0px -4px 4px -5px rgba(0, 0, 0, 0.25);
-  gap: 20px;
-  padding: 0 10px 0 10px;
-}
-
-.RelayReceiver .NewConversation.Input {
-  display: flex;
-  flex-grow: 1;
-  background-color: white;
-  border-radius: 4px;
-  display: flex;
-  align-self: stretch;
-  outline: none;
-  border: none;
-  padding: 5px 10px;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  margin-bottom: 1rem;
-  height: 3rem;
-  font-size: 16px;
-}
-
-.RelayReceiver .NewConversation.Button {
-  padding: 8px 12px;
-  border: 1px solid rgba(55, 41, 125, 0.5);
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 4px;
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-  align-self: stretch;
-  justify-content: center;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 15px;
-  background: #5203fc;
-  font-size: 14px;
-  color: white;
-  min-height: 1.5rem;
-  transition: all 0.1s ease-in-out;
-}
-
-.RelayReceiver .NewConversation.Button:hover {
-  cursor: pointer;
-  filter: brightness(1.1);
-}
-
-.RelayReceiver .NewConversation.Form {
+.RelayReceiver .NewConversationInputForm {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  margin-top: 1rem;
-  padding-top: 1.5rem;
 }
 
-.RelayReceiver .NewConversation.ErrorMessage {
+.RelayReceiver .NewConversationInput {
+  height: 3rem;
+  display: flex;
+  border-radius: 4px;
+  border: 2px solid #eeeeee;
+  display: flex;
+  margin: 1rem 10px 1rem 10px;
+  padding: 0.5rem;
+  outline: none;
+}
+
+.RelayReceiver .NewConversationInput:hover {
+  filter: brightness(0.98);
+  border: 2px solid gray;
+}
+
+.RelayReceiver .NewConversationInput:focus {
+  filter: brightness(0.98);
+  border: 2px solid black;
+}
+
+.RelayReceiver .NewConversationInput::placeholder {
+  opacity: 0.7;
+}
+
+.RelayReceiver .NewConversationInput:focus::placeholder {
+  opacity: 1;
+}
+
+.RelayReceiver .NewConversationInput.ErrorMessage {
+  background-color: white;
   position: absolute;
-  top: 0;
-  left: 0;
   color: red;
   font-size: 0.75rem;
   opacity: 0.8;
+  box-shadow: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  height: 1rem;
+  bottom: -4px;
+  left: 1.5rem;
+}
+
+.RelayReceiver .NewConversationInput.Plus {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0;
+  box-shadow: none;
+  opacity: 0.4;
+  background: none;
+  border: none;
+}
+
+.RelayReceiver .NewConversationInput.Search {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  padding: 0;
+  box-shadow: none;
+  opacity: 0.4;
+  background: none;
+  border: none;
+}
+
+.RelayReceiver .NewConversationInput.Plus:hover {
+  opacity: 1;
+  cursor: pointer;
 }
 
 .Intercom.Fixed {
@@ -768,4 +804,142 @@
     /* background-position: right 100% bottom 50%; */
     background-color: #777;
   }
+}
+
+.MenuScreen {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.RelayReceiver .MenuScreenHeader {
+  padding: 1rem;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.RelayReceiver .MenuScreenHeader .identity {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+  flex-grow: 1;
+}
+
+.RelayReceiver .MenuScreenHeader .identity .username {
+  font-weight: 900;
+}
+
+.RelayReceiver .MenuScreenHeader .avatar {
+  min-width: 75px;
+}
+
+.RelayReceiver .MenuScreenHeader .identity .xmtp-network {
+  margin-top: auto;
+}
+
+.MenuScreenHeader .address {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.MenuScreenHeader .address:hover {
+  cursor: pointer;
+}
+
+.MenuScreenHeader .CopyIcon {
+  height: 1rem;
+  width: 1rem;
+  max-width: 1rem;
+  margin-left: 0.5rem;
+}
+
+.xmtp-network-name {
+  color: green;
+  opacity: 0.8;
+}
+
+.xmtp-network .not-connected {
+  color: red;
+  opacity: 0.8;
+}
+
+.MenuScreen .NewConversationInputForm .NewConversationInput {
+  margin: 0;
+  margin-top: 1rem;
+}
+
+.ScreenNav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem;
+  padding-top: 0;
+  margin-top: 1rem;
+  align-items: stretch;
+}
+
+.MenuScreen .ScreenNav .nav-title {
+  font-size: 1.5rem;
+  color: black;
+  font-weight: bold;
+  line-height: 1;
+  margin-top: 1rem;
+}
+
+.MenuScreen .ScreenNav .ListItem {
+  height: 3rem;
+}
+
+.MenuScreen .NewConversationInputForm.OverrideMargin {
+  margin-bottom: 1rem;
+}
+
+.MenuScreen .FooterNav {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.MenuScreen .SocialIcon {
+  margin-right: 0.5rem;
+  transition: all 0.4s ease-in-out;
+}
+
+.MenuScreen .SocialIcon.Mirror {
+  margin-right: 0;
+}
+
+.MenuScreen .SocialIcon:hover {
+  cursor: pointer;
+  opacity: 0.35;
+}
+
+.MenuScreen .Footer .Relay {
+  color: #5203fc;
+  font-weight: 700;
+  font-size: 1.25rem;
+  opacity: 1;
+}
+
+.MenuScreen .Footer .Relay:hover {
+  text-decoration: underline;
+}
+
+.MenuScreen .RelayLogo {
+  height: 1.6rem;
+  width: 1.8rem;
+  transform: translateY(0px);
+}
+
+.RelayReceiver .PinnedLoadingSpinner {
+  margin-right: 6px;
+}
+
+.RelayReceiver .IgnoredLoadingSpinner {
+  margin-right: 6px;
+  margin-left: auto;
 }

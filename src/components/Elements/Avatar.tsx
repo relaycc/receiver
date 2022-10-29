@@ -11,15 +11,15 @@ import {
 import { motion } from 'framer-motion';
 
 export interface AvatarProps {
-  handle?: string | null;
+  handle: string | null | undefined;
   onClick: () => unknown;
-  large?: boolean;
+  size?: 'm' | 'l' | 'xl';
 }
 
 export const Avatar: FunctionComponent<AvatarProps> = ({
   handle,
   onClick,
-  large,
+  size,
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref);
@@ -52,12 +52,12 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
       <div
         ref={ref}
         style={{ opacity: ensAvatar.isLoading ? 0.2 : 1 }}
-        className={`Avatar BlockiesContainer large-${large}`}
+        className={`Avatar BlockiesContainer size-${size}`}
         onClick={onClick}>
         <Blockies
           seed={handle || 'no address'}
           size={10}
-          scale={large ? 5 : 4}
+          scale={size === 'xl' ? 7.5 : size === 'l' ? 5 : 4}
           className={'circle'}
         />
       </div>
@@ -68,7 +68,7 @@ export const Avatar: FunctionComponent<AvatarProps> = ({
         initial={{ opacity: 0.2 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0 }}
-        className={`Avatar AvatarImage large-${large}`}
+        className={`Avatar AvatarImage size-${size}`}
         onClick={onClick}
         src={ensAvatar.data}
         alt="user"

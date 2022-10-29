@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { Send } from './Icons/Send';
 
 interface MessageInputProps {
   onSendMessage: (val: string) => unknown;
@@ -25,20 +26,33 @@ export const MessageInput = ({
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
         onEnterPressed && onEnterPressed();
-        handleSend();
       }
     },
-    [handleSend]
+    []
   );
 
   return (
-    <input
-      className="MessageInput StyledInput"
-      placeholder="Write a Message..."
-      required
-      value={inputVal}
-      onChange={handleChange}
-      onKeyDown={handleKeyDown}
-    />
+    <form
+      className="MessageInput InputForm"
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSend();
+      }}>
+      <input
+        className="InputField"
+        autoFocus={true}
+        placeholder="Write a Message..."
+        type="text"
+        required
+        spellCheck="false"
+        autoComplete="off"
+        autoCorrect="false"
+        autoCapitalize="false"
+        value={inputVal}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+      />
+      <Send onClick={handleSend} className="Send" />
+    </form>
   );
 };

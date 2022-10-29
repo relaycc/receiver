@@ -36,9 +36,12 @@ export interface XmtpApi {
 }
 
 export type ReceiverScreen =
-  | { id: 'messages'; peerAddress: string }
-  | { id: 'conversations' }
+  | { id: 'messages'; handle: string }
+  | { id: 'all conversations' }
+  | { id: 'pinned conversations' }
+  | { id: 'ignored conversations' }
   | { id: 'pinned' }
+  | { id: 'menu' }
   | { id: 'new conversation' };
 
 export type ReceiverAction =

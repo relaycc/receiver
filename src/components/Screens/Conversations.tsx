@@ -1,7 +1,19 @@
 import React from 'react';
-import { ConversationList } from '../Elements';
+import {
+  Pinned as PinnedContent,
+  Ignored as IgnoredContent,
+  All as AllContent,
+} from '../Elements';
 import { Screen } from './Screen';
 
-export const Conversations = () => {
-  return <Screen content={<ConversationList />} />;
+export const Pinned = () => {
+  return <Screen content={<PinnedContent />} />;
+};
+
+export const Ignored = () => {
+  return <Screen content={<IgnoredContent />} />;
+};
+
+export const All = () => {
+  return <Screen content={<AllContent />} />;
 };

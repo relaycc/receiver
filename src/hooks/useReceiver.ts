@@ -8,7 +8,7 @@ export const useReceiver = create<ReceiverStore>((set, get) => ({
   setPinnedConversations: (pinnedConversations) => set({ pinnedConversations }),
   isOpen: false,
   setIsOpen: (isOpen) => set({ isOpen }),
-  screenHistory: [{ id: 'conversations' }],
+  screenHistory: [{ id: 'menu' }],
   setScreenHistory: (screenHistory) => set({ screenHistory }),
   dispatch: (action: ReceiverAction) => {
     switch (action.id) {
@@ -76,7 +76,7 @@ export const sameScreen = (
   screenB: ReceiverScreen
 ) => {
   if (screenA.id === 'messages' && screenB.id === 'messages') {
-    return screenA.peerAddress === screenB.peerAddress;
+    return screenA.handle === screenB.handle;
   } else {
     return screenA.id === screenB.id;
   }

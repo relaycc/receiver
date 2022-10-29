@@ -1,6 +1,7 @@
 import React from 'react';
-import { FunctionComponent } from 'react';
-import { useClient } from '../../hooks';
+import { FunctionComponent, useCallback } from 'react';
+import { useClient, useReceiver } from '../../hooks';
+import { Discord, Github, Mirror, Twitter } from './Icons';
 
 export interface InfoCardProps {
   variant:
@@ -13,7 +14,10 @@ export interface InfoCardProps {
     | 'no wallet'
     | 'new conversation'
     | 'invalid handle'
-    | 'empty conversation';
+    | 'no conversations'
+    | 'no pinned conversations'
+    | 'no ignored conversations'
+    | 'sign in';
   handle?: string | null;
 }
 
@@ -22,6 +26,11 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
   handle,
 }) => {
   const [signIn] = useClient();
+  const dispatch = useReceiver((state) => state.dispatch);
+
+  const goBack = useCallback(() => {
+    dispatch({ id: 'go back screen' });
+  }, [dispatch]);
 
   if (variant === 'invalid ENS') {
     return (
@@ -109,9 +118,6 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
         <div className="InfoCard CardContainer">
           <div className="InfoCard Title">Initialize XMTP Client</div>
           <div className="InfoCard Text">
-            <b>Initializing.</b>
-          </div>
-          <div className="InfoCard Text">
             Signature request cancelled. Try again...
           </div>
           <div className="InfoCard Button" onClick={signIn}>
@@ -130,7 +136,7 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
         </div>
       </div>
     );
-  } else if (variant === 'empty conversation') {
+  } else if (variant === 'no conversations') {
     return (
       <div className="InfoCard CardContainer">
         <div className="InfoCard Text">
@@ -140,16 +146,83 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
         </div>
       </div>
     );
-  } else if (variant === 'new conversation') {
+  } else if (variant === 'no pinned conversations') {
     return (
       <div className="InfoCard FullMiddleSection">
         <div className="InfoCard CardContainer">
           <div className="InfoCard Text">
-            Only those who have previously signed into the XMTP network are
-            reachable.
+            {
+              "It looks you haven't pinned any conversations yet. You can pin a conversation by clicking the pin icon in the top right corner of any conversation window."
+            }
+          </div>
+          <div className="InfoCard Button" onClick={goBack}>
+            Go Back
           </div>
         </div>
         <BrandedFooter />
+      </div>
+    );
+  } else if (variant === 'no ignored conversations') {
+    return (
+      <div className="InfoCard FullMiddleSection">
+        <div className="InfoCard CardContainer">
+          <div className="InfoCard Text">
+            {
+              "It looks you haven't ignored any conversations yet. You can ignore a conversation by clicking the eye icon in the top right corner of any conversation window."
+            }
+          </div>
+          <div className="InfoCard Button" onClick={goBack}>
+            Go Back
+          </div>
+        </div>
+        <BrandedFooter />
+      </div>
+    );
+  } else if (variant === 'sign in') {
+    return (
+      <div className="InfoCard FullMiddleSection">
+        <div className="InfoCard CardContainer">
+          <div className="InfoCard Title">{'Join the Relay Community 🎉'}</div>
+          <div className="InfoCard Text">
+            {
+              "Whether you're a developer, designer, or an early adopter, we'd love to have you. Let's build the future of messaging together."
+            }
+          </div>
+          <nav className="FooterNav">
+            <a href="https://relay.cc" target="_blank" rel="noreferrer">
+              <img
+                style={{ display: 'inline-block' }}
+                src="https://relay-receiver-prod.s3.amazonaws.com/smallLogoBlack.png"
+                alt="Relay Logo"
+                className="MenuScreen SocialIcon RelayLogo"
+              />
+            </a>
+            <a
+              href="https://github.com/relaycc/receiver"
+              target="_blank"
+              rel="noreferrer">
+              <Github className="SocialIcon" />
+            </a>
+            <a
+              href="https://github.com/relaycc/receiver"
+              target="_blank"
+              rel="noreferrer">
+              <Twitter className="SocialIcon" />
+            </a>
+            <a
+              href="https://github.com/relaycc/receiver"
+              target="_blank"
+              rel="noreferrer">
+              <Discord className="SocialIcon" />
+            </a>
+            <a
+              href="https://github.com/relaycc/receiver"
+              target="_blank"
+              rel="noreferrer">
+              <Mirror className="SocialIcon Mirror" />
+            </a>
+          </nav>
+        </div>
       </div>
     );
   } else {

@@ -2,15 +2,7 @@ import React, { FunctionComponent, useState } from 'react';
 import { truncateAddress } from '../../utils/address';
 import { Avatar } from './Avatar';
 import { LoadingText } from './LoadingText';
-import {
-  useEnsName,
-  useEnsAddress,
-  useLensProfile,
-  addressFromProfile,
-  isEnsName,
-  isEthAddress,
-  isLensName,
-} from '../../hooks';
+import { isEthAddress, useRelayId } from '../../hooks';
 
 export interface AddressInfoProps {
   handle?: string | null;
@@ -19,65 +11,25 @@ export interface AddressInfoProps {
 export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
   handle,
 }) => {
-  const lensProfile = useLensProfile({
-    handle,
-  });
-  const ensAddress = useEnsAddress({ handle });
-  const ensName = useEnsName({ handle });
+  const relayId = useRelayId({ handle });
   const [isOpen, setIsOpen] = useState(false);
   const [didCopyToClipboard, setDidCopyToClipboard] = useState(false);
 
   const primaryId = (() => {
-    if (isEnsName(handle)) {
-      return handle;
-    }
-    if (isLensName(handle)) {
-      return handle;
-    }
-    if (
-      lensProfile.data !== undefined &&
-      lensProfile.data !== null &&
-      isEthAddress(addressFromProfile(lensProfile.data))
-    ) {
-      return handle;
-    }
-    if (isEthAddress(ensAddress.data)) {
-      return handle;
-    }
-    if (isEnsName(ensName.data)) {
-      return ensName.data;
-    }
-
-    if (lensProfile.isLoading || ensAddress.isLoading || ensName.isLoading) {
-      return 'loading';
-    }
-
-    if (isEthAddress(handle)) {
-      return handle;
+    if (relayId.lens.data !== null && relayId.lens.data !== undefined) {
+      return relayId.lens.data;
+    } else if (relayId.ens.data !== null && relayId.ens.data !== undefined) {
+      return relayId.ens.data;
     } else {
-      return 'invalid';
+      return handle;
     }
   })();
 
   const secondaryId = (() => {
-    if (isEthAddress(handle)) {
-      return handle;
-    }
-    if (
-      lensProfile.data !== null &&
-      lensProfile.data !== undefined &&
-      isEthAddress(addressFromProfile(lensProfile.data))
-    ) {
-      return addressFromProfile(lensProfile.data);
-    }
-    if (isEthAddress(ensAddress.data)) {
-      return ensAddress.data;
-    }
-
-    if (lensProfile.isLoading || ensAddress.isLoading || ensName.isLoading) {
-      return 'loading';
+    if (relayId.address.isLoading) {
+      return <LoadingText />;
     } else {
-      return 'invalid';
+      return relayId.address.data;
     }
   })();
 
@@ -98,7 +50,16 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
         {secondaryId === 'loading' && <LoadingText />}
         {secondaryId === 'loading' || (
           <div className="AddressInfo SubText">
-            {truncateAddress(secondaryId)}
+            {(() => {
+              if (
+                typeof secondaryId === 'string' &&
+                isEthAddress(secondaryId)
+              ) {
+                return truncateAddress(secondaryId);
+              } else {
+                return secondaryId;
+              }
+            })()}
           </div>
         )}
         <div className="AddressInfo DropdownMenu">

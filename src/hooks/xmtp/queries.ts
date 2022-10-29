@@ -3,6 +3,8 @@ import { useQueries, useQuery, UseQueryResult } from '@tanstack/react-query';
 import {
   MOST_RECENT_MESSAGE_OPTIONS,
   MOST_RECENT_PAGE_OPTIONS,
+  fetchPinnedAddresses,
+  fetchIgnoredAddresses,
 } from './helpers';
 import { useXmtp } from './store';
 import { receiverContext } from './context';
@@ -56,18 +58,47 @@ export const useClient = (): [
 export const usePinnedAddresses = () => {
   const { address } = useXmtp();
   const [, clientQuery] = useClient();
+  const config = useConfig();
 
   return useQuery(
     ['pinned addresses', address],
     async () => {
-      if (clientQuery.data === null || clientQuery.data === undefined) {
+      if (
+        clientQuery.data === null ||
+        clientQuery.data === undefined ||
+        config === null
+      ) {
         throw new Error('Running pinned addresses list too early');
       } else {
-        return [];
+        return fetchPinnedAddresses(config.xmtp.client);
       }
     },
     {
-      staleTime: Infinity,
+      context: receiverContext,
+      enabled: clientQuery.data !== null && clientQuery.data !== undefined,
+    }
+  );
+};
+
+export const useIgnoredAddresses = () => {
+  const { address } = useXmtp();
+  const [, clientQuery] = useClient();
+  const config = useConfig();
+
+  return useQuery(
+    ['ignored addresses', address],
+    async () => {
+      if (
+        clientQuery.data === null ||
+        clientQuery.data === undefined ||
+        config === null
+      ) {
+        throw new Error('Running ignored addresses list too early');
+      } else {
+        return fetchIgnoredAddresses(config.xmtp.client);
+      }
+    },
+    {
       context: receiverContext,
       enabled: clientQuery.data !== null && clientQuery.data !== undefined,
     }

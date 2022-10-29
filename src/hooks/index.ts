@@ -11,3 +11,4 @@ export * from './ens';
 export * from './useInView';
 export * from './lens';
 export * from './receiver';
+export * from './useRelayId';
