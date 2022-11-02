@@ -83,6 +83,15 @@ export const ConversationListView: FunctionComponent<{
             peerAddress={peerAddress}
             subtitle={messages[0].content}
             topMessageTime={messages[0].sent as Date}
+            onClick={() => {
+              dispatch({
+                id: 'go to screen',
+                screen: {
+                  id: 'messages',
+                  handle: peerAddress,
+                },
+              });
+            }}
           />
         );
       })}

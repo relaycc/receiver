@@ -1,12 +1,20 @@
 import React, { FunctionComponent, useMemo } from 'react';
-import { useConversationsPreviews, useIgnoredAddresses } from '../../../hooks';
+import {
+  useConversationsPreviews,
+  useIgnoredAddresses,
+  useXmtp,
+} from '../../../hooks';
 import { ConversationListView, Conversation } from './ConversationListView';
 import { LoadingList } from '../LoadingList';
 import { NoIgnoredConversations } from './NoIgnoredConversations';
 
 export const Ignored: FunctionComponent = () => {
-  const ignoredAddresses = useIgnoredAddresses();
-  const ignoredPreviews = useConversationsPreviews(ignoredAddresses.data || []);
+  const address = useXmtp((state) => state.address);
+  const ignoredAddresses = useIgnoredAddresses(address);
+  const ignoredPreviews = useConversationsPreviews(
+    ignoredAddresses.data || [],
+    address
+  );
   const ignoredIsLoading =
     ignoredAddresses.isLoading ||
     Boolean(ignoredPreviews.find((pq) => pq.isLoading));

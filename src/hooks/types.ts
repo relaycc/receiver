@@ -2,10 +2,27 @@ export type Setter<T> = (state: T) => unknown;
 
 export type XmtpNetwork = 'dev' | 'production';
 
-export interface WorkerWallet {
-  getAddress: () => Promise<string>;
-  signMessage: (message: string) => Promise<string>;
+export interface ClientOptions {
+  env: XmtpNetwork;
 }
+
+export interface SignerWallet {
+  id: 'signer wallet';
+  wallet: {
+    getAddress: () => Promise<string>;
+    signMessage: (message: string) => Promise<string>;
+  };
+}
+
+export interface IdentityWallet {
+  id: 'identity wallet';
+  wallet: {
+    address: string;
+    privateKey: string;
+  };
+}
+
+export type WorkerWallet = SignerWallet | IdentityWallet;
 
 export interface ListMessagesOptions {
   limit?: number;
@@ -14,33 +31,74 @@ export interface ListMessagesOptions {
 
 export interface Client {
   address: string;
-  initialized: true;
+}
+
+export interface Message {
+  id: string;
+  sent: Date;
+  recipientAddress: string;
+  senderAddress: string;
+  /* eslint-disable-next-line */
+  content: any;
+}
+
+export interface Conversation {
+  peerAddress: string;
+}
+
+export interface Group {
+  wallet: IdentityWallet;
+  name?: string;
+  description?: string;
+}
+
+export interface CreateGroupOptions {
+  name: string;
+  description: string;
 }
 
 export interface XmtpApi {
-  startClient: (wallet: WorkerWallet) => Promise<boolean>;
+  createIdentity: () => Promise<IdentityWallet>;
+  startClient: (
+    wallet: WorkerWallet,
+    opts?: Partial<ClientOptions>
+  ) => Promise<Client | null>;
+  fetchClient: (clientAddress: string) => Promise<Client | null>;
   fetchMessages: (
+    clientAddress: string,
     peerAddress: string,
     opts: Partial<ListMessagesOptions>
   ) => Promise<Message[]>;
-  fetchConversations: () => Promise<Conversation[]>;
-  fetchPeerOnNetwork: (peerAddress: string) => Promise<boolean>;
-  sendMessage: (peerAddress: string, message: string) => Promise<boolean>;
-  listenToAllMessagesStream: (handler: (message: Message) => unknown) => {
+  fetchConversations: (clientAddress: string) => Promise<Conversation[]>;
+  fetchPeerOnNetwork: (
+    clientAddress: string,
+    peerAddress: string
+  ) => Promise<boolean>;
+  sendMessage: (
+    clientAddress: string,
+    peerAddress: string,
+    message: string
+  ) => Promise<Message>;
+  listenToAllMessagesStream: (
+    clientAddress: string,
+    handler: (message: Message) => unknown
+  ) => Promise<{
     unlisten: () => void;
-  };
+  }>;
   listenToConversationStream: (
+    clientAddress: string,
     peerAddress: string,
     handler: (message: Message) => unknown
-  ) => { unlisten: () => void };
+  ) => Promise<{ unlisten: () => void }>;
 }
 
 export type ReceiverScreen =
   | { id: 'messages'; handle: string }
+  | { id: 'group'; handle: string }
   | { id: 'all conversations' }
   | { id: 'pinned conversations' }
   | { id: 'ignored conversations' }
-  | { id: 'pinned' }
+  | { id: 'groups' }
   | { id: 'menu' }
   | { id: 'new conversation' };
 
@@ -71,19 +129,6 @@ export interface ReceiverStore {
   screenHistory: ReceiverScreen[];
   setScreenHistory: Setter<ReceiverScreen[]>;
   dispatch: (action: ReceiverAction) => unknown;
-}
-
-export interface Message {
-  id: string;
-  sent: Date;
-  recipientAddress: string;
-  senderAddress: string;
-  /* eslint-disable-next-line */
-  content: any;
-}
-
-export interface Conversation {
-  peerAddress: string;
 }
 
 export type SignatureStatus = 'idle' | 'waiting' | 'denied';

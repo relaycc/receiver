@@ -1,12 +1,20 @@
 import React, { FunctionComponent, useMemo } from 'react';
-import { useConversationsPreviews, usePinnedAddresses } from '../../../hooks';
+import {
+  useConversationsPreviews,
+  usePinnedAddresses,
+  useXmtp,
+} from '../../../hooks';
 import { ConversationListView, Conversation } from './ConversationListView';
 import { LoadingList } from '../LoadingList';
 import { NoPinnedConversations } from './NoPinnedConversations';
 
 export const Pinned: FunctionComponent = () => {
-  const pinnedAddresses = usePinnedAddresses();
-  const pinnedPreviews = useConversationsPreviews(pinnedAddresses.data || []);
+  const address = useXmtp((state) => state.address);
+  const pinnedAddresses = usePinnedAddresses(address);
+  const pinnedPreviews = useConversationsPreviews(
+    pinnedAddresses.data || [],
+    address
+  );
   const pinnedIsLoading =
     pinnedAddresses.isLoading ||
     Boolean(pinnedPreviews.find((pq) => pq.isLoading));

@@ -1,153 +1,164 @@
-import { useCallback } from 'react';
-import { useQueries, useQuery, UseQueryResult } from '@tanstack/react-query';
+import { useQueries, useQuery } from '@tanstack/react-query';
 import {
   MOST_RECENT_MESSAGE_OPTIONS,
   MOST_RECENT_PAGE_OPTIONS,
   fetchPinnedAddresses,
   fetchIgnoredAddresses,
+  fetchGroups,
 } from './helpers';
-import { useXmtp } from './store';
 import { receiverContext } from './context';
 import { useConfig } from '../receiver';
-import { Client } from '../types';
+import { useXmtp } from './store';
 
-export const useClient = (): [
-  () => unknown,
-  UseQueryResult<Client, unknown>
-] => {
-  const { wallet, address } = useXmtp();
+export const useClient = (clientAddress?: string | null) => {
   const config = useConfig();
 
-  const query = useQuery(
-    ['xmtp client', address],
-    async (): Promise<Client> => {
+  return useQuery(
+    ['xmtp client', clientAddress],
+    async () => {
       if (
-        wallet === null ||
-        wallet === undefined ||
-        address === null ||
+        clientAddress === null ||
+        clientAddress === undefined ||
         config === null
       ) {
-        throw new Error('Init running too early');
+        throw new Error(
+          'useClient queryFn, clientAddress is null or undefined or config is null'
+        );
       } else {
-        const created = await config.xmtp.client.startClient(wallet);
-        if (!created) {
-          throw new Error('failed to initialied client');
-        } else {
-          return { address, initialized: true };
-        }
+        return config.xmtp.client.fetchClient(clientAddress);
       }
     },
     {
+      enabled:
+        clientAddress !== null &&
+        clientAddress !== undefined &&
+        config !== null,
       context: receiverContext,
-      enabled: false,
-      refetchInterval: 1000 * 60 * 60,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
       refetchOnReconnect: true,
       retry: false,
     }
   );
-
-  const trigger = useCallback(() => {
-    query.refetch();
-  }, []);
-
-  return [trigger, query];
 };
 
-export const usePinnedAddresses = () => {
-  const { address } = useXmtp();
-  const [, clientQuery] = useClient();
+export const usePinnedAddresses = (clientAddress?: string | null) => {
   const config = useConfig();
+  const client = useClient(clientAddress);
 
   return useQuery(
-    ['pinned addresses', address],
+    ['pinned addresses', clientAddress],
     async () => {
       if (
-        clientQuery.data === null ||
-        clientQuery.data === undefined ||
+        clientAddress === null ||
+        clientAddress === undefined ||
+        client.data === undefined ||
+        client.data === null ||
         config === null
       ) {
-        throw new Error('Running pinned addresses list too early');
+        throw new Error(
+          'usePinnedAddress queryFn, clientAddress is null or undefined or config is null or client.data is undefined or null'
+        );
       } else {
-        return fetchPinnedAddresses(config.xmtp.client);
+        return fetchPinnedAddresses(clientAddress, config.xmtp.client);
       }
     },
     {
       context: receiverContext,
-      enabled: clientQuery.data !== null && clientQuery.data !== undefined,
+      enabled:
+        clientAddress !== null &&
+        clientAddress !== undefined &&
+        client.data !== undefined &&
+        client.data !== null &&
+        config !== null,
     }
   );
 };
 
-export const useIgnoredAddresses = () => {
-  const { address } = useXmtp();
-  const [, clientQuery] = useClient();
+export const useIgnoredAddresses = (clientAddress?: string | null) => {
   const config = useConfig();
+  const client = useClient(clientAddress);
 
   return useQuery(
-    ['ignored addresses', address],
+    ['ignored addresses', clientAddress],
     async () => {
       if (
-        clientQuery.data === null ||
-        clientQuery.data === undefined ||
+        clientAddress === null ||
+        clientAddress === undefined ||
+        client.data === undefined ||
+        client.data === null ||
         config === null
       ) {
         throw new Error('Running ignored addresses list too early');
       } else {
-        return fetchIgnoredAddresses(config.xmtp.client);
+        return fetchIgnoredAddresses(clientAddress, config.xmtp.client);
       }
     },
     {
       context: receiverContext,
-      enabled: clientQuery.data !== null && clientQuery.data !== undefined,
+      enabled:
+        clientAddress !== null &&
+        clientAddress !== undefined &&
+        client.data !== undefined &&
+        client.data !== null &&
+        config !== null,
     }
   );
 };
 
-export const useConversations = () => {
-  const { address } = useXmtp();
-  const [, clientQuery] = useClient();
+export const useConversations = (clientAddress?: string | null) => {
   const config = useConfig();
+  const client = useClient(clientAddress);
 
   return useQuery(
-    ['conversations list', address],
+    ['conversations list', clientAddress],
     async () => {
-      if (clientQuery.data === null || clientQuery.data === undefined) {
+      if (
+        clientAddress === null ||
+        clientAddress === undefined ||
+        client.data === null ||
+        client.data === undefined
+      ) {
         throw new Error('Running conversations list too early');
       } else {
         if (config === null) {
           throw new Error('useConversation :: useConfig returned null');
         } else {
-          return config.xmtp.client.fetchConversations();
+          return config.xmtp.client.fetchConversations(clientAddress);
         }
       }
     },
     {
       staleTime: 1000 * 60 * 5,
       context: receiverContext,
-      enabled: clientQuery.data !== null && clientQuery.data !== undefined,
+      enabled: client.data !== undefined && client.data !== null,
     }
   );
 };
 
-export const useConversationsPreviews = (addresses: string[]) => {
-  const { address } = useXmtp();
-  const [, clientQuery] = useClient();
+export const useConversationsPreviews = (
+  addresses: string[],
+  clientAddress?: string | null
+) => {
   const config = useConfig();
+  const client = useClient(clientAddress);
 
   return useQueries({
     queries: addresses.map((peerAddress) => {
       return {
-        queryKey: ['messages', address, peerAddress],
+        queryKey: ['messages', clientAddress, peerAddress],
         queryFn: async () => {
-          if (clientQuery.data === null || clientQuery.data === undefined) {
+          if (
+            clientAddress === null ||
+            clientAddress === undefined ||
+            client.data === undefined ||
+            client.data === null
+          ) {
             throw new Error('Running messages fetch too early');
           } else {
             if (config === null) {
               throw new Error('useConversation :: useConfig returned null');
             } else {
               const messages = await config.xmtp.client.fetchMessages(
+                clientAddress,
                 peerAddress,
                 MOST_RECENT_MESSAGE_OPTIONS
               );
@@ -158,7 +169,7 @@ export const useConversationsPreviews = (addresses: string[]) => {
             }
           }
         },
-        enabled: clientQuery.data !== null && clientQuery.data !== undefined,
+        enabled: client.data !== undefined && client.data !== null,
         staleTime: 1000 * 60 * 5,
       };
     }),
@@ -167,20 +178,23 @@ export const useConversationsPreviews = (addresses: string[]) => {
 };
 
 export const useMessages = ({
+  clientAddress,
   peerAddress,
 }: {
   peerAddress: string | null | undefined;
+  clientAddress?: string | null;
 }) => {
-  const { address } = useXmtp();
-  const [, { data: client }] = useClient();
   const config = useConfig();
+  const client = useClient(clientAddress);
 
   return useQuery(
-    ['messages', address, peerAddress],
+    ['messages', clientAddress, peerAddress],
     async () => {
       if (
-        client === null ||
-        client === undefined ||
+        clientAddress === null ||
+        clientAddress === undefined ||
+        client.data === null ||
+        client.data === undefined ||
         typeof peerAddress !== 'string'
       ) {
         throw new Error('Running messages fetch too early');
@@ -189,6 +203,7 @@ export const useMessages = ({
           throw new Error('useConversation :: useConfig returned null');
         } else {
           const messages = await config.xmtp.client.fetchMessages(
+            clientAddress,
             peerAddress,
             MOST_RECENT_PAGE_OPTIONS
           );
@@ -203,28 +218,34 @@ export const useMessages = ({
       keepPreviousData: true,
       context: receiverContext,
       enabled:
-        client !== null &&
-        client !== undefined &&
+        clientAddress !== null &&
+        clientAddress !== undefined &&
+        client.data !== undefined &&
+        client.data !== null &&
+        config !== null &&
         typeof peerAddress === 'string',
     }
   );
 };
 
 export const usePeerOnNetwork = ({
+  clientAddress,
   peerAddress,
 }: {
   peerAddress: string | null | undefined;
+  clientAddress?: string | null;
 }) => {
-  const { address } = useXmtp();
-  const [, { data: client }] = useClient();
   const config = useConfig();
+  const client = useClient(clientAddress);
 
   return useQuery(
-    ['peer on network', address, peerAddress],
+    ['peer on network', clientAddress, peerAddress],
     async () => {
       if (
-        client === null ||
-        client === undefined ||
+        clientAddress === null ||
+        clientAddress === undefined ||
+        client.data === null ||
+        client.data === undefined ||
         typeof peerAddress !== 'string'
       ) {
         throw new Error('Running fetch peer on network too early');
@@ -232,16 +253,115 @@ export const usePeerOnNetwork = ({
         if (config === null) {
           throw new Error('useConversation :: useConfig returned null');
         } else {
-          return config.xmtp.client.fetchPeerOnNetwork(peerAddress);
+          return config.xmtp.client.fetchPeerOnNetwork(
+            clientAddress,
+            peerAddress
+          );
         }
       }
     },
     {
       context: receiverContext,
       enabled:
-        client !== null &&
-        client !== undefined &&
+        clientAddress !== null &&
+        clientAddress !== undefined &&
+        client.data !== undefined &&
+        client.data !== null &&
+        config !== null &&
         typeof peerAddress === 'string',
     }
   );
+};
+
+export const useGroups = (clientAddress?: string | null) => {
+  const config = useConfig();
+  const client = useClient(clientAddress);
+
+  return useQuery(
+    ['groups', clientAddress],
+    async () => {
+      if (
+        clientAddress === null ||
+        clientAddress === undefined ||
+        client.data === undefined ||
+        client.data === null ||
+        config === null
+      ) {
+        throw new Error('Running fetchGroups too early');
+      } else {
+        return fetchGroups(clientAddress, config.xmtp.client);
+      }
+    },
+    {
+      context: receiverContext,
+      enabled:
+        client.data !== undefined &&
+        client.data !== null &&
+        clientAddress !== null &&
+        clientAddress !== undefined &&
+        config !== null,
+    }
+  );
+};
+
+export const useGroupsPreviews = (clientAddress?: string | null) => {
+  const address = useXmtp((state) => state.address);
+  const config = useConfig();
+  const groups = useGroups(clientAddress);
+  const groupsList = Object.values(groups.data || {});
+
+  const groupClients = useQueries({
+    queries: groupsList.map((group) => {
+      return {
+        queryKey: ['xmtp client', group.wallet.wallet.address],
+        queryFn: async () => {
+          if (
+            clientAddress === null ||
+            clientAddress === undefined ||
+            config === null
+          ) {
+            throw new Error('useGroupsPreviews :: queryFn running too early');
+          } else {
+            await config.xmtp.client.startClient(group.wallet, {
+              env: 'production',
+            });
+            return config.xmtp.client.fetchClient(group.wallet.wallet.address);
+          }
+        },
+      };
+    }),
+    context: receiverContext,
+  });
+
+  const groupClientsIsLoading = groupClients.some(
+    (query) => query.data === undefined
+  );
+
+  return useQueries({
+    queries: groupsList.map((group) => {
+      return {
+        queryKey: ['messages', address, group.wallet.wallet.address],
+        queryFn: async () => {
+          if (config === null) {
+            throw new Error(
+              'useGroupsPrevies :: fetchGroupsMessages queryFn running too early'
+            );
+          } else {
+            const messages = await config.xmtp.client.fetchMessages(
+              group.wallet.wallet.address,
+              group.wallet.wallet.address,
+              MOST_RECENT_MESSAGE_OPTIONS
+            );
+            return {
+              group,
+              messages,
+            };
+          }
+        },
+        enabled: groups.data !== undefined && !groupClientsIsLoading,
+        staleTime: 1000 * 60 * 5,
+      };
+    }),
+    context: receiverContext,
+  });
 };

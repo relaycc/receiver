@@ -1,35 +1,33 @@
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useRef,
-} from 'react';
+import React, { FunctionComponent, useEffect, useRef } from 'react';
 import { Avatar } from '../Avatar';
-import {
-  useResponsiveName,
-  useEnsName,
-  useReceiver,
-  useInView,
-} from '../../../hooks';
+import { useResponsiveName, useEnsName, useInView } from '../../../hooks';
 import { getDisplayDate } from '../../../utils/date';
 import { motion } from 'framer-motion';
 
 export interface ConversationListItemProps {
   peerAddress: string;
+  peerAddressDisplay?: string;
   subtitle: string;
   topMessageTime: Date;
   onEnsResolve?: (ensName: string | null) => unknown;
+  onClick: () => unknown;
 }
 
 export const ConversationListItem: FunctionComponent<
   ConversationListItemProps
-> = ({ peerAddress, subtitle, topMessageTime, onEnsResolve }) => {
-  const dispatch = useReceiver((state) => state.dispatch);
+> = ({
+  peerAddress,
+  peerAddressDisplay,
+  subtitle,
+  topMessageTime,
+  onEnsResolve,
+  onClick,
+}) => {
   const ref = useRef(null);
   const isInView = useInView(ref);
   const { data: name } = useEnsName({
     handle: peerAddress,
-    wait: isInView === false,
+    wait: isInView === false || typeof peerAddressDisplay === 'string',
   });
 
   useEffect(() => {
@@ -42,13 +40,6 @@ export const ConversationListItem: FunctionComponent<
 
   const responsiveName = useResponsiveName(name, peerAddress, '');
 
-  const goToPeerAddress = useCallback(() => {
-    dispatch({
-      id: 'go to screen',
-      screen: { id: 'messages', handle: peerAddress },
-    });
-  }, [peerAddress]);
-
   return (
     <motion.li
       ref={ref}
@@ -59,13 +50,15 @@ export const ConversationListItem: FunctionComponent<
       }}
       key={peerAddress}
       className="ConversationListItem ListItem"
-      onClick={goToPeerAddress}>
+      onClick={onClick}>
       <div style={{ marginRight: '10px' }}>
         <Avatar handle={peerAddress} onClick={() => null} />
       </div>
       <div className="ConversationListItem ContentContainer">
         <div className="ConversationListItem TopLineContainer">
-          <span className="ConversationListItem Title">{responsiveName}</span>
+          <span className="ConversationListItem Title">
+            {peerAddressDisplay || responsiveName}
+          </span>
           <span className="ConversationListItem Time">
             {getDisplayDate(topMessageTime)}
           </span>

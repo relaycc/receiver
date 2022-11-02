@@ -75,6 +75,15 @@ export const NoConversations: FunctionComponent = () => {
       </form>
       <ul className="ConversationList List">
         <ConversationListItem
+          onClick={() => {
+            dispatch({
+              id: 'go to screen',
+              screen: {
+                id: 'messages',
+                handle: '0x45C9a201e2937608905fEF17De9A67f25F9f98E0',
+              },
+            });
+          }}
           key={'0x45C9a201e2937608905fEF17De9A67f25F9f98E0'}
           peerAddress={'0x45C9a201e2937608905fEF17De9A67f25F9f98E0'}
           subtitle={'Welcome! Send your first message...'}

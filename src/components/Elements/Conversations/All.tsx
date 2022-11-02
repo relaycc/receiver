@@ -6,6 +6,8 @@ import {
   useIgnoredAddresses,
   PINNED_ADDRESS,
   IGNORED_ADDRESS,
+  useXmtp,
+  GROUPS_ADDRESS,
 } from '../../../hooks';
 import { LoadingList } from '../LoadingList';
 import { ConversationListView } from './ConversationListView';
@@ -17,10 +19,12 @@ interface Conversation {
 }
 
 export const All: FunctionComponent = () => {
-  const conversations = useConversations();
-  const ignoredAddresses = useIgnoredAddresses();
+  const address = useXmtp((state) => state.address);
+  const conversations = useConversations(address);
+  const ignoredAddresses = useIgnoredAddresses(address);
   const conversationsPreviews = useConversationsPreviews(
-    conversations.data ? conversations.data.map((c) => c.peerAddress) : []
+    conversations.data ? conversations.data.map((c) => c.peerAddress) : [],
+    address
   );
 
   const isLoading =
@@ -36,6 +40,7 @@ export const All: FunctionComponent = () => {
         if (ignoredAddresses.data?.includes(cp.data.peerAddress)) return false;
         if (cp.data.peerAddress === PINNED_ADDRESS) return false;
         if (cp.data.peerAddress === IGNORED_ADDRESS) return false;
+        if (cp.data.peerAddress === GROUPS_ADDRESS) return false;
         return true;
       })
       .map((cp) => cp.data)

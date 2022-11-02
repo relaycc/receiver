@@ -1,18 +1,18 @@
 import React, { FunctionComponent, ReactNode } from 'react';
-import { useClient, useWallet } from '../../hooks';
+import { useClient, useXmtp } from '../../hooks';
 import { Header, InfoCard } from '../Elements';
 
 export const Screen: FunctionComponent<{ content: ReactNode }> = ({
   content,
 }) => {
-  const [wallet] = useWallet();
-  const [, client] = useClient();
+  const { address } = useXmtp();
+  const client = useClient(address);
 
   return (
     <>
       <Header />
       {(() => {
-        if (wallet === null) {
+        if (address === null) {
           return <InfoCard variant="no wallet" />;
         } else if (client.status === 'loading') {
           if (client.fetchStatus === 'idle') {
@@ -22,6 +22,8 @@ export const Screen: FunctionComponent<{ content: ReactNode }> = ({
           }
         } else if (client.status === 'error') {
           return <InfoCard variant="signature denied" />;
+        } else if (client.data === null) {
+          return <InfoCard variant="no xmtp client" />;
         } else {
           return content;
         }

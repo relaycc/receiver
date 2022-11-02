@@ -1,6 +1,6 @@
 import React from 'react';
 import { FunctionComponent, useCallback } from 'react';
-import { useClient, useReceiver } from '../../hooks';
+import { useReceiver, useXmtp, useStartClient } from '../../hooks';
 import { Discord, Github, Mirror, Twitter } from './Icons';
 
 export interface InfoCardProps {
@@ -17,6 +17,7 @@ export interface InfoCardProps {
     | 'no conversations'
     | 'no pinned conversations'
     | 'no ignored conversations'
+    | 'no groups'
     | 'sign in';
   handle?: string | null;
 }
@@ -25,7 +26,9 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
   variant,
   handle,
 }) => {
-  const [signIn] = useClient();
+  const wallet = useXmtp((state) => state.wallet);
+  const signIn = useStartClient();
+
   const dispatch = useReceiver((state) => state.dispatch);
 
   const goBack = useCallback(() => {
@@ -89,7 +92,15 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
           <div className="InfoCard Text">
             To begin messaging, you must first initialize the XMTP client.
           </div>
-          <div className="InfoCard Button" onClick={signIn}>
+          <div
+            className="InfoCard Button"
+            onClick={() => {
+              if (wallet === null) {
+                return;
+              } else {
+                signIn.mutate({ wallet });
+              }
+            }}>
             Initialize
           </div>
         </div>
@@ -120,7 +131,15 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
           <div className="InfoCard Text">
             Signature request cancelled. Try again...
           </div>
-          <div className="InfoCard Button" onClick={signIn}>
+          <div
+            className="InfoCard Button"
+            onClick={() => {
+              if (wallet === null) {
+                return;
+              } else {
+                signIn.mutate({ wallet });
+              }
+            }}>
             Initialize
           </div>
         </div>
@@ -153,6 +172,22 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
           <div className="InfoCard Text">
             {
               "It looks you haven't pinned any conversations yet. You can pin a conversation by clicking the pin icon in the top right corner of any conversation window."
+            }
+          </div>
+          <div className="InfoCard Button" onClick={goBack}>
+            Go Back
+          </div>
+        </div>
+        <BrandedFooter />
+      </div>
+    );
+  } else if (variant === 'no groups') {
+    return (
+      <div className="InfoCard FullMiddleSection">
+        <div className="InfoCard CardContainer">
+          <div className="InfoCard Text">
+            {
+              "It looks like you haven't joined any groups yet. You can join a group via the user interface."
             }
           </div>
           <div className="InfoCard Button" onClick={goBack}>

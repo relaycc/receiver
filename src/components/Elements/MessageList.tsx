@@ -1,27 +1,26 @@
 import { useQueryClient } from '@tanstack/react-query';
 import React, { FunctionComponent, useEffect, useRef } from 'react';
-import {
-  Message,
-  useMessages,
-  useXmtp,
-  receiverContext,
-  useConfig,
-} from '../../hooks';
+import { Message, useMessages, receiverContext, useConfig } from '../../hooks';
 import { motion } from 'framer-motion';
-import MessagesBucket from '../Elements/MessagesBucket';
+import { MessagesBucket, MessagesBucketProps } from './MessagesBucket';
+
+type MessageBucket = MessagesBucketProps['bucket'];
 
 export interface MessageListProps {
+  clientAddress: string;
   peerAddress: string;
+  parseMessage?: (message: Message) => Message;
   setDoScroll: (doScroll: () => unknown) => unknown;
 }
 
 export const MessageList: FunctionComponent<MessageListProps> = ({
+  clientAddress,
   peerAddress,
+  parseMessage,
   setDoScroll,
 }) => {
   const queryClient = useQueryClient({ context: receiverContext });
-  const messagesQuery = useMessages({ peerAddress });
-  const address = useXmtp((state) => state.address);
+  const messagesQuery = useMessages({ peerAddress, clientAddress });
   const bottomDiv = useRef<HTMLDivElement>(null);
   const config = useConfig();
 
@@ -30,21 +29,24 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
       return;
     } else {
       const listener = config.xmtp.client.listenToConversationStream(
+        clientAddress,
         peerAddress,
         async (message: Message) => {
           queryClient.invalidateQueries([
             'messages',
-            address,
+            clientAddress,
             message.senderAddress,
           ]);
           queryClient.invalidateQueries([
             'messages',
-            address,
+            clientAddress,
             message.recipientAddress,
           ]);
         }
       );
-      return () => listener.unlisten();
+      return () => {
+        listener.then(({ unlisten }) => unlisten());
+      };
     }
   }, [config]);
 
@@ -62,7 +64,15 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
       : []
   ) as Message[];
 
-  const buckets = getMessageBuckets(withoutUndefined);
+  const parsedMessages = withoutUndefined.map((message) => {
+    if (parseMessage) {
+      return parseMessage(message);
+    } else {
+      return message;
+    }
+  });
+
+  const buckets = getMessageBuckets(parsedMessages);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -70,77 +80,50 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
       transition={{ duration: 0.5 }}
       className="MessageList List">
       <div ref={bottomDiv} />
-      {buckets.map((bucket, index) => {
-        if (bucket.length > 0) {
-          return (
-            <MessagesBucket
-              key={String(index)}
-              messages={bucket}
-              userPeerAddress={address}
-              startDate={bucket[bucket.length - 1].sent}
-              peerName={peerAddress}
-              sentByAddress={bucket[0].senderAddress}
-            />
-          );
-        }
-        return null;
-      })}
+      {buckets
+        .map((x) => x)
+        .reverse()
+        .map((bucket) => {
+          return <MessagesBucket key={bucket.messages[0].id} bucket={bucket} />;
+        })}
     </motion.div>
   );
 };
 
 // This assumets messages are sorted by date already.
-function getMessageBuckets(messages: Message[]): Array<Message[]> {
-  return messages.reduce(
-    (buckets: Array<Message[]>, message: Message) => {
-      // If sent isn't set, always add it as it's own bucket
-      if (message.sent === undefined) {
-        return [...buckets, [message]];
+function getMessageBuckets(messages: Message[]): MessageBucket[] {
+  const buckets: MessageBucket[] = [];
+  const currentBucket = () => buckets[0];
+  const currentSender = () => currentBucket()?.peerAddress;
+  const currentMessage = () => currentBucket()?.messages[0];
+  const currentSent = () => currentMessage()?.sent;
+
+  for (const message of messages) {
+    const shouldStartNewBucket = () => {
+      if (currentBucket() === undefined) {
+        return true;
       }
-
-      // We initialize the reducer with [[]] so buckets should always be non-empty.
-      const lastBucket = buckets[buckets.length - 1] as Message[];
-      if (lastBucket.length === 0) return [[message]];
-
-      // If this is the initial iteration, initialize buckets.
-      if (buckets.length === 1 && buckets[0].length === 0) {
-        const result: Array<Message[]> = [[message]];
-        return result;
+      if (currentSender() !== message.senderAddress) {
+        return true;
       }
-
-      // If the last message in the last bucket is either sent to a different
-      // address, undefined, sent is not set on it, or it's older than 5 minutes
-      // from the current message, create a new bucket.
-      const lastInLastBucket = buckets[buckets.length - 1]?.[0];
-      if (lastInLastBucket?.recipientAddress !== message.recipientAddress)
-        return [...buckets, [message]];
-      if (lastInLastBucket === undefined) return [...buckets, [message]];
-      if (lastInLastBucket.sent === undefined) return [...buckets, [message]];
-      if (isFiveMinuteDifference(lastInLastBucket.sent, message.sent)) {
-        return [...buckets, [message]];
+      if (currentSent()) {
+        if (isFiveMinuteDifference(currentSent(), message.sent)) {
+          return true;
+        }
       }
+    };
 
-      // If the first message in the last bucket is either undefined, sent is
-      // not set on it, or it's older than an hour from the current message,
-      // create a new bucket.
-      const firstInLastBucket = buckets[buckets.length - 1]?.[0];
-      if (firstInLastBucket === undefined) return [...buckets, [message]];
-      if (firstInLastBucket.sent === undefined) return [...buckets, [message]];
-      if (isHourDifference(firstInLastBucket.sent, message.sent))
-        return [...buckets, [message]];
+    if (shouldStartNewBucket()) {
+      buckets.unshift({
+        peerAddress: message.senderAddress,
+        messages: [message],
+      });
+    } else {
+      buckets[0].messages.push(message);
+    }
+  }
 
-      // If we got here then we just add the current message to the last bucket.
-      lastBucket.push(message);
-      return buckets;
-    },
-    // If you change this you might break this function, in particular the line
-    // where we assert that the last bucket is type Message[].
-    [[]]
-  );
-}
-function isHourDifference(a: Date, b: Date): boolean {
-  // 360000 is milliseconds in an hour
-  return Math.abs(a.getTime() - b.getTime()) > 3600000;
+  return buckets;
 }
 
 function isFiveMinuteDifference(a: Date, b: Date): boolean {

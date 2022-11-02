@@ -45,16 +45,17 @@ export const GoToConversationsIcon: FunctionComponent<MenuIconProps> = ({
       className={`MenuIcon ${className}`}
       style={{ marginRight, marginLeft, padding: '0', cursor: 'pointer' }}
       onClick={onClick}
-      xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      fill="currentColor"
+      width={28}
       height={28}
-      width={28}>
-      <path
-        fillRule="evenodd"
-        d="M3 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 5.25zm0 4.5A.75.75 0 013.75 9h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 9.75zm0 4.5a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75zm0 4.5a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
-        clipRule="evenodd"
-      />
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round">
+      <line x1="4" y1="12" x2="20" y2="12"></line>
+      <line x1="4" y1="6" x2="20" y2="6"></line>
+      <line x1="4" y1="18" x2="20" y2="18"></line>
     </svg>
   );
 };

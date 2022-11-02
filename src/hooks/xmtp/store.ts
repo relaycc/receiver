@@ -29,7 +29,13 @@ export const useWallet = (): [
       if (wallet === null) {
         setState({ wallet: null, address: null });
       } else {
-        setState({ wallet, address: await wallet.getAddress() });
+        setState({
+          wallet,
+          address:
+            wallet.id === 'identity wallet'
+              ? wallet.wallet.address
+              : await wallet.wallet.getAddress(),
+        });
       }
     },
     [setState]

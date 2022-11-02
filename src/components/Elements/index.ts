@@ -10,3 +10,4 @@ export * from './Header';
 export * from './Icons';
 export * from './MenuIcons';
 export * from './Menu';
+export * from './GroupInfo';

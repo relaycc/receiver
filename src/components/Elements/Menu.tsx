@@ -35,6 +35,10 @@ export const Menu = () => {
     dispatch({ id: 'go to screen', screen: { id: 'pinned conversations' } });
   }, [dispatch]);
 
+  const goToGroups = useCallback(() => {
+    dispatch({ id: 'go to screen', screen: { id: 'groups' } });
+  }, [dispatch]);
+
   const goToIgnoredConversations = useCallback(() => {
     dispatch({ id: 'go to screen', screen: { id: 'ignored conversations' } });
   }, [dispatch]);
@@ -78,6 +82,9 @@ export const Menu = () => {
           onClick={goToPinnedConversations}
           className="ConversationListItem ListItem">
           Pinned
+        </div>
+        <div onClick={goToGroups} className="ConversationListItem ListItem">
+          Groups
         </div>
         <div
           onClick={goToAllConversations}

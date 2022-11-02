@@ -296,7 +296,7 @@
   background-color: white;
 }
 
-.RelayReceiver .HeaderWrapper .MenuIcon:hover {
+.RelayReceiver .MenuIcon:hover {
   stroke-width: 2;
 }
 
@@ -720,6 +720,17 @@
   position: absolute;
   top: 0;
   right: 0;
+  padding: 0;
+  box-shadow: none;
+  opacity: 0.4;
+  background: none;
+  border: none;
+}
+
+.RelayReceiver .NewConversationInput.NewGroupSpinner {
+  position: absolute;
+  top: 12px;
+  right: 12px;
   padding: 0;
   box-shadow: none;
   opacity: 0.4;

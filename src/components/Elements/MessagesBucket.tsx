@@ -1,39 +1,30 @@
+import { FunctionComponent } from 'react';
 import MessageBubble from './MessageBubble';
+
 import { Avatar } from './Avatar';
 import React from 'react';
 import { Message, useResponsiveName, useEnsName } from '../../hooks';
 import { getDisplayDate } from '../../utils/date';
 import { motion } from 'framer-motion';
 
-interface MessagesBucketProps {
-  startDate: Date;
-  messages: Message[];
-  peerName?: string | undefined;
-  sentByAddress: string;
-  userPeerAddress: string | null;
+export interface MessagesBucketProps {
+  bucket: {
+    peerAddress: string;
+    messages: Message[];
+  };
 }
 
-export default function MessagesBucket({
-  startDate,
-  messages,
-  sentByAddress,
-  userPeerAddress,
-}: MessagesBucketProps) {
-  const sentByMe = sentByAddress === userPeerAddress;
-
-  const { data: senderName } = useEnsName({
-    handle: sentByAddress,
-  });
-  const { data: peerEns } = useEnsName({
-    handle: sentByAddress,
+export const MessagesBucket: FunctionComponent<MessagesBucketProps> = ({
+  bucket,
+}) => {
+  const ensName = useEnsName({
+    handle: bucket.peerAddress,
   });
   const responsiveName = useResponsiveName(
-    sentByMe ? senderName : peerEns,
-    sentByMe ? userPeerAddress : sentByAddress,
-    ''
+    ensName.data,
+    bucket.peerAddress,
+    bucket.peerAddress
   );
-
-  if (messages.length === 0) return null;
 
   return (
     <motion.div
@@ -44,19 +35,18 @@ export default function MessagesBucket({
       <div className="MessagesBucket SentByInfo">
         <div className="MessagesBucket MessageHeader">
           <div style={{ marginRight: '10px' }}>
-            <Avatar handle={sentByAddress} onClick={() => null} />
+            <Avatar handle={bucket.peerAddress} onClick={() => null} />
           </div>
-          <div
-            className={`MessagesBucket SenderName black-${sentByMe} white-${sentByMe}`}>
+          <div className={`MessagesBucket SenderName black-true white-true`}>
             {responsiveName}
           </div>
           <div className="MessagesBucket MessageTime">
-            {getDisplayDate(startDate)}
+            {getDisplayDate(bucket.messages[0].sent)}
           </div>
         </div>
       </div>
       <div className="MessagesBucket FlexColReverseContainer">
-        {messages.map((e: Message) => {
+        {bucket.messages.map((e: Message) => {
           return (
             <div className="MessagesBucket MessagePosition" key={e.id}>
               <MessageBubble message={e.content} />
@@ -66,4 +56,4 @@ export default function MessagesBucket({
       </div>
     </motion.div>
   );
-}
+};

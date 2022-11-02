@@ -12,12 +12,15 @@ import {
   isEnsName,
   isLensName,
   isEthAddress,
+  useXmtp,
+  useGroups,
 } from '../../hooks';
 import { useIgnoreAddress, usePinAddress } from '../../hooks/xmtp/mutations';
 import { AddressInfo } from './AddressInfo';
 import { LoadingSpinner } from './LoadingSpinner';
 import { Copy } from './Icons';
 import { Avatar } from './Avatar';
+import { GroupInfo } from './GroupInfo';
 import {
   GoToConversationsIcon,
   ExitIcon,
@@ -59,6 +62,14 @@ export const Header: FunctionComponent = () => {
         <ExitIcon onClick={doClose} />
       </div>
     );
+  } else if (screen.id === 'groups') {
+    return (
+      <div className="Header HeaderWrapper">
+        <GoToConversationsIcon onClick={goToMenu} />
+        <h1 className="Header Title">Groups</h1>
+        <ExitIcon onClick={doClose} />
+      </div>
+    );
   } else if (screen.id === 'ignored conversations') {
     return (
       <div className="Header HeaderWrapper">
@@ -71,6 +82,8 @@ export const Header: FunctionComponent = () => {
     return <MenuScreenHeader />;
   } else if (screen.id === 'messages') {
     return <MessageScreenHeader handle={screen.handle} />;
+  } else if (screen.id === 'group') {
+    return <GroupScreenHeader handle={screen.handle} />;
   } else {
     throw new Error('Never should have been here!');
   }
@@ -79,12 +92,12 @@ export const Header: FunctionComponent = () => {
 const MessageScreenHeader = ({ handle }: { handle?: string | null }) => {
   const dispatch = useReceiver((state) => state.dispatch);
   const setIsOpen = useReceiver((state) => state.setIsOpen);
-  const pinnedAddresses = usePinnedAddresses();
-  const ignoredAddresses = useIgnoredAddresses();
+  const address = useXmtp((state) => state.address);
+  const pinnedAddresses = usePinnedAddresses(address);
+  const ignoredAddresses = useIgnoredAddresses(address);
   const relayId = useRelayId({ handle });
-  const config = useConfig();
-  const { pin, unpin } = usePinAddress(relayId.address.data);
-  const { ignore, unignore } = useIgnoreAddress(relayId.address.data);
+  const { pin, unpin } = usePinAddress();
+  const { ignore, unignore } = useIgnoreAddress();
 
   const doClose = useCallback(() => {
     setIsOpen(false);
@@ -116,10 +129,13 @@ const MessageScreenHeader = ({ handle }: { handle?: string | null }) => {
                 marginLeft="auto"
                 marginRight="6px"
                 onClick={() => {
-                  if (config === null) {
+                  if (
+                    relayId.address.data === undefined ||
+                    relayId.address.data === null
+                  ) {
                     return;
                   } else {
-                    unignore.mutate();
+                    unignore.mutate({ peerAddress: relayId.address.data });
                   }
                 }}
                 className="IgnoreIcon"
@@ -131,10 +147,13 @@ const MessageScreenHeader = ({ handle }: { handle?: string | null }) => {
                 marginLeft="auto"
                 marginRight="6px"
                 onClick={() => {
-                  if (config === null) {
+                  if (
+                    relayId.address.data === undefined ||
+                    relayId.address.data === null
+                  ) {
                     return;
                   } else {
-                    ignore.mutate();
+                    ignore.mutate({ peerAddress: relayId.address.data });
                   }
                 }}
                 className="IgnoreIcon"
@@ -160,10 +179,13 @@ const MessageScreenHeader = ({ handle }: { handle?: string | null }) => {
               <PinOffIcon
                 marginRight="6px"
                 onClick={() => {
-                  if (config === null) {
+                  if (
+                    relayId.address.data === undefined ||
+                    relayId.address.data === null
+                  ) {
                     return;
                   } else {
-                    unpin.mutate();
+                    unpin.mutate({ peerAddress: relayId.address.data });
                   }
                 }}
                 className="PinIcon"
@@ -174,10 +196,13 @@ const MessageScreenHeader = ({ handle }: { handle?: string | null }) => {
               <PinIcon
                 marginRight="6px"
                 onClick={() => {
-                  if (config === null) {
+                  if (
+                    relayId.address.data === undefined ||
+                    relayId.address.data === null
+                  ) {
                     return;
                   } else {
-                    pin.mutate();
+                    pin.mutate({ peerAddress: relayId.address.data });
                   }
                 }}
                 className="PinIcon"
@@ -210,13 +235,13 @@ const MessageScreenHeader = ({ handle }: { handle?: string | null }) => {
 const MenuScreenHeader = () => {
   const [didCopyToClipboard, setDidCopyToClipboard] = useState(false);
   const setIsOpen = useReceiver((state) => state.setIsOpen);
-  const [, clientQuery] = useClient();
-  const handle = clientQuery.data?.address;
+  const address = useXmtp((state) => state.address);
+  const client = useClient(address);
   const config = useConfig();
   const lensProfile = useLensProfile({
-    handle,
+    handle: client.data?.address,
   });
-  const ensName = useEnsName({ handle });
+  const ensName = useEnsName({ handle: client.data?.address });
 
   const primaryId = (() => {
     if (isLensName(lensProfile.data?.handle)) {
@@ -225,8 +250,8 @@ const MenuScreenHeader = () => {
     if (isEnsName(ensName.data)) {
       return ensName.data;
     }
-    if (isEthAddress(handle)) {
-      return handle;
+    if (isEthAddress(client.data?.address)) {
+      return client.data?.address;
     }
 
     return 'Not Signed In';
@@ -234,11 +259,7 @@ const MenuScreenHeader = () => {
   return (
     <div className="MenuScreenHeader">
       <div className="avatar">
-        <Avatar
-          size="xl"
-          onClick={() => null}
-          handle={clientQuery.data?.address}
-        />
+        <Avatar size="xl" onClick={() => null} handle={client.data?.address} />
       </div>
       <div className="identity">
         <h3 className="username">
@@ -249,15 +270,15 @@ const MenuScreenHeader = () => {
           onClick={() => {
             setDidCopyToClipboard(true);
             setTimeout(() => setDidCopyToClipboard(false), 1500);
-            navigator.clipboard.writeText(String(clientQuery.data?.address));
+            navigator.clipboard.writeText(String(client.data?.address));
           }}>
           {(() => {
-            if (clientQuery.data?.address === undefined) {
+            if (client.data?.address === undefined) {
               return 'No XMTP identity found...';
             } else {
               return (
                 <>
-                  {truncateAddress(clientQuery.data?.address)}
+                  {truncateAddress(client.data?.address)}
                   {didCopyToClipboard ? (
                     <span style={{ marginLeft: '0.5rem', fontSize: '0.8rem' }}>
                       Copied!
@@ -274,9 +295,9 @@ const MenuScreenHeader = () => {
           XMTP Network:{' '}
           <span
             className={`xmtp-network-name ${
-              clientQuery.data ? undefined : 'not-connected'
+              client.data ? undefined : 'not-connected'
             }`}>
-            {(clientQuery.data && config?.xmtp.network) || 'Not Connected'}
+            {(client.data && config?.xmtp.network) || 'Not Connected'}
           </span>
         </h4>
       </div>
@@ -288,3 +309,51 @@ const MenuScreenHeader = () => {
 function truncateAddress(address: string) {
   return address.slice(0, 6) + '...' + address.slice(-4);
 }
+
+const GroupScreenHeader = ({ handle }: { handle?: string | null }) => {
+  const dispatch = useReceiver((state) => state.dispatch);
+  const setIsOpen = useReceiver((state) => state.setIsOpen);
+  const relayId = useRelayId({ handle });
+  const address = useXmtp((state) => state.address);
+  const groups = useGroups(address);
+  const group = (() => {
+    if (groups.data === undefined || handle === undefined || handle === null) {
+      return undefined;
+    } else {
+      return groups.data[handle];
+    }
+  })();
+
+  const doClose = useCallback(() => {
+    setIsOpen(false);
+  }, [setIsOpen]);
+
+  const goBack = useCallback(() => {
+    dispatch({ id: 'go back screen' });
+  }, [dispatch]);
+
+  return (
+    <div className="Header HeaderWrapper">
+      <GoBackIcon marginRight="10px" onClick={goBack} />
+      <GroupInfo group={group} />
+      <MinimizeIcon
+        marginLeft="auto"
+        onClick={() => {
+          if (
+            relayId.address.data === undefined ||
+            relayId.address.data === null
+          ) {
+            return;
+          } else {
+            dispatch({
+              id: 'add pinned conversation',
+              peerAddress: relayId.address.data,
+            });
+            doClose();
+          }
+        }}
+      />
+      <ExitIcon onClick={doClose} />
+    </div>
+  );
+};

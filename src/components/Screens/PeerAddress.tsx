@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useCallback, useState } from 'react';
 import { Screen } from './Screen';
 import { MessageList, MessageInput, InfoCard, LoadingList } from '../Elements';
 import {
@@ -9,6 +9,7 @@ import {
   useLensProfile,
   addressFromProfile,
   useConfig,
+  useXmtp,
 } from '../../hooks';
 
 export interface PeerAddressProps {
@@ -18,6 +19,7 @@ export interface PeerAddressProps {
 export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
   handle,
 }) => {
+  const { address } = useXmtp();
   const lensProfile = useLensProfile({
     handle,
   });
@@ -31,13 +33,26 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
     handle,
   });
   const peerAddress = lensAddress || ensAddress.data || handle;
-  const peerOnNetwork = usePeerOnNetwork({ peerAddress });
-  const messages = useMessages({ peerAddress });
+  const peerOnNetwork = usePeerOnNetwork({
+    peerAddress,
+    clientAddress: address,
+  });
+  const messages = useMessages({ peerAddress, clientAddress: address });
   const [scrollMessageList, setScrollMessageList] = useState<() => unknown>(
     () => null
   );
   const config = useConfig();
 
+  const sendMessage = useCallback(
+    (message: string) => {
+      if (config === null || address === null || !isEthAddress(peerAddress)) {
+        return;
+      } else {
+        return config.xmtp.client.sendMessage(address, peerAddress, message);
+      }
+    },
+    [config, address, peerAddress]
+  );
   return (
     <Screen
       content={(() => {
@@ -62,13 +77,7 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
                 <LoadingList />
                 <MessageInput
                   onEnterPressed={scrollMessageList}
-                  onSendMessage={(message: string) => {
-                    if (config === null) {
-                      return;
-                    } else {
-                      config.xmtp.client.sendMessage(peerAddress, message);
-                    }
-                  }}
+                  onSendMessage={sendMessage}
                 />
               </>
             );
@@ -81,13 +90,7 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
                   <InfoCard variant="no messages" />
                   <MessageInput
                     onEnterPressed={scrollMessageList}
-                    onSendMessage={(message: string) => {
-                      if (config === null) {
-                        return;
-                      } else {
-                        config.xmtp.client.sendMessage(peerAddress, message);
-                      }
-                    }}
+                    onSendMessage={sendMessage}
                   />
                 </>
               );
@@ -95,18 +98,13 @@ export const PeerAddress: FunctionComponent<PeerAddressProps> = ({
               return (
                 <>
                   <MessageList
+                    clientAddress={address as string}
                     peerAddress={peerAddress}
                     setDoScroll={setScrollMessageList}
                   />
                   <MessageInput
                     onEnterPressed={scrollMessageList}
-                    onSendMessage={(message: string) => {
-                      if (config === null) {
-                        return;
-                      } else {
-                        config.xmtp.client.sendMessage(peerAddress, message);
-                      }
-                    }}
+                    onSendMessage={sendMessage}
                   />
                 </>
               );
