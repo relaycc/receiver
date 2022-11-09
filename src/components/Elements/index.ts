@@ -1,4 +1,3 @@
-export * from './NewConversation';
 export * from './Conversations';
 export * from './Avatar';
 export * from './LoadingList';
@@ -11,3 +10,6 @@ export * from './Icons';
 export * from './MenuIcons';
 export * from './Menu';
 export * from './GroupInfo';
+export * from './RelayIdInput';
+export * from './RelayGroupNameInput';
+export * from './AddressInfo';

@@ -1,22 +1,33 @@
 import { useQueryClient } from '@tanstack/react-query';
 import React, { FunctionComponent, useEffect, useRef } from 'react';
-import { Message, useMessages, receiverContext, useConfig } from '../../hooks';
+import { useMessages, receiverContext, useConfig } from '../../hooks';
 import { motion } from 'framer-motion';
-import { MessagesBucket, MessagesBucketProps } from './MessagesBucket';
-
-type MessageBucket = MessagesBucketProps['bucket'];
+import { MessagesBucket } from './MessagesBucket';
+import {
+  MessageBucket,
+  getBucketSender,
+  getBucketSent,
+  getUniqueKey,
+  isGroupInviteBucket,
+  isMessageBucket,
+} from '../../utils';
+import {
+  Message,
+  EthAddress,
+  isText,
+  isGroupInvite,
+  isEthAddress,
+} from '../../domain';
 
 export interface MessageListProps {
-  clientAddress: string;
-  peerAddress: string;
-  parseMessage?: (message: Message) => Message;
+  clientAddress: EthAddress;
+  peerAddress: EthAddress;
   setDoScroll: (doScroll: () => unknown) => unknown;
 }
 
 export const MessageList: FunctionComponent<MessageListProps> = ({
   clientAddress,
   peerAddress,
-  parseMessage,
   setDoScroll,
 }) => {
   const queryClient = useQueryClient({ context: receiverContext });
@@ -64,15 +75,7 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
       : []
   ) as Message[];
 
-  const parsedMessages = withoutUndefined.map((message) => {
-    if (parseMessage) {
-      return parseMessage(message);
-    } else {
-      return message;
-    }
-  });
-
-  const buckets = getMessageBuckets(parsedMessages);
+  const buckets = getMessageBuckets(withoutUndefined);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -84,7 +87,7 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
         .map((x) => x)
         .reverse()
         .map((bucket) => {
-          return <MessagesBucket key={bucket.messages[0].id} bucket={bucket} />;
+          return <MessagesBucket key={getUniqueKey(bucket)} bucket={bucket} />;
         })}
     </motion.div>
   );
@@ -94,13 +97,18 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
 function getMessageBuckets(messages: Message[]): MessageBucket[] {
   const buckets: MessageBucket[] = [];
   const currentBucket = () => buckets[0];
-  const currentSender = () => currentBucket()?.peerAddress;
-  const currentMessage = () => currentBucket()?.messages[0];
-  const currentSent = () => currentMessage()?.sent;
+  const currentSender = () => getBucketSender(currentBucket());
+  const currentSent = () => getBucketSent(currentBucket());
 
   for (const message of messages) {
     const shouldStartNewBucket = () => {
-      if (currentBucket() === undefined) {
+      if (!isText(message.content)) {
+        return true;
+      }
+      if (isGroupInviteBucket(currentBucket())) {
+        return true;
+      }
+      if (!isMessageBucket(currentBucket())) {
         return true;
       }
       if (currentSender() !== message.senderAddress) {
@@ -111,15 +119,36 @@ function getMessageBuckets(messages: Message[]): MessageBucket[] {
           return true;
         }
       }
+      return false;
     };
 
     if (shouldStartNewBucket()) {
-      buckets.unshift({
-        peerAddress: message.senderAddress,
-        messages: [message],
-      });
+      if (isText(message.content)) {
+        if (!isEthAddress(message.senderAddress)) {
+          continue;
+        } else {
+          buckets.unshift({
+            id: 'text messages bucket',
+            peerAddress: message.senderAddress,
+            messages: [message],
+          });
+        }
+      } else if (isGroupInvite(message.content)) {
+        buckets.unshift({
+          id: 'group invite bucket',
+          message: message,
+        });
+      } else {
+        console.warn('You got an unsupported message type', message);
+        continue;
+      }
     } else {
-      buckets[0].messages.push(message);
+      const bucket = currentBucket();
+      if (isGroupInviteBucket(bucket)) {
+        throw new Error("Can't add a message to a group invite bucket");
+      } else {
+        bucket.messages.push(message);
+      }
     }
   }
 

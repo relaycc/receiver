@@ -7,18 +7,63 @@ import {
   unignoreAddress,
   createGroup,
   leaveGroup,
+  joinGroup,
+} from './actions';
+import { receiverContext } from '../receiverContext';
+import {
+  EthAddress,
+  Group,
+  Wallet,
   sendGroupMessage,
-} from './helpers';
-import { useXmtp } from './store';
-import { receiverContext } from './context';
-import { WorkerWallet } from '../types';
+  sendGroupInvite,
+  sendText,
+} from '../../domain';
+import { useWalletAddress } from '../wallet';
+
+export const useSendText = () => {
+  const config = useConfig();
+  const queryClient = useQueryClient({ context: receiverContext });
+  const walletAddress = useWalletAddress();
+
+  return useMutation(
+    async ({
+      peerAddress,
+      content,
+    }: {
+      peerAddress?: EthAddress | null;
+      content: string;
+    }) => {
+      if (
+        config === null ||
+        walletAddress === null ||
+        peerAddress === null ||
+        peerAddress === undefined
+      ) {
+        return null;
+      } else {
+        return sendText(
+          walletAddress,
+          config.xmtp.client,
+          peerAddress,
+          content
+        );
+      }
+    },
+    {
+      context: receiverContext,
+      onSuccess: () => {
+        queryClient.invalidateQueries(['messages', walletAddress]);
+      },
+    }
+  );
+};
 
 export const useStartClient = () => {
   const config = useConfig();
   const queryClient = useQueryClient({ context: receiverContext });
 
   return useMutation(
-    async ({ wallet }: { wallet: WorkerWallet }) => {
+    async ({ wallet }: { wallet: Wallet }) => {
       if (config === null) {
         throw new Error('useStartClient mutation, config is null');
       } else {
@@ -37,40 +82,40 @@ export const useStartClient = () => {
 export const usePinAddress = () => {
   const config = useConfig();
   const queryClient = useQueryClient({ context: receiverContext });
-  const { address } = useXmtp();
+  const walletAddress = useWalletAddress();
 
   const pin = useMutation(
-    async ({ peerAddress }: { peerAddress: string }) => {
-      if (config === null || address === null) {
+    async ({ peerAddress }: { peerAddress: EthAddress }) => {
+      if (config === null || walletAddress === null) {
         throw new Error(
           'usePinAddress::pin mutation, config is null or address is null'
         );
       } else {
-        return pinAddress(address, config.xmtp.client, peerAddress);
+        return pinAddress(walletAddress, config.xmtp.client, peerAddress);
       }
     },
     {
       context: receiverContext,
       onSuccess: () => {
-        queryClient.invalidateQueries(['pinned addresses', address]);
+        queryClient.invalidateQueries(['pinned addresses', walletAddress]);
       },
     }
   );
 
   const unpin = useMutation(
-    async ({ peerAddress }: { peerAddress: string }) => {
-      if (config === null || address === null) {
+    async ({ peerAddress }: { peerAddress: EthAddress }) => {
+      if (config === null || walletAddress === null) {
         throw new Error(
           'usePinAddress::unpin mutation, config is null or address is null'
         );
       } else {
-        return unpinAddress(address, config.xmtp.client, peerAddress);
+        return unpinAddress(walletAddress, config.xmtp.client, peerAddress);
       }
     },
     {
       context: receiverContext,
       onSuccess: () => {
-        queryClient.invalidateQueries(['pinned addresses', address]);
+        queryClient.invalidateQueries(['pinned addresses', walletAddress]);
       },
     }
   );
@@ -81,42 +126,50 @@ export const usePinAddress = () => {
 export const useIgnoreAddress = () => {
   const config = useConfig();
   const queryClient = useQueryClient({ context: receiverContext });
-  const { address } = useXmtp();
+  const walletAddress = useWalletAddress();
 
   const ignore = useMutation(
-    async ({ peerAddress }: { peerAddress: string }) => {
-      if (config === null || address === null) {
+    async ({ peerAddress }: { peerAddress: EthAddress }) => {
+      if (config === null || walletAddress === null) {
         throw new Error('useIgnoreAddress::unpin mutation, config is null');
       } else {
-        return ignoreAddress(address, config.xmtp.client, peerAddress);
+        return ignoreAddress(walletAddress, config.xmtp.client, peerAddress);
       }
     },
     {
       context: receiverContext,
       onSuccess: () => {
-        queryClient.invalidateQueries(['ignored addresses', address]);
+        queryClient.invalidateQueries(['ignored addresses', walletAddress]);
       },
     }
   );
 
   const unignore = useMutation(
-    async ({ peerAddress }: { peerAddress: string }) => {
-      if (config === null || address === null) {
+    async ({ peerAddress }: { peerAddress: EthAddress }) => {
+      if (config === null || walletAddress === null) {
         throw new Error(
           'useIgnoreAddress:unignore mutation, config is null or address is null'
         );
       } else {
-        if (peerAddress === undefined || peerAddress === null) {
+        if (
+          peerAddress === undefined ||
+          peerAddress === null ||
+          walletAddress === null
+        ) {
           return;
         } else {
-          return unignoreAddress(address, config.xmtp.client, peerAddress);
+          return unignoreAddress(
+            walletAddress,
+            config.xmtp.client,
+            peerAddress
+          );
         }
       }
     },
     {
       context: receiverContext,
       onSuccess: () => {
-        queryClient.invalidateQueries(['ignored addresses', address]);
+        queryClient.invalidateQueries(['ignored addresses', walletAddress]);
       },
     }
   );
@@ -127,23 +180,29 @@ export const useIgnoreAddress = () => {
 export const useGroup = () => {
   const config = useConfig();
   const queryClient = useQueryClient({ context: receiverContext });
-  const { address } = useXmtp();
+  const walletAddress = useWalletAddress();
 
   const create = useMutation(
     async ({ name }: { name: string }) => {
-      if (config === null || address === null) {
+      if (config === null || walletAddress === null) {
         throw new Error(
           'useGroup::create mutation, config is null or address is null'
         );
       } else {
-        const { created } = await createGroup(address, config.xmtp.client, {
-          name,
-        });
+        const { created } = await createGroup(
+          walletAddress,
+          config.xmtp.client,
+          {
+            name,
+          }
+        );
         await sendGroupMessage(
           created.wallet.wallet.address,
-          created.wallet.wallet.address,
           config.xmtp.client,
-          `New Group Created by ${address} at ${new Date().toLocaleString()}`
+          {
+            senderAddress: walletAddress,
+            message: `New Group Created by ${walletAddress} at ${new Date().toLocaleString()}`,
+          }
         );
         return created;
       }
@@ -151,28 +210,70 @@ export const useGroup = () => {
     {
       context: receiverContext,
       onSuccess: () => {
-        queryClient.invalidateQueries(['groups', address]);
+        queryClient.invalidateQueries(['groups', walletAddress]);
       },
     }
   );
 
-  const leave = useMutation(
-    async ({ peerAddress }: { peerAddress: string }) => {
-      if (config === null || address === null) {
+  const join = useMutation(
+    async (group: Group) => {
+      if (config === null || walletAddress === null) {
         throw new Error(
-          'useGroup::leave mutation, config is null or address is null'
+          'useGroup::join mutation, config is null or address is null'
         );
       } else {
-        return leaveGroup(address, config.xmtp.client, peerAddress);
+        return joinGroup(walletAddress, config.xmtp.client, group);
       }
     },
     {
       context: receiverContext,
       onSuccess: () => {
-        queryClient.invalidateQueries(['groups', address]);
+        queryClient.invalidateQueries(['groups', walletAddress]);
       },
     }
   );
 
-  return { create, leave };
+  const invite = useMutation(
+    async ({
+      peerAddress,
+      group,
+    }: {
+      peerAddress: EthAddress;
+      group: Group;
+    }) => {
+      if (config === null || walletAddress === null) {
+        throw new Error(
+          'useGroup::invite mutation, config is null or address is null'
+        );
+      } else {
+        return sendGroupInvite(walletAddress, peerAddress, config.xmtp.client, {
+          inviterAddress: walletAddress,
+          group,
+        });
+      }
+    },
+    {
+      context: receiverContext,
+    }
+  );
+
+  const leave = useMutation(
+    async (group: Group) => {
+      if (config === null || walletAddress === null) {
+        throw new Error(
+          'useGroup::leave mutation, config is null or address is null'
+        );
+      } else {
+        return leaveGroup(walletAddress, config.xmtp.client, group);
+      }
+    },
+    {
+      context: receiverContext,
+      onSuccess: () => {
+        queryClient.invalidateQueries(['groups', walletAddress]);
+      },
+    }
+  );
+
+  return { create, leave, join, invite };
 };

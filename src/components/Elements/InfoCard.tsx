@@ -1,6 +1,6 @@
 import React from 'react';
 import { FunctionComponent, useCallback } from 'react';
-import { useReceiver, useXmtp, useStartClient } from '../../hooks';
+import { useReceiver, useStartClient, useWallet } from '../../hooks';
 import { Discord, Github, Mirror, Twitter } from './Icons';
 
 export interface InfoCardProps {
@@ -26,7 +26,7 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
   variant,
   handle,
 }) => {
-  const wallet = useXmtp((state) => state.wallet);
+  const [wallet] = useWallet();
   const signIn = useStartClient();
 
   const dispatch = useReceiver((state) => state.dispatch);

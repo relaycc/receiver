@@ -1,14 +1,10 @@
-import React, { FunctionComponent, useCallback, useState } from 'react';
-import {
-  useReceiver,
-  isEnsName,
-  isEthAddress,
-  isLensName,
-  Message,
-} from '../../../hooks';
+import React, { FunctionComponent, useCallback } from 'react';
+import { useReceiver } from '../../../hooks';
 import { ConversationListItem } from './ConversationListItem';
 import { Plus } from '../Icons';
 import { InfoCard } from '../InfoCard';
+import { RelayIdInput } from '..';
+import { Handle, Message } from '../../../domain';
 
 export interface Conversation {
   peerAddress: string;
@@ -17,63 +13,24 @@ export interface Conversation {
 
 export const NoConversations: FunctionComponent = () => {
   const dispatch = useReceiver((state) => state.dispatch);
-  const [newConversationInput, setNewConversationInput] = useState<
-    string | null
-  >(null);
-  const [newConversatinInputIsError, setNewConversationInputIsError] =
-    useState(false);
-
-  const onSubmitNewConversation = useCallback(() => {
-    if (
-      newConversationInput === null ||
-      (!isEnsName(newConversationInput) &&
-        !isEthAddress(newConversationInput) &&
-        !isLensName(newConversationInput))
-    ) {
-      setNewConversationInputIsError(true);
-    } else {
+  const onSubmitNewConversation = useCallback(
+    (handle: Handle) => {
       dispatch({
         id: 'go to screen',
-        screen: { id: 'messages', handle: newConversationInput },
+        screen: { id: 'messages', handle },
       });
-    }
-  }, [newConversationInput, dispatch]);
+    },
+    [dispatch]
+  );
 
   return (
     <>
-      <form
-        className="NewConversationInputForm"
-        onSubmit={(e) => {
-          e.preventDefault();
-          onSubmitNewConversation();
-        }}>
-        <input
-          className="NewConversationInput"
-          autoFocus={true}
-          placeholder="Enter ENS, Lens, or address..."
-          type="text"
-          spellCheck="false"
-          autoComplete="off"
-          autoCorrect="false"
-          autoCapitalize="false"
-          value={newConversationInput || ''}
-          onChange={(e) => {
-            e.preventDefault();
-            setNewConversationInput(e.target.value);
-            setNewConversationInputIsError(false);
-          }}
-        />
-        <Plus
-          onClick={onSubmitNewConversation}
-          className="NewConversationInput Plus"
-        />
-        {newConversatinInputIsError && (
-          <p className="NewConversationInput ErrorMessage">
-            Please enter a valid handle...
-          </p>
-        )}
-      </form>
       <ul className="ConversationList List">
+        <RelayIdInput
+          className="rr-m-10px-mt-4"
+          onSubmit={onSubmitNewConversation}
+          HintIcon={Plus}
+        />
         <ConversationListItem
           onClick={() => {
             dispatch({

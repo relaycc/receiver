@@ -5,12 +5,14 @@ import {
   fetchPinnedAddresses,
   fetchIgnoredAddresses,
   fetchGroups,
-} from './helpers';
-import { receiverContext } from './context';
+  EthAddress,
+  fetchMessages,
+} from '../../domain';
+import { receiverContext } from '../receiverContext';
 import { useConfig } from '../receiver';
-import { useXmtp } from './store';
+import { useWalletAddress } from '../wallet';
 
-export const useClient = (clientAddress?: string | null) => {
+export const useClient = (clientAddress?: EthAddress | null) => {
   const config = useConfig();
 
   return useQuery(
@@ -40,7 +42,7 @@ export const useClient = (clientAddress?: string | null) => {
   );
 };
 
-export const usePinnedAddresses = (clientAddress?: string | null) => {
+export const usePinnedAddresses = (clientAddress?: EthAddress | null) => {
   const config = useConfig();
   const client = useClient(clientAddress);
 
@@ -73,7 +75,7 @@ export const usePinnedAddresses = (clientAddress?: string | null) => {
   );
 };
 
-export const useIgnoredAddresses = (clientAddress?: string | null) => {
+export const useIgnoredAddresses = (clientAddress?: EthAddress | null) => {
   const config = useConfig();
   const client = useClient(clientAddress);
 
@@ -104,7 +106,7 @@ export const useIgnoredAddresses = (clientAddress?: string | null) => {
   );
 };
 
-export const useConversations = (clientAddress?: string | null) => {
+export const useConversations = (clientAddress?: EthAddress | null) => {
   const config = useConfig();
   const client = useClient(clientAddress);
 
@@ -135,8 +137,8 @@ export const useConversations = (clientAddress?: string | null) => {
 };
 
 export const useConversationsPreviews = (
-  addresses: string[],
-  clientAddress?: string | null
+  addresses: EthAddress[],
+  clientAddress?: EthAddress | null
 ) => {
   const config = useConfig();
   const client = useClient(clientAddress);
@@ -157,9 +159,10 @@ export const useConversationsPreviews = (
             if (config === null) {
               throw new Error('useConversation :: useConfig returned null');
             } else {
-              const messages = await config.xmtp.client.fetchMessages(
+              const messages = await fetchMessages(
                 clientAddress,
                 peerAddress,
+                config.xmtp.client,
                 MOST_RECENT_MESSAGE_OPTIONS
               );
               return {
@@ -181,8 +184,8 @@ export const useMessages = ({
   clientAddress,
   peerAddress,
 }: {
-  peerAddress: string | null | undefined;
-  clientAddress?: string | null;
+  clientAddress?: EthAddress | null;
+  peerAddress?: EthAddress | null;
 }) => {
   const config = useConfig();
   const client = useClient(clientAddress);
@@ -202,9 +205,10 @@ export const useMessages = ({
         if (config === null) {
           throw new Error('useConversation :: useConfig returned null');
         } else {
-          const messages = await config.xmtp.client.fetchMessages(
+          const messages = await fetchMessages(
             clientAddress,
             peerAddress,
+            config.xmtp.client,
             MOST_RECENT_PAGE_OPTIONS
           );
           return {
@@ -232,8 +236,8 @@ export const usePeerOnNetwork = ({
   clientAddress,
   peerAddress,
 }: {
-  peerAddress: string | null | undefined;
-  clientAddress?: string | null;
+  peerAddress?: EthAddress | null;
+  clientAddress?: EthAddress | null;
 }) => {
   const config = useConfig();
   const client = useClient(clientAddress);
@@ -273,7 +277,7 @@ export const usePeerOnNetwork = ({
   );
 };
 
-export const useGroups = (clientAddress?: string | null) => {
+export const useGroups = (clientAddress?: EthAddress | null) => {
   const config = useConfig();
   const client = useClient(clientAddress);
 
@@ -304,8 +308,8 @@ export const useGroups = (clientAddress?: string | null) => {
   );
 };
 
-export const useGroupsPreviews = (clientAddress?: string | null) => {
-  const address = useXmtp((state) => state.address);
+export const useGroupsPreviews = (clientAddress?: EthAddress | null) => {
+  const walletAddress = useWalletAddress();
   const config = useConfig();
   const groups = useGroups(clientAddress);
   const groupsList = Object.values(groups.data || {});
@@ -340,16 +344,17 @@ export const useGroupsPreviews = (clientAddress?: string | null) => {
   return useQueries({
     queries: groupsList.map((group) => {
       return {
-        queryKey: ['messages', address, group.wallet.wallet.address],
+        queryKey: ['messages', walletAddress, group.wallet.wallet.address],
         queryFn: async () => {
           if (config === null) {
             throw new Error(
               'useGroupsPrevies :: fetchGroupsMessages queryFn running too early'
             );
           } else {
-            const messages = await config.xmtp.client.fetchMessages(
+            const messages = await fetchMessages(
               group.wallet.wallet.address,
               group.wallet.wallet.address,
+              config.xmtp.client,
               MOST_RECENT_MESSAGE_OPTIONS
             );
             return {

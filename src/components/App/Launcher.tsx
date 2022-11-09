@@ -4,19 +4,15 @@ import { useLaunch, useReceiver } from '../../hooks';
 import { Avatar } from '../Elements';
 import '../../styles/app.css';
 import { motion } from 'framer-motion';
+import { Handle } from '../../domain';
 
 export interface LauncherProps {
-  // TODO(achilles@relay.cc) We allow the user to pass in much more than a peer
-  // address (ENS, Lens, etc), so we should name this variable accordingly. I
-  // don't want to change the name until we at the very least have a good
-  // migration guide process in place.
-  peerAddress?: string | null;
+  handle?: Handle | null;
 }
 
-export const Launcher: FunctionComponent<LauncherProps> = ({ peerAddress }) => {
+export const Launcher: FunctionComponent<LauncherProps> = ({ handle }) => {
   // Rename here because we want to think of the input as a handle internally,
   // even though the public prop is still called `peerAddress`.
-  const inputHandle = peerAddress;
   const pinnedConversations = useReceiver((state) => state.pinnedConversations);
   const setIsOpen = useReceiver((state) => state.setIsOpen);
   const isOpen = useReceiver((state) => state.isOpen);
@@ -27,7 +23,7 @@ export const Launcher: FunctionComponent<LauncherProps> = ({ peerAddress }) => {
     if (isOpen) {
       setIsOpen(false);
     } else {
-      launch(inputHandle);
+      launch(handle);
     }
   };
 
@@ -50,7 +46,10 @@ export const Launcher: FunctionComponent<LauncherProps> = ({ peerAddress }) => {
               onClick={() => {
                 dispatchReceiver({
                   id: 'go to screen',
-                  screen: { id: 'messages', handle: peerAddress },
+                  screen: {
+                    id: 'messages',
+                    handle: peerAddress,
+                  },
                 });
                 setIsOpen(true);
               }}

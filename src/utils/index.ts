@@ -1,4 +1,3 @@
 export * from './address';
 export * from './date';
-export * from './parseJson';
-export * from './isEthAddress';
+export * from '../domain/receiver/MessageBucket';

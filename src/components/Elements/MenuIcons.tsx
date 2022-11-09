@@ -269,3 +269,35 @@ export const GoBackIcon: FunctionComponent<MenuIconProps> = ({
     </svg>
   );
 };
+
+export const LeaveGroupIcon: FunctionComponent<MenuIconProps> = ({
+  onClick,
+  marginLeft,
+  marginRight,
+  className,
+}) => {
+  return (
+    <svg
+      onClick={onClick}
+      className={`MenuIcon ${className}`}
+      style={{
+        marginRight,
+        marginLeft,
+        padding: '0',
+        cursor: 'pointer',
+      }}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+      <circle cx="9" cy="7" r="4"></circle>
+      <line x1="22" y1="11" x2="16" y2="11"></line>
+    </svg>
+  );
+};

@@ -1,63 +1,28 @@
-import React, { FunctionComponent, useCallback, useState } from 'react';
-import { useReceiver, useGroup } from '../../../hooks';
+import React, { FunctionComponent, useCallback } from 'react';
+import { useGroup } from '../../../hooks';
 import { Plus } from '../Icons';
 import { InfoCard } from '../InfoCard';
-import { LoadingSpinner } from '../LoadingSpinner';
+import { RelayGroupNameInput } from '../RelayGroupNameInput';
 
 export const NoGroups: FunctionComponent = () => {
-  const dispatch = useReceiver((state) => state.dispatch);
-  const [newGroupInput, setNewGroupInput] = useState<string | null>(null);
-  const [newGroupInputIsError, setNewGroupInputIsError] = useState(false);
   const { create } = useGroup();
 
-  const onSubmitNewGroup = useCallback(() => {
-    if (newGroupInput === null) {
-      setNewGroupInputIsError(true);
-    } else {
-      create.mutate({ name: newGroupInput });
-    }
-  }, [newGroupInput, dispatch]);
+  const onSubmitNewGroup = useCallback(
+    (name: string) => {
+      create.mutate({ name });
+    },
+    [create]
+  );
 
   return (
     <>
-      <form
-        className="NewConversationInputForm"
-        onSubmit={(e) => {
-          e.preventDefault();
-          onSubmitNewGroup();
-        }}>
-        <input
-          className="NewConversationInput"
-          placeholder="Enter new group info..."
-          type="text"
-          spellCheck="false"
-          autoComplete="off"
-          autoCorrect="false"
-          autoCapitalize="false"
-          value={create.isLoading ? 'Creating group...' : newGroupInput || ''}
-          onChange={(e) => {
-            e.preventDefault();
-            setNewGroupInput(e.target.value);
-            setNewGroupInputIsError(false);
-          }}
-        />
-        {create.isLoading && (
-          <div className="NewConversationInput NewGroupSpinner">
-            <LoadingSpinner />
-          </div>
-        )}
-        {create.isLoading || (
-          <Plus
-            onClick={onSubmitNewGroup}
-            className="NewConversationInput Plus"
-          />
-        )}
-        {newGroupInputIsError && (
-          <p className="NewConversationInput ErrorMessage">
-            {"Group name field can't be empty."}
-          </p>
-        )}
-      </form>
+      <RelayGroupNameInput
+        className="rr-m-10px-mt-4"
+        onSubmit={onSubmitNewGroup}
+        HintIcon={Plus}
+        onSubmitIsRunning={create.isLoading}
+        onSubmitIsSuccess={create.isSuccess}
+      />
       <InfoCard variant="no groups" />
     </>
   );

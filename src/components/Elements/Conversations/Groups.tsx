@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useMemo } from 'react';
-import { useGroupsPreviews, useXmtp } from '../../../hooks';
+import { useGroupsPreviews, useWalletAddress } from '../../../hooks';
 import { GroupListView, GroupConversation } from './GroupListView';
 import { LoadingList } from '../LoadingList';
 import { NoGroups } from './NoGroups';
 
 export const Groups: FunctionComponent = () => {
-  const address = useXmtp((state) => state.address);
-  const groupsPreviews = useGroupsPreviews(address);
+  const walletAddress = useWalletAddress();
+  const groupsPreviews = useGroupsPreviews(walletAddress);
   const groupsIsLoading = Boolean(groupsPreviews.find((pq) => pq.isLoading));
 
   const conversationsProps: GroupConversation[] = useMemo(() => {

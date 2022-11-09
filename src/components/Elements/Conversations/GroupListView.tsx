@@ -1,8 +1,9 @@
-import React, { FunctionComponent, useCallback, useState } from 'react';
-import { useReceiver, Message, Group, useGroup } from '../../../hooks';
+import React, { FunctionComponent, useCallback } from 'react';
+import { useReceiver, useGroup } from '../../../hooks';
 import { ConversationListItem } from './ConversationListItem';
 import { Plus } from '../Icons';
-import { LoadingSpinner } from '../LoadingSpinner';
+import { RelayGroupNameInput } from '../RelayGroupNameInput';
+import { Group, Message, getText } from '../../../domain';
 
 export interface GroupConversation {
   group: Group;
@@ -13,77 +14,25 @@ export const GroupListView: FunctionComponent<{
   conversations: GroupConversation[];
 }> = ({ conversations }) => {
   const dispatch = useReceiver((state) => state.dispatch);
-  const [newGroupInput, setNewGroupInput] = useState<string | null>(null);
-  const [newGroupInputIsError, setNewGroupInputIsError] = useState(false);
   const { create } = useGroup();
 
-  const onSubmitNewGroup = useCallback(() => {
-    if (newGroupInput === null) {
-      setNewGroupInputIsError(true);
-    } else {
-      create.mutate({ name: newGroupInput });
-    }
-  }, [newGroupInput, dispatch]);
-
-  const parseMessage = useCallback((message: Message): Message => {
-    try {
-      const json = JSON.parse(message.content) as {
-        senderAddress: string;
-        message: string;
-      };
-      return {
-        id: message.id,
-        senderAddress: json.senderAddress,
-        recipientAddress: message.recipientAddress,
-        content: json.message,
-        sent: message.sent,
-      };
-    } catch {
-      return message;
-    }
-  }, []);
+  const onSubmitNewGroup = useCallback(
+    (name: string) => {
+      create.mutate({ name });
+    },
+    [create]
+  );
 
   return (
     <ul className="ConversationList List">
       <li>
-        <form
-          className="NewConversationInputForm"
-          onSubmit={(e) => {
-            e.preventDefault();
-            onSubmitNewGroup();
-          }}>
-          <input
-            className="NewConversationInput"
-            placeholder="Enter new group info..."
-            type="text"
-            spellCheck="false"
-            autoComplete="off"
-            autoCorrect="false"
-            autoCapitalize="false"
-            value={create.isLoading ? 'Creating group...' : newGroupInput || ''}
-            onChange={(e) => {
-              e.preventDefault();
-              setNewGroupInput(e.target.value);
-              setNewGroupInputIsError(false);
-            }}
-          />
-          {create.isLoading && (
-            <div className="NewConversationInput NewGroupSpinner">
-              <LoadingSpinner />
-            </div>
-          )}
-          {create.isLoading || (
-            <Plus
-              onClick={onSubmitNewGroup}
-              className="NewConversationInput Plus"
-            />
-          )}
-          {newGroupInputIsError && (
-            <p className="NewConversationInput ErrorMessage">
-              {"Group name field can't be empty."}
-            </p>
-          )}
-        </form>
+        <RelayGroupNameInput
+          className="rr-m-10px-mt-4"
+          onSubmit={onSubmitNewGroup}
+          HintIcon={Plus}
+          onSubmitIsRunning={create.isLoading}
+          onSubmitIsSuccess={create.isSuccess}
+        />
       </li>
       {conversations.map(({ group, messages }) => {
         return (
@@ -91,7 +40,7 @@ export const GroupListView: FunctionComponent<{
             key={group.wallet.wallet.address}
             peerAddress={group.wallet.wallet.address}
             peerAddressDisplay={group.name}
-            subtitle={parseMessage(messages[0]).content}
+            subtitle={getText(messages[0])}
             topMessageTime={messages[0].sent as Date}
             onClick={() => {
               dispatch({

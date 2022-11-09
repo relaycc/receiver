@@ -2,18 +2,18 @@ import React, { FunctionComponent, useMemo } from 'react';
 import {
   useConversationsPreviews,
   useIgnoredAddresses,
-  useXmtp,
+  useWalletAddress,
 } from '../../../hooks';
 import { ConversationListView, Conversation } from './ConversationListView';
 import { LoadingList } from '../LoadingList';
 import { NoIgnoredConversations } from './NoIgnoredConversations';
 
 export const Ignored: FunctionComponent = () => {
-  const address = useXmtp((state) => state.address);
-  const ignoredAddresses = useIgnoredAddresses(address);
+  const walletAddress = useWalletAddress();
+  const ignoredAddresses = useIgnoredAddresses(walletAddress);
   const ignoredPreviews = useConversationsPreviews(
-    ignoredAddresses.data || [],
-    address
+    ignoredAddresses.data?.addresses || [],
+    walletAddress
   );
   const ignoredIsLoading =
     ignoredAddresses.isLoading ||

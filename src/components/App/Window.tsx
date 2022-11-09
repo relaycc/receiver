@@ -1,22 +1,22 @@
 import React, { FunctionComponent, useMemo, useEffect } from 'react';
+import { Message } from '../../domain';
 import {
-  PeerAddress,
   Pinned,
   Ignored,
   All,
   Menu,
   Groups,
   Group,
+  Messages,
 } from '../Screens';
 import {
   currentScreen,
   receiverContext,
   useConversations,
   useReceiver,
-  useXmtp,
-  Message,
   useConfig,
   useClient,
+  useWalletAddress,
 } from '../../hooks';
 import '../../styles/preflight.css';
 import '../../styles/app.css';
@@ -29,7 +29,7 @@ export interface WindowProps {
 export const Window: FunctionComponent<WindowProps> = ({ className }) => {
   const screenHistory = useReceiver((state) => state.screenHistory);
   const visibleScreen = currentScreen({ screenHistory });
-  const address = useXmtp((state) => state.address);
+  const address = useWalletAddress();
   const queryClient = useQueryClient({ context: receiverContext });
   const config = useConfig();
   const client = useClient(address);
@@ -78,15 +78,14 @@ export const Window: FunctionComponent<WindowProps> = ({ className }) => {
     } else if (visibleScreen.id === 'ignored conversations') {
       return <Ignored />;
     } else if (visibleScreen.id === 'messages') {
-      return <PeerAddress handle={visibleScreen.handle} />;
+      return <Messages handle={visibleScreen.handle} />;
     } else if (visibleScreen.id === 'group') {
       return <Group peerAddress={visibleScreen.handle} />;
     } else if (visibleScreen.id === 'menu') {
       return <Menu />;
     } else {
-      throw new Error(
-        'Unspported screen: ' + String(JSON.stringify(visibleScreen))
-      );
+      console.warn('You tried to go to an unsupported screen', visibleScreen);
+      return <Menu />;
     }
   }, [visibleScreen]);
 

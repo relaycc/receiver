@@ -1,21 +1,35 @@
 import React, { FunctionComponent, useState, useCallback } from 'react';
 import { Screen } from './Screen';
-import { MessageList, MessageInput, InfoCard, LoadingList } from '../Elements';
+import {
+  MessageList,
+  MessageInput,
+  InfoCard,
+  LoadingList,
+  RelayIdInput,
+  Plus,
+} from '../Elements';
 import {
   useMessages,
   useConfig,
   useClient,
-  Message,
-  sendGroupMessage,
-  useXmtp,
+  useWalletAddress,
+  useGroup,
+  useGroups,
 } from '../../hooks';
+import {
+  EthAddress,
+  sendGroupMessage,
+  isGroup,
+  Handle,
+  isEthAddress,
+} from '../../domain';
 
 export interface GroupProps {
-  peerAddress: string;
+  peerAddress: EthAddress;
 }
 
 export const Group: FunctionComponent<GroupProps> = ({ peerAddress }) => {
-  const address = useXmtp((state) => state.address);
+  const walletAddress = useWalletAddress();
   const groupClient = useClient(peerAddress);
   const messages = useMessages({
     clientAddress: peerAddress,
@@ -25,38 +39,35 @@ export const Group: FunctionComponent<GroupProps> = ({ peerAddress }) => {
     () => null
   );
   const config = useConfig();
+  const { invite } = useGroup();
+  const groups = useGroups(walletAddress);
+  const group = (() => {
+    if (groups.data === undefined) {
+      return undefined;
+    } else {
+      return groups.data.groups[peerAddress];
+    }
+  })();
 
   const sendMessage = useCallback(
     (message: string) => {
-      if (config === null || address === null) {
+      if (config === null || !isGroup(group)) {
         return;
       } else {
-        return sendGroupMessage(
-          address,
-          peerAddress,
-          config.xmtp.client,
-          message
-        );
+        return sendGroupMessage(peerAddress, config.xmtp.client, {
+          senderAddress: group.wallet.wallet.address,
+          message,
+        });
       }
     },
     [config, peerAddress]
   );
 
-  const parseMessage = useCallback((message: Message): Message => {
-    try {
-      const json = JSON.parse(message.content) as {
-        senderAddress: string;
-        message: string;
-      };
-      return {
-        id: message.id,
-        senderAddress: json.senderAddress,
-        recipientAddress: message.recipientAddress,
-        content: json.message,
-        sent: message.sent,
-      };
-    } catch {
-      return message;
+  const onSubmitInvite = useCallback((peerAddress: Handle) => {
+    if (group === undefined || !isEthAddress(peerAddress)) {
+      return;
+    } else {
+      invite.mutate({ peerAddress: peerAddress, group });
     }
   }, []);
 
@@ -87,11 +98,15 @@ export const Group: FunctionComponent<GroupProps> = ({ peerAddress }) => {
           } else {
             return (
               <>
+                <RelayIdInput
+                  className="rr-m-10px-mt-4"
+                  HintIcon={Plus}
+                  onSubmit={onSubmitInvite}
+                />
                 <MessageList
                   clientAddress={peerAddress}
                   peerAddress={peerAddress}
                   setDoScroll={setScrollMessageList}
-                  parseMessage={parseMessage}
                 />
                 <MessageInput
                   onEnterPressed={scrollMessageList}

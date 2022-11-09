@@ -1,10 +1,10 @@
 import { createContext } from 'react';
-import { XmtpApi, XmtpNetwork } from '../types';
+import { XmtpClient } from '../../domain';
 
 export interface ReceiverConfig {
   xmtp: {
-    network: XmtpNetwork;
-    client: XmtpApi;
+    network: 'dev' | 'production';
+    client: XmtpClient;
   };
 }
 

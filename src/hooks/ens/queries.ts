@@ -4,9 +4,9 @@ import {
   fetchEnsAddress,
   fetchEnsAvatar,
   fetchEnsName,
+  isEthAddress,
   isEnsName,
-} from './primitives';
-import { isEthAddress } from '../../utils';
+} from '../../domain';
 
 export const useEnsName = ({
   handle,
@@ -66,7 +66,7 @@ export const useEnsAvatar = ({
   return useQuery(
     ['ens avatar', handle],
     async () => {
-      if (!isEthAddress(handle) && !isEnsName(handle)) {
+      if (!isEnsName(handle) && !isEthAddress(handle)) {
         return null;
       } else {
         return fetchEnsAvatar(handle);
