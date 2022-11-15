@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { truncateAddress } from '../../utils/address';
+import { truncateHeader } from '../../utils/address';
 import { Avatar } from './Avatar';
 import { LoadingText } from './LoadingText';
 import { isEthAddress, useRelayId } from '../../hooks';
@@ -44,7 +44,7 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
         {primaryId === 'loading' && <LoadingText />}
         {primaryId === 'loading' || (
           <div className="AddressInfo MainText">
-            {isEthAddress(primaryId) ? truncateAddress(primaryId) : primaryId}
+            {primaryId && truncateHeader(primaryId)}
           </div>
         )}
         {secondaryId === 'loading' && <LoadingText />}
@@ -55,7 +55,7 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
                 typeof secondaryId === 'string' &&
                 isEthAddress(secondaryId)
               ) {
-                return truncateAddress(secondaryId);
+                return truncateHeader(secondaryId);
               } else {
                 return secondaryId;
               }
