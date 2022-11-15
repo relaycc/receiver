@@ -18,6 +18,9 @@ export function truncateHeader(e: string | undefined) {
   if (e === undefined) {
     return 'Name or address not found';
   }
+  if (e.length < 23) {
+    return e;
+  }
   if (e.slice(-3) === 'eth') {
     return e.slice(0, 15) + '...' + e.substring(e.length - 3);
   }
