@@ -18,13 +18,10 @@ export function truncateHeader(e: string | undefined) {
   if (e === undefined) {
     return 'Name or address not found';
   }
-  if (e.length < 23) {
-    return e;
-  }
-  if (e.slice(-3) === 'eth') {
+  if (e.slice(-3) === 'eth' && e.length > 21) {
     return e.slice(0, 15) + '...' + e.substring(e.length - 3);
   }
-  if (e.slice(-4) === 'lens') {
+  if (e.slice(-4) === 'lens' && e.length > 22) {
     return e.slice(0, 15) + '...' + e.substring(e.length - 4);
   }
   if (e.slice(0, 2) === '0x') {
