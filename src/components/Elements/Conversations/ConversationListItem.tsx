@@ -3,7 +3,7 @@ import { Avatar } from '../Avatar';
 import { useResponsiveName, useEnsName, useInView } from '../../../hooks';
 import { getDisplayDate } from '../../../utils/date';
 import { motion } from 'framer-motion';
-
+import { useRelayId } from '../../../hooks';
 export interface ConversationListItemProps {
   peerAddress: string;
   peerAddressDisplay?: string;
@@ -29,6 +29,8 @@ export const ConversationListItem: FunctionComponent<
     handle: peerAddress,
     wait: isInView === false || typeof peerAddressDisplay === 'string',
   });
+
+  const { lens } = useRelayId({ handle: peerAddress });
 
   useEffect(() => {
     if (onEnsResolve === undefined) {
@@ -57,7 +59,9 @@ export const ConversationListItem: FunctionComponent<
       <div className="ConversationListItem ContentContainer">
         <div className="ConversationListItem TopLineContainer">
           <span className="ConversationListItem Title">
-            {peerAddressDisplay || responsiveName}
+            {responsiveName.slice(0, 2) === '0x' && lens.data !== undefined
+              ? lens.data
+              : responsiveName}
           </span>
           <span className="ConversationListItem Time">
             {getDisplayDate(topMessageTime)}
