@@ -1,9 +1,12 @@
 import React, { FunctionComponent, useEffect, useRef } from 'react';
 import { Avatar } from '../Avatar';
-import { useResponsiveName, useEnsName, useInView } from '../../../hooks';
+import { useInView } from '../../../hooks';
 import { getDisplayDate } from '../../../utils/date';
 import { motion } from 'framer-motion';
 import { useRelayId } from '../../../hooks';
+import { truncateName } from '../../../utils';
+import { truncateLens } from '../../../utils';
+import { truncateAddress } from '../../../utils';
 export interface ConversationListItemProps {
   peerAddress: string;
   peerAddressDisplay?: string;
@@ -25,22 +28,21 @@ export const ConversationListItem: FunctionComponent<
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref);
-  const { data: name } = useEnsName({
+  const { lens, address, ens } = useRelayId({
     handle: peerAddress,
     wait: isInView === false || typeof peerAddressDisplay === 'string',
   });
-
-  const { lens } = useRelayId({ handle: peerAddress });
+  const responsiveEns = truncateName(ens.data);
+  const responsiveLens = truncateLens(lens.data);
+  const resonsiveAddress = truncateAddress(address.data);
 
   useEffect(() => {
     if (onEnsResolve === undefined) {
       return;
     } else {
-      onEnsResolve(name || null);
+      onEnsResolve(ens.data || null);
     }
-  }, [name]);
-
-  const responsiveName = useResponsiveName(name, peerAddress, '');
+  }, [ens.data]);
 
   return (
     <motion.li
@@ -59,9 +61,12 @@ export const ConversationListItem: FunctionComponent<
       <div className="ConversationListItem ContentContainer">
         <div className="ConversationListItem TopLineContainer">
           <span className="ConversationListItem Title">
-            {responsiveName.slice(0, 2) === '0x' && lens.data !== undefined
-              ? lens.data
-              : responsiveName}
+            {(responsiveEns !== 'ENS name or address not found' &&
+              responsiveEns) ||
+              (responsiveLens !== 'Lens name or address not found' &&
+                responsiveLens) ||
+              resonsiveAddress ||
+              peerAddressDisplay}
           </span>
           <span className="ConversationListItem Time">
             {getDisplayDate(topMessageTime)}
