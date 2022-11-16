@@ -14,6 +14,7 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
   const relayId = useRelayId({ handle });
   const [isOpen, setIsOpen] = useState(false);
   const [didCopyToClipboard, setDidCopyToClipboard] = useState(false);
+  const address = relayId.address.data;
 
   const primaryId = (() => {
     if (relayId.lens.data !== null && relayId.lens.data !== undefined) {
@@ -39,7 +40,7 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
       onClick={() => {
         setIsOpen(!isOpen);
       }}>
-      <Avatar handle={handle} onClick={() => null} />
+      <Avatar handle={address} onClick={() => null} />
       <div className="AddressInfo TextContainer">
         {primaryId === 'loading' && <LoadingText />}
         {primaryId === 'loading' || (
