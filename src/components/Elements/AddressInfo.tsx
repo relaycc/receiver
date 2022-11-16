@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useState } from 'react';
-import { truncateHeader } from '../../utils/address';
 import { Avatar } from './Avatar';
 import { LoadingText } from './LoadingText';
 import { isEthAddress, useRelayId } from '../../hooks';
@@ -157,3 +156,18 @@ const EtherscanIcon = () => {
     </svg>
   );
 };
+
+function truncateHeader(e: string | undefined) {
+  if (e === undefined) {
+    return 'Name or address not found';
+  }
+  if (e.slice(-3) === 'eth' && e.length > 21) {
+    return e.slice(0, 15) + '...' + e.substring(e.length - 3);
+  }
+  if (e.slice(-4) === 'lens' && e.length > 22) {
+    return e.slice(0, 15) + '...' + e.substring(e.length - 4);
+  }
+  if (e.slice(0, 2) === '0x') {
+    return e.slice(0, 5) + '...' + e.substring(e.length - 5);
+  } else return e;
+}
