@@ -85,14 +85,14 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
               <span className="InfoCard Text RelayLink">
                 {ensName.data ? (
                   <a
-                    href={`http://relay.cc/u/${String(ensName.data)}`}
+                    href={`http://relay.cc/u/${ensName.data}`}
                     target="_blank"
                     rel="noreferrer">
                     Relay Profile
                   </a>
                 ) : (
                   <a
-                    href={`http://relay.cc/u/${String(client.data?.address)}`}
+                    href={`http://relay.cc/u/${client.data?.address}`}
                     target="_blank"
                     rel="noreferrer">
                     Relay Profile
@@ -105,10 +105,10 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
                     {
                       ensName.data
                         ? navigator.clipboard.writeText(
-                            `http://relay.cc/u/${String(ensName.data)}`
+                            `http://relay.cc/u/${ensName.data}`
                           )
                         : navigator.clipboard.writeText(
-                            `http://relay.cc/u/${String(client.data?.address)}`
+                            `http://relay.cc/u/${client.data?.address}`
                           );
                     }
                   }}
