@@ -6,4 +6,4 @@ export * from './Edit';
 export * from './Plus';
 export * from './Search';
 export * from './Copy';
-export * from './CopySmall'
+export * from './CopySmall';
