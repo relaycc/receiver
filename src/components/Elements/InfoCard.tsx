@@ -83,7 +83,7 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
             Help them get web3 encrypted messaging by sharing your <br />{' '}
             {showLinkCopied || (
               <span className="InfoCard Text RelayLink">
-                {ensName ? (
+                {ensName.data ? (
                   <a
                     href={`http://relay.cc/u/${String(ensName.data)}`}
                     target="_blank"
@@ -103,7 +103,7 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
                     setShowLinkCopied(true);
                     setTimeout(() => setShowLinkCopied(false), 1500);
                     {
-                      ensName
+                      ensName.data
                         ? navigator.clipboard.writeText(
                             `http://relay.cc/u/${String(ensName.data)}`
                           )
