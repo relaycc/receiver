@@ -317,6 +317,14 @@
   color: #2d2d2d;
 }
 
+.RelayReceiver .InfoCard.Text .RelayLink {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: blue;
+  cursor: pointer;
+}
+
 .RelayReceiver .InfoCard.FooterLink {
   text-decoration: none;
   cursor: pointer;

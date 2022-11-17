@@ -1,7 +1,9 @@
 import React from 'react';
-import { FunctionComponent, useCallback } from 'react';
-import { useReceiver, useXmtp, useStartClient } from '../../hooks';
+import { FunctionComponent, useCallback, useState } from 'react';
+import { useReceiver, useXmtp, useStartClient, useEnsName } from '../../hooks';
 import { Discord, Github, Mirror, Twitter } from './Icons';
+import { CopySmall } from './Icons';
+import { useClient } from '../../hooks';
 
 export interface InfoCardProps {
   variant:
@@ -28,6 +30,10 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
 }) => {
   const wallet = useXmtp((state) => state.wallet);
   const signIn = useStartClient();
+  const [showLinkCopied, setShowLinkCopied] = useState(false);
+  const address = useXmtp((state) => state.address);
+  const client = useClient(address);
+  const ensName = useEnsName({ handle: client.data?.address });
 
   const dispatch = useReceiver((state) => state.dispatch);
 
@@ -66,6 +72,54 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
           <div className="InfoCard Title">User not on network</div>
           <div className="InfoCard Text">
             This user is not on the XMTP messaging network yet.
+          </div>
+          <div
+            className="InfoCard Text"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}>
+            Help them get web3 encrypted messaging by sharing your <br />{' '}
+            {showLinkCopied || (
+              <span className="InfoCard Text RelayLink">
+                {ensName ? (
+                  <a
+                    href={`http://relay.cc/u/${String(ensName.data)}`}
+                    target="_blank"
+                    rel="noreferrer">
+                    Relay Profile
+                  </a>
+                ) : (
+                  <a
+                    href={`http://relay.cc/u/${String(client.data?.address)}`}
+                    target="_blank"
+                    rel="noreferrer">
+                    Relay Profile
+                  </a>
+                )}
+                <span
+                  onClick={() => {
+                    setShowLinkCopied(true);
+                    setTimeout(() => setShowLinkCopied(false), 1500);
+                    {
+                      ensName
+                        ? navigator.clipboard.writeText(
+                            `http://relay.cc/u/${String(ensName.data)}`
+                          )
+                        : navigator.clipboard.writeText(
+                            `http://relay.cc/u/${String(client.data?.address)}`
+                          );
+                    }
+                  }}
+                  style={{ color: '#2d2d2d' }}>
+                  <CopySmall />
+                </span>
+              </span>
+            )}
+            {showLinkCopied && (
+              <span className="InfoCard Text">Link Copied</span>
+            )}
           </div>
         </div>
         <BrandedFooter />
