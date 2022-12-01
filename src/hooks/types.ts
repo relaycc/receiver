@@ -95,6 +95,7 @@ export interface XmtpApi {
 export type ReceiverScreen =
   | { id: 'messages'; handle: string }
   | { id: 'group'; handle: string }
+  | { id: 'no project'; handle: string }
   | { id: 'all conversations' }
   | { id: 'pinned conversations' }
   | { id: 'ignored conversations' }

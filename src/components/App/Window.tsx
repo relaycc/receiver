@@ -7,6 +7,7 @@ import {
   Menu,
   Groups,
   Group,
+  NoProject,
 } from '../Screens';
 import {
   currentScreen,
@@ -71,6 +72,8 @@ export const Window: FunctionComponent<WindowProps> = ({ className }) => {
   const screen = useMemo(() => {
     if (visibleScreen.id === 'pinned conversations') {
       return <Pinned />;
+    } else if (visibleScreen.id === 'no project') {
+      return <NoProject />;
     } else if (visibleScreen.id === 'all conversations') {
       return <All />;
     } else if (visibleScreen.id === 'groups') {

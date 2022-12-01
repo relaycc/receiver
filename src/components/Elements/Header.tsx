@@ -62,6 +62,14 @@ export const Header: FunctionComponent = () => {
         <ExitIcon onClick={doClose} />
       </div>
     );
+  } else if (screen.id === 'no project') {
+    return (
+      <div className="Header HeaderWrapper">
+        <GoToConversationsIcon onClick={goToMenu} />
+        <h1 className="Header Title">Project Not Connected</h1>
+        <ExitIcon onClick={doClose} />
+      </div>
+    );
   } else if (screen.id === 'groups') {
     return (
       <div className="Header HeaderWrapper">

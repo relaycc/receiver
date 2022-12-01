@@ -18,6 +18,7 @@ export interface InfoCardProps {
     | 'no pinned conversations'
     | 'no ignored conversations'
     | 'no groups'
+    | 'no project'
     | 'sign in';
   handle?: string | null;
 }
@@ -79,6 +80,32 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
           <div className="InfoCard Text">
             Could not find an ETH address for <em>{handle}</em>. Currently
             supported ID types are ENS name, Lens handle, or Ethereum address.
+          </div>
+        </div>
+        <BrandedFooter />
+      </div>
+    );
+  } else if (variant === 'no project') {
+    return (
+      <div className="InfoCard FullMiddleSection">
+        <div className="InfoCard CardContainer">
+          <div className="InfoCard Title">
+            This app has not connected an ENS name or Lens handle to Relay
+          </div>
+          <div className="InfoCard Text">
+            {
+              "Please message us if you're on the app's team, or share relay.cc with them!"
+            }
+          </div>
+          <div
+            className="InfoCard Button"
+            onClick={() => {
+              dispatch({
+                id: 'go to screen',
+                screen: { id: 'messages', handle: 'connect.relaycc.eth' },
+              });
+            }}>
+            Message Us
           </div>
         </div>
         <BrandedFooter />
