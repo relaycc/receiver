@@ -575,7 +575,7 @@
   border-radius: 4px;
   display: flex;
   flex-grow: 1;
-  padding: 0.5rem;
+  padding: 0.5rem 2.25rem 0.5rem 0.5rem;
   outline: none;
 }
 
@@ -679,7 +679,7 @@
   border: 2px solid #eeeeee;
   display: flex;
   margin: 1rem 10px 1rem 10px;
-  padding: 0.5rem;
+  padding: 0.5rem 2.25rem 0.5rem 0.5rem;
   outline: none;
 }
 

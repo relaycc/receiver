@@ -55,7 +55,7 @@ root.render(
 ```
 
 Next, provide the user's connected wallet to Receiver. The wallet is
-used to sign-in to the XMTP messaging network. How to access the connected
+used to sign in to the XMTP messaging network. How to access the connected
 wallet depends on how your application implements wallet connection. Here's
 an example using the popular [wagmi](https://wagmi.sh/) library.
 
@@ -66,7 +66,7 @@ import { useSigner } from 'wagmi';
 import { useWallet } from '@relaycc/receiver';
 
 function MyWalletComponent() {
-  // Acccess the user's connected wallet.
+  // Access the user's connected wallet.
   const signer = useSigner();
   const [wallet, setWallet] = useWallet();
 
