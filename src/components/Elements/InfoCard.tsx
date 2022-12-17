@@ -266,19 +266,19 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
               <Github className="SocialIcon" />
             </a>
             <a
-              href="https://github.com/relaycc/receiver"
+              href="https://twitter.com/relay_eth"
               target="_blank"
               rel="noreferrer">
               <Twitter className="SocialIcon" />
             </a>
             <a
-              href="https://github.com/relaycc/receiver"
+              href="https://discord.com/invite/DTMKf63ZSf"
               target="_blank"
               rel="noreferrer">
               <Discord className="SocialIcon" />
             </a>
             <a
-              href="https://github.com/relaycc/receiver"
+              href="https://mirror.xyz/relaycc.eth"
               target="_blank"
               rel="noreferrer">
               <Mirror className="SocialIcon Mirror" />
