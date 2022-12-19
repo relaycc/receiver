@@ -1,3 +1,12 @@
+---
+name: Release
+about: For creating a release issue
+title: ''
+labels: release
+assignees: ''
+
+---
+
 # [Title]
 
 [Description]
@@ -23,4 +32,3 @@
 - ...
 
 # Notes
-  
