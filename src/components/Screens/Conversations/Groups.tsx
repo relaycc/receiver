@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { GroupListView, GroupConversation } from './GroupListView';
 import { LoadingList } from '../../Elements/LoadingList';
-import { NoGroups } from './NoGroups';
+import { NoGroups } from '../GroupChat/Groups';
 
 export const Groups: FunctionComponent = () => {
   const groupsPreviews: { isLoading: boolean }[] = [];
