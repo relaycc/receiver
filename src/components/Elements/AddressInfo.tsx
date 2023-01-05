@@ -15,6 +15,10 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [didCopyToClipboard, setDidCopyToClipboard] = useState(false);
 
+  const primaryIdIsLoading =
+    relayId.lens.isLoading ||
+    relayId.ens.isLoading ||
+    relayId.address.isLoading;
   const primaryId = (() => {
     if (relayId.lens.data !== null && relayId.lens.data !== undefined) {
       return relayId.lens.data;
@@ -25,12 +29,9 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
     }
   })();
 
+  const secondaryIdIsLoading = relayId.address.isLoading;
   const secondaryId = (() => {
-    if (relayId.address.isLoading) {
-      return <LoadingText />;
-    } else {
-      return relayId.address.data;
-    }
+    return relayId.address.data;
   })();
 
   return (
@@ -41,14 +42,14 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
       }}>
       <Avatar handle={handle} onClick={() => null} />
       <div className="AddressInfo TextContainer">
-        {primaryId === 'loading' && <LoadingText />}
-        {primaryId === 'loading' || (
+        {primaryIdIsLoading && <LoadingText />}
+        {primaryIdIsLoading || (
           <div className="AddressInfo MainText">
             {isEthAddress(primaryId) ? truncateAddress(primaryId) : primaryId}
           </div>
         )}
-        {secondaryId === 'loading' && <LoadingText />}
-        {secondaryId === 'loading' || (
+        {secondaryIdIsLoading && <LoadingText />}
+        {secondaryIdIsLoading || (
           <div className="AddressInfo SubText">
             {(() => {
               if (

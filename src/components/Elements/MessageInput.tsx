@@ -1,14 +1,17 @@
 import React, { useCallback, useState } from 'react';
 import { Send } from './Icons/Send';
+import { LoadingSpinner } from './LoadingSpinner';
 
 interface MessageInputProps {
   onSendMessage: (val: string) => unknown;
   onEnterPressed?: () => unknown;
+  isLoading?: boolean;
 }
 
 export const MessageInput = ({
   onSendMessage,
   onEnterPressed,
+  isLoading,
 }: MessageInputProps) => {
   const [inputVal, setInputVal] = useState<string>('');
 
@@ -52,7 +55,13 @@ export const MessageInput = ({
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
-      <Send onClick={handleSend} className="Send" />
+      {(() => {
+        if (isLoading) {
+          return <LoadingSpinner className="Send" />;
+        } else {
+          return <Send onClick={handleSend} className="Send SendTweak" />;
+        }
+      })()}
     </form>
   );
 };

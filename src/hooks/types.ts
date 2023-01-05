@@ -1,3 +1,5 @@
+import { Conversation } from '@relaycc/xmtp-hooks';
+
 export type Setter<T> = (state: T) => unknown;
 
 export type XmtpNetwork = 'dev' | 'production';
@@ -22,8 +24,6 @@ export interface IdentityWallet {
   };
 }
 
-export type WorkerWallet = SignerWallet | IdentityWallet;
-
 export interface ListMessagesOptions {
   limit?: number;
   direction?: 'ascending' | 'descending';
@@ -42,10 +42,6 @@ export interface Message {
   content: any;
 }
 
-export interface Conversation {
-  peerAddress: string;
-}
-
 export interface Group {
   wallet: IdentityWallet;
   name?: string;
@@ -57,48 +53,12 @@ export interface CreateGroupOptions {
   description: string;
 }
 
-export interface XmtpApi {
-  createIdentity: () => Promise<IdentityWallet>;
-  startClient: (
-    wallet: WorkerWallet,
-    opts?: Partial<ClientOptions>
-  ) => Promise<Client | null>;
-  fetchClient: (clientAddress: string) => Promise<Client | null>;
-  fetchMessages: (
-    clientAddress: string,
-    peerAddress: string,
-    opts: Partial<ListMessagesOptions>
-  ) => Promise<Message[]>;
-  fetchConversations: (clientAddress: string) => Promise<Conversation[]>;
-  fetchPeerOnNetwork: (
-    clientAddress: string,
-    peerAddress: string
-  ) => Promise<boolean>;
-  sendMessage: (
-    clientAddress: string,
-    peerAddress: string,
-    message: string
-  ) => Promise<Message>;
-  listenToAllMessagesStream: (
-    clientAddress: string,
-    handler: (message: Message) => unknown
-  ) => Promise<{
-    unlisten: () => void;
-  }>;
-  listenToConversationStream: (
-    clientAddress: string,
-    peerAddress: string,
-    handler: (message: Message) => unknown
-  ) => Promise<{ unlisten: () => void }>;
-}
-
 export type ReceiverScreen =
-  | { id: 'messages'; handle: string }
-  | { id: 'group'; handle: string }
+  | { id: 'messages'; handle: string | Conversation }
+  | { id: 'group chat'; handle: string }
   | { id: 'no project'; handle: string }
   | { id: 'all conversations' }
   | { id: 'pinned conversations' }
-  | { id: 'ignored conversations' }
   | { id: 'groups' }
   | { id: 'menu' }
   | { id: 'new conversation' };
@@ -119,18 +79,6 @@ export type ReceiverAction =
   | {
       id: 'go back screen';
     };
-
-export interface ReceiverStore {
-  wallet: WorkerWallet | null;
-  setWallet: Setter<WorkerWallet | null>;
-  pinnedConversations: string[];
-  setPinnedConversations: Setter<string[]>;
-  isOpen: boolean;
-  setIsOpen: Setter<boolean>;
-  screenHistory: ReceiverScreen[];
-  setScreenHistory: Setter<ReceiverScreen[]>;
-  dispatch: (action: ReceiverAction) => unknown;
-}
 
 export type SignatureStatus = 'idle' | 'waiting' | 'denied';
 

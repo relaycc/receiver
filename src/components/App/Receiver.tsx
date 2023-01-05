@@ -1,25 +1,44 @@
-import React, { ReactNode } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React, { FunctionComponent, useMemo } from 'react';
+import { useCurrentScreen } from '../../hooks';
+import { Window } from '../Elements';
+import '../../styles/preflight.css';
+import '../../styles/app.css';
 import {
-  receiverContext,
-  ReceiverContext,
-  ReceiverContextType,
-} from '../../hooks';
+  DirectMessage,
+  Pinned,
+  All,
+  Groups,
+  Menu,
+  NoProject,
+} from '../Screens';
 
-const queryClient = new QueryClient();
+export interface ReceiverProps {
+  className?: string;
+}
 
-export const Receiver = ({
-  children,
-  config,
-}: {
-  children: ReactNode;
-  config: ReceiverContextType['config'];
-}) => {
-  return (
-    <ReceiverContext.Provider value={{ config }}>
-      <QueryClientProvider client={queryClient} context={receiverContext}>
-        {children}
-      </QueryClientProvider>
-    </ReceiverContext.Provider>
-  );
+export const Receiver: FunctionComponent<ReceiverProps> = ({ className }) => {
+  const currentScreen = useCurrentScreen();
+
+  const screen = useMemo(() => {
+    switch (currentScreen.id) {
+      case 'pinned conversations':
+        return <Pinned />;
+      case 'all conversations':
+        return <All />;
+      case 'groups':
+        return <Groups />;
+      case 'no project':
+        return <NoProject />;
+      case 'menu':
+        return <Menu />;
+      case 'messages':
+        return <DirectMessage />;
+      default:
+        throw new Error(
+          'Unspported screen: ' + String(JSON.stringify(currentScreen))
+        );
+    }
+  }, [currentScreen]);
+
+  return <Window className={className}>{screen}</Window>;
 };

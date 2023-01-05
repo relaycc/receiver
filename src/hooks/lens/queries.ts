@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { receiverContext } from '../xmtp';
+import { receiverContext } from '../context';
 import { fetchProfileByHandle, fetchProfilesByAddress } from './primitives';
 import { isLensName } from './helpers';
 import { isEthAddress } from '../types';

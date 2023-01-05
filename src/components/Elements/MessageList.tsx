@@ -1,54 +1,36 @@
-import { useQueryClient } from '@tanstack/react-query';
 import React, { FunctionComponent, useEffect, useRef } from 'react';
-import { Message, useMessages, receiverContext, useConfig } from '../../hooks';
 import { motion } from 'framer-motion';
 import { MessagesBucket, MessagesBucketProps } from './MessagesBucket';
+import {
+  EthAddress,
+  useFetchMessages,
+  Message,
+  Conversation,
+} from '@relaycc/xmtp-hooks';
 
 type MessageBucket = MessagesBucketProps['bucket'];
 
 export interface MessageListProps {
-  clientAddress: string;
-  peerAddress: string;
+  clientAddress: EthAddress;
+  conversation: Conversation;
   parseMessage?: (message: Message) => Message;
   setDoScroll: (doScroll: () => unknown) => unknown;
 }
 
 export const MessageList: FunctionComponent<MessageListProps> = ({
   clientAddress,
-  peerAddress,
+  conversation,
   parseMessage,
   setDoScroll,
 }) => {
-  const queryClient = useQueryClient({ context: receiverContext });
-  const messagesQuery = useMessages({ peerAddress, clientAddress });
+  const messagesQuery = useFetchMessages({
+    // TODO - Type this better.
+    conversation,
+    clientAddress,
+  });
   const bottomDiv = useRef<HTMLDivElement>(null);
-  const config = useConfig();
 
-  useEffect(() => {
-    if (config === null) {
-      return;
-    } else {
-      const listener = config.xmtp.client.listenToConversationStream(
-        clientAddress,
-        peerAddress,
-        async (message: Message) => {
-          queryClient.invalidateQueries([
-            'messages',
-            clientAddress,
-            message.senderAddress,
-          ]);
-          queryClient.invalidateQueries([
-            'messages',
-            clientAddress,
-            message.recipientAddress,
-          ]);
-        }
-      );
-      return () => {
-        listener.then(({ unlisten }) => unlisten());
-      };
-    }
-  }, [config]);
+  // TODO - stream messages and invalidate queries
 
   useEffect(() => {
     if (bottomDiv.current) {
@@ -59,9 +41,7 @@ export const MessageList: FunctionComponent<MessageListProps> = ({
   }, [bottomDiv.current]);
 
   const withoutUndefined = (
-    messagesQuery.data
-      ? messagesQuery.data.messages.filter((m) => m !== undefined)
-      : []
+    messagesQuery.data ? messagesQuery.data.filter((m) => m !== undefined) : []
   ) as Message[];
 
   const parsedMessages = withoutUndefined.map((message) => {

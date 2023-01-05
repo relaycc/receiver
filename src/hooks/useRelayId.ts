@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { isEthAddress } from '../utils';
 import { useEnsAddress, useEnsName, isEnsName } from './ens';
 import {
   useLensProfile,
@@ -9,6 +8,7 @@ import {
   getFirstProfile,
   getMostFollowedProfile,
 } from './lens';
+import { isEthAddress } from '@relaycc/xmtp-hooks';
 export const useRelayId = ({
   handle,
   wait,
@@ -42,7 +42,21 @@ export const useRelayId = ({
     } else if (isEnsName(handle)) {
       return addressFromEns;
     } else if (isLensName(handle)) {
-      return { ...addressFromLens, data: addressFromLens.data?.ownedBy };
+      const address = addressFromLens.data?.ownedBy;
+      return {
+        ...addressFromLens,
+        data: (() => {
+          if (address === undefined) {
+            return undefined;
+          } else {
+            if (!isEthAddress(address)) {
+              throw new Error('Invalid address');
+            } else {
+              return address;
+            }
+          }
+        })(),
+      };
     } else {
       return {
         isError: true,

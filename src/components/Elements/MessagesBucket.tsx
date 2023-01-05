@@ -3,9 +3,10 @@ import MessageBubble from './MessageBubble';
 
 import { Avatar } from './Avatar';
 import React from 'react';
-import { Message, useResponsiveName, useEnsName } from '../../hooks';
+import { useResponsiveName, useEnsName } from '../../hooks';
 import { getDisplayDate } from '../../utils/date';
 import { motion } from 'framer-motion';
+import { Message } from '@relaycc/xmtp-hooks';
 
 export interface MessagesBucketProps {
   bucket: {
@@ -49,7 +50,7 @@ export const MessagesBucket: FunctionComponent<MessagesBucketProps> = ({
         {bucket.messages.map((e: Message) => {
           return (
             <div className="MessagesBucket MessagePosition" key={e.id}>
-              <MessageBubble message={e.content} />
+              <MessageBubble message={`${e.content}`} />
             </div>
           );
         })}

@@ -590,6 +590,10 @@
   border: none;
 }
 
+.RelayReceiver .MessageInput .Send.SendTweak {
+  top: 12px;
+}
+
 .RelayReceiver .MessageInput .Send:hover {
   opacity: 1;
   cursor: pointer;
@@ -712,8 +716,8 @@
   margin: 0;
   padding: 0;
   height: 1rem;
-  bottom: -4px;
-  left: 1.5rem;
+  top: -16px;
+  left: 1rem;
 }
 
 .RelayReceiver .NewConversationInput.Plus {
@@ -854,6 +858,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  padding-top: 0.5rem;
 }
 
 .MenuScreenHeader .address:hover {
@@ -947,10 +952,6 @@
 }
 
 .RelayReceiver .PinnedLoadingSpinner {
-  margin-right: 6px;
-}
-
-.RelayReceiver .IgnoredLoadingSpinner {
   margin-right: 6px;
   margin-left: auto;
 }
