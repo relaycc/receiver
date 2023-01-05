@@ -1,5 +1,6 @@
 import { getAddress } from '@ethersproject/address';
 import { AlchemyProvider } from '@ethersproject/providers';
+import { isEthAddress } from '@relaycc/xmtp-hooks';
 
 const provider = new AlchemyProvider(
   'homestead',
@@ -15,7 +16,12 @@ export const fetchEnsAddress = async (ensName: string) => {
   if (resolved === null) {
     return null;
   } else {
-    return getAddress(resolved);
+    const address = getAddress(resolved);
+    if (!isEthAddress(address)) {
+      return null;
+    } else {
+      return address;
+    }
   }
 };
 

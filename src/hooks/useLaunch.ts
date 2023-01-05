@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useReceiver } from './useReceiver';
+import { useReceiver } from './receiver/useReceiver';
 import { ReceiverScreen } from './types';
 
 export const useLaunch = () => {

@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { receiverContext } from '../xmtp';
+import { receiverContext } from '../context';
 import {
   fetchEnsAddress,
   fetchEnsAvatar,
   fetchEnsName,
   isEnsName,
 } from './primitives';
-import { isEthAddress } from '../../utils';
+import { isEthAddress } from '@relaycc/xmtp-hooks';
 
 export const useEnsName = ({
   handle,

@@ -8,6 +8,8 @@
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -c -w",
+    "dev:demo": "npm link ../receiver-example-cra/node_modules/react ../receiver-example-cra/node_modules/react-dom && npm run watch",
+    "dev:full": "npm link ../receiver-example-cra/node_modules/react ../receiver-example-cra/node_modules/react-dom ../xmtp-hooks && npm run watch",
     "lint": "eslint src/",
     "prettier": "prettier --check .",
     "prettier:fix": "prettier . --write",
@@ -54,7 +56,7 @@
     "@ethersproject/providers": "^5.7.0",
     "@headlessui/react": "^1.7.3",
     "@motionone/dom": "^10.14.2",
-    "@relaycc/xmtp-worker": "^0.1.10",
+    "@relaycc/xmtp-hooks": "^0.0.5",
     "@tanstack/react-query": "^4.10.3",
     "encoding": "^0.1.13",
     "framer-motion": "^4.1.17",

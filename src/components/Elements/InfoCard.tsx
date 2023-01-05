@@ -1,7 +1,8 @@
 import React from 'react';
 import { FunctionComponent, useCallback } from 'react';
-import { useReceiver, useXmtp, useStartClient } from '../../hooks';
+import { useReceiver } from '../../hooks';
 import { Discord, Github, Mirror, Twitter } from './Icons';
+import { EthAddress, useStartClient } from '@relaycc/xmtp-hooks';
 
 export interface InfoCardProps {
   variant:
@@ -21,14 +22,15 @@ export interface InfoCardProps {
     | 'no project'
     | 'sign in';
   handle?: string | null;
+  clientAddress?: EthAddress | null;
 }
 
 export const InfoCard: FunctionComponent<InfoCardProps> = ({
   variant,
   handle,
 }) => {
-  const wallet = useXmtp((state) => state.wallet);
-  const signIn = useStartClient();
+  const wallet = useReceiver((state) => state.wallet);
+  const startClient = useStartClient({});
 
   const dispatch = useReceiver((state) => state.dispatch);
 
@@ -123,9 +125,9 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
             className="InfoCard Button"
             onClick={() => {
               if (wallet === null) {
-                return;
+                console.log('InfoCard.tsx :: Wallet is NULL');
               } else {
-                signIn.mutate({ wallet });
+                startClient.mutate({ wallet, opts: { env: 'production' } });
               }
             }}>
             Initialize
@@ -162,9 +164,9 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
             className="InfoCard Button"
             onClick={() => {
               if (wallet === null) {
-                return;
+                console.log('InfoCard.tsx :: Wallet is NULL');
               } else {
-                signIn.mutate({ wallet });
+                startClient.mutate({ wallet });
               }
             }}>
             Initialize
@@ -214,7 +216,7 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
         <div className="InfoCard CardContainer">
           <div className="InfoCard Text">
             {
-              "It looks like you haven't joined any groups yet. You can join a group via the user interface."
+              "It looks like you haven't joined any groups yet. The Group DM UI is coming soon 🎉."
             }
           </div>
           <div className="InfoCard Button" onClick={goBack}>
@@ -288,7 +290,7 @@ export const InfoCard: FunctionComponent<InfoCardProps> = ({
       </div>
     );
   } else {
-    throw new Error('We never should have got here!');
+    throw new Error('InfoCard.tsx :: Invalid variant: ' + variant);
   }
 };
 
