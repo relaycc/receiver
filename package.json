@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "version": "0.1.74",
+  "version": "0.1.75",
   "description": "The best way to add wallet messaging to your site.",
   "scripts": {
     "build": "rollup -c",
