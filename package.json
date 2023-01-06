@@ -56,7 +56,7 @@
     "@ethersproject/providers": "^5.7.0",
     "@headlessui/react": "^1.7.3",
     "@motionone/dom": "^10.14.2",
-    "@relaycc/xmtp-hooks": "^0.0.9",
+    "@relaycc/xmtp-hooks": "^0.0.10",
     "@tanstack/react-query": "^4.10.3",
     "encoding": "^0.1.13",
     "framer-motion": "^4.1.17",
