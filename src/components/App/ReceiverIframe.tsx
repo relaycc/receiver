@@ -2,11 +2,15 @@ import React, {
   FunctionComponent,
   useCallback,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import { motion } from 'framer-motion';
+import { FetchSignerResult } from '@wagmi/core';
+import mir from 'mini-iframe-rpc';
 
 import '../../styles/app.css';
+import { Signer } from '@relaycc/xmtp-worker';
 
 enum EVENTS {
   OPEN = 'receiver:open',
@@ -14,7 +18,9 @@ enum EVENTS {
   TOGGLE = 'receiver:toggle',
 }
 
-export const ReceiverIframe: FunctionComponent<{}> = () => {
+export const ReceiverIframe: FunctionComponent<{
+  wallet: FetchSignerResult<Signer>;
+}> = ({ wallet }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -49,8 +55,20 @@ export const ReceiverIframe: FunctionComponent<{}> = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+    const rpc = new mir();
+    rpc.register('request', (args) => {
+    console.log({args})
+      return window.ethereum?.request(JSON.parse(args));
+    });
+  }, []);
+
   return (
     <motion.iframe
+      id="frame"
       title="receiver"
       className="Iframe"
       key="receiver"
@@ -61,12 +79,12 @@ export const ReceiverIframe: FunctionComponent<{}> = () => {
         open: { opacity: 1, y: 0 },
       }}
       transition={{ duration: 0.2, ease: 'easeIn' }}
-      src="https://relay.cc"
+      src="http://localhost:3001/"
       sandbox="allow-scripts allow-popups allow-same-origin allow-forms"></motion.iframe>
   );
 };
 
-export const LaunchButton: FunctionComponent<{}> = () => {
+export const LaunchButton: FunctionComponent = () => {
   const handler = useCallback(() => {
     if (!window?.dispatchEvent) {
       return;
