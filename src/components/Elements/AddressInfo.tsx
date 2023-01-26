@@ -20,10 +20,10 @@ export const AddressInfo: FunctionComponent<AddressInfoProps> = ({
     relayId.ens.isLoading ||
     relayId.address.isLoading;
   const primaryId = (() => {
-    if (relayId.lens.data !== null && relayId.lens.data !== undefined) {
-      return relayId.lens.data;
-    } else if (relayId.ens.data !== null && relayId.ens.data !== undefined) {
+    if (relayId.ens.data !== null && relayId.ens.data !== undefined) {
       return relayId.ens.data;
+    } else if (relayId.lens.data !== null && relayId.lens.data !== undefined) {
+      return relayId.lens.data;
     } else {
       return handle;
     }
